@@ -1,0 +1,70 @@
+<resources>
+
+        <!-- Customize your theme here. -->
+        <color name="tab_indicator_color">@color/tabBarIndicator</color>
+        <color name="tab_background">@color/tabBarBackground</color>
+
+        <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+
+        </style>
+
+        <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+            <item name="colorPrimary">@color/colorPrimary</item>
+            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+            <item name="colorAccent">@color/colorAccent</item>
+            <item name="android:textColorPrimary">@color/textColorPrimary</item>
+            <item name="windowActionModeOverlay">true</item>
+            <item name="windowNoTitle">true</item>
+            <item name="windowActionBar">false</item>
+
+        </style>
+
+
+
+        <style name="HeaderBar">
+            <item name="android:background">?colorPrimary</item>
+        </style>
+
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+            <item name="android:windowTranslucentStatus">true</item>
+        </style>
+
+        <!-- Misc -->
+        <style name="TabIndicator" />
+
+    <!--  floating label text color -->
+    <style name="floatlabelededittext">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <!-- Fragment Drawer Text theme. -->
+    <style name="TestInputTheme">
+
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/margin_left_normal</item>
+        <item name="android:layout_marginRight">@dimen/margin_right_normal</item>
+        <item name="android:layout_marginBottom">@dimen/margin_bottom_normal</item>
+
+    </style>
+
+    <style name="TextAppearance">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/navigationBarColor</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Toolbar theme. -->
+    <style name="CustomToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="elevation">10dp</item>
+    </style>
+
+    <style name="PagerSlidingTabStripStyle" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+
+    </style>
+</resources>

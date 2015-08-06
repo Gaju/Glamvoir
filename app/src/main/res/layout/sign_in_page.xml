@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/appbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="top"
+        android:layout_marginTop="@dimen/margin_top_large"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signin_inputemail"
+            style="@style/TestInputTheme"
+            app:hintTextAppearance="@android:style/TextAppearance.Medium">
+
+            <EditText
+                android:id="@+id/signin_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_bottom_xlarge"
+                android:ems="10"
+                android:hint="First Name"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/textsize_normal" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signin_inputpwd"
+            style="@style/TestInputTheme"
+            app:hintTextAppearance="@android:style/TextAppearance.Medium">
+
+            <EditText
+                android:id="@+id/signin_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:hint="PASSWORD"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:textSize="@dimen/textsize_normal" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/singnin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_large"
+            android:text="SIGN IN TO GLAMVOIR"
+            android:textAllCaps="true"
+            android:layout_marginLeft="@dimen/margin_left_normal"
+            android:layout_marginRight="@dimen/margin_right_normal"
+            android:background="@drawable/corner_button_dip"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+</LinearLayout>

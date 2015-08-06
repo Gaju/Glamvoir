@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="glamvoir.appzstack.glamvoir">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MyMaterialTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activity.FrontPageActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name=".activity.SigninActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity android:name=".activity.FollowersActivity"></activity>
+
+        <activity android:name=".activity.FollowingActivity"></activity>
+
+        <activity android:name=".activity.MyPostActivity"></activity>
+
+        <activity android:name=".activity.MysaveActivity"></activity>
+
+        <activity android:name=".activity.SettingsActivity"></activity>
+
+
+        <!-- Network change detector -->
+
+    </application>
+
+</manifest>
