@@ -26,6 +26,8 @@ import com.google.android.gms.plus.model.people.Person;
 import java.io.InputStream;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
 
 
@@ -57,10 +59,13 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     private Button btnSignIn, btn_SignUp, btn_LoginGmain;
     private CoordinatorLayout coordinatorLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
+        checkUserSession();
 
         //initialize all views
         initViews();
@@ -68,8 +73,10 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         // initializeall views listeners
         initListeners();
 
+        saveDeviceToken();
+
         // Initializing google Api
-     //   initGoogleApi();
+        //   initGoogleApi();
 
     }
 
@@ -133,26 +140,22 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
                 SigninActivity.startActivity(FrontPageActivity.this);
                 break;
 
-
             case R.id.frontpage_signup:
                 SignUpActivity.startActivity(FrontPageActivity.this);
                 break;
 
             case R.id.login_gmail:
                 // Signin button clicked
-                signInWithGplus();
+                //signInWithGplus();
                 break;
             default:
                 break;
-
-
         }
     }
 
 
     /**
      * show when no internet connection.
-     *
      */
     private void enableSnackbar() {
         Snackbar
@@ -288,7 +291,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
                         personPhotoUrl.length() - 2)
                         + PROFILE_PIC_SIZE;
 
-             //   new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
+                //   new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
 
             } else {
                 Toast.makeText(getApplicationContext(),
@@ -324,6 +327,28 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+        }
+    }
+
+    /**
+     * save the device token and device type.
+     */
+    private void saveDeviceToken() {
+        AppPreferences appPreferences = new AppPreferences(FrontPageActivity.this);
+        if (appPreferences.getDeviceToken() == null)
+            appPreferences.setDeviceToken(AppConstant.getDeviceToken(this));
+        if (appPreferences.getDeviceType() == null)
+            appPreferences.setDeviceType(AppConstant.getDeviceType());
+    }
+
+    /**
+     * check the auth token for user session
+     */
+    private void checkUserSession() {
+        AppPreferences appPreferences = new AppPreferences(FrontPageActivity.this);
+        if (appPreferences.getAuthToken() != null) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
         }
     }
 }

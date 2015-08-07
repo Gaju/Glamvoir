@@ -11,18 +11,28 @@ public class Logger {
     public final static String LOG_VERBOSE = "VERBOSE";
     public final static String LOG_DEBUG = "DEBUG";
     public final static String PREFIX = "OLXIn";
-	public final static String LOG_API = "API";
-	public final static String LOG_CACHE = "CACHE";
-	public final static String LOG_CONNECTION = "CONNECTION";
-	public final static String LOG_IMAGES = "IMAGES";
-	public final static String LOG_ERROR = "ERROR";
+    public final static String LOG_API = "API";
+    public final static String LOG_CACHE = "CACHE";
+    public final static String LOG_CONNECTION = "CONNECTION";
+    public final static String LOG_IMAGES = "IMAGES";
+    public final static String LOG_ERROR = "ERROR";
     public final static String LOG_WEBVIEW = "WEBVIEW";
     public final static String LOG_PROFILER = "PROFILER";
 
     private final static String SPACE = " ";
 
     public enum LogType {
-        LOG_INFO, LOG_WARNING, LOG_VERBOSE, LOG_DEBUG, LOG_ERROR, LOG_PROFILER, LOG_WEBVIEW, LOG_IMAGES, LOG_CACHE, LOG_CONNECTION, LOG_API
+        LOG_INFO,
+        LOG_WARNING,
+        LOG_VERBOSE,
+        LOG_DEBUG,
+        LOG_ERROR,
+        LOG_PROFILER,
+        LOG_WEBVIEW,
+        LOG_IMAGES,
+        LOG_CACHE,
+        LOG_CONNECTION,
+        LOG_API
     }
 
     private static boolean logEnable = checkMode();
@@ -44,18 +54,16 @@ public class Logger {
     private static boolean checkMode() {
         //return BuildConfig.LOGS;
         return true;
-	}
+    }
 
     /**
-     *
-     * @param value   : value to be print for the log
+     * @param value : value to be print for the log
      */
     public static void push(String value) {
         push(LogType.LOG_INFO, "N/A", value);
-	}
+    }
 
     /**
-     *
      * @param logType : type of the log
      * @param value   : value to be print for the log
      */
@@ -64,9 +72,8 @@ public class Logger {
     }
 
     /**
-     *
      * @param logType : type of the log
-     * @param type : Tag name
+     * @param type    : Tag name
      * @param value   : value to be print for the log
      */
     public static void push(LogType logType, String type, int value) {
@@ -82,7 +89,7 @@ public class Logger {
      */
     public static void push(LogType logType, String tagName, String value) {
         LogType mLogType = logType;
-		boolean logThis = false;
+        boolean logThis = false;
         if (logEnable) {
             switch (mLogType) {
                 case LOG_IMAGES:
@@ -92,33 +99,33 @@ public class Logger {
                     break;
                 case LOG_API:
                     if (apiLogEnable && logType.toString().equals("LOG_API")) {
-				logThis = true;
-			}
+                        logThis = true;
+                    }
                     break;
                 case LOG_CACHE:
                     if (cacheLogEnable && logType.toString().equals("LOG_CACHE")) {
-				logThis = true;
-			}
+                        logThis = true;
+                    }
                     break;
                 case LOG_CONNECTION:
                     if (connectionLogEnable && logType.toString().equals("LOG_CONNECTION")) {
-				logThis = true;
-			}
+                        logThis = true;
+                    }
                     break;
                 case LOG_WEBVIEW:
                     if (webviewLogEnable && logType.toString().equals("LOG_WEBVIEW")) {
-				logThis = true;
-			}
+                        logThis = true;
+                    }
                     break;
                 case LOG_PROFILER:
                     if (profilerLogEnable && logType.toString().equals("LOG_PROFILER")) {
-                logThis = true;
-            }
+                        logThis = true;
+                    }
                     break;
                 case LOG_INFO:
                     if (logEnable && logType.toString().equals("LOG_INFO")) {
-                logThis = true;
-            }
+                        logThis = true;
+                    }
                     break;
 
                 default:
@@ -129,7 +136,7 @@ public class Logger {
             if (logThis) {
                 Log.i(PREFIX + SPACE + logType.toString() + SPACE + tagName, value);
                 return;
-		}
+            }
 
             if (debugLogEnable && logType.toString().equals("LOG_DEBUG")) {
                 Log.d(PREFIX + SPACE + logType.toString() + SPACE + tagName, value);
@@ -145,8 +152,8 @@ public class Logger {
                 Log.e(PREFIX + SPACE + logType.toString() + SPACE + tagName, value);
                 if (!android.text.TextUtils.isEmpty(value)) {
                     Log.e(PREFIX + SPACE + logType.toString() + SPACE + tagName, value);
-		}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
 }

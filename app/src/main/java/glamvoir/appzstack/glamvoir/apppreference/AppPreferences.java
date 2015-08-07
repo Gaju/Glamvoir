@@ -20,9 +20,11 @@ public class AppPreferences {
     enum SharedPrefrencesKey {
         userID,
         userFirstName,
-        accessToken,
+        authToken,
         emailID,
-        userLastName
+        userLastName,
+        devicToken,
+        deviceType
     }
 
     public AppPreferences(Context context) {
@@ -37,22 +39,22 @@ public class AppPreferences {
         return mAppPreference;
     }
 
-    public void setUserId(long userId) {
-        mEditor.putLong(SharedPrefrencesKey.userID.toString(), userId);
+    public void setUserId(String userId) {
+        mEditor.putString(SharedPrefrencesKey.userID.toString(), userId);
         mEditor.commit();
     }
 
-    public long getUserId() {
-        return mPreferences.getLong(SharedPrefrencesKey.userID.toString(), 0);
+    public String getUserId() {
+        return mPreferences.getString(SharedPrefrencesKey.userID.toString(), null);
     }
 
-    public void setAccessToken(String accessToken) {
-        mEditor.putString(SharedPrefrencesKey.accessToken.toString(), accessToken);
+    public void setAuthToken(String accessToken) {
+        mEditor.putString(SharedPrefrencesKey.authToken.toString(), accessToken);
         mEditor.commit();
     }
 
-    public String getAccessToken() {
-        return mPreferences.getString(SharedPrefrencesKey.accessToken.toString(), null);
+    public String getAuthToken() {
+        return mPreferences.getString(SharedPrefrencesKey.authToken.toString(), null);
     }
 
     public void setFirstName(String fName) {
@@ -72,6 +74,7 @@ public class AppPreferences {
     public String getEmailID() {
         return mPreferences.getString(SharedPrefrencesKey.emailID.toString(), null);
     }
+
     public void setLastName(String lName) {
         mEditor.putString(SharedPrefrencesKey.userLastName.toString(), lName);
         mEditor.commit();
@@ -81,5 +84,22 @@ public class AppPreferences {
         return mPreferences.getString(SharedPrefrencesKey.userLastName.toString(), null);
     }
 
+    public void setDeviceType(String deviceType) {
+        mEditor.putString(SharedPrefrencesKey.deviceType.toString(), deviceType);
+        mEditor.commit();
+    }
+
+    public String getDeviceType() {
+        return mPreferences.getString(SharedPrefrencesKey.deviceType.toString(), null);
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        mEditor.putString(SharedPrefrencesKey.devicToken.toString(), deviceToken);
+        mEditor.commit();
+    }
+
+    public String getDeviceToken() {
+        return mPreferences.getString(SharedPrefrencesKey.devicToken.toString(), null);
+    }
 }
 

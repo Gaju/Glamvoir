@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoginLoader;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -106,11 +107,6 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.singnin:
-                Intent intent = new Intent(SigninActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-
-
                 if (Validation.isValidEmail(edt_Email.getText().toString())) {
                     if (Validation.isValidPassword(edt_Password.getText().toString())) {
                         login();
@@ -136,13 +132,35 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
 
                 @Override
                 public Loader<TaskResponse<LoginResponse>> onCreateLoader(int id, Bundle args) {
-                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), null, AppConstant.getDeviceToken(mRequestBean.getContext()), AppConstant.getDeviceType(), LoginLoader.LOGIN_GLAMVOIR);
+                    AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
+                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), null, appPreferences.getDeviceToken(), appPreferences.getDeviceType(), LoginLoader.LOGIN_GLAMVOIR);
                 }
 
                 @Override
                 public void onLoadFinished(Loader<TaskResponse<LoginResponse>> loader, TaskResponse<LoginResponse> data) {
-
-
+                    if (loader instanceof LoginLoader) {
+                        ((LoginLoader) loader).hideLoaderDialog();
+                        if (data.error != null) {
+                            Utility.showToast(SigninActivity.this, data.error.toString());
+                        } else {
+                            if (data.data != null && data.data.error_code != null) {
+                                int errorCode = Integer.parseInt(data.data.error_code);
+                                switch (errorCode) {
+                                    case 0:
+                                        Utility.showToast(SigninActivity.this, data.data.msg_string);
+                                        Utility.saveUserData(mRequestBean.getContext(), data.data.user);
+                                        HomeActivity.startActivityWithClearTop(SigninActivity.this);
+                                        break;
+                                    case 1:
+                                        Utility.showToast(SigninActivity.this, data.data.msg_string);
+                                        break;
+                                    case 2:
+                                        Utility.showToast(SigninActivity.this, data.data.msg_string);
+                                        break;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 @Override

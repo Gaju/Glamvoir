@@ -6,9 +6,10 @@ package glamvoir.appzstack.glamvoir.config;
 public class AppConfig {
 
     // CREDENTIALS
-    public final static String DOMAIN_IN = "http://glamvoir.com/";
+    //public final static String DOMAIN = "http://glamvoir.com/";
+    public final static String DOMAIN = "http://android.999globalsoft.com/";
 
     public static String getDomain() {
-        return DOMAIN_IN;
+        return DOMAIN;
     }
 }

@@ -1,6 +1,7 @@
 package glamvoir.appzstack.glamvoir.widgets;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -9,12 +10,12 @@ import glamvoir.appzstack.glamvoir.R;
 /**
  * Created by gajendran on 03-08-2015.
  */
-public class Dialog {
+public class ShowDialog {
 
-    public Dialog(){
+    public ShowDialog(){
     }
 
-    private android.app.Dialog mProgressDialog;
+    private Dialog mProgressDialog;
     public boolean isShowingDialog = false;
     /**
      * This method is use to show progress dialog before hitting web service
@@ -25,7 +26,7 @@ public class Dialog {
      * @return void
      */
     public void showProgressDialog(Activity activity, String loadingMessage, boolean isCancelable) {
-        mProgressDialog = new android.app.Dialog(activity);
+        mProgressDialog = new Dialog(activity);
         mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mProgressDialog.setContentView(R.layout.dialog_progress_indicator);
         ((TextView) mProgressDialog.findViewById(R.id.tv_text)).setText(loadingMessage);

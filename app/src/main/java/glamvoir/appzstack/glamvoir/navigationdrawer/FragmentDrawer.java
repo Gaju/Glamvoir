@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 
 
 public class FragmentDrawer extends Fragment {
@@ -33,8 +34,8 @@ public class FragmentDrawer extends Fragment {
 
     int ICONS[] = {R.drawable.ic_delete_black_24dp, R.drawable.ic_star_black_24dp, R.drawable.ic_drafts_black_24dp,
             R.drawable.ic_inbox_black_24dp, R.drawable.ic_report_black_24dp, R.drawable.ic_settings_black_24dp};
-    String NAME = "Jai Mishra";
-    String EMAIL = "jaimishra54@gmail,com";
+    private String mName;
+    private String mEmail;
     int PROFILE = R.drawable.ic_nav_home;
 
     private FragmentDrawerListener drawerListener;
@@ -51,8 +52,11 @@ public class FragmentDrawer extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        AppPreferences appPreferences = new AppPreferences(getActivity());
+        if (appPreferences.getFirstName() != null && appPreferences.getEmailID() != null) {
+            mName = new StringBuffer().append(appPreferences.getFirstName()).append(" ").append(appPreferences.getLastName() == null ? "" : appPreferences.getLastName()).toString();
+            mEmail = appPreferences.getEmailID();
+        }
     }
 
     @Override
@@ -62,14 +66,16 @@ public class FragmentDrawer extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
 
-        adapter = new NavigationDrawerAdapter(getActivity(), TITLES, ICONS, NAME, EMAIL, PROFILE);
+        adapter = new NavigationDrawerAdapter(getActivity(), TITLES, ICONS, mName, mEmail, PROFILE);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                drawerListener.onDrawerItemSelected(view, position);
-                mDrawerLayout.closeDrawer(containerView);
+                if (position != 0) {
+                    drawerListener.onDrawerItemSelected(view, position);
+                    mDrawerLayout.closeDrawer(containerView);
+                }
             }
 
             @Override

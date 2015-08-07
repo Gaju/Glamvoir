@@ -9,14 +9,12 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.squareup.okhttp.internal.Util;
+import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -28,6 +26,7 @@ import glamvoir.appzstack.glamvoir.helpers.Validation;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.UserDetails;
 
 
 /**
@@ -53,7 +52,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.sign_up_page);
 
         mRequestBean = new RequestBean();
-        mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
 
@@ -198,7 +196,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             if (Validation.isValidPassword(edt_Password.getText().toString())) {
                                 //call signup
                                 joinGlamvoir();
-                                Utility.hideKeyboard(this,edt_Password);
+                                Utility.hideKeyboard(this, edt_Password);
                             } else {
                                 tl_Password.setError(getResources().getString(R.string.password_short));
                             }
@@ -215,7 +213,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             default:
                 break;
-
         }
     }
 
@@ -229,22 +226,35 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                 @Override
                 public Loader<TaskResponse<LoginResponse>> onCreateLoader(int id, Bundle args) {
-                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), edt_fName.getText().toString(), AppConstant.getDeviceToken(mRequestBean.getContext()), AppConstant.getDeviceType(), LoginLoader.LOGIN_SIGNUP);
+                    AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
+                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), edt_fName.getText().toString(), appPreferences.getDeviceToken(), appPreferences.getDeviceType(), LoginLoader.LOGIN_SIGNUP);
                 }
 
                 @Override
                 public void onLoadFinished(Loader<TaskResponse<LoginResponse>> loader, TaskResponse<LoginResponse> data) {
-
-                    if(data.error!=null){
-
-                    }else{
-                        if(data.data!=null){
-                            AppPreferences mAppPreferences=new AppPreferences(SignUpActivity.this);
-
-
+                    if (loader instanceof LoginLoader) {
+                        ((LoginLoader) loader).hideLoaderDialog();
+                        if (data.error != null) {
+                            Utility.showToast(SignUpActivity.this, data.error.toString());
+                        } else {
+                            if (data.data != null && data.data.error_code != null) {
+                                int errorCode = Integer.parseInt(data.data.error_code);
+                                switch (errorCode) {
+                                    case 0:
+                                        Utility.showToast(SignUpActivity.this, data.data.msg_string);
+                                        Utility.saveUserData(mRequestBean.getContext(), data.data.user);
+                                        HomeActivity.startActivityWithClearTop(SignUpActivity.this);
+                                        break;
+                                    case 1:
+                                        Utility.showToast(SignUpActivity.this, data.data.msg_string);
+                                        break;
+                                    case 2:
+                                        Utility.showToast(SignUpActivity.this, data.data.msg_string);
+                                        break;
+                                }
+                            }
                         }
                     }
-
                 }
 
                 @Override
