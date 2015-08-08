@@ -56,6 +56,7 @@
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="mysave">MySave</string>
+    <string name="alert">Alert</string>
     <string name="mypost">MyPost</string>
     <string name="setting">Setting</string>
     <string name="user_name">Hello Glamvoir</string>

@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.customview.RoundedImageView;
 import glamvoir.appzstack.glamvoir.model.NavDrawerItem;
 
 
@@ -46,10 +47,8 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         name = Name;
         email = Email;
         profile = Profile;
-         //here we assign those passed values to the values we declared here
+        //here we assign those passed values to the values we declared here
         //in adapter
-
-
     }
 
     public void delete(int position) {
@@ -60,89 +59,66 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     @Override
 
 
-    public  NavigationDrawerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
-
+    public NavigationDrawerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            View v = inflater.from(parent.getContext()).inflate(R.layout.nav_drawer_row,parent,false); //Inflating the layout
-
-            ViewHolder vhItem = new ViewHolder(v,viewType); //Creating ViewHolder and passing the object of type view
-
-            return vhItem; // Returning the created object
-
+            View v = inflater.from(parent.getContext()).inflate(R.layout.nav_drawer_row, parent, false); //Inflating the layout
+            ViewHolder vhItem = new ViewHolder(v, viewType); //Creating ViewHolder and passing the object of type vie
+            return vhItem; // Returning the created objec
             //inflate your layout and pass it to view holder
 
         } else if (viewType == TYPE_HEADER) {
-
-            View v = inflater.from(parent.getContext()).inflate(R.layout.header,parent,false); //Inflating the layout
-
-            ViewHolder vhHeader = new ViewHolder(v,viewType); //Creating ViewHolder and passing the object of type view
-
+            View v = inflater.from(parent.getContext()).inflate(R.layout.header, parent, false); //Inflating the layout
+            ViewHolder vhHeader = new ViewHolder(v, viewType); //Creating ViewHolder and passing the object of type view
             return vhHeader; //returning the object created
-
-
         }
         return null;
     }
 
 
-
     @Override
     public void onBindViewHolder(NavigationDrawerAdapter.ViewHolder holder, int position) {
-        if(holder.Holderid ==1) {                              // as the list view is going to be called after the header view so we decrement the
+        if (holder.Holderid == 1) {                              // as the list view is going to be called after the header view so we decrement the
             // position by 1 and pass it to the holder while setting the text and image
             holder.textView.setText(mNavTitles[position - 1]); // Setting the Text with the array of our Titles
             holder.imageView.setImageResource(mIcons[position - 1]);// Settimg the image with array of our icons
-        }
-        else{
+        } else {
 
             holder.profile.setImageResource(profile);           // Similarly we set the resources for header view
             holder.Name.setText(name);
             holder.email.setText(email);
         }
-
     }
 
     @Override
     public int getItemCount() {
-
-
-        return  mNavTitles.length+1;
+        return mNavTitles.length + 1;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         int Holderid;
-
         TextView textView;
-        ImageView imageView;
-        ImageView profile;
+        ImageView imageView, img_alert;
+        RoundedImageView profile;
         TextView Name;
         TextView email;
 
-        public ViewHolder(View itemView,int ViewType) {                 // Creating ViewHolder Constructor with View and viewType As a parameter
+        public ViewHolder(View itemView, int ViewType) {                 // Creating ViewHolder Constructor with View and viewType As a parameter
             super(itemView);
-
-
             // Here we set the appropriate view in accordance with the the view type as passed when the holder object is created
 
-            if(ViewType == TYPE_ITEM) {
+            if (ViewType == TYPE_ITEM) {
                 textView = (TextView) itemView.findViewById(R.id.title); // Creating TextView object with the id of textView from item_row.xml
                 imageView = (ImageView) itemView.findViewById(R.id.image);// Creating ImageView object with the id of ImageView from item_row.xml
                 Holderid = 1;                                               // setting holder id as 1 as the object being populated are of type item row
-            }
-            else{
-
-
+            } else {
+                img_alert = (ImageView) itemView.findViewById(R.id.alert);
                 Name = (TextView) itemView.findViewById(R.id.name);         // Creating Text View object from header.xml for name
                 email = (TextView) itemView.findViewById(R.id.email);       // Creating Text View object from header.xml for email
-                profile = (ImageView) itemView.findViewById(R.id.circleView);// Creating Image view object from header.xml for profile pic
+                profile = (RoundedImageView) itemView.findViewById(R.id.circleView);// Creating Image view object from header.xml for profile pic
                 Holderid = 0;                                                // Setting holder id = 0 as the object being populated are of type header view
             }
         }
     }
-
 
 
     // Witht the following method we check what type of view is being passed

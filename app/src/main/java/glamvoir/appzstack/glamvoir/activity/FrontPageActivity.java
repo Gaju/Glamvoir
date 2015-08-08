@@ -63,7 +63,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_page);
+        setContentView(R.layout.front_page);
 
         checkUserSession();
 
