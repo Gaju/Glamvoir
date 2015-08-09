@@ -7,11 +7,11 @@
 
     <ImageView
         android:id="@+id/alert"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="@dimen/margin_left_normal"
-        android:layout_marginTop="@dimen/margin_top_normal"
-        android:src="@drawable/ic_nav_home" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_xlarge"
+        android:layout_marginTop="@dimen/margin_top_xlarge"
+        android:src="@drawable/alert" />
 
 
     <LinearLayout
@@ -25,9 +25,9 @@
 
         <glamvoir.appzstack.glamvoir.customview.RoundedImageView
             android:id="@+id/circleView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_nav_home" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/camera" />
 
         <TextView
             android:id="@+id/name"

@@ -1,5 +1,6 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -58,6 +59,13 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
     private Button btnSignIn, btn_SignUp, btn_LoginGmain;
     private CoordinatorLayout coordinatorLayout;
+
+    public static void startActivityWithClearTop(Activity activity) {
+        Intent intent = new Intent(activity, FrontPageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+        activity.finish();
+    }
 
 
     @Override

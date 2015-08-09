@@ -107,6 +107,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.singnin:
+                //HomeActivity.startActivityWithClearTop(SigninActivity.this);
                 if (Validation.isValidEmail(edt_Email.getText().toString())) {
                     if (Validation.isValidPassword(edt_Password.getText().toString())) {
                         login();

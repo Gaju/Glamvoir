@@ -23,8 +23,9 @@ public class AppPreferences {
         authToken,
         emailID,
         userLastName,
-        devicToken,
-        deviceType
+        deviceToken,
+        deviceType,
+        firstTime
     }
 
     public AppPreferences(Context context) {
@@ -37,6 +38,12 @@ public class AppPreferences {
             mAppPreference = new AppPreferences(context);
         }
         return mAppPreference;
+    }
+
+    public void clearAppPreference() {
+        if (mPreferences != null) {
+            mEditor.clear().commit();
+        }
     }
 
     public void setUserId(String userId) {
@@ -94,12 +101,21 @@ public class AppPreferences {
     }
 
     public void setDeviceToken(String deviceToken) {
-        mEditor.putString(SharedPrefrencesKey.devicToken.toString(), deviceToken);
+        mEditor.putString(SharedPrefrencesKey.deviceToken.toString(), deviceToken);
         mEditor.commit();
     }
 
     public String getDeviceToken() {
-        return mPreferences.getString(SharedPrefrencesKey.devicToken.toString(), null);
+        return mPreferences.getString(SharedPrefrencesKey.deviceToken.toString(), null);
+    }
+
+    public void setFirstTime(boolean mFirstTime) {
+        mEditor.putBoolean(SharedPrefrencesKey.firstTime.toString(), mFirstTime);
+        mEditor.commit();
+    }
+
+    public boolean getFirstTime() {
+        return mPreferences.getBoolean(SharedPrefrencesKey.firstTime.toString(), true);
     }
 }
 

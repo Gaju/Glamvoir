@@ -19,10 +19,12 @@ public class SettingAdapter extends BaseAdapter {
 
     private Context mContext;
     private String[] settingsLable;
+    MyItemClickListener clickListener;
 
-    public SettingAdapter(Context context, String[] strings) {
+    public SettingAdapter(Context context, String[] strings, MyItemClickListener clickListener) {
         this.settingsLable = strings;
         this.mContext = context;
+        this.clickListener=clickListener;
     }
 
     @Override
@@ -70,11 +72,8 @@ public class SettingAdapter extends BaseAdapter {
         holder.mMainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_LONG).show();
-                switch (position) {
-
-                }
+                if(clickListener!=null)
+                    clickListener.onClick(position);
             }
         });
         return convertView;
@@ -83,6 +82,10 @@ public class SettingAdapter extends BaseAdapter {
     private class ViewHolder {
         protected TextView mLable;
         protected LinearLayout mMainLayout;
+    }
+
+    public interface MyItemClickListener{
+        public void onClick(int position);
     }
 }
 

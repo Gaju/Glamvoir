@@ -5,25 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.adapter.SettingAdapter;
-import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
- * Created by gajendran on 5/8/15.
+ * Created by acer pc on 09-08-2015.
  */
-public class SettingsActivity extends AppCompatActivity implements SettingAdapter.MyItemClickListener {
-
-    ListView listView;
-    String[] settingsLabels;
+public class MyAccountActivity extends AppCompatActivity {
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, SettingsActivity.class);
+        Intent intent = new Intent(context, MyAccountActivity.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }
@@ -34,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_settings);
+        setContentView(R.layout.layout_myaccount);
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -47,13 +40,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
         initListener();
 
         getToolbar(toolbar);
-
-        settingsLabels = getResources().getStringArray(R.array.settings_labels);
-
-        SettingAdapter adapter = new SettingAdapter(this, settingsLabels, this);
-
-        // Assign adapter to ListView
-        listView.setAdapter(adapter);
     }
 
 
@@ -67,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.setting));
+        getSupportActionBar().setTitle(getResources().getString(R.string.myaccount));
     }
 
     /**
@@ -84,7 +70,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
     private void initViews() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        listView = (ListView) findViewById(R.id.list);
     }
 
     @Override
@@ -94,45 +79,11 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
         Intent newIntent = null;
         try {
             //you need to define the class with package name
-            newIntent = new Intent(SettingsActivity.this, Class.forName(AppConstant.PACKAGE + className));
+            newIntent = new Intent(MyAccountActivity.this, Class.forName(AppConstant.PACKAGE + className));
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return newIntent;
-    }
-
-    @Override
-    public void onClick(int position) {
-        switch (position) {
-            case 0:
-                break;
-            case 1:
-                MyAccountActivity.startActivity(SettingsActivity.this);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                signOut();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void signOut(){
-        AppPreferences appPreferences=new AppPreferences(this);
-        appPreferences.clearAppPreference();
-        FrontPageActivity.startActivityWithClearTop(SettingsActivity.this);
     }
 }

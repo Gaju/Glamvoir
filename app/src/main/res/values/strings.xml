@@ -73,6 +73,11 @@
     <string name="privacy_policy">PRIVACY POLICY</string>
     <string name="signout">SIGNOUT</string>
 
+    <string name="changepwd">Change Password</string>
+    <string name="delaccount">Delete Account</string>
+    <string name="done">Done</string>
+
+
     <!-- settings labels  -->
     <string-array name="settings_labels">
         <item>@string/profile</item>

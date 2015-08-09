@@ -11,6 +11,6 @@
         android:text="@string/user_name"
         android:padding="@dimen/padding_xlarge"
         android:textColor="@color/textColorPrimary"
-        android:textSize="@dimen/textsize_xlarge"
+        android:textSize="@dimen/textsize_large"
         />
 </LinearLayout>

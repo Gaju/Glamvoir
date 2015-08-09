@@ -36,7 +36,7 @@ public class FragmentDrawer extends Fragment {
             R.drawable.ic_inbox_black_24dp, R.drawable.ic_report_black_24dp, R.drawable.ic_settings_black_24dp};
     private String mName;
     private String mEmail;
-    int PROFILE = R.drawable.ic_nav_home;
+    int PROFILE = R.drawable.camera;
 
     private FragmentDrawerListener drawerListener;
 

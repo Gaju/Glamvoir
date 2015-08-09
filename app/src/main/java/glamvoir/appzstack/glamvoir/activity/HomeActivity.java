@@ -154,10 +154,10 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
 
             case 4:
-                MyPostActivity.startActivity(HomeActivity.this);
+                MysaveActivity.startActivity(HomeActivity.this);
                 break;
             case 5:
-                MysaveActivity.startActivity(HomeActivity.this);
+                MyPostActivity.startActivity(HomeActivity.this);
                 break;
             case 6:
                 SettingsActivity.startActivity(HomeActivity.this);
