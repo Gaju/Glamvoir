@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter;
@@ -30,10 +31,10 @@ public class FragmentDrawer extends Fragment {
     private NavigationDrawerAdapter adapter;
     private View containerView;
 
-    String TITLES[] = {"FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTING"};
+    String TITLES[] = {"FEED","FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTING"};
 
-    int ICONS[] = {R.drawable.ic_delete_black_24dp, R.drawable.ic_star_black_24dp, R.drawable.ic_drafts_black_24dp,
-            R.drawable.ic_inbox_black_24dp, R.drawable.ic_report_black_24dp, R.drawable.ic_settings_black_24dp};
+    int ICONS[] = {R.drawable.feed_active,R.drawable.fleamarket, R.drawable.followers, R.drawable.following,
+            R.drawable.mysave, R.drawable.mypost, R.drawable.setting};
     private String mName;
     private String mEmail;
     int PROFILE = R.drawable.camera;
@@ -67,6 +68,12 @@ public class FragmentDrawer extends Fragment {
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
 
         adapter = new NavigationDrawerAdapter(getActivity(), TITLES, ICONS, mName, mEmail, PROFILE);
+        adapter.setOnItemClickListener(new NavigationDrawerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(), "gaja", Toast.LENGTH_LONG).show();
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {

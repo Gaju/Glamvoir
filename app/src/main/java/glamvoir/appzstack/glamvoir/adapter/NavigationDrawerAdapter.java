@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     private int profile;        //int Resource for header view profile picture
     private String email;       //String Resource for header view email
 
+    OnItemClickListener mItemClickListener;
 
     // Creating a ViewHolder which extends the RecyclerView View Holder
     // ViewHolder are used to to store the inflated views in order to recycle them
@@ -49,6 +51,10 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         profile = Profile;
         //here we assign those passed values to the values we declared here
         //in adapter
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mItemClickListener){
+        this.mItemClickListener=mItemClickListener;
     }
 
     public void delete(int position) {
@@ -94,7 +100,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         return mNavTitles.length + 1;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         int Holderid;
         TextView textView;
         ImageView imageView, img_alert;
@@ -118,6 +124,14 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
                 Holderid = 0;                                                // Setting holder id = 0 as the object being populated are of type header view
             }
         }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(context,"gaja",Toast.LENGTH_LONG).show();
+                mItemClickListener.onItemClick(view, getPosition()); //OnItemClickListener mItemClickListener;
+
+
+        }
     }
 
 
@@ -133,4 +147,9 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     private boolean isPositionHeader(int position) {
         return position == 0;
     }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view , int position);
+    }
+
 }

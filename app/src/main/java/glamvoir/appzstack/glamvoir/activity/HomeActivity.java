@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         drawerFragment.setDrawerListener(this);
 
         // display the first navigation drawer view on app launch
-        displayView(1);
+        displayView(2);
     }
 
 
@@ -131,6 +131,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         String title = getString(R.string.app_name);
         switch (position) {
             case 1:
+                break;
+            case 2:
                 fragment = new HomeFragment();
 
                 if (fragment != null) {
@@ -145,21 +147,21 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_home);
                 break;
 
-            case 2:
+            case 3:
                 FollowersActivity.startActivity(HomeActivity.this);
                 break;
 
-            case 3:
+            case 4:
                 FollowingActivity.startActivity(HomeActivity.this);
                 break;
 
-            case 4:
+            case 5:
                 MysaveActivity.startActivity(HomeActivity.this);
                 break;
-            case 5:
+            case 6:
                 MyPostActivity.startActivity(HomeActivity.this);
                 break;
-            case 6:
+            case 7:
                 SettingsActivity.startActivity(HomeActivity.this);
 
                 break;
