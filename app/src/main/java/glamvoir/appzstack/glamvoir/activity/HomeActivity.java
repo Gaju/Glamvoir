@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
         drawerFragment.setDrawerListener(this);*/
-
+        // added new drawer
         drawerFragment = (FragmentDrawer_Lv)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer_lv);
         drawerFragment.setUp(R.id.fragment_navigation_drawer_lv, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
