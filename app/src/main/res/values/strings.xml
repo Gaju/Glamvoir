@@ -91,5 +91,9 @@
         <item>@string/signout</item>
     </string-array>
 
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

@@ -12,19 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.fragment.HomeFragment;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
-import glamvoir.appzstack.glamvoir.navigationdrawer.FragmentDrawer;
+import glamvoir.appzstack.glamvoir.navigationdrawer.FragmentDrawer_Lv;
 
 
-public class HomeActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
+public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv.FragmentDrawerListener_Lv {
 
     private static String TAG = HomeActivity.class.getSimpleName();
-    private FragmentDrawer drawerFragment;
+    private FragmentDrawer_Lv drawerFragment;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
 
@@ -54,13 +53,17 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         getToolbar(toolbar);
 
-        drawerFragment = (FragmentDrawer)
+       /* drawerFragment = (FragmentDrawer_Lv)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
-        drawerFragment.setDrawerListener(this);
+        drawerFragment.setDrawerListener(this);*/
 
+        drawerFragment = (FragmentDrawer_Lv)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer_lv);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer_lv, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+        drawerFragment.setDrawerListener_lv(this);
         // display the first navigation drawer view on app launch
-        displayView(2);
+        displayView(1);
     }
 
 
@@ -118,9 +121,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         return super.onOptionsItemSelected(item);
     }
-
     @Override
-    public void onDrawerItemSelected(View view, int position) {
+    public void onDrawerItemSelected_Lv(int position) {
         displayView(position);
     }
 
@@ -128,9 +130,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         Fragment fragment = null;
         String title = getString(R.string.app_name);
         switch (position) {
-            case 1:
+            case 0:
                 break;
-            case 2:
+            case 1:
                 fragment = new HomeFragment();
 
                 if (fragment != null) {
@@ -145,21 +147,21 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_home);
                 break;
 
-            case 3:
+            case 2:
                 FollowersActivity.startActivity(HomeActivity.this);
                 break;
 
-            case 4:
+            case 3:
                 FollowingActivity.startActivity(HomeActivity.this);
                 break;
 
-            case 5:
+            case 4:
                 MysaveActivity.startActivity(HomeActivity.this);
                 break;
-            case 6:
+            case 5:
                 MyPostActivity.startActivity(HomeActivity.this);
                 break;
-            case 7:
+            case 6:
                 SettingsActivity.startActivity(HomeActivity.this);
 
                 break;
@@ -167,4 +169,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
         }
     }
+
+
 }

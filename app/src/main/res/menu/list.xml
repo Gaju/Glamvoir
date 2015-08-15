@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/share" android:title="@string/gallery" android:icon="@android:drawable/ic_menu_gallery"/>
+    <item android:id="@+id/upload" android:title="@string/camera" android:icon="@drawable/camera"/>
+    <item android:id="@+id/call" android:title="@string/delete" android:icon="@android:drawable/ic_menu_delete"/>
+    <group android:id="@android:id/empty">
+        <item android:id="@+id/help" android:title="@string/cancel" android:icon="@android:drawable/ic_menu_close_clear_cancel"/>
+    </group>
+</menu>
