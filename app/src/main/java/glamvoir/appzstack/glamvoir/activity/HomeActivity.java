@@ -2,7 +2,6 @@ package glamvoir.appzstack.glamvoir.activity;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.fragment.HomeFragment;
-import glamvoir.appzstack.glamvoir.fragment.Setting;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.navigationdrawer.FragmentDrawer;
 
