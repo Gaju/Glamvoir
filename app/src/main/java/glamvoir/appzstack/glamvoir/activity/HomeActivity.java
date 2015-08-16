@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present.jai
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
