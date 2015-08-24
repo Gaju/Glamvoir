@@ -480,7 +480,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
                     @Override
                     public void onError(FacebookException error) {
-                        //  Log.dddd(TAG_ERROR,error.toString());
+                        //  Log.ddddd(TAG_ERROR,error.toString());
                     }
                 });
     }
