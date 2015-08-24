@@ -295,7 +295,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
-        // Get user's information
+        // Get user's information gv
         getProfileInformation();
 
     }
