@@ -5,6 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -12,19 +15,34 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -37,6 +55,8 @@ import glamvoir.appzstack.glamvoir.network.InternetStatus;
  */
 public class FrontPageActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    // Creating Facebook CallbackManager Value
+    public static CallbackManager callbackmanager;
     private static final int RC_SIGN_IN = 0;
     // Logcat tag
     private static final String TAG = "MainActivity";
@@ -57,7 +77,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
     private ConnectionResult mConnectionResult;
 
-    private Button btnSignIn, btn_SignUp, btn_LoginGmain;
+    private Button btnSignIn, btn_SignUp, btn_LoginGmain,bt_facebook;
     private CoordinatorLayout coordinatorLayout;
 
     public static void startActivityWithClearTop(Activity activity) {
@@ -71,7 +91,32 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*PackageInfo info;
+        try {
+            info = getPackageManager().getPackageInfo("glamvoir.appzstack.glamvoir", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                //String something = new String(Base64.encodeBytes(md.digest()));
+                Log.e("hash key", something);
+                System.out.print("#######"+something);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("name not found", e1.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("no such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("exception", e.toString());
+        }*/
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.front_page);
+        callbackmanager = CallbackManager.Factory.create();
+        // Add code to print out the key hash
+
 
         checkUserSession();
 
@@ -120,6 +165,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         btnSignIn = (Button) findViewById(R.id.frontpage_signin);
         btn_SignUp = (Button) findViewById(R.id.frontpage_signup);
         btn_LoginGmain = (Button) findViewById(R.id.login_gmail);
+        bt_facebook= (Button) findViewById(R.id.bt_facebook);
     }
 
     /**
@@ -130,6 +176,9 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         btnSignIn.setOnClickListener(this);
         btn_SignUp.setOnClickListener(this);
         btn_LoginGmain.setOnClickListener(this);
+        bt_facebook.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -156,6 +205,11 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
                 // Signin button clicked
                 //signInWithGplus();
                 break;
+            case R.id.bt_facebook:
+                // Signin button clicked
+                onFblogin();
+                break;
+
             default:
                 break;
         }
@@ -220,6 +274,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int responseCode,
                                     Intent intent) {
+        callbackmanager.onActivityResult(requestCode, responseCode, intent);
         if (requestCode == RC_SIGN_IN) {
             if (responseCode != RESULT_OK) {
                 mSignInClicked = false;
@@ -231,6 +286,8 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
                 mGoogleApiClient.connect();
             }
         }
+
+
     }
 
     @Override
@@ -359,4 +416,73 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
             finish();
         }
     }
+
+    // Private method to handle Facebook login and callback
+    private void onFblogin()
+    {
+
+
+        // Set permissions
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+
+        LoginManager.getInstance().registerCallback(callbackmanager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+
+                        System.out.println("Success");
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,last_name,link,email,picture");
+
+                        GraphRequest request     =     GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+
+                                    @Override
+
+                                    public void onCompleted(
+                                            JSONObject json,
+                                            GraphResponse response) {
+                                        // TODO Auto-generated method stub
+
+                                        if (response.getError() != null) {
+                                            // handle error
+                                            System.out.println("ERROR");
+                                        } else {
+                                            System.out.println("Success");
+                                            try {
+
+                                                String jsonresult = String.valueOf(json);
+                                                System.out.println("JSON Result" + jsonresult);
+
+                                                String str_email = json.getString("email");
+                                                String str_id = json.getString("id");
+                                                String str_firstname = json.getString("first_name");
+                                                String str_lastname = json.getString("last_name");
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+
+                                    }
+
+                                });
+                        request.setParameters(parameters);
+                        request.executeAsync();
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // Log.d(TAG_CANCEL,"On cancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        //  Log.d(TAG_ERROR,error.toString());
+                    }
+                });
+    }
+
 }

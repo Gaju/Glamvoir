@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -45,7 +46,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private Bitmap mbitmap;
     private ImageView proFile_Image;
     File file  = new File(Environment.getExternalStorageDirectory()+"/"+"doc.jpeg");
-
+    int save = -1;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private NavigationDrawerAdapter_Lv adapter;
@@ -101,14 +102,32 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         tv_email.setText(mEmail);
         listView = (ListView) layout.findViewById(R.id.drawerList);
         adapter= new NavigationDrawerAdapter_Lv(getActivity(), TITLES, ICONS);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+                parent.getChildAt(position).setBackgroundColor(
+                        Color.parseColor("#A9BCF5"));
                 drawerListener_lv.onDrawerItemSelected_Lv(position);
                 mDrawerLayout.closeDrawer(containerView);
+
+                if (save != -1 && save != position) {
+                    parent.getChildAt(save).setBackgroundColor(
+                            Color.parseColor("#d6e6ff"));
+                    drawerListener_lv.onDrawerItemSelected_Lv(position);
+                    mDrawerLayout.closeDrawer(containerView);
+                    drawerListener_lv.onDrawerItemSelected_Lv(position);
+                    mDrawerLayout.closeDrawer(containerView);
+                }
+
+                save = position;
+
+
 
             }
         });
