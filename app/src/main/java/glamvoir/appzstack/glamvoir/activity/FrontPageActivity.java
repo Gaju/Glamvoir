@@ -475,7 +475,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
                     @Override
                     public void onCancel() {
-                        // (TAG_CANCEL,"On cancel");ddd tt kkn
+                        // (TAG_CANCEL,"On cancel");ddd tt kk
                     }
 
                     @Override
