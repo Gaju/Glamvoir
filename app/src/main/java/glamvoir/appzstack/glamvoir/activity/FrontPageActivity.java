@@ -453,7 +453,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
                                                 String jsonresult = String.valueOf(json);
                                                 System.out.println("JSON Result" + jsonresult);
-
+ //face
                                                 String str_email = json.getString("email");
                                                 String str_id = json.getString("id");
                                                 String str_firstname = json.getString("first_name");
