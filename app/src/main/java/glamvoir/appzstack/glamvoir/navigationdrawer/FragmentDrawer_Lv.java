@@ -23,6 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,6 +35,7 @@ import java.io.InputStream;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 
 /**
  * Created by jaim on 8/10/2015.
@@ -44,7 +48,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private static final int CAPTURE_IMAGE_GALLARY = 2;
     private Bitmap mbitmap;
     private ImageView proFile_Image;
-    File file  = new File(Environment.getExternalStorageDirectory()+"/"+"doc.jpeg");
+    File file = new File(Environment.getExternalStorageDirectory() + "/" + "doc.jpeg");
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -57,7 +61,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     int ICONS[] = {R.drawable.ic_delete_black_24dp, R.drawable.ic_star_black_24dp, R.drawable.ic_drafts_black_24dp,
             R.drawable.ic_inbox_black_24dp, R.drawable.ic_report_black_24dp, R.drawable.ic_settings_black_24dp};*/
-    String TITLES[] = {"FEED","FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTING"};
+    String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTING"};
 
     int ICONS[] = {R.drawable.feed_active, R.drawable.fleamarket, R.drawable.followers, R.drawable.following,
             R.drawable.mysave, R.drawable.mypost, R.drawable.setting};
@@ -65,8 +69,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private String mEmail;
     int PROFILE = R.drawable.camera;
     private FragmentDrawerListener_Lv drawerListener_lv;
-
-
 
 
     public FragmentDrawer_Lv() {
@@ -78,7 +80,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppPreferences appPreferences = new AppPreferences(getActivity());
         if (appPreferences.getFirstName() != null && appPreferences.getEmailID() != null) {
@@ -93,14 +95,14 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer_lv, container, false);
-        TextView tv_name= (TextView) layout.findViewById(R.id.name);
-        TextView tv_email= (TextView) layout.findViewById(R.id.email);
-       proFile_Image= (ImageView) layout.findViewById(R.id.circleView);
+        TextView tv_name = (TextView) layout.findViewById(R.id.name);
+        TextView tv_email = (TextView) layout.findViewById(R.id.email);
+        proFile_Image = (ImageView) layout.findViewById(R.id.circleView);
         proFile_Image.setOnClickListener(this);
         tv_name.setText(mName);
         tv_email.setText(mEmail);
         listView = (ListView) layout.findViewById(R.id.drawerList);
-        adapter= new NavigationDrawerAdapter_Lv(getActivity(), TITLES, ICONS);
+        adapter = new NavigationDrawerAdapter_Lv(getActivity(), TITLES, ICONS);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -120,45 +122,43 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, Toolbar toolbar) {
 
 
-            containerView = getActivity().findViewById(fragmentId);
-            mDrawerLayout = drawerLayout;
-            mtoolbar=toolbar;
-            mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                    getActivity().invalidateOptionsMenu();
-                }
+        containerView = getActivity().findViewById(fragmentId);
+        mDrawerLayout = drawerLayout;
+        mtoolbar = toolbar;
+        mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActivity().invalidateOptionsMenu();
+            }
 
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                    super.onDrawerClosed(drawerView);
-                    getActivity().invalidateOptionsMenu();
-                }
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                getActivity().invalidateOptionsMenu();
+            }
 
-                @Override
-                public void onDrawerSlide(View drawerView, float slideOffset) {
-                    super.onDrawerSlide(drawerView, slideOffset);
-                    mtoolbar.setAlpha(1 - slideOffset / 2);
-                }
-            };
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
-            mDrawerLayout.post(new Runnable() {
-                @Override
-                public void run() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                mtoolbar.setAlpha(1 - slideOffset / 2);
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
 
-                    mDrawerToggle.syncState();
-                }
-            });
+                mDrawerToggle.syncState();
+            }
+        });
 
 
     }
 
 
-
-
     public interface FragmentDrawerListener_Lv {
-    void onDrawerItemSelected_Lv(int position);
+        void onDrawerItemSelected_Lv(int position);
 
 
     }
@@ -170,33 +170,30 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case R.id.share:
-                        Toast.makeText(getActivity(),"Gallery",Toast.LENGTH_LONG).show();
-                        try
-                        {
-                            Intent   intent = new Intent( Intent.ACTION_GET_CONTENT );
+                        Toast.makeText(getActivity(), "Gallery", Toast.LENGTH_LONG).show();
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                            intent.setType( "image/*" );
-                            startActivityForResult( intent, CAPTURE_IMAGE_GALLARY);
-                        }
-                        catch ( ActivityNotFoundException e )
-                        {
+                            intent.setType("image/*");
+                            startActivityForResult(intent, CAPTURE_IMAGE_GALLARY);
+                        } catch (ActivityNotFoundException e) {
                             e.printStackTrace();
                         }
                         break;
                     case R.id.upload:
-                        Toast.makeText(getActivity(),"Camera",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Camera", Toast.LENGTH_LONG).show();
                         // capture image from camera.
-                        Intent  intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
                         startActivityForResult(intent, CAPTURE_IMAGE_CAMERA);
 
                         break;
                     case R.id.call:
-                        Toast.makeText(getActivity(),"Delete",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Delete", Toast.LENGTH_LONG).show();
                         mbitmap.recycle();
                         break;
                     case R.id.help:
-                        Toast.makeText(getActivity(),"Cancel",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         break;
                 }
@@ -214,29 +211,41 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         options.inSampleSize = 2;
 
 
-            if(requestCode == CAPTURE_IMAGE_CAMERA){
-                mbitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-                proFile_Image.setImageBitmap(mbitmap);
-            }else if(requestCode== CAPTURE_IMAGE_GALLARY){
+        if (requestCode == CAPTURE_IMAGE_CAMERA) {
+            mbitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+            // proFile_Image.setImageBitmap(mbitmap);
+            displayImage(proFile_Image, file.getAbsolutePath());
+        } else if (requestCode == CAPTURE_IMAGE_GALLARY) {
 
-                try {
-                    // We need to recyle unused bitmaps
-                    if (mbitmap != null) {
-                        mbitmap.recycle();
-                    }
-                    InputStream stream = getActivity().getContentResolver().openInputStream(
-                            data.getData());
-                    mbitmap = BitmapFactory.decodeStream(stream);
-                    stream.close();
-                    proFile_Image.setImageBitmap(mbitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            try {
+                // We need to recyle unused bitmaps
+                if (mbitmap != null) {
+                    mbitmap.recycle();
                 }
+                InputStream stream = getActivity().getContentResolver().openInputStream(
+                        data.getData());
+                mbitmap = BitmapFactory.decodeStream(stream);
+                stream.close();
+                proFile_Image.setImageBitmap(mbitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
+    }
 
+    private void displayImage(ImageView imageView, String path) {
 
+        ImageLoader imageLoader = ImageLoader.getInstance();
+//        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+//                .cacheOnDisc(true).resetViewBeforeLoading(true)
+//                .showImageForEmptyUri(fallback)
+//                .showImageOnFail(fallback)
+//                .showImageOnLoading(fallback).build();
+
+        DisplayImageOptions options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
+        imageLoader.displayImage(path, imageView, options);
 
 
     }

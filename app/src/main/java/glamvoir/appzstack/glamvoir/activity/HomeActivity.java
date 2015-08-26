@@ -121,6 +121,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onDrawerItemSelected_Lv(int position) {
         displayView(position);

@@ -1,6 +1,7 @@
 package glamvoir.appzstack.glamvoir.helpers;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,5 +37,12 @@ public class Utility {
         mAppPreferences.setFirstName(userDetails.user_fname);
         mAppPreferences.setLastName(userDetails.user_lname);
         mAppPreferences.setUserId(userDetails.user_id);
+    }
+
+    public static boolean shouldEnableCacheOnMemory(){
+        if(Build.MODEL.equalsIgnoreCase("GT-N7100")||(Build.MANUFACTURER.equalsIgnoreCase("SAMSUNG")&&android.os.Build.VERSION.RELEASE.equalsIgnoreCase("4.4.2"))) {
+            return false;
+        }
+        return true;
     }
 }
