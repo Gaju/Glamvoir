@@ -28,7 +28,6 @@ public class AlertActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_alert);
-
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);

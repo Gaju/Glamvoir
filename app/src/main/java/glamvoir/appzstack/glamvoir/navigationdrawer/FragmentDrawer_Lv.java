@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -129,9 +130,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 }
 
                 save = position;
-
-
-
             }
         });
 
@@ -256,16 +254,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                InputStream stream = getActivity().getContentResolver().openInputStream(
-                        data.getData());
-                mbitmap = BitmapFactory.decodeStream(stream);
-                stream.close();
-                proFile_Image.setImageBitmap(mbitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
