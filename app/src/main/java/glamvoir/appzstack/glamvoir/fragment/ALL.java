@@ -36,7 +36,7 @@ public class ALL extends Fragment {
 
 
     private class ImagePagerAdapter extends PagerAdapter {
-        private final int[] mImages = new int[] {
+        private final int[] mImages = new int[] { //
                 R.drawable.chiang_mai,
                 R.drawable.himeji,
                 R.drawable.petronas_twin_tower,

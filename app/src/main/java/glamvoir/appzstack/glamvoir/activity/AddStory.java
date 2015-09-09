@@ -79,7 +79,7 @@ public class AddStory extends AppCompatActivity {
         String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
         Intent newIntent = null;
         try {
-            //you need to define the class with package name
+            //you need to define the class with package name //
             newIntent = new Intent(AddStory.this, Class.forName(AppConstant.PACKAGE + className));
 
         } catch (ClassNotFoundException e) {

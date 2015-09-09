@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
     }
 
     private RequestBean mRequestBean;
-    private Toolbar toolbar;
+    private Toolbar toolbar; //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
