@@ -52,6 +52,7 @@ public class ALL extends Fragment {
 
         @Override
         public int getCount() {
+
             return this.mImages.length;
         }
 
@@ -62,7 +63,7 @@ public class ALL extends Fragment {
             final int padding = context.getResources().getDimensionPixelSize(
                     R.dimen.padding_medium);
             imageView.setPadding(padding, padding, padding, padding);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setImageResource(this.mImages[position]);
             ((ViewPager) container).addView(imageView, 0);
             return imageView;

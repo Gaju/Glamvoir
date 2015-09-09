@@ -161,7 +161,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
             case 5:
                 MyPostActivity.startActivity(HomeActivity.this);
                 break;
+
             case 6:
+                AddStory.startActivity(HomeActivity.this);
+                break;
+            case 7:
                 SettingsActivity.startActivity(HomeActivity.this);
 
                 break;

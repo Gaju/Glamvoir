@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
 
@@ -60,12 +59,12 @@ public class SettingAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (position % 2 == 0) {
+        /*if (position % 2 == 0) {
             holder.mMainLayout.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
 
         } else {
             holder.mMainLayout.setBackgroundColor(mContext.getResources().getColor(R.color.tabBarBackground));
-        }
+        }*/
 
         holder.mLable.setText(settingsLable[position]);
 

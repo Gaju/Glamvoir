@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.activity.AlertActivity;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 
@@ -45,6 +46,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private static final int CAPTURE_IMAGE_GALLARY = 2;
     private Bitmap mbitmap;
     private ImageView proFile_Image;
+    private  ImageView alert;
     File file  = new File(Environment.getExternalStorageDirectory()+"/"+"doc.jpeg");
     int save = -1;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -58,10 +60,10 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     int ICONS[] = {R.drawable.ic_delete_black_24dp, R.drawable.ic_star_black_24dp, R.drawable.ic_drafts_black_24dp,
             R.drawable.ic_inbox_black_24dp, R.drawable.ic_report_black_24dp, R.drawable.ic_settings_black_24dp};*/
-    String TITLES[] = {"FEED","FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTING"};
+    String TITLES[] = {"FEED","FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "ADD STORY","SETTING"};
 
     int ICONS[] = {R.drawable.feed_active, R.drawable.fleamarket, R.drawable.followers, R.drawable.following,
-            R.drawable.mysave, R.drawable.mypost, R.drawable.setting};
+            R.drawable.mysave, R.drawable.mypost,R.drawable.alert,R.drawable.setting};
     private String mName;
     private String mEmail;
     int PROFILE = R.drawable.camera;
@@ -96,8 +98,10 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer_lv, container, false);
         TextView tv_name= (TextView) layout.findViewById(R.id.name);
         TextView tv_email= (TextView) layout.findViewById(R.id.email);
-       proFile_Image= (ImageView) layout.findViewById(R.id.circleView);
+        proFile_Image= (ImageView) layout.findViewById(R.id.circleView);
         proFile_Image.setOnClickListener(this);
+        alert= (ImageView) layout.findViewById(R.id.alert);
+        alert.setOnClickListener(this);
         tv_name.setText(mName);
         tv_email.setText(mEmail);
         listView = (ListView) layout.findViewById(R.id.drawerList);
@@ -184,7 +188,9 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+
         new BottomSheet.Builder(getActivity()).title("Upload Profile Pic").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
@@ -221,6 +227,17 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 }
             }
         }).show();
+
+        switch (v.getId()){
+            case  R.id.alert:
+              AlertActivity.startActivity(getActivity());
+              break;
+            default:
+                break;
+
+        }
+
+
     }
 
 
