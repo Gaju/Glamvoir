@@ -57,7 +57,8 @@
         <activity android:name=".activity.SettingsActivity"></activity>
 
         <activity android:name=".activity.MyAccountActivity"></activity>
-
+        <activity android:name=".activity.AlertActivity"></activity>
+        <activity android:name=".activity.AddStory"></activity>
 
         <!-- Network change detector -->
 

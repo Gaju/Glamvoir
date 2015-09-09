@@ -1,27 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+   android:weightSum="7">
+
+    <include layout="@layout/appbar" />
 
     <TextView
-        android:id="@+id/label"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="45dp"
-        android:text="MY POST"
-        android:textStyle="bold" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textColor="#707070"
+        android:text="Share With"
+        android:id="@+id/textView8"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".5" />
 
-    <TextView
-        android:layout_below="@id/label"
-        android:layout_centerInParent="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12dp"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight=".5"
+        android:weightSum="3"
+        android:layout_height="40dp"
+        android:background="@drawable/rounder_corner"
+        android:layout_margin="8dp"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_weight="1"
+            android:text="BOTH"
+            android:id="@+id/button7" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="WOMAN"
+            android:layout_weight="1"
+            android:id="@+id/button8" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="MAN"
+            android:layout_weight="1"
+            android:id="@+id/button9" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight=".5"
+        android:weightSum="2"
+        android:background="@drawable/rounder_corner"
+        android:layout_margin="8dp"
         android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
-        android:text="Edit my_post.xml to change the appearance" />
+        android:layout_height="40dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="NEW DELHI"
+            android:layout_weight="1"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@android:color/transparent"
+            android:id="@+id/button11" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:text="ALL CITY"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_weight="1"
+            android:id="@+id/button10" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_weight="5"
+        android:weightSum="3"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <glamvoir.appzstack.glamvoir.customview.RoundedImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView3"
+                android:layout_gravity="center"
+                android:background="@drawable/camera"
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Whats's on your mind"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/textView9"
+                android:layout_weight="1.5" />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight=".5"
+        android:weightSum="5"
+        android:background="@android:color/transparent"
+        android:layout_height="50dp"
+       >
+
+
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/up_camera"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:id="@+id/button2" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/imgesmult"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:id="@+id/button3" />
+
+        <ImageButton
+
+            android:layout_width="50dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_height="match_parent"
+            android:src="@drawable/u_location"
+            android:background="@android:color/transparent"
+            android:id="@+id/button6"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/upl_phone"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:id="@+id/button4" />
+
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/calendar_up"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:id="@+id/button5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Add Another Story"
+            android:textColor="@android:color/white"
+            android:background="@color/com_facebook_blue"
+            android:id="@+id/button" />
+    </LinearLayout>
 
 </LinearLayout>

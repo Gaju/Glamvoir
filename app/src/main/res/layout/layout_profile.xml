@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/appbar" />
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:src="@drawable/pic"
+            android:layout_weight="3"
+            android:scaleType="fitXY"
+            android:id="@+id/imageView4" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:text="PRAMVIR RAGHAV"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/tv_user_name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:weightSum="3">
+
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/info"
+            android:id="@+id/button12" />
+
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/location"
+            android:id="@+id/button14"
+            android:layout_gravity="right" />
+
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/phone"
+            android:id="@+id/button13"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounder_corner"
+        android:layout_marginTop="20dp"
+        android:layout_margin="4dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Following"
+            android:layout_weight="1"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@android:color/transparent"
+            android:id="@+id/bt_pro_following" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:text="Followers"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_weight="1"
+            android:id="@+id/bt_pro_followers" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounder_corner"
+        android:layout_marginTop="20dp"
+        android:layout_margin="4dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Activity"
+            android:layout_weight="1"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@android:color/transparent"
+            android:id="@+id/bt_pro_activity" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:text="Likes"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_weight="1"
+            android:id="@+id/bt_pro_like" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

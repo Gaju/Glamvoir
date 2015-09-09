@@ -63,16 +63,15 @@
     <string name="member_period">Member since jan 2000</string>
 
     <!-- settings item labels  -->
-    <string name="profile">PROFILE</string>
+
     <string name="myaccount">MY ACCOUNT</string>
-    <string name="fashion_lifestyle">FASHION AND LIFESTYLE</string>
-    <string name="interest">INTEREST</string>
-    <string name="about">ABOUT</string>
+    <string name="my_city">MY CITY</string>
+    <string name="we_are_hiring">WE ARE HIRING</string>
     <string name="contact_us">CONTACT US</string>
     <string name="terms_condition">TERMS OF AGREEMENT</string>
     <string name="privacy_policy">PRIVACY POLICY</string>
+    <string name="f_a_q">FAQ</string>
     <string name="signout">SIGNOUT</string>
-
     <string name="changepwd">Change Password</string>
     <string name="delaccount">Delete Account</string>
     <string name="done">Done</string>
@@ -80,15 +79,16 @@
 
     <!-- settings labels  -->
     <string-array name="settings_labels">
-        <item>@string/profile</item>
+
         <item>@string/myaccount</item>
-        <item>@string/fashion_lifestyle</item>
-        <item>@string/interest</item>
-        <item>@string/about</item>
+        <item>@string/my_city</item>
+        <item>@string/we_are_hiring</item>
         <item>@string/contact_us</item>
         <item>@string/terms_condition</item>
         <item>@string/privacy_policy</item>
+        <item>@string/f_a_q</item>
         <item>@string/signout</item>
+
     </string-array>
 
     <string name="gallery">Gallery</string>
@@ -96,6 +96,9 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="app_id">1645342315721002</string>
+
+    <string name="bodyText">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería d</string>
+
 
 
 </resources>

@@ -5,9 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -15,7 +12,6 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,8 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import glamvoir.appzstack.glamvoir.R;
@@ -453,7 +447,6 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
                                                 String jsonresult = String.valueOf(json);
                                                 System.out.println("JSON Result" + jsonresult);
- //facecheck kh
                                                 String str_email = json.getString("email");
                                                 String str_id = json.getString("id");
                                                 String str_firstname = json.getString("first_name");
@@ -475,7 +468,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
                     @Override
                     public void onCancel() {
-                        // (TAG_CANCEL,"On cancel");ddd tt kk k
+                        // (TAG_CANCEL,"On cancel");
                     }
 
                     @Override
