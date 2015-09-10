@@ -49,9 +49,10 @@ public class AdAdapterWithGallery extends BaseLoadableListAdapter<FollowResponse
     public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
         View v = null;
 
-        v = mInflater.inflate(R.layout.listitem_follow, parent, false);
+        v = mInflater.inflate(R.layout.following_drawer_shell, parent, false);
 
         FollowViewHolder holder = new FollowViewHolder(v, new MyViewHolderClick() {
+
             @Override
             public void _OnClick(View view, int position) {
 

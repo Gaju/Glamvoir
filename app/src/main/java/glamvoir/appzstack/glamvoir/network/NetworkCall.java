@@ -37,7 +37,7 @@ import java.net.URL;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.Utility.AppLogger;
+
 
 
 /**
@@ -64,7 +64,7 @@ public class NetworkCall {
      * This method is used to get response from webservice using get method
      */
     public String getResponseFromServer(String url) {
-        AppLogger.e("Requested URL "+url);
+        //AppLogger.e("Requested URL "+url);
         String response_string = null;
         url = url.trim();
         url = url.replace(" ", "%20");
@@ -78,7 +78,7 @@ public class NetworkCall {
             if (httpResponse != null) {
                 InputStream inputStream = httpResponse.getEntity().getContent();
                 response_string = convertInputStreamToString(inputStream);
-                AppLogger.e("Response " + response_string);
+               // AppLogger.e("Response " + response_string);
                 //  return response_string;
             } else {
                 return null;

@@ -61,7 +61,7 @@ public abstract class BaseLoadableListAdapter<T> extends LoadableListAdapter imp
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.retryButton) {
-            onRetryPressed();
+            //onRetryPressed();
         }
     }
 }

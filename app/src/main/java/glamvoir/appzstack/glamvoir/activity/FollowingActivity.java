@@ -38,6 +38,11 @@ public class FollowingActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mRequestBean = new RequestBean();
+        mRequestBean.setLoader(true);
+        mRequestBean.setActivity(this);
+        mRequestBean.setLoader(true);
     }
 
     @Override

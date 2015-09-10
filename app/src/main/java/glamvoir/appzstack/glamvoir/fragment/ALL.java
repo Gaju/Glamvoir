@@ -22,7 +22,7 @@ public class ALL extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.feed_or_felia_market_shell,container,false);
 
-        final ViewPager viewPager = (ViewPager)v.findViewById(R.id.view_pager);
+       /* final ViewPager viewPager = (ViewPager)v.findViewById(R.id.view_pager);
         final ImagePagerAdapter adapter = new ImagePagerAdapter();
         viewPager.setAdapter(adapter);
 
@@ -30,7 +30,7 @@ public class ALL extends Fragment {
         circleIndicator.setViewPager(viewPager);
 
         final TextView tvText = (TextView) v.findViewById(R.id.text);
-        tvText.setText(getResources().getString(R.string.bodyText));
+        tvText.setText(getResources().getString(R.string.bodyText));*/
         return v;
     }
 
@@ -47,7 +47,7 @@ public class ALL extends Fragment {
 
         @Override
         public void destroyItem(final ViewGroup container, final int position, final Object object) {
-            ((ViewPager) container).removeView((ImageView) object);
+            container.removeView((ImageView) object);
         }
 
         @Override
@@ -65,13 +65,13 @@ public class ALL extends Fragment {
             imageView.setPadding(padding, padding, padding, padding);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setImageResource(this.mImages[position]);
-            ((ViewPager) container).addView(imageView, 0);
+            container.addView(imageView, 0);
             return imageView;
         }
 
         @Override
         public boolean isViewFromObject(final View view, final Object object) {
-            return view == ((ImageView) object);
+            return view == object;
         }
     }
 
