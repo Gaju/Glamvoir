@@ -1,6 +1,7 @@
 package glamvoir.appzstack.glamvoir.network;
 
 import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
+import glamvoir.appzstack.glamvoir.model.FollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 
 /**
@@ -14,10 +15,15 @@ public class Communication {
         return response;
     }
 
-
-    public static LoginResponse loginGlamvoir(String methodType,String emailId, String password, String deviceToken, String deviceType) {
+    public static LoginResponse loginGlamvoir(String methodType, String emailId, String password, String deviceToken, String deviceType) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        LoginResponse response = service.loginGlamvoir(methodType,emailId, password, deviceToken, deviceType);
+        LoginResponse response = service.loginGlamvoir(methodType, emailId, password, deviceToken, deviceType);
+        return response;
+    }
+
+    public static FollowResponse following(String methodType, String userID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        FollowResponse response = service.following(methodType, userID);
         return response;
     }
 }

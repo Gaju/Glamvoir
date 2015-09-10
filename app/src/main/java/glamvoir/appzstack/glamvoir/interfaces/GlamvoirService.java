@@ -1,5 +1,6 @@
 package glamvoir.appzstack.glamvoir.interfaces;
 
+import glamvoir.appzstack.glamvoir.model.FollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -20,10 +21,10 @@ public interface GlamvoirService {
     @POST("/index.php/api")
     LoginResponse loginSignup(@Field("method") String methodType, @Field("user_email") String email, @Field("user_password") String password, @Field("user_fname") String fName, @Field("user_gender") String gender, @Field("user_device_token") String deviToken, @Field("user_device_type") String deviceType);
 
-
-    //user_email, user_device_token, user_device_type, user_password
-
     @GET("/index.php/api")
     LoginResponse loginGlamvoir(@Query("method") String methodType, @Query("user_email") String email, @Query("user_password") String password, @Query("user_device_token") String deviToken, @Query("user_device_type") String deviceType);
+
+    @GET("/index.php/api")
+    FollowResponse following(@Query("method") String methodType, @Query("user_id") String user_id);
 
 }

@@ -3,20 +3,19 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
-import android.widget.EditText;
+
+import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
  * Created by gajendran on 5/8/15.
  */
-public class FollowersActivity extends AppCompatActivity {
+public class FollowersActivity extends BaseActivity {
 
     private RequestBean mRequestBean;
     private Toolbar toolbar;
@@ -29,51 +28,23 @@ public class FollowersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_followers);
-
-        mRequestBean = new RequestBean();
-        mRequestBean.setLoader(true);
-        mRequestBean.setActivity(this);
-        mRequestBean.setLoader(true);
-
-        //initialize all views
-        initViews();
-
-        initListener();
-
-        getToolbar(toolbar);
     }
 
-
-    /**
-     * customize the toolbar
-     *
-     * @param toolbar : pass the toolbar reference
-     */
-    private void getToolbar(Toolbar toolbar) {
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.followers));
+    @Override
+    protected String getAppBarTitle() {
+        return getResources().getString(R.string.followers);
     }
 
-    /**
-     * initialize all views listeners
-     */
-    private void initListener() {
+    @Override
+    public void loadData() {
 
     }
 
-
-    /**
-     * initialize all views
-     */
-    private void initViews() {
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+    @Override
+    protected LoadableListAdapter createAdapter(ArrayList data) {
+        return null;
     }
 
     @Override

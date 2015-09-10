@@ -8,7 +8,9 @@ import android.provider.Settings;
  */
 public class AppConstant {
 
-    public static String PACKAGE="glamvoir.appzstack.glamvoir.activity.";
+    public static String PACKAGE = "glamvoir.appzstack.glamvoir.activity.";
+    public static final int FLAG_FOLLOWING = 1;
+    public static final int FLAG_FOLLOWER = 2;
 
     public static String getDeviceToken(Context context) {
         String deviceId = Settings.Secure.getString(context.getContentResolver(),

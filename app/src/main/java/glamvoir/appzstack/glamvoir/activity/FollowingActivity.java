@@ -1,19 +1,30 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.asynctaskloader.FollowLoader;
+import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
+import glamvoir.appzstack.glamvoir.model.FollowResponse;
+import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
  * Created by gajendran on 5/8/15.
  */
-public class FollowingActivity extends AppCompatActivity {
+public class FollowingActivity extends BaseActivity {
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, FollowingActivity.class);
@@ -25,51 +36,66 @@ public class FollowingActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_following);
+    }
 
-        mRequestBean = new RequestBean();
-        mRequestBean.setLoader(true);
-        mRequestBean.setActivity(this);
-        mRequestBean.setLoader(true);
+    @Override
+    protected String getAppBarTitle() {
+        return getResources().getString(R.string.following);
+    }
 
-        //initialize all views
-        initViews();
+    @Override
+    public void loadData() {
+        getLoaderManager().restartLoader(LoaderID.FOLLOW, null, followingCallback);
+    }
 
-        initListener();
-
-        getToolbar(toolbar);
+    @Override
+    protected LoadableListAdapter createAdapter(ArrayList data) {
+        return null;
     }
 
 
-    /**
-     * customize the toolbar
-     *
-     * @param toolbar : pass the toolbar reference
-     */
-    private void getToolbar(Toolbar toolbar) {
+    LoaderManager.LoaderCallbacks<TaskResponse<FollowResponse>> followingCallback =
+            new LoaderManager.LoaderCallbacks<TaskResponse<FollowResponse>>() {
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.following));
-    }
+                @Override
+                public Loader<TaskResponse<FollowResponse>> onCreateLoader(int id, Bundle args) {
+                    AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
+                    return new FollowLoader(mRequestBean, AppConstant.FLAG_FOLLOWING, appPreferences.getUserId());
+                }
 
-    /**
-     * initialize all views listeners
-     */
-    private void initListener() {
+                @Override
+                public void onLoadFinished(Loader<TaskResponse<FollowResponse>> loader, TaskResponse<FollowResponse> data) {
+                    if (loader instanceof FollowLoader) {
+                        ((FollowLoader) loader).hideLoaderDialog();
+                        if (data.error != null) {
+                            Utility.showToast(FollowingActivity.this, data.error.toString());
+                        } else {
 
-    }
+                            if (data.data != null && data.data.error_code != null) {
+                                onDataLoaded(data);
+                            }
+                        }
+                    }
+                }
 
+                @Override
+                public void onLoaderReset(Loader<TaskResponse<FollowResponse>> loader) {
+                }
+            };
 
-    /**
-     * initialize all views
-     */
-    private void initViews() {
+    public void onDataLoaded(TaskResponse data) {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        dataLoaded((Collection) data);
+
+        int pageno = 0;//default
+        FollowResponse followResponseList = (FollowResponse) data.data;
+        if (followResponseList != null) {
+
+            adapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
