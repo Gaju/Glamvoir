@@ -1,41 +1,45 @@
 package glamvoir.appzstack.glamvoir.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.viewpagerindicator.CirclePageIndicator;
+import android.widget.ListView;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.Custome_All_ListAdapter;
 
 
 public class ALL extends Fragment {
 
+    //ImagePagerAdapter adapter;
+    private ListView mlistView;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.feed_or_felia_market_shell,container,false);
+        View v = inflater.inflate(R.layout.all,container,false);
+        //feed_or_felia_market_shell
 
-       /* final ViewPager viewPager = (ViewPager)v.findViewById(R.id.view_pager);
-        final ImagePagerAdapter adapter = new ImagePagerAdapter();
+        mlistView= (ListView) v.findViewById(R.id.lv_all);
+        mlistView.setAdapter(new Custome_All_ListAdapter(getActivity()));
+
+
+        /*final ViewPager viewPager = (ViewPager)v.findViewById(R.id.view_pager);
+        adapter = new ImagePagerAdapter(getActivity());
         viewPager.setAdapter(adapter);
 
         final CirclePageIndicator circleIndicator = (CirclePageIndicator)v.findViewById(R.id.indicator);
-        circleIndicator.setViewPager(viewPager);
+        circleIndicator.setViewPager(viewPager);*/
 
-        final TextView tvText = (TextView) v.findViewById(R.id.text);
+       /* final TextView tvText = (TextView) v.findViewById(R.id.text);
         tvText.setText(getResources().getString(R.string.bodyText));*/
         return v;
     }
 
 
-    private class ImagePagerAdapter extends PagerAdapter {
+   /* private class ImagePagerAdapter extends PagerAdapter {
         private final int[] mImages = new int[] { //
                 R.drawable.chiang_mai,
                 R.drawable.himeji,
@@ -74,5 +78,5 @@ public class ALL extends Fragment {
             return view == object;
         }
     }
-
+*/
 }

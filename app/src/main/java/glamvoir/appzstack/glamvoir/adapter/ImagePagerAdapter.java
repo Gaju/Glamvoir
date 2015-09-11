@@ -2,7 +2,6 @@ package glamvoir.appzstack.glamvoir.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import glamvoir.appzstack.glamvoir.R;
 public class ImagePagerAdapter extends PagerAdapter{
 
     private Context mContext;
+
 
 
     private final int[] mImageIds = new int[] { //
@@ -60,7 +60,7 @@ public class ImagePagerAdapter extends PagerAdapter{
         view_image.setImageResource(mImageIds[position]);
         view_image.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        description.setText("The natural habitat of the Niligiri tahr,Rajamala          Rajamala is 2695 Mts above sea level"
+        description.setText("The natural habitat of the Niligiri tahr,Rajamala is 2695 Mts above sea level"
                 + "The natural habitat of the Niligiri tahr,Rajamala Rajamala is 2695 Mts above sea level"
                 + "The natural habitat of the Niligiri tahr,Rajamala Rajamala is 2695 Mts above sea level");
 

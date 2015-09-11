@@ -15,7 +15,7 @@
             android:id="@+id/about_layout1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".4"
+            android:layout_weight=".6"
             android:orientation="vertical" >
 
             <ImageView
@@ -33,19 +33,6 @@
             android:layout_height="0dp"
             android:layout_weight=".6"
             android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SIGNATURE LANDMARK OF MALAYSIA-SINGAPORE CAUSEWAY"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:padding="18dp"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearance" />
-
-
             <ScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
