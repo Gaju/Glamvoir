@@ -1,7 +1,7 @@
 package glamvoir.appzstack.glamvoir.network;
 
 import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
-import glamvoir.appzstack.glamvoir.model.FollowResponse;
+import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 
 /**
@@ -21,9 +21,9 @@ public class Communication {
         return response;
     }
 
-    public static FollowResponse following(String methodType, String userID) {
+    public static FFSP_Response _FFSP(String methodType, String userID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        FollowResponse response = service.following(methodType, userID);
+        FFSP_Response response = service.following(methodType, userID);
         return response;
     }
 }

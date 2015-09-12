@@ -1,7 +1,6 @@
 package glamvoir.appzstack.glamvoir.adapter;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,29 +11,29 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.activity.FollowersActivity;
+import glamvoir.appzstack.glamvoir.activity.FollowingActivity;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
-import glamvoir.appzstack.glamvoir.holder.FollowViewHolder;
-import glamvoir.appzstack.glamvoir.model.FollowResponse;
+import glamvoir.appzstack.glamvoir.holder.FFSP_ViewHolder;
+import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 
 /**
  * Created by gajendran on 19/8/15.
  */
-public class AdAdapterWithGallery extends BaseLoadableListAdapter<FollowResponse> {
+public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
-    protected Fragment fragment;
-    protected Boolean removeOnUnobserve = false;
     protected DisplayImageOptions imageOptions;
     protected ImageLoader imageLoader;
     protected HashMap<String, ArrayList<String>> adImages;
 
     //RecyclerViewOnItemClick onItemClick;
 
-    public AdAdapterWithGallery(Context context, ArrayList<FollowResponse> items, Fragment fragment, int listType) {
+    public FFSP_Adapter(Context context, ArrayList<FFSP_Response> items) {
         super(context, items);
-        this.fragment = fragment;
-     //   this.onItemClick = onItemClick;
+        //   this.onItemClick = onItemClick;
         adImages = new HashMap<String, ArrayList<String>>();
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -49,9 +48,8 @@ public class AdAdapterWithGallery extends BaseLoadableListAdapter<FollowResponse
     public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
         View v = null;
 
-        v = mInflater.inflate(R.layout.following_drawer_shell, parent, false);
-
-        FollowViewHolder holder = new FollowViewHolder(v, new MyViewHolderClick() {
+        v = mInflater.inflate(R.layout.item_row, parent, false);
+        FFSP_ViewHolder holder = new FFSP_ViewHolder(v, new MyViewHolderClick() {
 
             @Override
             public void _OnClick(View view, int position) {
@@ -70,9 +68,31 @@ public class AdAdapterWithGallery extends BaseLoadableListAdapter<FollowResponse
     @Override
     public void onBindBasicItemView(RecyclerView.ViewHolder holder1, int position) {
 
-        final FollowViewHolder holder = ((FollowViewHolder) holder1);
-        FollowResponse ad = (FollowResponse) getItem(position);
+        FFSP_ViewHolder holder = ((FFSP_ViewHolder) holder1);
+        FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) getItem(position);
 
+        if (singleFollow.user_fname != null && singleFollow.user_lname != null)
+            holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);
+
+        if (context instanceof FollowingActivity) {
+
+            if (Integer.parseInt(singleFollow.total_following) < 1)
+                holder.subtitle.setText(singleFollow.total_following + "follower");
+            else holder.subtitle.setText(singleFollow.total_following + "followers");
+
+
+            holder.icon.setImageResource(R.drawable.following);
+            holder.icon_title.setText("Following");
+        } else if (context instanceof FollowersActivity) {
+
+            if (Integer.parseInt(singleFollow.total_following) < 1)
+                holder.subtitle.setText(singleFollow.total_following + "follower");
+            else holder.subtitle.setText(singleFollow.total_following + "followers");
+
+
+            holder.icon.setImageResource(R.drawable.followers);
+            holder.icon_title.setText("Follower");
+        }
     }
 
 

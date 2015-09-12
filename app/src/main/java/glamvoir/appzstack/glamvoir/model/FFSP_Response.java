@@ -13,7 +13,10 @@ import java.util.List;
  * Created by Gajendran on 10-09-2015.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FollowResponse implements Parcelable {
+public class FFSP_Response implements Parcelable {
+
+    public FFSP_Response() {
+    }
 
     @JsonProperty("error_code")
     public String error_code;
@@ -37,25 +40,28 @@ public class FollowResponse implements Parcelable {
         dest.writeTypedList(this.results);
     }
 
-    private FollowResponse(Parcel in) {
+    private FFSP_Response(Parcel in) {
         this.error_code = in.readString();
         this.msg_string = in.readString();
         this.results = new ArrayList<SingleFollow>();
         in.readTypedList(this.results, SingleFollow.CREATOR);
     }
 
-    public static final Creator<FollowResponse> CREATOR = new Creator<FollowResponse>() {
-        public FollowResponse createFromParcel(Parcel source) {
-            return new FollowResponse(source);
+    public static final Creator<FFSP_Response> CREATOR = new Creator<FFSP_Response>() {
+        public FFSP_Response createFromParcel(Parcel source) {
+            return new FFSP_Response(source);
         }
 
-        public FollowResponse[] newArray(int size) {
-            return new FollowResponse[size];
+        public FFSP_Response[] newArray(int size) {
+            return new FFSP_Response[size];
         }
     };
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SingleFollow implements Parcelable {
+
+        public SingleFollow() {
+        }
 
         @JsonProperty("user_id")
         public String user_id;

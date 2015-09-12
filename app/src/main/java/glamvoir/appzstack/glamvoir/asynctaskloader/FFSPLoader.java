@@ -2,48 +2,37 @@ package glamvoir.appzstack.glamvoir.asynctaskloader;
 
 import android.content.AsyncTaskLoader;
 
-import glamvoir.appzstack.glamvoir.model.FollowResponse;
+import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.network.Communication;
-
-import static glamvoir.appzstack.glamvoir.constant.AppConstant.FLAG_FOLLOWER;
-import static glamvoir.appzstack.glamvoir.constant.AppConstant.FLAG_FOLLOWING;
+import glamvoir.appzstack.glamvoir.widgets.ShowDialog;
 
 /**
  * Created by gajendran on 10/9/15.
  */
-public class FollowLoader extends AsyncTaskLoader<TaskResponse<FollowResponse>> implements BaseLoader {
+public class FFSPLoader extends AsyncTaskLoader<TaskResponse<FFSP_Response>> implements BaseLoader {
 
     private RequestBean requestBean;
     private TaskResponse response = null;
-    private int flag_Type;
+    private String methodName;
     private String user_id;
+    private ShowDialog dialog;
 
-    public FollowLoader(RequestBean requestBean, int flag, String user_id) {
+    public FFSPLoader(RequestBean requestBean, String methodName, String user_id) {
         super(requestBean.getContext());
         this.requestBean = requestBean;
-        this.flag_Type = flag;
+        this.methodName = methodName;
         this.user_id = user_id;
+        dialog = new ShowDialog();
     }
 
 
     @Override
-    public TaskResponse<FollowResponse> loadInBackground() {
+    public TaskResponse<FFSP_Response> loadInBackground() {
         response = new TaskResponse();
-
         try {
-            //Logger.push(Logger.LogType.LOG_DEBUG, TAG, email + "," + password + "," + deviceToken + "," + deviceType);
-            switch (flag_Type) {
-                case FLAG_FOLLOWER:
-                    //      response.data = Communication.loginGlamvoir("user_login", email, password, deviceToken, deviceType);
-                    break;
-                case FLAG_FOLLOWING:
-                    response.data = Communication.following("getfollowing", user_id);
-                    break;
-            }
-
-
+            response.data = Communication._FFSP(methodName, user_id);
         } catch (Exception e) {
             response.error = e;
         }
@@ -77,11 +66,15 @@ public class FollowLoader extends AsyncTaskLoader<TaskResponse<FollowResponse>> 
 
     @Override
     public void showLoaderDialog() {
-
+        if (requestBean.isLoader()) {
+            dialog.showProgressDialog(requestBean.getActivity(), "Loading", false);
+        }
     }
 
     @Override
     public void hideLoaderDialog() {
-
+        if (requestBean.isLoader()) {
+            dialog.dismissDialog();
+        }
     }
 }

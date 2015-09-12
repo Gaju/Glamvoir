@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.FFSP_Adapter;
 import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
@@ -15,7 +16,7 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 /**
  * Created by gajendran on 5/8/15.
  */
-public class FollowersActivity extends BaseActivity {
+public class FollowersActivity extends FFSPActivity {
 
     private RequestBean mRequestBean;
     private Toolbar toolbar;
@@ -30,6 +31,21 @@ public class FollowersActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mRequestBean = new RequestBean();
+        mRequestBean.setLoader(true);
+        mRequestBean.setActivity(this);
+        mRequestBean.setLoader(true);
+    }
+
+    @Override
+    protected String getMethodName() {
+        return AppConstant.METHOD_FOLLOWING;
+    }
+
+    @Override
+    protected RequestBean getRequestBean() {
+        return mRequestBean;
     }
 
     @Override
@@ -38,13 +54,8 @@ public class FollowersActivity extends BaseActivity {
     }
 
     @Override
-    public void loadData() {
-
-    }
-
-    @Override
     protected LoadableListAdapter createAdapter(ArrayList data) {
-        return null;
+        return new FFSP_Adapter(FollowersActivity.this, data);
     }
 
     @Override

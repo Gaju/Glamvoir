@@ -1,6 +1,6 @@
 package glamvoir.appzstack.glamvoir.interfaces;
 
-import glamvoir.appzstack.glamvoir.model.FollowResponse;
+import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -25,6 +25,6 @@ public interface GlamvoirService {
     LoginResponse loginGlamvoir(@Query("method") String methodType, @Query("user_email") String email, @Query("user_password") String password, @Query("user_device_token") String deviToken, @Query("user_device_type") String deviceType);
 
     @GET("/index.php/api")
-    FollowResponse following(@Query("method") String methodType, @Query("user_id") String user_id);
+    FFSP_Response following(@Query("method") String methodType, @Query("user_id") String user_id);
 
 }

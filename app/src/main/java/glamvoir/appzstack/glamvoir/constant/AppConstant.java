@@ -9,8 +9,10 @@ import android.provider.Settings;
 public class AppConstant {
 
     public static String PACKAGE = "glamvoir.appzstack.glamvoir.activity.";
-    public static final int FLAG_FOLLOWING = 1;
-    public static final int FLAG_FOLLOWER = 2;
+    public static final String METHOD_FOLLOWING = "getfollowing";
+    public static final String METHOD_FOLLOWER = "getfollower";
+    public static final String METHOD_MYSAVE = "mysavedpost";
+    public static final String METHOD_MYPOST = "";
 
     public static String getDeviceToken(Context context) {
         String deviceId = Settings.Secure.getString(context.getContentResolver(),

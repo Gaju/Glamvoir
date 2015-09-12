@@ -6,5 +6,5 @@ package glamvoir.appzstack.glamvoir.asynctaskloader;
 public class LoaderID {
 
     public static final int LOGIN=1;
-    public static final int FOLLOW=2;
+    public static final int FFSP =2;
 }

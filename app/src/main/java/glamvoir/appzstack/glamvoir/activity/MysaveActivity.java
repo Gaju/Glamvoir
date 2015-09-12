@@ -3,17 +3,21 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import java.util.ArrayList;
+
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.FFSP_Adapter;
+import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
  * Created by gajendran on 5/8/15.
  */
-public class MysaveActivity extends AppCompatActivity {
+public class MysaveActivity extends FFSPActivity {
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MysaveActivity.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
@@ -24,52 +28,36 @@ public class MysaveActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_mysave);
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
 
-        //initialize all views
-        initViews();
-
-        initListener();
-
-        getToolbar(toolbar);
     }
 
-
-    /**
-     * customize the toolbar
-     *
-     * @param toolbar : pass the toolbar reference
-     */
-    private void getToolbar(Toolbar toolbar) {
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.mysave));
+    @Override
+    protected String getMethodName() {
+        return AppConstant.METHOD_MYSAVE;
     }
 
-    /**
-     * initialize all views listeners
-     */
-    private void initListener() {
-
+    @Override
+    protected RequestBean getRequestBean() {
+        return mRequestBean;
     }
 
-
-    /**
-     * initialize all views
-     */
-    private void initViews() {
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+    @Override
+    protected String getAppBarTitle() {
+        return getResources().getString(R.string.mysave);
     }
+
+    @Override
+    protected LoadableListAdapter createAdapter(ArrayList data) {
+        return new FFSP_Adapter(MysaveActivity.this, data);
+    }
+
 
     @Override
     public Intent getSupportParentActivityIntent() {
