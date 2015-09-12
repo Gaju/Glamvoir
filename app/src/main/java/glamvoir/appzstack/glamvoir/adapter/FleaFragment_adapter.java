@@ -1,8 +1,6 @@
 package glamvoir.appzstack.glamvoir.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,20 +13,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cocosw.bottomsheet.BottomSheet;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import glamvoir.appzstack.glamvoir.R;
 
 /**
- * Created by jaim on 9/11/2015.
+ * Created by jaim on 9/12/2015.
  */
-public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClickListener {
+public class FleaFragment_adapter extends BaseAdapter implements View.OnClickListener {
 
     private static LayoutInflater inflater=null;
     ImagePagerAdapter adapter;
     Context context;
-    public Custome_All_ListAdapter(FragmentActivity activity) {
+    public FleaFragment_adapter(FragmentActivity activity) {
         this.context=activity;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -75,9 +72,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.bt_ff_shell_like                 = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_like);
             holder.bt_ff_shell_whatapp              = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_whatapp);
             holder.bt_ff_shell_share                = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_share);
-            holder.bt_ff_shell_complain             = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_complain);
-            holder.bt_ff_shell_map                  = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_map);
-
             convertView.setTag(holder);
 
         }
@@ -88,8 +82,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_like.setOnClickListener(this);
         holder.bt_ff_shell_whatapp.setOnClickListener(this);
         holder.bt_ff_shell_share.setOnClickListener(this);
-        holder.bt_ff_shell_complain.setOnClickListener(this);
-        holder.bt_ff_shell_map.setOnClickListener(this);
+
 
 
 
@@ -100,38 +93,13 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.bt_ff_shell_complain:
-                new BottomSheet.Builder((Activity)context).title("Take action on post").sheet(R.menu.menu_complain).listener(new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case R.id.wrong_category:
-                                Toast.makeText(context, "wrong_category", Toast.LENGTH_LONG).show();
-
-                                break;
-                            case R.id.dont_show:
-                                Toast.makeText(context, "dont_show", Toast.LENGTH_LONG).show();
-
-                                break;
-                            case R.id.roport:
-                                Toast.makeText(context, "roport", Toast.LENGTH_LONG).show();
-                                break;
-                            case R.id.cacel:
-                                Toast.makeText(context, "Cancel", Toast.LENGTH_LONG).show();
-                                dialog.dismiss();
-                                break;
-                        }
-                    }
-                }).show();
-                break;
             case R.id.bt_connect_with_seller:
                 Toast.makeText(context, "You click connect sellet", Toast.LENGTH_LONG).show();
                 break;
             case R.id.bt_ff_shell_shave:
                 Toast.makeText(context, "You click connect shave", Toast.LENGTH_LONG).show();
                 break;
-           case R.id.bt_ff_shell_comments:
+            case R.id.bt_ff_shell_comments:
                 Toast.makeText(context, "You click connect comments", Toast.LENGTH_LONG).show();
                 break;
             case R.id.bt_ff_shell_like:
@@ -143,11 +111,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             case R.id.bt_ff_shell_share:
                 Toast.makeText(context, "You click connect share", Toast.LENGTH_LONG).show();
                 break;
-            case R.id.bt_ff_shell_map:
-                Toast.makeText(context, "You click connect Map", Toast.LENGTH_LONG).show();
-                break;
-
-
         }
 
 
@@ -169,8 +132,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         ImageButton       bt_ff_shell_like;
         ImageButton       bt_ff_shell_whatapp;
         ImageButton       bt_ff_shell_share;
-        ImageButton       bt_ff_shell_complain;
-        ImageButton       bt_ff_shell_map;
 
 
     }

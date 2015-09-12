@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.fragment.FleaFragment;
 import glamvoir.appzstack.glamvoir.fragment.HomeFragment;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.navigationdrawer.FragmentDrawer_Lv;
@@ -132,9 +133,22 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
         String title = getString(R.string.app_name);
         switch (position) {
             case 0:
+                fragment = new HomeFragment();
+
+                if (fragment != null) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container_body, fragment);
+                    fragmentTransaction.commit();
+
+                    // set the toolbar title
+                    getSupportActionBar().setTitle(title);
+                }
+                title = getString(R.string.title_feed);
+
                 break;
             case 1:
-                fragment = new HomeFragment();
+                fragment = new FleaFragment();
 
                 if (fragment != null) {
                     FragmentManager fragmentManager = getSupportFragmentManager();

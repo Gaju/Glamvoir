@@ -12,37 +12,22 @@
         android:orientation="vertical">
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:hint="Search Here..."
             android:layout_gravity="center_vertical"
             android:drawableLeft="@drawable/search"
             android:background="@drawable/edit_text_border"
 
             android:id="@+id/textView10" />
-        <LinearLayout
-            style="@style/HeaderBar"
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:id="@+id/lv_all"
 
-
-            <glamvoir.appzstack.glamvoir.SlidingTabs.SlidingTabLayout
-                android:id="@+id/sliding_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/tab_background"
-                />
-        </LinearLayout>
-
-
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            />
 
     </LinearLayout>
+
+
 
 </LinearLayout>

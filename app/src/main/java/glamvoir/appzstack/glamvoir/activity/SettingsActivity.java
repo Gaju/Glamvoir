@@ -109,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
                 MyAccountActivity.startActivity(SettingsActivity.this);
                 break;
             case 1:
-
+                MyCityActivity.startActivity(SettingsActivity.this);
                 break;
             case 2:
 

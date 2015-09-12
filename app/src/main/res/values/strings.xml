@@ -36,7 +36,7 @@
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
-
+    <string name="title_feed">FEED</string>
     <string name="title_follower">FOLLOWERS</string>
     <string name="title_following">FOLLOWING</string>
     <string name="title_home">FLEA MARKET</string>
@@ -96,6 +96,10 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="app_id">1645342315721002</string>
+
+    <string name="wrong_category">Wrong category</string>
+    <string name="dont_show">Dont not show me post from this user</string>
+    <string name="roport">Report Abuse</string>
 
     <string name="bodyText">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería d</string>
 

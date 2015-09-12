@@ -11,19 +11,29 @@ import android.widget.ListView;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Custome_All_ListAdapter;
 
-
-public class ALL extends Fragment {
+/**
+ * Created by jaim on 9/12/2015.
+ */
+public class FleaFragment extends Fragment {
 
     //ImagePagerAdapter adapter;
     private ListView mlistView;
 
+    public FleaFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.all,container,false);
-        //feed_or_felia_market_shell
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        mlistView= (ListView) v.findViewById(R.id.lv_all);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
+        mlistView= (ListView) rootView.findViewById(R.id.lv_all);
         mlistView.setAdapter(new Custome_All_ListAdapter(getActivity()));
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -32,7 +42,7 @@ public class ALL extends Fragment {
             }
         });
 
-        return v;
+        return rootView;
     }
 
 }
