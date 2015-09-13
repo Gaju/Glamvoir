@@ -16,6 +16,7 @@ import java.util.List;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.FollowersActivity;
 import glamvoir.appzstack.glamvoir.activity.FollowingActivity;
+import glamvoir.appzstack.glamvoir.activity.MysaveActivity;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.holder.FFSP_ViewHolder;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
@@ -92,6 +93,11 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
             holder.icon.setImageResource(R.drawable.followers);
             holder.icon_title.setText("Follower");
+        } else if (context instanceof MysaveActivity) {
+
+            holder.subtitle.setVisibility(View.INVISIBLE);
+            holder.icon.setImageResource(R.drawable.delete);
+            holder.icon_title.setText("Delete");
         }
     }
 

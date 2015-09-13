@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
+
 public class InternetStatus {
 	
 	public static int TYPE_WIFI = 1;
@@ -38,5 +41,35 @@ public class InternetStatus {
 			status = "Not connected to Internet";
 		}
 		return status;
+	}
+
+	/**
+	 * This method is used to check whether Internet is available or not
+	 *
+	 * @param mcontext
+	 * @param showToast
+	 * @return
+	 */
+	public static boolean isInternetAvailable(Context mcontext, boolean showToast) {
+		boolean isConnected = false;
+		ConnectivityManager connectivity = (ConnectivityManager) mcontext.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (connectivity != null) {
+			NetworkInfo[] info = connectivity.getAllNetworkInfo();
+			if (info != null)
+				for (int i = 0; i < info.length; i++)
+					if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+						isConnected = true;
+//					}
+					}
+
+		} else
+			isConnected = false;
+		if (isConnected) {
+			return true;
+		} else {
+			if (showToast)
+				Utility.showToast(mcontext, mcontext.getString(R.string.internet_connection_error));
+			return false;
+		}
 	}
 }

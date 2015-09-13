@@ -12,6 +12,7 @@ public class AppConstant {
     public static final String METHOD_FOLLOWING = "getfollowing";
     public static final String METHOD_FOLLOWER = "getfollower";
     public static final String METHOD_MYSAVE = "mysavedpost";
+    public static final String METHOD_UPDATE_IMAGE = "updateImage";
     public static final String METHOD_MYPOST = "";
 
     public static String getDeviceToken(Context context) {
