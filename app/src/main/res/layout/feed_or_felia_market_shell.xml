@@ -3,10 +3,9 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardElevation="4dp"
-    card_view:cardCornerRadius="3dp">
+    card_view:cardElevation="2dp"
+    card_view:cardCornerRadius="2dp">
 
     <LinearLayout
 
@@ -21,7 +20,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/downaarow"
-            android:layout_marginLeft="2dp"
+
             android:id="@+id/bt_ff_shell_complain"
             android:layout_gravity="right" />
 
@@ -85,9 +84,12 @@
 
                 <TextView
                     android:id="@+id/tv_actiontext_checkBox_ff_shell"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:layout_weight="1"
                     android:text="following"
                     android:textColor="@android:color/black" />
 

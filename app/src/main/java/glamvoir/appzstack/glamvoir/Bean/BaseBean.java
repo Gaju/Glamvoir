@@ -14,25 +14,32 @@ public class BaseBean {
      * @return the mExceptionName
      */
     public String getmExceptionName() {
+
         return mExceptionName;
+
     }
 
     /**
      * @param mExceptionName the mExceptionName to set
      */
     public void setmExceptionName(String mExceptionName) {
+
         this.mExceptionName = mExceptionName;
     }
 
     public boolean isParsed() {
+
         return isParsed;
     }
 
-    public void setParsed(boolean isParsed) {
+    public void setParsed(boolean isParsed)
+    {
+
         this.isParsed = isParsed;
     }
 
     public int getSuccessCode() {
+
         return successCode;
     }
 

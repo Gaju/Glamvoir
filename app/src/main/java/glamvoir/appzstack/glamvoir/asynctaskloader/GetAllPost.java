@@ -17,7 +17,7 @@ public class GetAllPost extends AsyncTaskLoader<AllPostsBean> implements BaseLoa
     private AllPostsBean allPostsBean;
     private String mUrl;
 
-    public GetAllPost(RequestBean requestBean, String url, String productFilter) {
+    public GetAllPost(RequestBean requestBean, String url) {
         super(requestBean.getContext());
         this.requestBean = requestBean;
         this.mUrl = url;

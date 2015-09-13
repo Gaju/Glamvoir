@@ -115,8 +115,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
             return true;
         }
 */
-        if (id == R.id.action_search) {
+        if (id == R.id.action_uplaod) {
             Toast.makeText(getApplicationContext(), "Search action is selected!", Toast.LENGTH_SHORT).show();
+            AddStory.startActivity(HomeActivity.this);
             return true;
         }
 
@@ -177,10 +178,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                 MyPostActivity.startActivity(HomeActivity.this);
                 break;
 
+
             case 6:
-                AddStory.startActivity(HomeActivity.this);
-                break;
-            case 7:
                 SettingsActivity.startActivity(HomeActivity.this);
 
                 break;

@@ -39,16 +39,19 @@ public class FollowingActivity extends FFSPActivity {
 
     @Override
     protected String getMethodName() {
+
         return AppConstant.METHOD_FOLLOWING;
     }
 
     @Override
     protected RequestBean getRequestBean() {
+
         return mRequestBean;
     }
 
     @Override
     protected String getAppBarTitle() {
+
         return getResources().getString(R.string.following);
     }
 
