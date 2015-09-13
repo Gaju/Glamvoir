@@ -23,6 +23,7 @@
             android:layout_height="match_parent"
             android:divider="@android:color/transparent"
             android:dividerHeight="20dp"
+            android:layout_margin="6dp"
             android:id="@+id/lv_all"
 
             />
