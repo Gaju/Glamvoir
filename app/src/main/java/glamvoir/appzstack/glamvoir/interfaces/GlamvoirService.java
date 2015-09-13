@@ -3,7 +3,7 @@ package glamvoir.appzstack.glamvoir.interfaces;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
-import glamvoir.appzstack.glamvoir.model.net.response.ObservedAdsResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -33,7 +33,7 @@ public interface GlamvoirService {
     FFSP_Response following(@Query("method") String methodType, @Query("user_id") String user_id);
 
     @GET("/index.php/api")
-    ObservedAdsResponse toggleFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);
+    ObservedFollowResponse toggleFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);
 
     @Multipart
     @POST("/index.php/api")

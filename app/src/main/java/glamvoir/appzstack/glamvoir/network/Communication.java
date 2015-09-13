@@ -6,7 +6,7 @@ import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
-import glamvoir.appzstack.glamvoir.model.net.response.ObservedAdsResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import retrofit.mime.TypedFile;
 
 /**
@@ -32,9 +32,9 @@ public class Communication {
         return response;
     }
 
-    public static ObservedAdsResponse toggleFollow(String methodType, String followingUserID, String followerUserID) {
+    public static ObservedFollowResponse toggleFollow(String methodType, String followingUserID, String followerUserID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        ObservedAdsResponse response = service.toggleFollow(methodType, followingUserID, followerUserID);
+        ObservedFollowResponse response = service.toggleFollow(methodType, followingUserID, followerUserID);
         return response;
     }
 

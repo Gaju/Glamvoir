@@ -95,7 +95,8 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             holder.icon_title.setText("Follower");
         } else if (context instanceof MysaveActivity) {
 
-            holder.subtitle.setVisibility(View.INVISIBLE);
+            //    holder.subtitle.setVisibility(View.INVISIBLE);
+            holder.subtitle.setText(singleFollow.total_following);
             holder.icon.setImageResource(R.drawable.delete);
             holder.icon_title.setText("Delete");
         }
