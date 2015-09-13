@@ -256,7 +256,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:hint="comment"
                 android:textColor="@android:color/black"
-                />
+                 />
 
         </LinearLayout>
 
