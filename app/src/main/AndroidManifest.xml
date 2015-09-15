@@ -60,6 +60,13 @@
         <activity android:name=".activity.AlertActivity"></activity>
         <activity android:name=".activity.AddStory"></activity>
         <activity android:name=".activity.MyCityActivity"></activity>
+        <activity android:name=".activity.FaqActivity"></activity>
+        <activity android:name=".activity.Privacy_Policy"></activity>
+
+        <activity android:name=".activity.Term_and_Condition"></activity>
+        <activity android:name=".activity.Contact_Us"></activity>
+
+
 
         <!-- Network change detector -->
 

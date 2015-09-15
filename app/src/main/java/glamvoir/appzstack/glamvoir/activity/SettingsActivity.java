@@ -116,15 +116,16 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
                 break;
             case 3:
 
+                Contact_Us.startActivity(SettingsActivity.this);
                 break;
             case 4:
-
+                Term_and_Condition.startActivity(SettingsActivity.this);
                 break;
             case 5:
-
+                Privacy_Policy.startActivity(SettingsActivity.this);
                 break;
             case 6:
-
+                FaqActivity.startActivity(SettingsActivity.this);
                 break;
             case 7:
                 signOut();

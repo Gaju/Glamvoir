@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/appbar" />
+<ScrollView
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    android:layout_gravity="center_horizontal" >
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_marginTop="@dimen/padding_small"
+       android:layout_marginLeft="@dimen/padding_small"
+       android:layout_marginRight="@dimen/padding_small"
+       android:weightSum="3"
+       android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
+        android:text="@string/term_one"
+        android:id="@+id/textView12" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:hint="@string/term_one_answer"
+        android:layout_weight="1"
+        android:id="@+id/textView13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="@dimen/padding_small"
+        android:text="@string/term_Two"
+        android:textColor="@android:color/black"
+        android:id="@+id/textView14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="@dimen/padding_small"
+        android:layout_weight="1"
+        android:hint="@string/term_answer"
+        android:id="@+id/textView15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="@dimen/padding_small"
+        android:textColor="@android:color/black"
+        android:text="@string/term_three"
+        android:id="@+id/textView16" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_weight="1"
+        android:hint="@string/term_three_answer"
+        android:id="@+id/textView17" />
+
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textAppearance="?android:attr/textAppearanceMedium"
+           android:layout_marginTop="@dimen/padding_small"
+           android:textColor="@android:color/black"
+           android:text="@string/term_three"
+           android:id="@+id/textView18" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textAppearance="?android:attr/textAppearanceSmall"
+           android:layout_weight="1"
+           android:hint="@string/term_three_answer"
+           android:id="@+id/textView19" />
+
+
+   </LinearLayout>
+</ScrollView>
+
+</LinearLayout>
+
+
