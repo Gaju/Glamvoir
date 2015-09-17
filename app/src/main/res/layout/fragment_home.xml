@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:drawableLeft="@drawable/search"
             android:background="@drawable/edit_text_border"
-
+            android:cursorVisible="false"
             android:id="@+id/textView10" />
         <LinearLayout
             style="@style/HeaderBar"

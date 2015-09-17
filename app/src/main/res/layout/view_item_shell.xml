@@ -22,8 +22,7 @@
                 android:id="@+id/view_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/userimg"
-                android:scaleType="fitXY">
+                >
             </ImageView>
         </LinearLayout>
 
@@ -31,7 +30,7 @@
             android:id="@+id/about_layout2"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".6"
+            android:layout_weight=".4"
             android:orientation="vertical" >
             <ScrollView
                 android:layout_width="fill_parent"
