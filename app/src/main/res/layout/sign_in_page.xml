@@ -28,7 +28,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_bottom_xlarge"
                 android:ems="10"
-                android:hint="First Name"
+                android:hint="EMAIL ID"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:textSize="@dimen/textsize_normal" />

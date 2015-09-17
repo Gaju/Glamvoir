@@ -36,7 +36,7 @@ public class Term_and_Condition extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Term and Agreement");
+        getSupportActionBar().setTitle("TERMS AND PRIVACY POLICY");
     }
 
     @Override

@@ -87,6 +87,7 @@
             android:id="@+id/drawerList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:listSelector="#a9bcf5"
             android:choiceMode="singleChoice" />
 
 

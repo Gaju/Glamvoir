@@ -41,7 +41,7 @@ public class Privacy_Policy  extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Privat Policy");
+        getSupportActionBar().setTitle("PRIVACY POLICY");
     }
 
     @Override

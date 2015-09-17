@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
+import android.view.View;
+import android.widget.TextView;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -12,8 +15,9 @@ import glamvoir.appzstack.glamvoir.constant.AppConstant;
 /**
  * Created by jaim on 9/14/2015.
  */
-public class Contact_Us  extends AppCompatActivity {
+public class Contact_Us  extends AppCompatActivity implements View.OnClickListener {
     protected Toolbar toolbar;
+    Context context;
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, Contact_Us.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
@@ -23,9 +27,12 @@ public class Contact_Us  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_contact_us);
+        setContentView(R.layout.layout_contact_us); //
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         getToolbar(toolbar);
+        TextView t2 = (TextView) findViewById(R.id.textView22);
+        t2.setOnClickListener(this);
 
 
 
@@ -52,5 +59,15 @@ public class Contact_Us  extends AppCompatActivity {
             e.printStackTrace();
         }
         return newIntent;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_EMAIL,new String[]{"glamvoir@gmail.com"});
+        email.putExtra(Intent.EXTRA_SUBJECT, "Hiring");
+        email.putExtra(Intent.EXTRA_TEXT, "");
+        email.setType("message/rfc822");
+        startActivity(Intent.createChooser(email, "Select Email Client"));
     }
 }

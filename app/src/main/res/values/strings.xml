@@ -3,7 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="action_upload">Upload</string>
+    <string name="action_upload">UPLOAD</string>
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -51,14 +51,14 @@
     <string name="invalid_fname">Please enter the first name</string>
     <string name="invalid_lname">Please enter the last name</string>
     <string name="password_short">Minimum password length is 5</string>
-    <string name="signup">SignUp</string>
-    <string name="signin">SignIn</string>
-    <string name="followers">Followers</string>
-    <string name="following">Following</string>
-    <string name="mysave">MySave</string>
-    <string name="alert">Alert</string>
-    <string name="mypost">MyPost</string>
-    <string name="setting">Setting</string>
+    <string name="signup">SIGNUP</string>
+    <string name="signin">SIGN IN</string>
+    <string name="followers">FOLLOWERS</string>
+    <string name="following">FOLLOWING</string>
+    <string name="mysave">MYSAVE</string>
+    <string name="alert">ALERTS</string>
+    <string name="mypost">MYPOST</string>
+    <string name="setting">SETTINGS</string>
     <string name="user_name">Hello Glamvoir</string>
     <string name="member_period">Member since jan 2000</string>
 
@@ -68,7 +68,7 @@
     <string name="my_city">MY CITY</string>
     <string name="we_are_hiring">WE ARE HIRING</string>
     <string name="contact_us">CONTACT US</string>
-    <string name="terms_condition">TERMS OF AGREEMENT</string>
+    <string name="terms_condition">TERMS AND PRIVACY POLICY</string>
     <string name="privacy_policy">PRIVACY POLICY</string>
     <string name="f_a_q">FAQ</string>
     <string name="signout">SIGNOUT</string>
@@ -118,7 +118,7 @@
     </string>
     <string name="about_us">About Us</string>
 
-
+    <string name="txtCredits"><a href="glamvoir@gmail.com">Contact Us:glamvoir@gmail.com </a></string>
 
 
 

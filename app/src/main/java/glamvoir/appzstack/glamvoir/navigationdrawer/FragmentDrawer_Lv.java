@@ -82,7 +82,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     int ICONS[] = {R.drawable.feed_active, R.drawable.fleamarket, R.drawable.followers, R.drawable.following,
             R.drawable.mysave, R.drawable.mypost,R.drawable.setting};
-    private String mName;
+    private StringBuilder mName;
     private String mEmail;
     int PROFILE = R.drawable.camera;
     private FragmentDrawerListener_Lv drawerListener_lv;
@@ -100,8 +100,9 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppPreferences appPreferences = new AppPreferences(getActivity());
+        String jai=appPreferences.getLastName().toString();
         if (appPreferences.getFirstName() != null && appPreferences.getEmailID() != null) {
-            mName = new StringBuffer().append(appPreferences.getFirstName()).append(" ").append(appPreferences.getLastName() == null ? "" : appPreferences.getLastName()).toString();
+            mName = new StringBuilder().append(appPreferences.getFirstName()).append(" ").append((appPreferences.getLastName() == null) ? "" : appPreferences.getLastName());
             mEmail = appPreferences.getEmailID();
         }
     }
@@ -132,12 +133,12 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                parent.getChildAt(position).setBackgroundColor(
-                        Color.parseColor("#A9BCF5"));
+               /* parent.getChildAt(position).setBackgroundColor(
+                        Color.parseColor("#A9BCF5"));*/
                 drawerListener_lv.onDrawerItemSelected_Lv(position);
                 mDrawerLayout.closeDrawer(containerView);
 
-                if (save != -1 && save != position) {
+                /*if (save != -1 && save != position) {
                     parent.getChildAt(save).setBackgroundColor(
                             Color.parseColor("#d6e6ff"));
                     drawerListener_lv.onDrawerItemSelected_Lv(position);
@@ -146,7 +147,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                     mDrawerLayout.closeDrawer(containerView);
                 }
 
-                save = position;
+                save = position;*/
             }
         });
 
@@ -260,7 +261,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
 
         if (requestCode == CAPTURE_IMAGE_CAMERA) {
-            photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), file.getAbsolutePath());
+           // photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), file.getAbsolutePath());
 
             mbitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
             proFile_Image.setImageBitmap(mbitmap);
@@ -271,7 +272,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 if (mbitmap != null) {
                     mbitmap.recycle();
                 }
-                photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), getRealPathFromURI(data.getData()));
+              //  photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), getRealPathFromURI(data.getData()));
 
                 InputStream stream = getActivity().getContentResolver().openInputStream(
                         data.getData());

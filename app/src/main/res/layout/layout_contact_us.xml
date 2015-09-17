@@ -42,8 +42,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_gravity="center"
-        android:textColor="@android:color/black"
-        android:text="Email Id:sample@gmail.com"
+        android:textColor="@color/com_facebook_blue"
+        android:text="@string/txtCredits"
+        android:textSize="22sp"
         android:id="@+id/textView22" />
 </LinearLayout>
 </ScrollView>

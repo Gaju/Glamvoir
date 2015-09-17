@@ -19,6 +19,7 @@
         <activity
             android:name=".activity.FrontPageActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,35 +37,51 @@
             android:value="@string/app_id" />
         <activity
             android:name=".activity.HomeActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="@string/app_name"></activity>
 
         <activity
             android:name=".activity.SignUpActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="@string/app_name"></activity>
 
         <activity
             android:name=".activity.SigninActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="@string/app_name"></activity>
 
-        <activity android:name=".activity.FollowersActivity"></activity>
+        <activity android:name=".activity.FollowersActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
-        <activity android:name=".activity.FollowingActivity"></activity>
+        <activity android:name=".activity.FollowingActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
-        <activity android:name=".activity.MyPostActivity"></activity>
+        <activity android:name=".activity.MyPostActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
-        <activity android:name=".activity.MysaveActivity"></activity>
+        <activity android:name=".activity.MysaveActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
-        <activity android:name=".activity.SettingsActivity"></activity>
+        <activity android:name=".activity.SettingsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
-        <activity android:name=".activity.MyAccountActivity"></activity>
-        <activity android:name=".activity.AlertActivity"></activity>
-        <activity android:name=".activity.AddStory"></activity>
-        <activity android:name=".activity.MyCityActivity"></activity>
-        <activity android:name=".activity.FaqActivity"></activity>
-        <activity android:name=".activity.Privacy_Policy"></activity>
+        <activity android:name=".activity.MyAccountActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.AlertActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.AddStory"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.MyCityActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.FaqActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.Privacy_Policy"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
-        <activity android:name=".activity.Term_and_Condition"></activity>
-        <activity android:name=".activity.Contact_Us"></activity>
+        <activity android:name=".activity.Term_and_Condition"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.Contact_Us"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
 
 

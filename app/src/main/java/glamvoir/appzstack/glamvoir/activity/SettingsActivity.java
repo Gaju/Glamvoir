@@ -113,6 +113,13 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
                 break;
             case 2:
 
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL,new String[]{"jobs@boommarcom.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Hiring");
+                email.putExtra(Intent.EXTRA_TEXT, "");
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email, "Select Email Client"));
+
                 break;
             case 3:
 

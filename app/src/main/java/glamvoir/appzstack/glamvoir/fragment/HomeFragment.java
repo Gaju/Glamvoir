@@ -26,7 +26,7 @@ public class HomeFragment extends Fragment {
     ViewPager mViewPager;
 
     String[] titlesTAB;
-    int Numboftabs =4;
+    int Numboftabs =5;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -46,8 +46,9 @@ public class HomeFragment extends Fragment {
 
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
-        mViewPager.setOffscreenPageLimit(4); // tabcachesize (=tabcount for better performance)
-        titlesTAB =new String[]{"All","FASHION","FOOD & PLACE","SAVE & DEALS"};
+        mViewPager.setOffscreenPageLimit(5);
+        // tabcachesize (=tabcount for better performance)
+        titlesTAB =new String[]{"All","FASHION & LIFESTYLE","FOOD & PLACE","MUSIC & GIGS","INTEREST"};
         mSlidingTabLayout = (SlidingTabLayout)rootView.findViewById(R.id.sliding_tabs);
 
 
@@ -58,8 +59,7 @@ public class HomeFragment extends Fragment {
         mSlidingTabLayout.setDistributeEvenly(true);
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), titlesTAB, Numboftabs));
         mSlidingTabLayout.setViewPager(mViewPager);
-
-
+        mViewPager.setCurrentItem(1);
         // Tab events
         if (mSlidingTabLayout != null) {
             mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -141,7 +141,12 @@ public class HomeFragment extends Fragment {
                 return tab3;
             } else if (position == 3) // if the position is 0 we are returning the First tab
             {
-                StoreAndDeals tab5 = new StoreAndDeals();
+                StoreAndDeals tab4 = new StoreAndDeals();
+                return tab4;
+            }
+            else if (position == 4) // if the position is 0 we are returning the First tab
+            {
+                Interest tab5 = new Interest();
                 return tab5;
             }
 
@@ -153,6 +158,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
+
             return Titles[position];
         }
 

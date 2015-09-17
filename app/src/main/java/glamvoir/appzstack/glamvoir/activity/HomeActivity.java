@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
         drawerFragment.setUp(R.id.fragment_navigation_drawer_lv, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
         drawerFragment.setDrawerListener_lv(this);
         // display the first navigation drawer view on app launch
-        displayView(1);
+        displayView(0);
     }
 
 
@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
         switch (position) {
             case 0:
                 fragment = new HomeFragment();
-
+                title = getString(R.string.title_feed);
                 if (fragment != null) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -145,12 +145,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                     // set the toolbar title
                     getSupportActionBar().setTitle(title);
                 }
-                title = getString(R.string.title_feed);
+
 
                 break;
             case 1:
                 fragment = new FleaFragment();
-
+                title = getString(R.string.title_home);
                 if (fragment != null) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -160,7 +160,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                     // set the toolbar title
                     getSupportActionBar().setTitle(title);
                 }
-                title = getString(R.string.title_home);
+
                 break;
 
             case 2:

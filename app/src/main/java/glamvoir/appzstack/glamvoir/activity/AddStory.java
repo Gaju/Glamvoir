@@ -17,7 +17,7 @@ public class AddStory extends AppCompatActivity {
 
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, MyPostActivity.class);
+        Intent intent = new Intent(context, AddStory.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }

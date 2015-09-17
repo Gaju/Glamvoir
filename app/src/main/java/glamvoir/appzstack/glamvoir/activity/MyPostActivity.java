@@ -27,7 +27,7 @@ public class MyPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_post);//layout_mypost
+        setContentView(R.layout.layout_mypost);//layout_mypost
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
