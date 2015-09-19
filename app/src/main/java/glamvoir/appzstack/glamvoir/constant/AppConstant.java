@@ -14,6 +14,13 @@ public class AppConstant {
     public static final String METHOD_MYSAVE = "mysavedpost";
     public static final String METHOD_UPDATE_IMAGE = "updateImage";
     public static final String METHOD_MYPOST = "";
+    public static final String METHOD_GETPOST = "getPosts";
+
+    public static final String CATEGORY_ALL = "1";
+    public static final String CATEGORY_FASHION = "2";
+    public static final String CATEGORY_FOOD_PLACE = "3";
+    public static final String CATEGORY_INTEREST = "4";
+    public static final String CATEGORY_STORE_DEAL = "5";
 
     public static String getDeviceToken(Context context) {
         String deviceId = Settings.Secure.getString(context.getContentResolver(),

@@ -5,9 +5,12 @@ import java.io.File;
 import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
+import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
+import retrofit.mime.TypedString;
 
 /**
  * Created by gajendran on 03-08-2015.
@@ -38,13 +41,31 @@ public class Communication {
         return response;
     }
 
+
+    public static DeleteMySaveResponse deleteMySave(String methodType, String userID, String postID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        DeleteMySaveResponse response = service.deleteMySave(methodType, userID, postID);
+        return response;
+    }
+
     public static PhotoUploadResponse uploadImage(String methodType, String userID, String imagePath) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
 
         File requestFilePath = new File(imagePath);
         String filename = imagePath.substring(imagePath.lastIndexOf("/") + 1);
 
-        PhotoUploadResponse response = service.uploadPhoto(new TypedFile("image/jpeg", requestFilePath), methodType, userID, filename);
+
+        MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+        multipartTypedOutput.addPart("method",new TypedString(methodType));
+        multipartTypedOutput.addPart("user_id", new TypedString(userID));
+        multipartTypedOutput.addPart("user_image", new TypedString(filename));
+        multipartTypedOutput.addPart("file",new TypedFile("image/*", requestFilePath));
+
+
+
+       // PhotoUploadResponse response = service.uploadPhoto(multipartTypedOutput);
+
+        PhotoUploadResponse response = service.uploadPhoto(new TypedFile("image/*", requestFilePath), methodType, userID, filename);
         return response;
     }
 }

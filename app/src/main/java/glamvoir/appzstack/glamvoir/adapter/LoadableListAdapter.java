@@ -161,4 +161,18 @@ public abstract class LoadableListAdapter<T> extends RecyclerView.Adapter<Recycl
 //        }
 //    }
 
+
+
+    /*
+     * Inserting a new item at the head of the list. This uses a specialized
+     * RecyclerView method, notifyItemRemoved(), to trigger any enabled item
+     * animations in addition to updating the view.
+     */
+    public void removeItem(int position) {
+        if (position >= items.size()) return;
+
+        items.remove(position);
+        notifyItemRemoved(position);
+    }
+
 }

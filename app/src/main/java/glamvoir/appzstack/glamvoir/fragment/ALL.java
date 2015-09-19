@@ -24,7 +24,7 @@ public class ALL extends Fragment {
         //feed_or_felia_market_shell
 
         mlistView= (ListView) v.findViewById(R.id.lv_all);
-        mlistView.setAdapter(new Custome_All_ListAdapter(getActivity()));
+       // mlistView.setAdapter(new Custome_All_ListAdapter(getActivity()));
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

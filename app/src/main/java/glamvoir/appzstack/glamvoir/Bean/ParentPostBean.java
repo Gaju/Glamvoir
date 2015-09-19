@@ -1,11 +1,12 @@
 package glamvoir.appzstack.glamvoir.Bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by gajendran on 9/9/15.
  */
-public class singlePostBean extends BaseBean implements Serializable {
+public class ParentPostBean extends BaseBean implements Serializable {
 
     public String post_id;
     public String post_parent_id;
@@ -21,6 +22,16 @@ public class singlePostBean extends BaseBean implements Serializable {
     public int total_like;
     public int total_dislike;
     public int like_dislike_status;
+
+    public List<ChildPostBean> childResult;
+
+    public List<ChildPostBean> getChildResult() {
+        return childResult;
+    }
+
+    public void setChildResult(List<ChildPostBean> childResult) {
+        this.childResult = childResult;
+    }
 
     public String getPost_id() {
         return post_id;

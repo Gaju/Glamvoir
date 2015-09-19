@@ -151,7 +151,9 @@ public abstract class FFSPActivity extends AppCompatActivity {
 //            }
 
         adapter.notifyDataSetChanged();
+    }
 
-
+    public void removeItem(int position) {
+        adapter.removeItem(position);
     }
 }

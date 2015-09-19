@@ -7,4 +7,5 @@ public class LoaderID {
 
     public static final int LOGIN=1;
     public static final int FFSP =2;
+    public static final int GETPOST =3;
 }

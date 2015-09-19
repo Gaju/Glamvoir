@@ -1,8 +1,11 @@
 package glamvoir.appzstack.glamvoir.asynctaskloader;
 
-import android.content.AsyncTaskLoader;
+
+import android.support.v4.content.AsyncTaskLoader;
 
 import glamvoir.appzstack.glamvoir.Bean.AllPostsBean;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.network.NetworkCall;
 import glamvoir.appzstack.glamvoir.network.ParserClass;
@@ -10,17 +13,19 @@ import glamvoir.appzstack.glamvoir.network.ParserClass;
 /**
  * Created by gajendran on 9/9/15.
  */
-public class GetAllPost extends AsyncTaskLoader<AllPostsBean> implements BaseLoader {
+public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> implements BaseLoader {
 
     private RequestBean requestBean;
     private NetworkCall networkCall;
     private AllPostsBean allPostsBean;
     private String mUrl;
+    private String categoryID;
 
-    public GetAllPost(RequestBean requestBean, String url) {
+    public GetAllPostLoader(RequestBean requestBean, String url, String categoryID) {
         super(requestBean.getContext());
         this.requestBean = requestBean;
         this.mUrl = url;
+        this.categoryID = categoryID;
         networkCall = NetworkCall.getInstance(requestBean.getContext());
     }
 
@@ -52,9 +57,10 @@ public class GetAllPost extends AsyncTaskLoader<AllPostsBean> implements BaseLoa
     public AllPostsBean loadInBackground() {
         allPostsBean = new AllPostsBean();
 
+        AppPreferences appPreferences = AppPreferences.getInstance(requestBean.getContext());
         String url = null;
         try {
-            //url = AppConfig.GLOBALPRODUCTSEARCH + URLEncoder.encode(mProductCode, "UTF-8") + URLEncoder.encode(mProductFilter, "UTF-8");
+            url = mUrl + "method=" + AppConstant.METHOD_GETPOST + "&user_gender=1"  /*+ appPreferences.getGender()*/ + "&cat_id=" + categoryID + "&user_id=21" /*+ appPreferences.getUserId()*/;
             String serverResponseString = networkCall.getResponseFromServer(url.trim());
 
             ParserClass parserClass = ParserClass.getsInstance(requestBean.getContext());
@@ -62,6 +68,7 @@ public class GetAllPost extends AsyncTaskLoader<AllPostsBean> implements BaseLoa
 
         } catch (Exception e) {
             e.printStackTrace();
+            allPostsBean.setSuccessCode(1);
         }
 
         return allPostsBean;

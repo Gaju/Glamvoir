@@ -7,8 +7,11 @@ public class AppConfig {
 
     // CREDENTIALS
     public final static String DOMAIN = "http://glamvoir.com/api";
+
    /* public final static String DOMAIN = "http://android.999globalsoft.com/";*/
    /* public final static String DOMAIN = "http://glamvoir.shrubtechnology.com/api";*/
+
+    public final static String GETALLPOST ="http://glamvoir.com/index.php/api?";
 
 
     public static String getDomain() {

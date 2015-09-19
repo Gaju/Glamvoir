@@ -25,7 +25,8 @@ public class AppPreferences {
         userLastName,
         deviceToken,
         deviceType,
-        firstTime
+        firstTime,
+        gender
     }
 
     public AppPreferences(Context context) {
@@ -116,6 +117,15 @@ public class AppPreferences {
 
     public boolean getFirstTime() {
         return mPreferences.getBoolean(SharedPrefrencesKey.firstTime.toString(), true);
+    }
+
+    public String getGender() {
+        return mPreferences.getString(SharedPrefrencesKey.gender.toString(), null);
+    }
+
+    public void setGender(String gender) {
+        mEditor.putString(SharedPrefrencesKey.gender.toString(), gender);
+        mEditor.commit();
     }
 }
 

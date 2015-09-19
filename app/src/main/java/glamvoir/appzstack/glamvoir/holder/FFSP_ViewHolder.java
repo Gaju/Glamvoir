@@ -36,7 +36,7 @@ public class FFSP_ViewHolder extends RecyclerView.ViewHolder implements View.OnC
         //followingBy_Action = (TextView) view.findViewById(R.id.tv_shell_action_name);
 
 
-        //chatButton.setOnClickListener(this);
+        icon.setOnClickListener(this);
     }
 
     @Override

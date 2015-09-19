@@ -64,7 +64,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private Bitmap mbitmap;
     private ImageView proFile_Image;
     private ImageView alert;
-    File file = new File(Environment.getExternalStorageDirectory() + "/" + getDateTime() + ".jpeg");
+    File file;
     int save = -1;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -209,6 +209,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 switch (which) {
                     case R.id.share:
                         Toast.makeText(getActivity(), "Gallery", Toast.LENGTH_LONG).show();
+                        file = new File(Environment.getExternalStorageDirectory() + "/" + getDateTime() + ".jpg");
                         try {
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
@@ -220,6 +221,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                         break;
                     case R.id.upload:
                         Toast.makeText(getActivity(), "Camera", Toast.LENGTH_LONG).show();
+                        file = new File(Environment.getExternalStorageDirectory() + "/" + getDateTime() + ".jpg");
                         // capture image from camera.
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
@@ -258,7 +260,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 2;
-
 
         if (requestCode == CAPTURE_IMAGE_CAMERA) {
            // photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), file.getAbsolutePath());
@@ -348,7 +349,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     private String getDateTime() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         return sdf.format(c.getTime());
     }
 }

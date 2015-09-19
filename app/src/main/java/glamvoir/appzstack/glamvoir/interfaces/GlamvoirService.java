@@ -2,8 +2,10 @@ package glamvoir.appzstack.glamvoir.interfaces;
 
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
+import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -11,6 +13,7 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Query;
+import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
 
 /**
@@ -35,11 +38,18 @@ public interface GlamvoirService {
     @GET("/index.php/api")
     ObservedFollowResponse toggleFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);
 
+    @GET("/index.php/api")
+    DeleteMySaveResponse deleteMySave(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
+
     @Multipart
     @POST("/index.php/api")
     PhotoUploadResponse uploadPhoto(@Part("file") TypedFile file,
-                                    @Query("method") String methodName,
-                                    @Query("user_id") String user_id,
-                                    @Query("user_image") String user_image);
+                                    @Part("method") String methodName,
+                                    @Part("user_id") String user_id,
+                                    @Part("user_image") String user_image);
+
+    @Multipart
+    @POST("/index.php/api")
+    PhotoUploadResponse uploadPhoto(@Body MultipartTypedOutput attachments);
 
 }

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.activity.FFSPActivity;
 import glamvoir.appzstack.glamvoir.activity.FollowersActivity;
 import glamvoir.appzstack.glamvoir.activity.FollowingActivity;
 import glamvoir.appzstack.glamvoir.activity.MysaveActivity;
@@ -29,6 +30,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
     protected DisplayImageOptions imageOptions;
     protected ImageLoader imageLoader;
     protected HashMap<String, ArrayList<String>> adImages;
+    private int mPosition;
 
     //RecyclerViewOnItemClick onItemClick;
 
@@ -55,12 +57,10 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             @Override
             public void _OnClick(View view, int position) {
 
-//                if (view.getId() == R.id.chatButton) {
-//                    doFollow();
-//                } else {
-//                    if (onItemClick != null)
-//                        onItemClick.onItemClick(view, position);
-//                }
+                mPosition=position;
+                if (view.getId() == R.id.icon) {
+                    performAction();
+                }
             }
         });
         return holder;
@@ -93,6 +93,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
             holder.icon.setImageResource(R.drawable.followers);
             holder.icon_title.setText("Follower");
+
         } else if (context instanceof MysaveActivity) {
 
             //    holder.subtitle.setVisibility(View.INVISIBLE);
@@ -102,8 +103,10 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         }
     }
 
+    private void performAction() {
 
-    private void doFollow() {
-
+        if (context instanceof FollowingActivity) {
+            ((FFSPActivity)context).removeItem(mPosition);
+        }
     }
 }

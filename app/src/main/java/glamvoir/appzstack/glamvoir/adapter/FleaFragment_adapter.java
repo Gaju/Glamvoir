@@ -56,7 +56,7 @@ public class FleaFragment_adapter extends BaseAdapter implements View.OnClickLis
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
             final ViewPager viewPager = (ViewPager)convertView.findViewById(R.id.view_pager);
-            adapter = new ImagePagerAdapter(context);
+           // adapter = new ImagePagerAdapter(context);
             viewPager.setAdapter(adapter);
             final CirclePageIndicator circleIndicator = (CirclePageIndicator)convertView.findViewById(R.id.indicator);
             circleIndicator.setViewPager(viewPager);

@@ -10,7 +10,17 @@ public class AllPostsBean extends BaseBean implements Serializable {
 
     public String error_code;
     public String msg_string;
-    public List<singlePostBean> results;
+    public List<ParentPostBean> results;
+
+//    public List<ChildPostBean> childResult;
+//
+//    public List<ChildPostBean> getChildResult() {
+//        return childResult;
+//    }
+//
+//    public void setChildResult(List<ChildPostBean> childResult) {
+//        this.childResult = childResult;
+//    }
 
     public String getError_code() {
         return error_code;
@@ -28,11 +38,11 @@ public class AllPostsBean extends BaseBean implements Serializable {
         this.msg_string = msg_string;
     }
 
-    public List<singlePostBean> getResults() {
+    public List<ParentPostBean> getResults() {
         return results;
     }
 
-    public void setResults(List<singlePostBean> results) {
+    public void setResults(List<ParentPostBean> results) {
         this.results = results;
     }
 }

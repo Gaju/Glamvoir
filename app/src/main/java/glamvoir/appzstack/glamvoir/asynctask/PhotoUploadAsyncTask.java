@@ -39,6 +39,7 @@ public class PhotoUploadAsyncTask extends AsyncTask<String, Void, Void> {
                 //ParserClass parserClass = ParserClass.getsInstance(mContext);
                 //photoUploadResponse = parserClass.parseProductDetailResponse(serviceResult, photoUploadResponse);
                 //photoUploadResponse.setSearchKey(mSearhedKey);
+
                 mLIList.add(photoUploadResponse);
             }
         } catch (Exception e) {
