@@ -1,10 +1,12 @@
 package glamvoir.appzstack.glamvoir.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,7 +53,7 @@ public class ImagePagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
 
         ChildPostBean item = list.get(position);
 
@@ -66,11 +68,24 @@ public class ImagePagerAdapter extends PagerAdapter {
                 .findViewById(R.id.description);
 
         view_image.setImageResource(mImageIds[position]);
-        view_image.setScaleType(ImageView.ScaleType.FIT_XY);
+        view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        view_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TouchImageView imgDisplay;
+                final Dialog dialog = new Dialog(mContext);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.layout_fullscreen_image);
+                imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
+                imgDisplay.setImageResource(mImageIds[position]);
+               // imgDisplay.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                dialog.show();
+            }
+        });
 
         description.setText(item.getPost_description());
 
-        container.addView(convertView, position);
+        container.addView(convertView, 0);
 
         return convertView;
     }
