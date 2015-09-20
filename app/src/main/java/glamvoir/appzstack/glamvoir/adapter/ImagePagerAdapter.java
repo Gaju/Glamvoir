@@ -10,10 +10,16 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.Bean.ChildPostBean;
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.config.AppConfig;
+import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 
 /**
  * Created by jai on 9/10/2015.
@@ -21,8 +27,11 @@ import glamvoir.appzstack.glamvoir.R;
 public class ImagePagerAdapter extends PagerAdapter {
 
     private Context mContext;
+    private int mPosition;
 
     private List<ChildPostBean> list;
+    ImageLoader imageLoader;
+    DisplayImageOptions options;
 
     private final int[] mImageIds = new int[]{ //
             R.drawable.chiang_mai,
@@ -36,11 +45,12 @@ public class ImagePagerAdapter extends PagerAdapter {
     public ImagePagerAdapter(Context context, List<ChildPostBean> list) {
         mContext = context;
         this.list = list;
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
     public int getCount() {
-
-
         return list.size();
     }
 
@@ -53,9 +63,13 @@ public class ImagePagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, final int position) {
+    public Object instantiateItem(ViewGroup container, int position) {
+
+        mPosition = position;
 
         ChildPostBean item = list.get(position);
+
+        String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
 
         LayoutInflater inflater = (LayoutInflater) container.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,11 +91,18 @@ public class ImagePagerAdapter extends PagerAdapter {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layout_fullscreen_image);
                 imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
-                imgDisplay.setImageResource(mImageIds[position]);
-               // imgDisplay.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imgDisplay.setImageResource(mImageIds[mPosition]);
+                // imgDisplay.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 dialog.show();
             }
         });
+
+
+        // view_image.setImageResource(mImageIds[position]);
+        //view_image.setScaleType(ImageView.ScaleType.FIT_XY);
+
+
+        imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
 
         description.setText(item.getPost_description());
 
@@ -92,7 +113,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-
         return view == object;
     }
 

@@ -12,16 +12,21 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 
 /**
  * Created by jaim on 9/11/2015.
@@ -32,13 +37,16 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     ImagePagerAdapter adapter;
     Context context;
     ArrayList<ParentPostBean> list;
+    ImageLoader imageLoader;
+    DisplayImageOptions options;
 
     public Custome_All_ListAdapter(FragmentActivity activity, ArrayList<ParentPostBean> allPostsBeans) {
         this.context = activity;
         this.list = allPostsBeans;
-        inflater = (LayoutInflater) context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
     @Override
@@ -66,7 +74,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
             final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
-            adapter = new ImagePagerAdapter(context,item.getChildResult());
+            adapter = new ImagePagerAdapter(context, item.getChildResult());
             viewPager.setAdapter(adapter);
             final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
             circleIndicator.setViewPager(viewPager);
@@ -86,6 +94,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.bt_ff_shell_complain = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_complain);
             holder.bt_ff_shell_map = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_map);
 
+            holder.user_Image = (ImageView) convertView.findViewById(R.id.imageView);
+
             convertView.setTag(holder);
 
         } else {
@@ -93,8 +103,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         }
 
 
-        if (item.getPost_description() != null) {
-            holder.tv_ff_shell_username.setText(item.getPost_description());
+        if (item.getUser_fname() != null) {
+            holder.tv_ff_shell_username.setText(item.getUser_fname() + " " + item.getUser_lname());
         }
 
         if (item.getTotal_like() != 0) {
@@ -107,6 +117,15 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_time.setText(item.getPost_end_date());
         }
 
+        if (item.getUser_image() != null) {
+            imageLoader.displayImage(item.getUser_image(), holder.user_Image, options);
+        }
+
+        if(item.getContact_no().length()==10){
+            holder.bt_connect_with_seller.setVisibility(View.VISIBLE);
+        }else {
+            holder.bt_connect_with_seller.setVisibility(View.GONE);
+        }
 
         holder.bt_connect_with_seller.setOnClickListener(this);
         holder.bt_ff_shell_shave.setOnClickListener(this);
@@ -195,6 +214,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         ImageButton bt_ff_shell_share;
         ImageButton bt_ff_shell_complain;
         ImageButton bt_ff_shell_map;
+        ImageView user_Image;
 
 
     }

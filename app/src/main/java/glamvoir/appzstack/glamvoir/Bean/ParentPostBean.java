@@ -18,10 +18,56 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public String post_image;
     public String post_start_date;
     public String post_end_date;
+    public String user_fname;
+    public String user_lname;
+    public String contact_no;
+    public String user_signup_type;
+    public String user_image;
+
     public int is_following;
     public int total_like;
     public int total_dislike;
     public int like_dislike_status;
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
+    }
+
+    public String getUser_signup_type() {
+        return user_signup_type;
+    }
+
+    public void setUser_signup_type(String user_signup_type) {
+        this.user_signup_type = user_signup_type;
+    }
+
+    public String getUser_fname() {
+        return user_fname;
+    }
+
+    public void setUser_fname(String user_fname) {
+        this.user_fname = user_fname;
+    }
+
+    public String getUser_lname() {
+        return user_lname;
+    }
+
+    public void setUser_lname(String user_lname) {
+        this.user_lname = user_lname;
+    }
+
+    public String getContact_no() {
+        return contact_no;
+    }
+
+    public void setContact_no(String contact_no) {
+        this.contact_no = contact_no;
+    }
 
     public List<ChildPostBean> childResult;
 

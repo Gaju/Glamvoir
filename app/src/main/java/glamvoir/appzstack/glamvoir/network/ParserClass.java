@@ -72,6 +72,28 @@ public class ParserClass {
                                 ParentPostBean.setPost_id(obj.optString("post_id"));
                             }
 
+
+                            if (Utils.contains(obj, "user_fname")) {
+                                ParentPostBean.setUser_fname(obj.optString("user_fname"));
+                            }
+
+                            if (Utils.contains(obj, "user_lname")) {
+                                ParentPostBean.setUser_lname(obj.optString("user_lname"));
+                            }
+
+                            if (Utils.contains(obj, "user_image")) {
+                                ParentPostBean.setUser_image(obj.optString("user_image"));
+                            }
+
+                            if (Utils.contains(obj, "user_signup_type")) {
+                                ParentPostBean.setUser_signup_type(obj.optString("user_signup_type"));
+                            }
+
+                            if (Utils.contains(obj, "user_contact")) {
+                                ParentPostBean.setContact_no(obj.optString("user_contact"));
+                            }
+
+
                             if (Utils.contains(obj, "post_parent_id")) {
                                 ParentPostBean.setPost_parent_id(obj.optString("post_parent_id"));
                             }

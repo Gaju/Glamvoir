@@ -13,6 +13,8 @@ public class AppConfig {
 
     public final static String GETALLPOST ="http://glamvoir.com/index.php/api?";
 
+    public final static String POST_IMAGE_BASE_PATH ="http://glamvoir.com/assests/post_images/";
+
 
     public static String getDomain() {
         return DOMAIN;
