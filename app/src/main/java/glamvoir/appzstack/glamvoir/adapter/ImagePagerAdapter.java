@@ -37,7 +37,9 @@ public class ImagePagerAdapter extends PagerAdapter {
     }
 
     public int getCount() {
-        return mImageIds.length;
+
+
+        return list.size();
     }
 
     public Object getItem(int position) {
@@ -66,17 +68,16 @@ public class ImagePagerAdapter extends PagerAdapter {
         view_image.setImageResource(mImageIds[position]);
         view_image.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        description.setText("The natural habitat of the Niligiri tahr,Rajamala is 2695 Mts above sea level"
-                + "The natural habitat of the Niligiri tahr,Rajamala Rajamala is 2695 Mts above sea level"
-                + "The natural habitat of the Niligiri tahr,Rajamala Rajamala is 2695 Mts above sea level");
+        description.setText(item.getPost_description());
 
-        container.addView(convertView, 0);
+        container.addView(convertView, position);
 
         return convertView;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
+
         return view == object;
     }
 
