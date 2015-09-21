@@ -2,6 +2,7 @@ package glamvoir.appzstack.glamvoir.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -10,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ public class FleaFragment extends Fragment {
     //ImagePagerAdapter adapter;
     private ListView mlistView;
     private RequestBean mRequestBean;
+    private TextView tv_search;
 
     private ArrayList<ParentPostBean> list = new ArrayList<ParentPostBean>();
 
@@ -42,6 +48,7 @@ public class FleaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(getActivity());
@@ -52,6 +59,9 @@ public class FleaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
         mlistView = (ListView) rootView.findViewById(R.id.lv_all);
+        tv_search= (TextView) rootView.findViewById(R.id.tv_search);
+        tv_search.setVisibility(View.VISIBLE);
+
 
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,10 +74,15 @@ public class FleaFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated( Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        loadData();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
-        loadData();
     }
 
     protected void loadData() {
@@ -104,4 +119,9 @@ public class FleaFragment extends Fragment {
         mlistView.setAdapter(new Custome_All_ListAdapter(getActivity(),list));
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ImageLoader.getInstance().destroy();
+    }
 }

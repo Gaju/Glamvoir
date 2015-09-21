@@ -82,6 +82,8 @@
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity android:name=".activity.Contact_Us"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.ProfileActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
 
 

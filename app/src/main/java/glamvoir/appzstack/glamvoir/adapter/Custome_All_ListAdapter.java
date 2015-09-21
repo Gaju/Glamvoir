@@ -40,12 +40,14 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     ImageLoader imageLoader;
     DisplayImageOptions options;
 
+
     public Custome_All_ListAdapter(FragmentActivity activity, ArrayList<ParentPostBean> allPostsBeans) {
         this.context = activity;
         this.list = allPostsBeans;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
@@ -110,7 +112,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         if (item.getTotal_like() != 0) {
             holder.tv_ff_shell_like_count.setText(item.getTotal_like() + "likes");
         } else {
-            holder.tv_ff_shell_like_count.setText(item.getTotal_like() + "like");
+            holder.tv_ff_shell_like_count.setText("like");
         }
 
         if (item.getPost_end_date() != null) {
@@ -126,6 +128,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         }else {
             holder.bt_connect_with_seller.setVisibility(View.GONE);
         }
+
+        holder.tv_ff_shell_comment_count.setText("Comments");
 
         holder.bt_connect_with_seller.setOnClickListener(this);
         holder.bt_ff_shell_shave.setOnClickListener(this);
@@ -218,4 +222,5 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
 
     }
+
 }

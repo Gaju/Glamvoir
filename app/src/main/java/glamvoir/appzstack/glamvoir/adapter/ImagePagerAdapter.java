@@ -28,19 +28,11 @@ public class ImagePagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private int mPosition;
+    ChildPostBean item;
 
-    private List<ChildPostBean> list;
+    private List<ChildPostBean> list=null;
     ImageLoader imageLoader;
     DisplayImageOptions options;
-
-    private final int[] mImageIds = new int[]{ //
-            R.drawable.chiang_mai,
-            R.drawable.himeji,
-            R.drawable.petronas_twin_tower,
-            R.drawable.ulm,
-            R.drawable.chiang_mai,
-
-    };
 
     public ImagePagerAdapter(Context context, List<ChildPostBean> list) {
         mContext = context;
@@ -67,7 +59,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 
         mPosition = position;
 
-        ChildPostBean item = list.get(position);
+         item = list.get(position);
 
         String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
 
@@ -81,7 +73,6 @@ public class ImagePagerAdapter extends PagerAdapter {
         TextView description = (TextView) convertView
                 .findViewById(R.id.description);
 
-        view_image.setImageResource(mImageIds[position]);
         view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
         view_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,16 +82,10 @@ public class ImagePagerAdapter extends PagerAdapter {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layout_fullscreen_image);
                 imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
-                imgDisplay.setImageResource(mImageIds[mPosition]);
-                // imgDisplay.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), imgDisplay, options);
                 dialog.show();
             }
         });
-
-
-        // view_image.setImageResource(mImageIds[position]);
-        //view_image.setScaleType(ImageView.ScaleType.FIT_XY);
-
 
         imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
 
