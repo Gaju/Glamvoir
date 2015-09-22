@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,11 +77,35 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
-            final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
-            adapter = new ImagePagerAdapter(context, item.getChildResult());
-            viewPager.setAdapter(adapter);
-            final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
-            circleIndicator.setViewPager(viewPager);
+            if (item.getChildResult()!=null){
+                final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
+                adapter = new ImagePagerAdapter(context, item.getChildResult());
+                viewPager.setAdapter(adapter);
+                final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
+                circleIndicator.setViewPager(viewPager);
+
+            }
+            else {
+                LinearLayout ll_view_pager= (LinearLayout) convertView.findViewById(R.id.ll_view_pager);
+
+                final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
+                viewPager.setVisibility(View.GONE);
+                final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
+                circleIndicator.setVisibility(View.GONE);
+                ImageView defaultImage= new ImageView(context);
+                defaultImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 300));
+                defaultImage.setImageResource(R.drawable.pic);
+                TextView defaultTextView= new TextView(context);
+                defaultTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                defaultTextView.setGravity(Gravity.CENTER );
+                defaultTextView.setText("Image Not Available");
+                ll_view_pager.addView(defaultImage);
+                ll_view_pager.addView(defaultTextView);
+
+
+            }
+
+
             holder.tv_ff_shell_username = (TextView) convertView.findViewById(R.id.tv_ff_shell_username);
             holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
 

@@ -1,10 +1,13 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -40,8 +43,15 @@ public class MyAccountActivity extends AppCompatActivity {
         initListener();
 
         getToolbar(toolbar);
+        setupWindowAnimations();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        getWindow().setEnterTransition(fade);
+    }
 
     /**
      * customize the toolbar

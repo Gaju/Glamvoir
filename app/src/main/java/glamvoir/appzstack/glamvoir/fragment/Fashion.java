@@ -89,7 +89,7 @@ public class Fashion extends Fragment {
 
                 @Override
                 public Loader<AllPostsBean> onCreateLoader(int id, Bundle args) {
-                    return new GetAllPostLoader(mRequestBean, AppConfig.GETALLPOST, AppConstant.CATEGORY_ALL);
+                    return new GetAllPostLoader(mRequestBean, AppConfig.GETALLPOST, AppConstant.CATEGORY_FASHION);
                 }
 
                 @Override

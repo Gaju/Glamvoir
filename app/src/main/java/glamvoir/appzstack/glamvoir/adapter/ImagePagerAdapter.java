@@ -29,6 +29,8 @@ public class ImagePagerAdapter extends PagerAdapter {
     private Context mContext;
     private int mPosition;
     ChildPostBean item;
+ 
+
 
     private List<ChildPostBean> list=null;
     ImageLoader imageLoader;
@@ -36,6 +38,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 
     public ImagePagerAdapter(Context context, List<ChildPostBean> list) {
         mContext = context;
+
         this.list = list;
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
@@ -43,6 +46,9 @@ public class ImagePagerAdapter extends PagerAdapter {
     }
 
     public int getCount() {
+      if (list==null){
+          return -1;
+      }
         return list.size();
     }
 
@@ -57,41 +63,42 @@ public class ImagePagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        mPosition = position;
-
-         item = list.get(position);
-
-        String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
+         mPosition = position;
 
         LayoutInflater inflater = (LayoutInflater) container.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View convertView = inflater.inflate(R.layout.view_item_shell, null);
 
-        ImageView view_image = (ImageView) convertView
-                .findViewById(R.id.view_image);
-        TextView description = (TextView) convertView
-                .findViewById(R.id.description);
 
-        view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        view_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TouchImageView imgDisplay;
-                final Dialog dialog = new Dialog(mContext);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.layout_fullscreen_image);
-                imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
-                imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), imgDisplay, options);
-                dialog.show();
-            }
-        });
 
-        imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
 
-        description.setText(item.getPost_description());
+            item = list.get(position);
+            String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
+            ImageView view_image = (ImageView) convertView
+                    .findViewById(R.id.view_image);
+            TextView description = (TextView) convertView
+                    .findViewById(R.id.description);
 
-        container.addView(convertView, 0);
+            view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            view_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TouchImageView imgDisplay;
+                    final Dialog dialog = new Dialog(mContext);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.layout_fullscreen_image);
+                    imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
+                    imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), imgDisplay, options);
+                    dialog.show();
+                }
+            });
+
+            imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
+
+            description.setText(item.getPost_description());
+
+            container.addView(convertView, 0);
+
 
         return convertView;
     }

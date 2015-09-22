@@ -1,10 +1,14 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.widget.ListView;
 
 import glamvoir.appzstack.glamvoir.R;
@@ -46,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
         initListener();
 
         getToolbar(toolbar);
+        setupWindowAnimations();
 
         settingsLabels = getResources().getStringArray(R.array.settings_labels);
 
@@ -53,6 +58,17 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        getWindow().setEnterTransition(fade);
+
+        Slide slide = new Slide();
+        fade.setDuration(1000);
+        getWindow().setReturnTransition(slide);
     }
 
 

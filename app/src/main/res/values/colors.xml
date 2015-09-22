@@ -9,6 +9,7 @@
     <color name="tabBarIndicator">#0000FF</color>
     <color name="buttonStroke">#2a2a2a</color>
     <color name="overscroll">#33b5e5</color>
+    <color name="sub_tittle">#909090</color>
 
 
 </resources>

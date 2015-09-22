@@ -105,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:id="@+id/ll_view_pager"
                 android:orientation="vertical">
 
 
@@ -227,7 +228,7 @@
                     android:layout_marginRight="@dimen/padding_medium"
                     android:hint="5"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/sub_tittle"
 
 
                     />
@@ -238,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:hint="10"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/sub_tittle" />
 
 
             </LinearLayout>

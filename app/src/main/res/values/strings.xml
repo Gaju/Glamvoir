@@ -101,8 +101,133 @@
     <string name="dont_show">Dont not show me post from this user</string>
     <string name="roport">Report Abuse</string>
 
-    <string name="bodyText">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería d</string>
-   <string name="question_one">What is Lorem Ipsum ?</string>
+    <string name="question_one">WHAT IS GLAMVOIR?</string>
+    <string name="question_one_anwer"> \n-	Glamvoir is a community of members. It’s a medium to interact with other community members on fashion, lifestyle, food, music, and avocational interests.  Glamvoir community consists of fashion stores, designers, boutiques, connoisseurs, gourmets, chefs, cafe, restaurants, bars, lounges, artists, performers, photographers, writers and everyone else who fits in between.
+     \n-You can connect with fellow members of the community by simply uploading a post and get replies from them. Not just that, you can also chat with distinguished members in your city by sending them personalized messages – such as stylists, hairdressers, nutritionists, yoga instructors, photographers, caterers etc.
+     \n-Story sharing and inspiring! If you feel there is something worthy out there on the internet which is interesting, informative, or inspiring then please share it. You can upload picture stories of your personal style, your reflections on seasonal fashion verve, comment on celebrity style, share beauty tips; review a product, store, designer or brand. Inspire all for the love of Glamvoir community.
+     \n-Glamvoir allows you to discover fashion and lifestyle products, collections at different fashion stores, food places, bars, gigs, art workshops and events in your city. You can save your awesome discoveries and events for your reference later.
+      \n-Glamvoir is also an open market place where fashionistas, designers, boutiques can sell or auction their apparels, accessories, footwear and lifestyle products by connecting with their buyers through whatsapp. For other community members, they can sell their used fashion and lifestyle products to an interested buyer of the Glamvoir community.
+      \n-Follow what you love and love what you follow!</string>
+
+    <string name="question_two">HOW TO CREATE MY ACCOUNT?</string>
+    <string name="question_two_anwer">
+        \n -Signing up to create an account is easy. You can sign up with your google or facebook account and your account automatically gets created.
+        \n-You can also create an account by pressing sign up button on the home screen and enter your basic details like, name, gender, email, phone number and then set your password for signing in, should you get signed outout later.
+    </string>
+    <string name="question_three">HOW TO CREATE AN ACCOUNT FOR MY ESTABLISHMENT?</string>
+    <string name="question_three_anwer">
+    \n -	User account for any establishment such as boutiques, stores, restaurants, café, bar, catering company, etc. can be created in the same way as an account is created for an individual.
+    \n -Please bear in mind that Glamvoir fetches details of your facebook or google account when you sign up through them. Therefore, for avoiding wrong details to be used in your profile, please make sure that you use the correct facebook or google account of your establishment for signing up with Glamvoir.
+    \n -When you sign up to create an account by filling in all your details, the creator of the account should enter his or her gender and age. Details like name, email and phone number should be of the establishment
+
+    </string>
+
+    <string name="question_four"> WHY SHOULD I UPDATE MY ACCOUNT?</string>
+    <string name="question_four_anwer">
+    \n-It is strongly recommended that you update your profile so that you could benefit from using all Glamvoir features, such as (i) connecting with sellers/buyers, stylists, etc. through whatsapp messenger (ii) making location of your establishment trackable for members (iii) allowing members to know what’s most appealing about you or your establishment.
+    \n-To update your profile details you will have to press SETTINGS button in your dashboard and then press MY ACCOUNT. Under MY ACCOUNT please fill in your phone number, age and location (if it is an account for an establishment). Please write about yourself or your establishment under ABOUT ME so that you are known to the community better.
+   </string>
+
+    <string name="question_five">HOW TO CHANGE MY DISPLAY PICTURE?</string>
+    <string name="question_five_anwer">
+    -	By pressing the camera button or your existing display picture above your name on top of your dashboard you can change your display picture
+    </string>
+
+    <string name="question_six">WHAT CAN I DO IF I AM TRAVELLING OR RELOCATED TO ANOTHER CITY?</string>
+    <string name="question_six_anwer">
+   -	To update or change your city preference, you will have to press SETTINGS button in your dashboard and then press MY CITY. By selecting a different city you can change your city preference. After changing your city you will start viewing posts which are specific to that city along with posts which are general and visible for all cities
+    </string>
+    <string name="question_seven"> HOW CAN I UPLOAD A POST?</string>
+    <string name="question_seven_anwer">
+    \n  -In FEED and FLEA MARKET section by pressing the top right button saying POST you can create and upload a post.
+    \n  -Depending upon the nature of your post, you should upload your post under an appropriate category, i.e. (i) fashion andlifestyle, (ii) food and places, (iii) music and gigs, (iv) avocational interests, (v) flea market.
+    </string>
+    <string name="question_eight">WHAT SHOULD I POST IN FASHION AND LIFESTYLE CATEGORY UNDER FEED?</string>
+    <string name="question_eight_anwer">
+        \n-You can post fashion and lifestyle related question (with or without pictures) for the Glamvoir community to answer. E.g.  Any recommendations for a good freelance makeup artist for my wedding?
+        \n-If you feel there is something worthy or new out there on the internet about fashion and lifestyle (blog, tips, article, images, product or boutique review etc.) which is interesting, informative, or inspiring, then please share it.
+       \n-You can upload picture stories of your personal style, your reflections on seasonal fashion verve, comment on celebrity style, share beauty tips; review a product, store, designer or brand. Inspire all for the love of Glamvoir community.
+       \n -If you are an establishment, e.g. store, boutique, beauty salon, etc., you can upload pictures of your latest collection, bestsellers, finest services, pictures of establishment with a description of what’s so fascinating about it. If you wish you can connect with your customers by inserting your phone no. at the time of uploading the post. If you insert your location then people can see your location and search you whenever they wish to.
+    </string>
+     <string name="question_nine">WHAT SHOULD I POST IN FOOD AND PLACES CATEGORY UNDER FEED?</string>
+    <string name="question_nine_anwer">
+      \n -You can post food or food place related question (with or without pictures) for the Glamvoir community to answer. It could be related to anything – where to find best dim sung in town, when would be the next wine tasting event in the city, recommendations for a good Bohri kitchen in your city, etc.
+     \n-If you feel there is something in your mind or relevant on the internet about different cuisine, restaurants, café, bars, lounges, (food blog, food critique, food or restaurant review etc.), which is interesting, informative, or inspiring, then please share it. You can also upload picture stories of your personal experiences at different food-places with different cuisines.
+     \n-If you are an establishment, e.g. restaurant, café, bar, lounge etc., you can upload pictures of your food that is a must try or something new that is recently added in your menu. Your posts can also have pictures of fascinating décor and ambience of your establishment.
+      \n-You can post information of an upcoming event in your establishment by inserting a date and time at the time of uploading your post. Users can save the event to be reminded later. If you want your customers to connect with you for RSVP then please insert the relevant phone no. at the time of uploading the post. If you wish you can also insert location of your event or establishment for the benefit of users.
+
+    </string>
+    <string name="question_ten">WHAT SHOULD I POST IN MUSIC AND GIGS CATEGORY UNDER FEED?</string>
+    <string name="question_ten_anwer">\n-	You can post any question related to the world of music and gigs for the Glamvoir community to answer. It could relate to anything – your hunt for a new band artist, event performers, the next awesome deep house gig, seekingseeking album  recommendations for the best of a new genre you wanna try, etc.\n-	You can upload picture stories of your personal experience at different musical concerts and gigs.
+     \n-You can also upload youtube link of your musical compositions to gain popularity and know the audience responses.
+     \n-Anything interesting find for music lovers on the internet can be shared too.
+     \n-If you are an artist performing somewhere or an establishment hosting a gig, you can upload a post with all its details. By inserting date and time at the time of uploading your post users can save the event to be reminded later.
+    </string>
+
+    <string name="question_eleven">WHAT SHOULD I POST IN INTERSTS CATEGORY UNDER FEED?</string>
+    <string name="question_eleven_anwer">
+       \n-You can post any question related to avocational interests for the Glamvoir community to answer. E.g. Where to find best guitar classes, photography workshop, poetry clubs, painting tips, photo editing tips, trekking tours, etc. You can also post your interesting experience and stories related to your avocational interests.
+       \n-If you are an establishment, e.g. trek group, activity workshop, art school etc., you can upload posts related to what your establishment offers. Your posts can also have some interesting pictures stories relating to what you do.
+    </string>
+    <string name="question_twelve">WHAT SHOULD I POST UNDER FLEA MARKET?</string>
+    <string name="question_twelve_anwer">
+        \n-	By creating and uploading posts under Flea Market you can sell different products related to FASHION AND LIFESTYLE ONLY – e.g. apparels, accessories, footwear etc. Products other than fashion and lifestyle will be removed from the listing.
+        \n-	To upload a post under Flea Market, you will mandatorily have to provide your phone number at the time of creating your post.
+    </string>
+    <string name="question_thirteen">WHAT CAN I SEARCH FOR IN GLAMVOIR?</string>
+    <string name="question_thirteen_anwer">
+       \n-You can search for anything – store, designer, restaurants, concerts, etc. based on name, location, cuisine, genre, or any other relevant keyword. Just make sure you are searching the right category or searching under all categories.
+    </string>
+     <string name="question_fourteen">WHO CAN SEE POSTS THAT I UPLOAD?</string>
+    <string name="question_fourteen_anwer">
+     \n-When you upload a post that is shared with all, the entire Glamvoir community can see your posts. The order of posts may vary from user to user depending on their set preferences.
+    </string>
+    <string name="question_fifteen">HOW AND WHEN SHOULD I UPLOAD A POST JUST FOR WOMEN?</string>
+    <string name="question_fifteen_anwer">
+        \n-	At the time of creating a post you can select WOMEN under Share With. By doing this your post will appear only to women and not to men. It is advisable that you select this option only when you wish to keep your post visible exclusively to women users only. (Merely because you are selling women apparel doesn’t mean that men may not be interested to buy it for women). </string>
+    <string name="question_sixteen">HOW WHEN SHOULD I UPLOAD A POST JUST FOR MEN?</string>
+    <string name="question_sixteen_anwer">
+      \n -	At the time of creating a post you can select MEN under Share With. By doing this your post will appear only to men and not to men. It is advisable that you select this option only when you wish to keep your post visible exclusively to male users only. (Merely because you are selling men apparel doesn’t mean that women may not be interested to buy it for men).
+    </string>
+    <string name="question_seventeen">HOW AND WHEN SHOULD I UPLOAD A POST JUST FOR MY CITY?</string>
+    <string name="question_seventeen_anwer">
+       \n-	At the time of creating any post you can select your city (e.g. New Delhi) under Share With. By doing this your post will appear exclusively to users of your city only. It is advisable that you select this option when you are sure that your post will be relevant only to users of your current city and not for other city users.
+      \n -	If you don’t ship your products to other cities and intend to sell in your city only then whenever you post in Flea Market please make sure you share your post only with your city (by selecting your city while creating post). However, if you do ship it to other cities then make sure you share it with all.
+    </string>
+    <string name="question_ninteen">WHEN SHOULD I INSERT A PHONE NUMBER WHILE UPLOADING A POST? </string>
+    <string name="question_ninteen_anwer">
+    \n-As an establishment/user whenever you upload a post through which you want to be contacted by your customers then it is recommended that you insert a valid mobile phone number while creating your post.
+    \n -To successfully upload a post under Flea Market you will have to mandatorily insert a valid mobile phone number while creating your post as a seller.
+    \n -To connect with creator of any post, a user will have to necessarily provide a valid mobile phone under MY ACCOUNT in SETTINGS.
+    </string>
+    <string name="question_twenty">WHEN SHOULD I INSERT A LOCATION WHILE UPLOADING A POST?</string>
+    <string name="question_twenty_anwer">
+     \n-	As an establishment/user whenever you upload a post through which you want to inform your location to your customers/visitors then it is recommended that you provide a valid address while creating your post. This location gets shown along with the uploaded post only.
+    \n-The location which you enter under MY ACCOUNT in SETTINGS is a location assigned to your profile which is visible only in your profile and not along your post.
+   </string>
+   <string name="question_twenty_one">WHEN SHOULD I INSERT DATE AND TIME WHILE UPLOADING A POST?</string>
+    <string name="question_twenty_one_anwer">
+    \n-	Date and time is supposed to be inserted when you are creating an event post of any kind and you want viewers of the post to know about the time and date of such event, e.g. art exhibition, gigs, food festival, etc. Please make sure that you create an event under the right category.
+    </string>
+    <string name="question_twenty_two">WHAT HAPPENS ON SAVING A POST?</string>
+    <string name="question_twenty_two_anwer">
+   \n-	You can save any post by pressing the save icon in a post. Posts saved by you can be seen again by pressing MY SAVES in your dashboard.
+   \n-	When you save an event post you will get a notification on the event day morning. If you intend to attend an event then you should save that event post.
+   </string>
+    <string name="question_twenty_three">HOW SHOULD I REPORT A POST AS ABUSE?</string>
+    <string name="question_twenty_three_anwer">
+       \n-	In the event where a post is offensive, abusive, displaying explicit content, or having any reprehensive content then we request you to report it as abuse immediately.
+       \n-	In every post you will find \/ icon on right side of profile name. On pressing that you can see the option REPORT POST AS ABUSE. By pressing this option the reported post will get suspended and the admin will immediately take action.
+    </string>
+    <string name="question_twenty_four">DOES GLAMVOIR SELL ANYTHING?</string>
+    <string name="question_twenty_four_anwer">
+     -	NO, Glamvoir DOES NOT SELL ANYTHING. It’s an open market place which merely facilitates interaction between people. An occurrence of purchase or sale between users is incidental and exclusive between user without Glamvoir being a party to it.
+    </string>
+    <string name="question_twenty_five">WHAT CAN I SELL ON GLAMVOIR?</string>
+    <string name="question_twenty_five_anwer">You can sell different products related to FASHION AND LIFESTYLE ONLY – e.g. apparels, accessories, footwear, tea sets etc.
+    </string>
+
+
 
     <string name="term_one"> 1. Acceptable use</string>
     <string name="term_one_answer"> Please feel free to explore our Website and, where available, contribute material to it, such as questions, posts and multimedia content (e.g. pictures, videos)However, use of the Website and materials posted to it should not be illegal or offensive in any way. You should be mindful not to:
