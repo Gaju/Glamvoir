@@ -16,6 +16,8 @@ public class AppConstant {
     public static final String METHOD_MYPOST = "";
     public static final String METHOD_GETPOST = "getPosts";
 
+    public static final String METHOD_SAVEPOST = "savemypost";
+
     public static final String CATEGORY_ALL = "1";
     public static final String CATEGORY_FASHION = "2";
     public static final String CATEGORY_FOOD_PLACE = "3";

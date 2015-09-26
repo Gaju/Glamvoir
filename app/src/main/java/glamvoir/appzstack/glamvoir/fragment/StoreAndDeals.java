@@ -109,7 +109,7 @@ public class StoreAndDeals extends Fragment {
             };
 
     private void setAdapter(){
-        mlistView.setAdapter(new Custome_All_ListAdapter(getActivity(),list));
+        mlistView.setAdapter(new Custome_All_ListAdapter(StoreAndDeals.this,list));
     }
 
 

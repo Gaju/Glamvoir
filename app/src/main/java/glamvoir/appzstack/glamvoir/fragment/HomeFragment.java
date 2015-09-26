@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
 
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
-        mViewPager.setOffscreenPageLimit(5);
+       // mViewPager.setOffscreenPageLimit(2);
         // tabcachesize (=tabcount for better performance)
         titlesTAB =new String[]{"All","FASHION & LIFESTYLE","FOOD & PLACE","MUSIC & GIGS","INTEREST"};
         mSlidingTabLayout = (SlidingTabLayout)rootView.findViewById(R.id.sliding_tabs);
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
         mSlidingTabLayout.setDistributeEvenly(true);
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), titlesTAB, Numboftabs));
         mSlidingTabLayout.setViewPager(mViewPager);
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(0);
         // Tab events
         if (mSlidingTabLayout != null) {
             mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

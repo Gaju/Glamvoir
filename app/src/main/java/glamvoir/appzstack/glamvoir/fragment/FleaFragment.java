@@ -36,8 +36,8 @@ public class FleaFragment extends Fragment {
     //ImagePagerAdapter adapter;
     private ListView mlistView;
     private RequestBean mRequestBean;
-    private TextView tv_search;
 
+    private TextView tv_search;
     private ArrayList<ParentPostBean> list = new ArrayList<ParentPostBean>();
 
     public FleaFragment() {
@@ -47,7 +47,6 @@ public class FleaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -116,12 +115,7 @@ public class FleaFragment extends Fragment {
             };
 
     private void setAdapter(){
-        mlistView.setAdapter(new Custome_All_ListAdapter(getActivity(),list));
+        mlistView.setAdapter(new Custome_All_ListAdapter(FleaFragment.this, list));
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ImageLoader.getInstance().destroy();
-    }
 }

@@ -5,6 +5,7 @@ import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
 import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -40,6 +41,9 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     DeleteMySaveResponse deleteMySave(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
+
+    @GET("/index.php/api")
+    ServerResponse savePost(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
 
     @Multipart
     @POST("/index.php/api")

@@ -24,10 +24,20 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public String user_signup_type;
     public String user_image;
 
+    public int total_comment;
     public int is_following;
     public int total_like;
     public int total_dislike;
     public int like_dislike_status;
+
+
+    public int getTotal_comment() {
+        return total_comment;
+    }
+
+    public void setTotal_comment(int total_comment) {
+        this.total_comment = total_comment;
+    }
 
     public String getUser_image() {
         return user_image;

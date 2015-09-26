@@ -8,6 +8,7 @@ import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
 import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
@@ -45,6 +46,12 @@ public class Communication {
     public static DeleteMySaveResponse deleteMySave(String methodType, String userID, String postID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         DeleteMySaveResponse response = service.deleteMySave(methodType, userID, postID);
+        return response;
+    }
+
+    public static ServerResponse savePost(String methodType, String userID, String postID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        ServerResponse response = service.savePost(methodType, userID, postID);
         return response;
     }
 

@@ -153,6 +153,10 @@ public class ParserClass {
                                 ParentPostBean.setLike_dislike_status(obj.optInt("like_dislike_status"));
                             }
 
+                            if (Utils.contains(obj, "total_comment")) {
+                                ParentPostBean.setTotal_comment(obj.optInt("total_comment"));
+                            }
+
                             parentPostBeanList.add(ParentPostBean);
                             allPostsBean.setResults(parentPostBeanList);
 
