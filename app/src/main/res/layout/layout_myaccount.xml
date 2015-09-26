@@ -35,6 +35,44 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/padding_top_normal"
+            android:layout_marginLeft="@dimen/padding_top_normal"
+            android:gravity="center"
+            android:weightSum="3">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/gender"
+                android:layout_weight="1"
+                android:id="@+id/textView24" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"
+                android:layout_weight="1"
+                android:id="@+id/checkBox" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/female"
+                android:layout_weight="1"
+                android:id="@+id/checkBox2" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/padding_top_normal"
+            android:layout_marginLeft="@dimen/padding_top_normal"
+            android:layout_height="3dp"
+            android:layout_marginTop="@dimen/padding_top_normal"
+            android:background="@color/button_material_light"/>
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/myaccount_inputmail"
             style="@style/TestInputTheme"
@@ -133,16 +171,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/changepwd"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_large" />
-
-        <TextView
-            android:id="@+id/delaccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/delaccount"
             android:textColor="@android:color/black"
             android:textSize="@dimen/textsize_large" />
 

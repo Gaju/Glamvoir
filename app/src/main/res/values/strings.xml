@@ -76,6 +76,11 @@
     <string name="delaccount">Delete Account</string>
     <string name="done">Done</string>
 
+    <string name="change_password">Change Password</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
+
 
     <!-- settings labels  -->
     <string-array name="settings_labels">
