@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.ALL;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
@@ -208,7 +209,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
         switch (v.getId()) {
             case R.id.bt_ff_shell_complain:
-                new BottomSheet.Builder((Activity) frag.getActivity()).title("Take action on post").sheet(R.menu.menu_complain).listener(new DialogInterface.OnClickListener() {
+                new BottomSheet.Builder(frag.getActivity()).title("Take action on post").sheet(R.menu.menu_complain).listener(new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -240,7 +241,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 savePost(item.getUser_id(), item.getPost_id());
                 break;
             case R.id.bt_ff_shell_comments:
-                Toast.makeText(frag.getActivity(), "You click connect comments", Toast.LENGTH_LONG).show();
+                CommentActivity.startActvity(frag.getActivity());
                 break;
             case R.id.bt_ff_shell_like:
                 Toast.makeText(frag.getActivity(), "You click connect like", Toast.LENGTH_LONG).show();

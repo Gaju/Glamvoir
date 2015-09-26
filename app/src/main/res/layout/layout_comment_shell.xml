@@ -14,8 +14,8 @@
 
         <glamvoir.appzstack.glamvoir.customview.RoundedImageView
             android:id="@+id/circleView"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="@drawable/camera"
             android:layout_marginLeft="@dimen/padding_top_normal"
@@ -35,14 +35,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Jai Mishra"
                 android:textColor="@android:color/black"
-                android:id="@+id/textView25" />
+                android:id="@+id/user_name" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Hello , How are you ?"
-                android:id="@+id/textView26" />
+                android:id="@+id/user_comment" />
 
 
         </LinearLayout>
@@ -53,7 +53,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_weight="1"
             android:text="20.08.2015"
-            android:id="@+id/textView27" />
+            android:id="@+id/comment_date" />
 
 
     </LinearLayout>

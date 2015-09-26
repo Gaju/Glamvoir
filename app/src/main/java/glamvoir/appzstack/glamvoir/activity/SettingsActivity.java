@@ -50,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
         initListener();
 
         getToolbar(toolbar);
-        setupWindowAnimations();
+
 
         settingsLabels = getResources().getStringArray(R.array.settings_labels);
 
@@ -60,16 +60,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
         listView.setAdapter(adapter);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setupWindowAnimations() {
-        Fade fade = new Fade();
-        fade.setDuration(1000);
-        getWindow().setEnterTransition(fade);
-
-        Slide slide = new Slide();
-        fade.setDuration(1000);
-        getWindow().setReturnTransition(slide);
-    }
 
 
     /**
