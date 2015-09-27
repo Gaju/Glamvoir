@@ -232,5 +232,4 @@ public class ALL extends Fragment {
     }
 
 
-
 }

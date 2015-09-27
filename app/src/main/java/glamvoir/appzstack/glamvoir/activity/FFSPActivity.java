@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +34,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ArrayList<FFSP_Response.SingleFollow> data = new ArrayList<FFSP_Response.SingleFollow>();
     protected LoadableListAdapter<FFSP_Response.SingleFollow> adapter;
+    protected TextView txt_Nodata;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,8 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        txt_Nodata = (TextView) findViewById(R.id.nodata);
+
     }
 
     LoaderManager.LoaderCallbacks<TaskResponse<FFSP_Response>> ffspCallback =
@@ -137,9 +142,12 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
     public void dataLoaded(FFSP_Response responseData) {
 
-        if (responseData != null) {
+        if (responseData != null && responseData.results.size() > 0) {
             if (this.data != null)
                 this.data.addAll(responseData.results);
+            adapter.notifyDataSetChanged();
+        } else {
+            txt_Nodata.setVisibility(View.VISIBLE);
         }
 
 //            this.totalRows = totalRows;
@@ -150,7 +158,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
 //                adapter.setLoadingFooterType(LoadableListAdapter1.LoadingFooterType.None);
 //            }
 
-        adapter.notifyDataSetChanged();
+
     }
 
     public void removeItem(int position) {

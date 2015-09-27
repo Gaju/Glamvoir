@@ -57,7 +57,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             @Override
             public void _OnClick(View view, int position) {
 
-                mPosition=position;
+                mPosition = position;
                 if (view.getId() == R.id.icon) {
                     performAction();
                 }
@@ -96,7 +96,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
         } else if (context instanceof MysaveActivity) {
 
-            //    holder.subtitle.setVisibility(View.INVISIBLE);
+            //holder.subtitle.setVisibility(View.INVISIBLE);
             holder.subtitle.setText(singleFollow.total_following);
             holder.icon.setImageResource(R.drawable.delete);
             holder.icon_title.setText("Delete");
@@ -104,9 +104,12 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
     }
 
     private void performAction() {
+        if (context instanceof MysaveActivity) {
+            ((FFSPActivity) context).removeItem(mPosition);
+        } else if (context instanceof FollowersActivity) {
 
-        if (context instanceof FollowingActivity) {
-            ((FFSPActivity)context).removeItem(mPosition);
+        } else if (context instanceof FollowersActivity) {
+
         }
     }
 }
