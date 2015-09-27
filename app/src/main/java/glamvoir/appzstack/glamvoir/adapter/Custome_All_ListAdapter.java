@@ -151,6 +151,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_username.setText(item.getUser_fname() + " " + item.getUser_lname());
         }
 
+
+
         if (item.getTotal_like() > 0) {
             holder.tv_ff_shell_like_count.setVisibility(View.VISIBLE);
             if (item.getTotal_like() == 1) {

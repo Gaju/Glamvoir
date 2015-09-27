@@ -1,15 +1,16 @@
 package glamvoir.appzstack.glamvoir.activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.CommentCustomAdapter;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -24,12 +25,15 @@ import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 /**
  * Created by jai on 9/26/2015.
  */
-public class CommentActivity extends AppCompatActivity {
+public class CommentActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ListView mlistView;
     protected Toolbar toolbar;
     private RequestBean mRequestBean;
     private CommentCustomAdapter adapter;
+    private EditText et_comment;
+    private ImageButton bt_sent;
+
 
     private ArrayList<CommentResponse.AllCommentResponse> list = new ArrayList<>();
 
@@ -45,6 +49,9 @@ public class CommentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_comment);
+        iniview();
+        getToolbar(toolbar);
+        listner();
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -64,6 +71,12 @@ public class CommentActivity extends AppCompatActivity {
         mlistView.setAdapter(adapter);
     }
 
+    private void listner() {
+
+        bt_sent.setOnClickListener(this);
+
+    }
+
     /**
      * customize the toolbar
      *
@@ -79,14 +92,17 @@ public class CommentActivity extends AppCompatActivity {
 
     private void iniview() {
 
-        mlistView = (ListView) findViewById(R.id.listView);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mlistView = (ListView) findViewById(R.id.listView);
+        mlistView= (ListView) findViewById(R.id.listView);
+        et_comment= (EditText) findViewById(R.id.et_comment);
+        bt_sent= (ImageButton) findViewById(R.id.bt_sent);
     }
 
     @Override
     public Intent getSupportParentActivityIntent() {
-        // Intent parentIntent = getIntent();
-        // String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
+
         Intent newIntent = null;
         finish();
         return newIntent;
@@ -131,4 +147,10 @@ public class CommentActivity extends AppCompatActivity {
                 public void onLoaderReset(android.content.Loader<TaskResponse<CommentResponse>> loader) {
                 }
             };
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(this,"Click send Button",Toast.LENGTH_SHORT).show();
+
+
+    }
 }

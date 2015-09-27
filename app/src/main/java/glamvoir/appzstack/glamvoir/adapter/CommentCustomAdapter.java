@@ -39,6 +39,8 @@ public class CommentCustomAdapter extends BaseAdapter {
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
+
+
     @Override
     public int getCount() {
         return list.size();
