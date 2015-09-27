@@ -30,6 +30,8 @@ public class CommentCustomAdapter extends BaseAdapter {
     ImageLoader imageLoader;
     DisplayImageOptions options;
     ArrayList<CommentResponse.AllCommentResponse> list;
+    private int mPosition;
+
 
     public CommentCustomAdapter(CommentActivity commentActivity, ArrayList<CommentResponse.AllCommentResponse> list) {
         inflater = (LayoutInflater) commentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,8 +40,6 @@ public class CommentCustomAdapter extends BaseAdapter {
         this.list = list;
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
-
-
 
     @Override
     public int getCount() {
@@ -60,6 +60,7 @@ public class CommentCustomAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
+        mPosition=position;
         CommentResponse.AllCommentResponse item = list.get(position);
 
         if (convertView == null) {

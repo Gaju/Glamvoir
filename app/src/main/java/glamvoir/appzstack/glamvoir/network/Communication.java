@@ -7,6 +7,7 @@ import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.LikeStatusResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
@@ -53,6 +54,12 @@ public class Communication {
     public static ServerResponse savePost(String methodType, String userID, String postID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         ServerResponse response = service.savePost(methodType, userID, postID);
+        return response;
+    }
+
+    public static LikeStatusResponse likeStatus(String methodType, String userID, String postID, String like_dislike_status, String action) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        LikeStatusResponse response = service.likeStatus(methodType, userID, postID, like_dislike_status, action);
         return response;
     }
 

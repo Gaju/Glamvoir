@@ -29,7 +29,15 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public int total_like;
     public int total_dislike;
     public int like_dislike_status;
+    public int is_saved;
 
+    public int getIs_saved() {
+        return is_saved;
+    }
+
+    public void setIs_saved(int is_saved) {
+        this.is_saved = is_saved;
+    }
 
     public int getTotal_comment() {
         return total_comment;

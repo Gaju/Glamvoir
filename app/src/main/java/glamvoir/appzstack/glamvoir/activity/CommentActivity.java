@@ -1,6 +1,9 @@
 package glamvoir.appzstack.glamvoir.activity;
+
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,14 +11,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.CommentCustomAdapter;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
-import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.asynctaskloader.CommentLoader;
+import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
@@ -33,8 +36,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private CommentCustomAdapter adapter;
     private EditText et_comment;
     private ImageButton bt_sent;
-
-
+    private String userID;
     private ArrayList<CommentResponse.AllCommentResponse> list = new ArrayList<>();
 
     public static void startActvity(Context context, String postID, String comment) {
@@ -60,6 +62,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             // comment(extras.getString("postID"), extras.getString("postID"));
+            userID = extras.getString("postID");
             getLoaderManager().initLoader(LoaderID.COMMENT, extras, commentCallback);
         }
 
@@ -95,9 +98,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mlistView = (ListView) findViewById(R.id.listView);
-        mlistView= (ListView) findViewById(R.id.listView);
-        et_comment= (EditText) findViewById(R.id.et_comment);
-        bt_sent= (ImageButton) findViewById(R.id.bt_sent);
+        mlistView = (ListView) findViewById(R.id.listView);
+        et_comment = (EditText) findViewById(R.id.et_comment);
+        bt_sent = (ImageButton) findViewById(R.id.bt_sent);
     }
 
     @Override
@@ -116,29 +119,33 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         getLoaderManager().initLoader(LoaderID.COMMENT, args, commentCallback);
     }
 
-    android.app.LoaderManager.LoaderCallbacks<TaskResponse<CommentResponse>> commentCallback =
-            new android.app.LoaderManager.LoaderCallbacks<TaskResponse<CommentResponse>>() {
+    LoaderManager.LoaderCallbacks<TaskResponse<CommentResponse>> commentCallback =
+            new LoaderManager.LoaderCallbacks<TaskResponse<CommentResponse>>() {
 
                 @Override
-                public android.content.Loader<TaskResponse<CommentResponse>> onCreateLoader(int id, Bundle args) {
+                public Loader<TaskResponse<CommentResponse>> onCreateLoader(int id, Bundle args) {
                     AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
                     if (args.getString("comment") != null) {
-                        return new CommentLoader(mRequestBean, AppConstant.METHOD_ADDCOMMENT, appPreferences.getUserId(), args.getString("postID"), args.getString("comment"));
+                        Loader loader = new CommentLoader(mRequestBean, AppConstant.METHOD_ADDCOMMENT, appPreferences.getUserId(), args.getString("postID"), args.getString("comment"));
+                        return loader;
                     } else {
-                        return new CommentLoader(mRequestBean, AppConstant.METHOD_GETCOMMENT, appPreferences.getUserId(), args.getString("postID"));
+                        Loader loader = new CommentLoader(mRequestBean, AppConstant.METHOD_GETCOMMENT, appPreferences.getUserId(), args.getString("postID"));
+                        return loader;
                     }
                 }
 
                 @Override
                 public void onLoadFinished(android.content.Loader<TaskResponse<CommentResponse>> loader, TaskResponse<CommentResponse> data) {
                     if (loader instanceof CommentLoader) {
-                       // ((CommentLoader) loader).hideLoaderDialog();
+                        // ((CommentLoader) loader).hideLoaderDialog();
                         if (data.error != null) {
                             Utility.showToast(CommentActivity.this, data.error.toString());
                         } else {
 
+                            list.clear();
                             list.addAll(data.data.results);
                             adapter.notifyDataSetChanged();
+                            getLoaderManager().destroyLoader(LoaderID.COMMENT);
                         }
                     }
                 }
@@ -147,10 +154,13 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 public void onLoaderReset(android.content.Loader<TaskResponse<CommentResponse>> loader) {
                 }
             };
+
     @Override
     public void onClick(View v) {
-        Toast.makeText(this,"Click send Button",Toast.LENGTH_SHORT).show();
-
-
+        if (et_comment.getText().toString().length() > 0) {
+            comment(userID, et_comment.getText().toString());
+        } else {
+            Utility.showToast(mRequestBean.getContext(), "Comment should not be empty");
+        }
     }
 }

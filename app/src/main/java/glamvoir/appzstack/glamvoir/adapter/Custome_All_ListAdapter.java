@@ -1,10 +1,10 @@
 package glamvoir.appzstack.glamvoir.adapter;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,7 +33,7 @@ import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.ALL;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
-import glamvoir.appzstack.glamvoir.intentservice.SendServerIntentService;
+import glamvoir.appzstack.glamvoir.intentservice.LikeStatusIntentService;
 
 /**
  * Created by jaim on 9/11/2015.
@@ -48,6 +48,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     DisplayImageOptions options;
     ParentPostBean item;
     Fragment frag;
+    private int mPosition;
 
 
 //    public Custome_All_ListAdapter(FragmentActivity activity, ArrayList<ParentPostBean> allPostsBeans) {
@@ -89,6 +90,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
+        mPosition = position;
         item = list.get(position);
 
         if (convertView == null) {
@@ -152,7 +154,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         }
 
 
-
         if (item.getTotal_like() > 0) {
             holder.tv_ff_shell_like_count.setVisibility(View.VISIBLE);
             if (item.getTotal_like() == 1) {
@@ -164,6 +165,13 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_like_count.setVisibility(View.GONE);
         }
 
+        if (item.is_following == 0) {
+            holder.checkBox_ff_shell.setChecked(false);
+            holder.tv_actiontext_checkBox_ff_shell.setText("Following");
+        } else {
+            holder.checkBox_ff_shell.setChecked(true);
+            holder.tv_actiontext_checkBox_ff_shell.setText("Follower");
+        }
 
         if (item.getTotal_comment() > 0) {
             holder.tv_ff_shell_comment_count.setVisibility(View.VISIBLE);
@@ -176,6 +184,18 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_comment_count.setVisibility(View.GONE);
         }
 
+
+        if (item.like_dislike_status == 1) {
+            holder.bt_ff_shell_like.setImageResource(R.drawable.heart_active);
+        } else {
+            holder.bt_ff_shell_like.setImageResource(R.drawable.heart);
+        }
+
+        if (item.is_saved == 0) {
+            holder.bt_ff_shell_shave.setImageResource(R.drawable.mysave);
+        } else {
+            holder.bt_ff_shell_shave.setImageResource(R.drawable.mysave_active);
+        }
 
         if (item.getPost_end_date() != null) {
             holder.tv_ff_shell_time.setText(item.getPost_end_date());
@@ -238,6 +258,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             case R.id.bt_connect_with_seller:
                 Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
                 break;
+            case R.id.checkBox_ff_shell:
+               // Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
+                break;
             case R.id.bt_ff_shell_shave:
                 //  Toast.makeText(frag.getActivity(), "You click connect shave", Toast.LENGTH_LONG).show();
                 savePost(item.getUser_id(), item.getPost_id());
@@ -246,7 +269,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 CommentActivity.startActvity(frag.getActivity(), item.getPost_id(), null);
                 break;
             case R.id.bt_ff_shell_like:
-                Toast.makeText(frag.getActivity(), "You click connect like", Toast.LENGTH_LONG).show();
+                // Toast.makeText(frag.getActivity(), "You click connect like", Toast.LENGTH_LONG).show();
+                LikeStatusIntentService.startIntentService(frag.getActivity(), item.user_id, item.post_id, String.valueOf(item.like_dislike_status), item.like_dislike_status == 1 ? "like" : "dislike", mPosition);
                 break;
             case R.id.bt_ff_shell_whatapp:
                 Toast.makeText(frag.getActivity(), "You click connect whatapp", Toast.LENGTH_LONG).show();
@@ -281,8 +305,28 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
     private void savePost(String userID, String postID) {
         //  SendServerIntentService.startSavePostService(frag.getActivity(), userID, postID, AppConstant.METHOD_SAVEPOST);
-        ((ALL) frag).sendServer(AppConstant.METHOD_SAVEPOST, userID, postID);
-
-
+        ((ALL) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID);
     }
+
+
+    public BroadcastReceiver observeLikeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(LikeStatusIntentService.BROADCAST_ACTION)) {
+
+                String totalLike = intent.getStringExtra(LikeStatusIntentService.BROADCAST_EXTRA_LIKE);
+                String totalDislike = intent.getStringExtra(LikeStatusIntentService.BROADCAST_EXTRA_DISLIKE);
+                String like_dislike_status = intent.getStringExtra(LikeStatusIntentService.BROADCAST_EXTRA_LIKE_DISLIKE_STATUS);
+                int position = intent.getIntExtra(LikeStatusIntentService.BROADCAST_EXTRA_POSITION, 0);
+
+                ParentPostBean item = list.get(position);
+                item.setLike_dislike_status(Integer.parseInt(like_dislike_status));
+                item.setTotal_like(Integer.parseInt(totalLike));
+                item.setTotal_dislike(Integer.parseInt(totalDislike));
+
+                notifyDataSetChanged();
+            }
+        }
+    };
 }

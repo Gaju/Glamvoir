@@ -1,9 +1,9 @@
 package glamvoir.appzstack.glamvoir.activity;
 
 import android.app.LoaderManager;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,18 +12,24 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.FFSP_Adapter;
 import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.asynctask.DeleteMySaveAsyncTask;
+import glamvoir.appzstack.glamvoir.asynctask.SavePostAsyncTask;
 import glamvoir.appzstack.glamvoir.asynctaskloader.FFSPLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
+import glamvoir.appzstack.glamvoir.intentservice.ObserveFFSPIntentService;
+import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
+import glamvoir.appzstack.glamvoir.network.InternetStatus;
 
 /**
  * Created by gajendran on 16/8/15.
@@ -52,10 +58,33 @@ public abstract class FFSPActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected void onStart() {
+        super.onStart();
         loadData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Utility.showToast(getActivity(), "on resume");
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ObserveFFSPIntentService.BROADCAST_ACTION_OBSERVED);
+
+        registerReceiver(getAdapter().observeFollowReceiver, filter);
+        registered = true;
+    }
+
+    private boolean registered = false;
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //Utility.showToast(getActivity(), "onPause frag");
+
+        if (registered) {
+            unregisterReceiver(getAdapter().observeFollowReceiver);
+            registered = false;
+        }
     }
 
     /**
@@ -81,6 +110,10 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
     protected void loadData() {
         getLoaderManager().restartLoader(LoaderID.FFSP, null, ffspCallback);
+    }
+
+    public FFSP_Adapter getAdapter() {
+        return (FFSP_Adapter) adapter;
     }
 
 
@@ -161,7 +194,44 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
     }
 
-    public void removeItem(int position) {
-        adapter.removeItem(position);
+    public void removeItem(int position, String userID, String postID) {
+        // adapter.removeItem(position);
+        deletePost(AppConstant.METHOD_DELETE_SAVE_POST, userID, postID, position);
     }
+
+
+    public void followFollower(String followerID, int position) {
+        ObserveFFSPIntentService.startObserveAdService(FFSPActivity.this, AppPreferences.getInstance(this).getUserId(), followerID, position);
+    }
+
+
+    public void deletePost(String methodName, String mUserID, String postID, final int position) {
+        if (InternetStatus.isInternetAvailable(this, true)) {
+            new DeleteMySaveAsyncTask(this, new AsynTaskListener() {
+                @Override
+                public void success(String success, String listenerId) {
+
+                }
+
+                @Override
+                public void error(String errorMessage, String errorCode, String listenerId) {
+                    Utility.showToast(FFSPActivity.this, errorMessage);
+                }
+
+                @Override
+                public void successWithresult(List<Object> sucessObject, String message, String listenerId) {
+
+                    if (message.equalsIgnoreCase("0")) {
+                        Utility.showToast(FFSPActivity.this, "success");
+                        adapter.removeItem(position);
+                    } else {
+                        Utility.showToast(FFSPActivity.this, message);
+                    }
+
+                }
+            }, "server").execute(methodName, mUserID, postID);
+        }
+    }
+
+
 }

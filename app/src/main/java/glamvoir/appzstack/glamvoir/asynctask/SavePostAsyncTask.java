@@ -10,13 +10,13 @@ import glamvoir.appzstack.glamvoir.network.Communication;
 /**
  * Created by gajendran on 26/9/15.
  */
-public class SendServerAsyncTask extends AsyncTask<String, Void, Void> {
+public class SavePostAsyncTask extends AsyncTask<String, Void, Void> {
     private AsynTaskListener mAsynTaskListener;
     private String mAsynTaskId;
     private Context mContext;
     private ServerResponse response = new ServerResponse();
 
-    public SendServerAsyncTask(Context mCtx, AsynTaskListener asT, String AsyntaskId) {
+    public SavePostAsyncTask(Context mCtx, AsynTaskListener asT, String AsyntaskId) {
         mAsynTaskListener = asT;
         mAsynTaskId = AsyntaskId;
         this.mContext = mCtx;

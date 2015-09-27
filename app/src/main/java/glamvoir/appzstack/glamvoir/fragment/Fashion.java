@@ -110,13 +110,7 @@ public class Fashion extends Fragment {
                 }
             };
 
-    private void setAdapter(){
-        mlistView.setAdapter(new Custome_All_ListAdapter(Fashion.this,list));
+    private void setAdapter() {
+        mlistView.setAdapter(new Custome_All_ListAdapter(Fashion.this, list));
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ImageLoader.getInstance().destroy();
-    }
-
 }

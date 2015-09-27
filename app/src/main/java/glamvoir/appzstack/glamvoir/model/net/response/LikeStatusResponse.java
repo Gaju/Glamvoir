@@ -9,18 +9,21 @@ import java.util.List;
  * Created by gajendran on 27/9/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ObservedFollowResponse extends BaseResponse {
+public class LikeStatusResponse extends BaseResponse {
     @JsonProperty("results")
-    public List<FollowResponse> observedFollowIds;
+    public List<LikeStatus> list;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class FollowResponse {
+    public static class LikeStatus {
 
-        @JsonProperty("total_folower")
-        public String total_folower;
+        @JsonProperty("total_like")
+        public String total_like;
 
-        @JsonProperty("is_followng")
-        public String is_followng;
+        @JsonProperty("total_dislike")
+        public String total_dislike;
+
+        @JsonProperty("like_dislike_status")
+        public String like_dislike_status;
 
     }
 }

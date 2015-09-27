@@ -13,12 +13,20 @@ public class AppConstant {
     public static final String METHOD_FOLLOWER = "getfollower";
     public static final String METHOD_MYSAVE = "mysavedpost";
     public static final String METHOD_UPDATE_IMAGE = "updateImage";
-    public static final String METHOD_MYPOST = "";
+    public static final String METHOD_MYPOST = "getmyposts";
     public static final String METHOD_GETPOST = "getPosts";
     public static final String METHOD_GETCOMMENT = "getcomments";
     public static final String METHOD_ADDCOMMENT = "addcomment";
+    public static final String METHOD_FOLLOWER_FOLLOWING = "followerfollowing";
 
+    public static final String METHOD_DELETE_SAVE_POST = "deletemysavedpost";
     public static final String METHOD_SAVEPOST = "savemypost";
+    public static final String METHOD_LIKESTATUS = "likedislike";
+
+    public static final int FOLLOWER = 1;
+    public static final int FOLLOWING = 2;
+    public static final int MY_SAVE = 3;
+    public static final int MY_POST = 4;
 
     public static final String CATEGORY_ALL = "1";
     public static final String CATEGORY_FASHION = "2";

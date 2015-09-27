@@ -119,6 +119,11 @@ public class ParserClass {
                             }
 
                             //get the partial
+                            if (Utils.contains(obj, "is_saved")) {
+                                ParentPostBean.setIs_saved(obj.optInt("is_saved"));
+                            }
+
+                            //get the partial
                             if (Utils.contains(obj, "post_video")) {
                                 ParentPostBean.setPost_video(obj.optString("post_video"));
                             }

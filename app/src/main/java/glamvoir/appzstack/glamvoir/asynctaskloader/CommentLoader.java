@@ -53,7 +53,7 @@ public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>
                     response.data = Communication.addComment(AppConstant.METHOD_ADDCOMMENT, userID, postID, comment);
                     break;
                 case AppConstant.METHOD_GETCOMMENT:
-                    response.data = Communication.getComment(AppConstant.METHOD_GETCOMMENT, "21", "3");
+                    response.data = Communication.getComment(AppConstant.METHOD_GETCOMMENT, userID, postID);
                     break;
             }
         } catch (Exception e) {

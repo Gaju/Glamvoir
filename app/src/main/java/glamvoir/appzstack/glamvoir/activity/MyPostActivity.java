@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import java.util.ArrayList;
+
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.FFSP_Adapter;
+import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
  * Created by gajendran on 5/8/15.
  */
-public class MyPostActivity extends AppCompatActivity {
+public class MyPostActivity extends FFSPActivity {
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MyPostActivity.class);
@@ -25,9 +29,8 @@ public class MyPostActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_mypost);//layout_mypost
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -54,6 +57,26 @@ public class MyPostActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.mypost));
+    }
+
+    @Override
+    protected String getMethodName() {
+        return AppConstant.METHOD_MYPOST;
+    }
+
+    @Override
+    protected RequestBean getRequestBean() {
+        return mRequestBean;
+    }
+
+    @Override
+    protected String getAppBarTitle() {
+        return getResources().getString(R.string.mysave);
+    }
+
+    @Override
+    protected LoadableListAdapter createAdapter(ArrayList data) {
+        return new FFSP_Adapter(MyPostActivity.this, data);
     }
 
     /**

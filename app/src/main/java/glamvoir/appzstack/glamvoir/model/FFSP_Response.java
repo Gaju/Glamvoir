@@ -63,6 +63,31 @@ public class FFSP_Response implements Parcelable {
         public SingleFollow() {
         }
 
+        @JsonProperty("post_id")
+        public String post_id;
+
+        @JsonProperty("post_parent_id")
+        public String post_parent_id;
+
+        @JsonProperty("cat_id")
+        public String cat_id;
+
+        @JsonProperty("post_gender")
+        public String post_gender;
+
+        @JsonProperty("post_description")
+        public String post_description;
+
+        @JsonProperty("post_video")
+        public String post_video;
+
+        @JsonProperty("post_image")
+        public String post_image;
+
+        @JsonProperty("post_end_date")
+        public String post_end_date;
+
+
         @JsonProperty("user_id")
         public String user_id;
 

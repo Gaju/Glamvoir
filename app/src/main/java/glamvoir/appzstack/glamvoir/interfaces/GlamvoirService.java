@@ -4,6 +4,7 @@ import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.LikeStatusResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
@@ -45,6 +46,10 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     ServerResponse savePost(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
+
+    @GET("/index.php/api")
+    LikeStatusResponse likeStatus(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id, @Query("like_dislike_status") String like_dislike_status, @Query("action") String action);
+
 
     @GET("/index.php/api")
     CommentResponse addComment(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id, @Query("comment") String comment);

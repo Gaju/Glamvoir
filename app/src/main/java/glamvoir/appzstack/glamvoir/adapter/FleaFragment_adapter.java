@@ -22,14 +22,14 @@ import glamvoir.appzstack.glamvoir.R;
  */
 public class FleaFragment_adapter extends BaseAdapter implements View.OnClickListener {
 
-    private static LayoutInflater inflater=null;
+    private static LayoutInflater inflater = null;
     ImagePagerAdapter adapter;
     Context context;
-    public FleaFragment_adapter(FragmentActivity activity) {
-        this.context=activity;
-        inflater = ( LayoutInflater )context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+    public FleaFragment_adapter(FragmentActivity activity) {
+        this.context = activity;
+        inflater = (LayoutInflater) context.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
     }
@@ -51,31 +51,31 @@ public class FleaFragment_adapter extends BaseAdapter implements View.OnClickLis
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder  = null;
-        if(convertView==null){
+        ViewHolder holder = null;
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
-            final ViewPager viewPager = (ViewPager)convertView.findViewById(R.id.view_pager);
-           // adapter = new ImagePagerAdapter(context);
+            final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
+            // adapter = new ImagePagerAdapter(context);
             viewPager.setAdapter(adapter);
-            final CirclePageIndicator circleIndicator = (CirclePageIndicator)convertView.findViewById(R.id.indicator);
+            final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
             circleIndicator.setViewPager(viewPager);
-            holder.tv_ff_shell_username             = (TextView)convertView.findViewById(R.id.tv_ff_shell_username);
-            holder.tv_ff_shell_time                 = (TextView)convertView.findViewById(R.id.tv_ff_shell_time);
-            holder.tv_actiontext_checkBox_ff_shell  = (TextView)convertView.findViewById(R.id.tv_actiontext_checkBox_ff_shell);
-            holder.tv_ff_shell_like_count           = (TextView)convertView.findViewById(R.id.tv_ff_shell_like_count);
-            holder.tv_ff_shell_comment_count        = (TextView)convertView.findViewById(R.id.tv_ff_shell_comment_count);
-            holder.checkBox_ff_shell                = (CheckBox)convertView.findViewById(R.id.checkBox_ff_shell);
-            holder.bt_connect_with_seller           = (Button)convertView.findViewById(R.id.bt_connect_with_seller);
-            holder.bt_ff_shell_shave                = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_shave);
-            holder.bt_ff_shell_comments             = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_comments);
-            holder.bt_ff_shell_like                 = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_like);
-            holder.bt_ff_shell_whatapp              = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_whatapp);
-            holder.bt_ff_shell_share                = (ImageButton)convertView.findViewById(R.id.bt_ff_shell_share);
+            holder.tv_ff_shell_username = (TextView) convertView.findViewById(R.id.tv_ff_shell_username);
+            holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
+            holder.tv_actiontext_checkBox_ff_shell = (TextView) convertView.findViewById(R.id.tv_actiontext_checkBox_ff_shell);
+            holder.tv_ff_shell_like_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_like_count);
+            holder.tv_ff_shell_comment_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_comment_count);
+            holder.checkBox_ff_shell = (CheckBox) convertView.findViewById(R.id.checkBox_ff_shell);
+            holder.bt_connect_with_seller = (Button) convertView.findViewById(R.id.bt_connect_with_seller);
+            holder.bt_ff_shell_shave = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_shave);
+            holder.bt_ff_shell_comments = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_comments);
+            holder.bt_ff_shell_like = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_like);
+            holder.bt_ff_shell_whatapp = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_whatapp);
+            holder.bt_ff_shell_share = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_share);
             convertView.setTag(holder);
 
         }
-        holder = (ViewHolder)convertView.getTag();
+        holder = (ViewHolder) convertView.getTag();
         holder.bt_connect_with_seller.setOnClickListener(this);
         holder.bt_ff_shell_shave.setOnClickListener(this);
         holder.bt_ff_shell_comments.setOnClickListener(this);
@@ -84,15 +84,13 @@ public class FleaFragment_adapter extends BaseAdapter implements View.OnClickLis
         holder.bt_ff_shell_share.setOnClickListener(this);
 
 
-
-
         return convertView;
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_connect_with_seller:
                 Toast.makeText(context, "You click connect sellet", Toast.LENGTH_LONG).show();
                 break;
@@ -114,24 +112,23 @@ public class FleaFragment_adapter extends BaseAdapter implements View.OnClickLis
         }
 
 
-
     }
 
 
-    static class  ViewHolder{
+    static class ViewHolder {
 
-        TextView          tv_ff_shell_username;
-        TextView          tv_ff_shell_time;
-        TextView          tv_actiontext_checkBox_ff_shell;
-        TextView          tv_ff_shell_like_count;
-        TextView          tv_ff_shell_comment_count;
-        CheckBox          checkBox_ff_shell;
-        Button            bt_connect_with_seller;
-        ImageButton       bt_ff_shell_shave;
-        ImageButton       bt_ff_shell_comments;
-        ImageButton       bt_ff_shell_like;
-        ImageButton       bt_ff_shell_whatapp;
-        ImageButton       bt_ff_shell_share;
+        TextView tv_ff_shell_username;
+        TextView tv_ff_shell_time;
+        TextView tv_actiontext_checkBox_ff_shell;
+        TextView tv_ff_shell_like_count;
+        TextView tv_ff_shell_comment_count;
+        CheckBox checkBox_ff_shell;
+        Button bt_connect_with_seller;
+        ImageButton bt_ff_shell_shave;
+        ImageButton bt_ff_shell_comments;
+        ImageButton bt_ff_shell_like;
+        ImageButton bt_ff_shell_whatapp;
+        ImageButton bt_ff_shell_share;
 
 
     }
