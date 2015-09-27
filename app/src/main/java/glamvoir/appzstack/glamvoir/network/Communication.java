@@ -5,6 +5,7 @@ import java.io.File;
 import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
@@ -55,6 +56,18 @@ public class Communication {
         return response;
     }
 
+    public static CommentResponse addComment(String methodType, String userID, String postID, String comment) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        CommentResponse response = service.addComment(methodType, userID, postID, comment);
+        return response;
+    }
+
+    public static CommentResponse getComment(String methodType, String userID, String postID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        CommentResponse response = service.getComment(methodType, userID, postID);
+        return response;
+    }
+
     public static PhotoUploadResponse uploadImage(String methodType, String userID, String imagePath) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
 
@@ -63,14 +76,13 @@ public class Communication {
 
 
         MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-        multipartTypedOutput.addPart("method",new TypedString(methodType));
+        multipartTypedOutput.addPart("method", new TypedString(methodType));
         multipartTypedOutput.addPart("user_id", new TypedString(userID));
         multipartTypedOutput.addPart("user_image", new TypedString(filename));
-        multipartTypedOutput.addPart("file",new TypedFile("image/*", requestFilePath));
+        multipartTypedOutput.addPart("file", new TypedFile("image/*", requestFilePath));
 
 
-
-       // PhotoUploadResponse response = service.uploadPhoto(multipartTypedOutput);
+        // PhotoUploadResponse response = service.uploadPhoto(multipartTypedOutput);
 
         PhotoUploadResponse response = service.uploadPhoto(new TypedFile("image/*", requestFilePath), methodType, userID, filename);
         return response;

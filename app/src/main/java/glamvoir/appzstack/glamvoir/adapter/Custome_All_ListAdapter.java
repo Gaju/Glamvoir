@@ -241,7 +241,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 savePost(item.getUser_id(), item.getPost_id());
                 break;
             case R.id.bt_ff_shell_comments:
-                CommentActivity.startActvity(frag.getActivity());
+                CommentActivity.startActvity(frag.getActivity(), item.getPost_id(), null);
                 break;
             case R.id.bt_ff_shell_like:
                 Toast.makeText(frag.getActivity(), "You click connect like", Toast.LENGTH_LONG).show();

@@ -50,19 +50,19 @@ public class ALL extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utility.showToast(getActivity(), "onCreate");
+        //Utility.showToast(getActivity(), "onCreate");
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Utility.showToast(getActivity(), "onAttach");
+        //Utility.showToast(getActivity(), "onAttach");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Utility.showToast(getActivity(), "onCreateView");
+        //Utility.showToast(getActivity(), "onCreateView");
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -85,7 +85,7 @@ public class ALL extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
-        Utility.showToast(getActivity(), "onActivityCreated");
+        //Utility.showToast(getActivity(), "onActivityCreated");
     }
 
     //onRestart() --> onStart() --> onResume()
@@ -94,9 +94,8 @@ public class ALL extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Utility.showToast(getActivity(), "onViewCreated");
+        //Utility.showToast(getActivity(), "onViewCreated");
     }
-
 
 
     protected void loadData() {
@@ -137,7 +136,7 @@ public class ALL extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Utility.showToast(getActivity(), "on resume");
+        //Utility.showToast(getActivity(), "on resume");
         IntentFilter filter = new IntentFilter();
         filter.addAction(SendServerIntentService.BROADCAST_ACTION);
 
@@ -150,7 +149,7 @@ public class ALL extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Utility.showToast(getActivity(), "onPause frag");
+        //Utility.showToast(getActivity(), "onPause frag");
 
         if (registered) {
             getActivity().unregisterReceiver(observeAdReceiver);
@@ -161,31 +160,31 @@ public class ALL extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Utility.showToast(getActivity(), "onDestroy frag");
+        //Utility.showToast(getActivity(), "onDestroy frag");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Utility.showToast(getActivity(), "onDestroyView frag");
+        //Utility.showToast(getActivity(), "onDestroyView frag");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Utility.showToast(getActivity(), "onDetach frag");
+        //Utility.showToast(getActivity(), "onDetach frag");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Utility.showToast(getActivity(), "onStart frag");
+        //Utility.showToast(getActivity(), "onStart frag");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Utility.showToast(getActivity(), "onStop fragment");
+        //Utility.showToast(getActivity(), "onStop fragment");
     }
 
     public BroadcastReceiver observeAdReceiver = new BroadcastReceiver() {
@@ -231,4 +230,7 @@ public class ALL extends Fragment {
             }, "server").execute(methodName, mUserID, postID);
         }
     }
+
+
+
 }

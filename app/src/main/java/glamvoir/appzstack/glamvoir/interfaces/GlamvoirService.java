@@ -2,6 +2,7 @@ package glamvoir.appzstack.glamvoir.interfaces;
 
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
@@ -44,6 +45,14 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     ServerResponse savePost(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
+
+    @GET("/index.php/api")
+    CommentResponse addComment(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id, @Query("comment") String comment);
+
+
+    @GET("/index.php/api")
+    CommentResponse getComment(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
+
 
     @Multipart
     @POST("/index.php/api")

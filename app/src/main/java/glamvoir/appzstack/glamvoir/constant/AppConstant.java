@@ -15,6 +15,8 @@ public class AppConstant {
     public static final String METHOD_UPDATE_IMAGE = "updateImage";
     public static final String METHOD_MYPOST = "";
     public static final String METHOD_GETPOST = "getPosts";
+    public static final String METHOD_GETCOMMENT = "getcomments";
+    public static final String METHOD_ADDCOMMENT = "addcomment";
 
     public static final String METHOD_SAVEPOST = "savemypost";
 
