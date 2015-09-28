@@ -7,7 +7,7 @@ import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
-import glamvoir.appzstack.glamvoir.model.net.response.LikeStatusResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
@@ -45,6 +45,12 @@ public class Communication {
     }
 
 
+    public static GetPostLikeFollowResponse getPostFollow(String methodType, String followingUserID, String followerUserID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        GetPostLikeFollowResponse response = service.getPostFollow(methodType, followingUserID, followerUserID);
+        return response;
+    }
+
     public static DeleteMySaveResponse deleteMySave(String methodType, String userID, String postID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         DeleteMySaveResponse response = service.deleteMySave(methodType, userID, postID);
@@ -57,9 +63,9 @@ public class Communication {
         return response;
     }
 
-    public static LikeStatusResponse likeStatus(String methodType, String userID, String postID, String like_dislike_status, String action) {
+    public static GetPostLikeFollowResponse likeStatus(String methodType, String userID, String postID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        LikeStatusResponse response = service.likeStatus(methodType, userID, postID, like_dislike_status, action);
+        GetPostLikeFollowResponse response = service.likeStatus(methodType, userID, postID);
         return response;
     }
 

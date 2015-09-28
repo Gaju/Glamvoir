@@ -30,10 +30,11 @@ import java.util.ArrayList;
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.ALL;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
-import glamvoir.appzstack.glamvoir.intentservice.LikeStatusIntentService;
+import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 
 /**
  * Created by jaim on 9/11/2015.
@@ -48,8 +49,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     DisplayImageOptions options;
     ParentPostBean item;
     Fragment frag;
-    private int mPosition;
-
 
 //    public Custome_All_ListAdapter(FragmentActivity activity, ArrayList<ParentPostBean> allPostsBeans) {
 //        this.context = activity;
@@ -90,10 +89,10 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
-        mPosition = position;
         item = list.get(position);
 
         if (convertView == null) {
+
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
             if (item.getChildResult() != null) {
@@ -119,8 +118,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 defaultTextView.setText("Image Not Available");
                 ll_view_pager.addView(defaultImage);
                 ll_view_pager.addView(defaultTextView);
-
-
             }
 
 
@@ -149,6 +146,10 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         }
 
 
+        holder.checkBox_ff_shell.setTag(position);
+        holder.bt_ff_shell_like.setTag(position);
+
+
         if (item.getUser_fname() != null) {
             holder.tv_ff_shell_username.setText(item.getUser_fname() + " " + item.getUser_lname());
         }
@@ -166,11 +167,11 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         }
 
         if (item.is_following == 0) {
-            holder.checkBox_ff_shell.setChecked(false);
             holder.tv_actiontext_checkBox_ff_shell.setText("Following");
+            holder.checkBox_ff_shell.setChecked(false);
         } else {
-            holder.checkBox_ff_shell.setChecked(true);
             holder.tv_actiontext_checkBox_ff_shell.setText("Follower");
+            holder.checkBox_ff_shell.setChecked(true);
         }
 
         if (item.getTotal_comment() > 0) {
@@ -183,7 +184,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         } else {
             holder.tv_ff_shell_comment_count.setVisibility(View.GONE);
         }
-
 
         if (item.like_dislike_status == 1) {
             holder.bt_ff_shell_like.setImageResource(R.drawable.heart_active);
@@ -211,8 +211,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.bt_connect_with_seller.setVisibility(View.GONE);
         }
 
-        holder.tv_ff_shell_comment_count.setText("Comments");
-
         holder.bt_connect_with_seller.setOnClickListener(this);
         holder.bt_ff_shell_shave.setOnClickListener(this);
         holder.bt_ff_shell_comments.setOnClickListener(this);
@@ -221,7 +219,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_share.setOnClickListener(this);
         holder.bt_ff_shell_complain.setOnClickListener(this);
         holder.bt_ff_shell_map.setOnClickListener(this);
-
+        holder.checkBox_ff_shell.setOnClickListener(this);
 
         return convertView;
     }
@@ -259,7 +257,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
                 break;
             case R.id.checkBox_ff_shell:
-               // Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
+                // Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
+                NetworkIntentService.startFollowIntentServicen(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), item.user_id, (Integer) v.getTag(), AppConstant.GETPOST_FOLLOW);
                 break;
             case R.id.bt_ff_shell_shave:
                 //  Toast.makeText(frag.getActivity(), "You click connect shave", Toast.LENGTH_LONG).show();
@@ -270,7 +269,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 break;
             case R.id.bt_ff_shell_like:
                 // Toast.makeText(frag.getActivity(), "You click connect like", Toast.LENGTH_LONG).show();
-                LikeStatusIntentService.startIntentService(frag.getActivity(), item.user_id, item.post_id, String.valueOf(item.like_dislike_status), item.like_dislike_status == 1 ? "like" : "dislike", mPosition);
+                int positiona = (Integer) v.getTag();
+                NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), item.post_id, (Integer) v.getTag(), AppConstant.GETPOST_LIKE);
                 break;
             case R.id.bt_ff_shell_whatapp:
                 Toast.makeText(frag.getActivity(), "You click connect whatapp", Toast.LENGTH_LONG).show();
@@ -313,20 +313,28 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(LikeStatusIntentService.BROADCAST_ACTION)) {
+            if (action.equals(NetworkIntentService.BROADCAST_LIKE_ACTION)) {
 
-                String totalLike = intent.getStringExtra(LikeStatusIntentService.BROADCAST_EXTRA_LIKE);
-                String totalDislike = intent.getStringExtra(LikeStatusIntentService.BROADCAST_EXTRA_DISLIKE);
-                String like_dislike_status = intent.getStringExtra(LikeStatusIntentService.BROADCAST_EXTRA_LIKE_DISLIKE_STATUS);
-                int position = intent.getIntExtra(LikeStatusIntentService.BROADCAST_EXTRA_POSITION, 0);
+                String totalLike = intent.getStringExtra(NetworkIntentService.BROADCAST_EXTRA_LIKE);
+                String like_dislike_status = intent.getStringExtra(NetworkIntentService.BROADCAST_EXTRA_LIKE_DISLIKE_STATUS);
+                int position = intent.getIntExtra(NetworkIntentService.BROADCAST_EXTRA_POSITION, 0);
 
                 ParentPostBean item = list.get(position);
                 item.setLike_dislike_status(Integer.parseInt(like_dislike_status));
                 item.setTotal_like(Integer.parseInt(totalLike));
-                item.setTotal_dislike(Integer.parseInt(totalDislike));
+                notifyDataSetChanged();
 
+            } else if (action.equals(NetworkIntentService.BROADCAST_FOLLOW_ACTION)) {
+
+                String totalFollow = intent.getStringExtra(NetworkIntentService.BROADCAST_EXTRA_TOTAL_FOLLOWE);
+                String is_followng = intent.getStringExtra(NetworkIntentService.BROADCAST_EXTRA_IS_FOLLOWING);
+                int position = intent.getIntExtra(NetworkIntentService.BROADCAST_EXTRA_POSITION, 0);
+
+                ParentPostBean item = list.get(position);
+                item.setIs_following(Integer.parseInt(is_followng));
                 notifyDataSetChanged();
             }
         }
     };
+
 }

@@ -1,9 +1,6 @@
 package glamvoir.appzstack.glamvoir.fragment;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,8 +26,7 @@ import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.config.AppConfig;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
-import glamvoir.appzstack.glamvoir.intentservice.LikeStatusIntentService;
-import glamvoir.appzstack.glamvoir.intentservice.SendServerIntentService;
+import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
@@ -149,8 +145,8 @@ public class ALL extends Fragment {
         super.onResume();
         //Utility.showToast(getActivity(), "on resume");
         IntentFilter filter = new IntentFilter();
-        filter.addAction(LikeStatusIntentService.BROADCAST_ACTION);
-
+        filter.addAction(NetworkIntentService.BROADCAST_LIKE_ACTION);
+        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ACTION);
         getActivity().registerReceiver(getAdapter().observeLikeReceiver, filter);
         registered = true;
     }

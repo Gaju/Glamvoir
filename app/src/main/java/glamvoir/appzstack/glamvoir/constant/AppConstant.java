@@ -23,6 +23,11 @@ public class AppConstant {
     public static final String METHOD_SAVEPOST = "savemypost";
     public static final String METHOD_LIKESTATUS = "likedislike";
 
+
+    public static final int GETPOST_LIKE = 1;
+    public static final int GETPOST_FOLLOW = 2;
+
+
     public static final int FOLLOWER = 1;
     public static final int FOLLOWING = 2;
     public static final int MY_SAVE = 3;

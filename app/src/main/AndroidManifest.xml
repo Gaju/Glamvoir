@@ -119,7 +119,7 @@
             android:exported="false" />
 
         <service
-            android:name=".intentservice.LikeStatusIntentService"
+            android:name=".intentservice.NetworkIntentService"
             android:exported="false" />
 
         <!-- Network change detector -->
