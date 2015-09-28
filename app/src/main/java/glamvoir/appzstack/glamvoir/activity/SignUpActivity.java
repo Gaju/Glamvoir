@@ -13,6 +13,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.List;
 
@@ -32,13 +34,16 @@ import glamvoir.appzstack.glamvoir.model.net.response.UserDetails;
 /**
  * Created by jaim on 7/21/2015.
  */
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private EditText edt_fName, edt_lName, edt_Email, edt_Password;
     private TextInputLayout tl_fName, tl_lName, tl_Email, tl_Password;
+    RadioButton rdbMale, rdbFemale;
+    RadioGroup rgGender;
     private Button btn_Signup;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
+    String gender;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SignUpActivity.class);
@@ -164,6 +169,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      */
     private void initListener() {
         btn_Signup.setOnClickListener(this);
+        rgGender.setOnCheckedChangeListener(this);
     }
 
 
@@ -183,6 +189,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         tl_lName = (TextInputLayout) findViewById(R.id.inputlastname);
         tl_Email = (TextInputLayout) findViewById(R.id.inputemail);
         tl_Password = (TextInputLayout) findViewById(R.id.inputpassword);
+        rgGender = (RadioGroup) findViewById(R.id.rgGender);
+        rdbMale = (RadioButton) findViewById(R.id.rdbMale);
+        rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
 
     }
 
@@ -227,7 +236,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public Loader<TaskResponse<LoginResponse>> onCreateLoader(int id, Bundle args) {
                     AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
-                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), edt_fName.getText().toString(), appPreferences.getDeviceToken(), appPreferences.getDeviceType(), LoginLoader.LOGIN_SIGNUP);
+                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), edt_fName.getText().toString(),gender, appPreferences.getDeviceToken(), appPreferences.getDeviceType(), LoginLoader.LOGIN_SIGNUP);
                 }
 
                 @Override
@@ -275,5 +284,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             e.printStackTrace();
         }
         return newIntent;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // TODO Auto-generated method stub
+        switch (checkedId) {
+            case R.id.rdbMale:
+                gender="1";
+                break;
+            case R.id.rdbFemale:
+                gender="0";
+                break;
+
+            default:
+                break;
+        }
     }
 }

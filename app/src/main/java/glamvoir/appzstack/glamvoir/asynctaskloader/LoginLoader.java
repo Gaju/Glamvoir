@@ -12,6 +12,7 @@ import glamvoir.appzstack.glamvoir.widgets.ShowDialog;
 
 public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> implements BaseLoader {
     private static final String TAG = LoginLoader.class.getSimpleName();
+    private String fgender;
     private String email;
     private String password;
     private String deviceToken;
@@ -26,11 +27,12 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
     private int loginType;
     private TaskResponse response = null;
 
-    public LoginLoader(RequestBean requestBean, String email, String password, String fName, String deviceToken, String deviceType, int loginType) {
+    public LoginLoader(RequestBean requestBean, String email, String password, String fName,String fgender, String deviceToken, String deviceType, int loginType) {
         super(requestBean.getContext());
         this.email = email;
         this.password = password;
         this.fName = fName;
+        this.fgender=fgender;
         this.deviceToken = deviceToken;
         this.deviceType = deviceType;
         this.requestBean = requestBean;
@@ -49,7 +51,7 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
                     response.data = Communication.loginGlamvoir("user_login", email, password, deviceToken, deviceType);
                     break;
                 case LOGIN_SIGNUP:
-                    response.data = Communication.loginSignup("add_user", email, password, fName, "1", deviceToken, deviceType);
+                    response.data = Communication.loginSignup("add_user", email, password, fName, fgender, deviceToken, deviceType);
                     break;
             }
         } catch (Exception e) {

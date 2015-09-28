@@ -68,19 +68,30 @@
                     android:layout_weight="1"
                     android:id="@+id/textView24" />
 
-                <CheckBox
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/male"
-                    android:layout_weight="1"
-                    android:id="@+id/checkBox" />
+                    android:id="@+id/rgGender"
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/female"
-                    android:layout_weight="1"
-                    android:id="@+id/checkBox2" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MALE"
+                       android:layout_weight="1"
+                        android:id="@+id/rdbMale" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FEMALE"
+                        android:id="@+id/rdbFemale"
+                        android:layout_weight="1" />
+
+                </RadioGroup>
+
 
 
             </LinearLayout>
