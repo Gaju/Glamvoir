@@ -235,17 +235,15 @@
 
 
     <string name="term_one"> 1. Acceptable use</string>
-    <string name="term_one_answer"> Please feel free to explore our Website and, where available, contribute material to it, such as questions, posts and multimedia content (e.g. pictures, videos)However, use of the Website and materials posted to it should not be illegal or offensive in any way. You should be mindful not to:
-\n(a) breach another person’s right to privacy;
-\n(b) infringe any intellectual property rights;
-\n(c) make statements that are defamatory (including towards Nestlé), relate to pornography, are of a racist or xenophobic nature, promote hatred or incite to violence or disorder;
-\n(d) upload files that contain viruses or may lead to security issues; or
-\n(e) otherwise jeopardize the integrity of the Website.</string>
-    <string name="term_Two">2. Data protection</string>
-    <string name="term_answer">Our Privacy Notice applies to any personal data or material shared on this Website.</string>
-    <string name="term_three">3.Content provided by You</string>
-    <string name="term_three_answer"> You represent to Nestlé that you are either the author of the content that you contribute to this Website, or that you have the rights (ie: have been given permission by the rights holder) and are able to contribute such content (e.g. pictures, videos, music) to the Website.
-    </string>
+    <string name="term_one_answer"> This Privacy Policy governs the manner in which Boom Marcom Services Private Limited (“Glamvoir”) collects, uses, maintains and discloses information collected from user(s) (“User”) of the www.glamvoir.com website and mobile app Glamvoir (the “Site”). This Privacy Policy applies only to the Site and any products and services offered directly by Glamvoir.
+This electronic record is digitally generated and does not require any kind of signature (physical or digital) for it to be legally binding.  By registering or using the Site you agree to be bound by the terms and conditions as contained in this Privacy Policy. This privacy policy is incorporated by reference to the Terms and Conditions of Use of Glamvoir.com. Our Privacy Policy is subject to any amendment without providing you any prior notice. Please review this policy periodically for staying aware of any changes. In case you do not wish to be bound by any of our terms and conditions of use you are advised not to register or use any features of our Site. Continued use of the Site following the posting of any changes to this policy constitutes your acceptance of those changes.
+</string>
+    <string name="term_Two">Personal identification information</string>
+    <string name="term_two_answer">We may collect personal identification information from Users in a variety of ways, including, but not limited to, when Users visit our Site, register on the Site, subscribe to the newsletter, fill out a form, and in connection with other activities, services, features or resources we make available on our Site. Users may be asked for, as appropriate, name, email address, mailing address, phone number, fax numbers, or other identifying information. We will collect personal identification information from Users if they voluntarily submit such information to us. Users can always refuse to supply personal identification information, recognizing that such refusal may prevent a User from engaging in certain Site-related activities.</string>
+    <string name="term_three">Non-personal identification information</string>
+    <string name="term_three_answer">We may collect non-personal identification information about Users whenever they interact with our Site. Non-personal identification information may include the User’s browser name, type of computer and technical information about Users means of connection to our Site, such as the User’s operating system, the Internet service providers and other similar information.</string>
+
+
     <string name="about_us">About Us</string>
 
     <string name="txtCredits"><a href="glamvoir@gmail.com">Contact Us:glamvoir@gmail.com </a></string>

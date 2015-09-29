@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.webkit.WebView;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -14,6 +15,7 @@ import glamvoir.appzstack.glamvoir.constant.AppConstant;
  */
 public class Term_and_Condition extends AppCompatActivity {
     protected Toolbar toolbar;
+    WebView webView;
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, Term_and_Condition.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
@@ -26,7 +28,9 @@ public class Term_and_Condition extends AppCompatActivity {
         setContentView(R.layout.term_and_condition);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         getToolbar(toolbar);
-
+        webView= (WebView) findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/index.html");
 
 
     }

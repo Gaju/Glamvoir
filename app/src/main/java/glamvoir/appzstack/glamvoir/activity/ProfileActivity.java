@@ -1,6 +1,5 @@
 package glamvoir.appzstack.glamvoir.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.adapter.Custome_All_ListAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 
 /**
@@ -27,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); //
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_profile);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         getToolbar(toolbar);

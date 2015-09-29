@@ -94,6 +94,7 @@ public class ParentPostBean extends BaseBean implements Serializable {
     }
 
     public void setChildResult(List<ChildPostBean> childResult) {
+
         this.childResult = childResult;
     }
 

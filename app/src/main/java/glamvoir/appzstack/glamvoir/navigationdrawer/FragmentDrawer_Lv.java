@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,7 +28,6 @@ import com.cocosw.bottomsheet.BottomSheet;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,13 +41,11 @@ import glamvoir.appzstack.glamvoir.activity.AlertActivity;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctask.PhotoUploadAsyncTask;
-import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
-import glamvoir.appzstack.glamvoir.network.NetworkCall;
 import retrofit.mime.TypedFile;
 
 /**
@@ -100,7 +96,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppPreferences appPreferences = new AppPreferences(getActivity());
-        String jai=appPreferences.getLastName().toString();
+
         if (appPreferences.getFirstName() != null && appPreferences.getEmailID() != null) {
             mName = new StringBuilder().append(appPreferences.getFirstName()).append(" ").append((appPreferences.getLastName() == null) ? "" : appPreferences.getLastName());
             mEmail = appPreferences.getEmailID();

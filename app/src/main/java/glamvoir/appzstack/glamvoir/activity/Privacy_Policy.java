@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.webkit.WebView;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -14,6 +15,7 @@ import glamvoir.appzstack.glamvoir.constant.AppConstant;
  */
 public class Privacy_Policy  extends AppCompatActivity {
     protected Toolbar toolbar;
+    WebView webView;
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, Privacy_Policy.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
@@ -27,12 +29,9 @@ public class Privacy_Policy  extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         getToolbar(toolbar);
 
-      /*  Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
-        email.putExtra(Intent.EXTRA_SUBJECT, subject);
-        email.putExtra(Intent.EXTRA_TEXT, message);
-        email.setType("message/rfc822");
-        startActivity(Intent.createChooser(email, "Select Email Client"));*/
+        webView= (WebView) findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/privacy_policy.html");
 
     }
 
