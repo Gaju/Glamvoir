@@ -2,8 +2,6 @@ package glamvoir.appzstack.glamvoir.fragment;
 
 
 import android.app.Activity;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.SlidingTabs.SlidingTabLayout;
@@ -21,12 +18,11 @@ import glamvoir.appzstack.glamvoir.SlidingTabs.SlidingTabLayout;
 public class HomeFragment extends Fragment {
    /* private FragmentTabHost mTabHost;*/
 
-
     SlidingTabLayout mSlidingTabLayout;
     ViewPager mViewPager;
 
     String[] titlesTAB;
-    int Numboftabs =5;
+    int Numboftabs = 5;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -43,13 +39,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
-       // mViewPager.setOffscreenPageLimit(2);
+        // mViewPager.setOffscreenPageLimit(2);
         // tabcachesize (=tabcount for better performance)
-        titlesTAB =new String[]{"All","FASHION & LIFESTYLE","FOOD & PLACE","MUSIC & GIGS","INTEREST"};
-        mSlidingTabLayout = (SlidingTabLayout)rootView.findViewById(R.id.sliding_tabs);
+        titlesTAB = new String[]{"All", "FASHION & LIFESTYLE", "FOOD & PLACE", "MUSIC & GIGS", "INTEREST"};
+        mSlidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.sliding_tabs);
 
 
         // use own style rules for tab layout
@@ -65,7 +59,7 @@ public class HomeFragment extends Fragment {
             mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset,
-                                           int positionOffsetPixels){
+                                           int positionOffsetPixels) {
 
                 }
 
@@ -90,7 +84,6 @@ public class HomeFragment extends Fragment {
             });
 
         }
-
 
 
         return rootView;
@@ -143,8 +136,7 @@ public class HomeFragment extends Fragment {
             {
                 StoreAndDeals tab4 = new StoreAndDeals();
                 return tab4;
-            }
-            else if (position == 4) // if the position is 0 we are returning the First tab
+            } else if (position == 4) // if the position is 0 we are returning the First tab
             {
                 Interest tab5 = new Interest();
                 return tab5;
@@ -171,8 +163,6 @@ public class HomeFragment extends Fragment {
 
 
     }
-
-
 
 
 }

@@ -32,6 +32,7 @@ public class FFSPLoader extends AsyncTaskLoader<TaskResponse<FFSP_Response>> imp
     public TaskResponse<FFSP_Response> loadInBackground() {
         response = new TaskResponse();
         try {
+            String url = "http://glamvoir.com/index.php/api?method=" + methodName + "&user_id=" + user_id;
             response.data = Communication._FFSP(methodName, user_id);
         } catch (Exception e) {
             response.error = e;

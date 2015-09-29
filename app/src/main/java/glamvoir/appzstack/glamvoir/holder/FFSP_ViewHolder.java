@@ -19,6 +19,7 @@ public class FFSP_ViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public TextView title;
     public TextView icon_title;
     public ImageView icon;
+    public ImageView user_img;
     public TextView subtitle, followers;
 
     public LoadableListAdapter.MyViewHolderClick mListener;
@@ -30,6 +31,7 @@ public class FFSP_ViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
         title = (TextView) view.findViewById(R.id.title);
         icon = (ImageView) view.findViewById(R.id.icon);
+        user_img = (ImageView) view.findViewById(R.id.user_img);
         subtitle = (TextView) view.findViewById(R.id.subtitle);
         icon_title = (TextView) view.findViewById(R.id.icon_title);
         //bt_shell_following_action = (ImageButton) view.findViewById(R.id.bt_shell_action);

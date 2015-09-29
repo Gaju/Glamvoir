@@ -26,7 +26,8 @@ public class AppPreferences {
         deviceToken,
         deviceType,
         firstTime,
-        gender
+        gender,
+        userImage
     }
 
     public AppPreferences(Context context) {
@@ -125,6 +126,15 @@ public class AppPreferences {
 
     public void setGender(String gender) {
         mEditor.putString(SharedPrefrencesKey.gender.toString(), gender);
+        mEditor.commit();
+    }
+
+    public String getUserImage() {
+        return mPreferences.getString(SharedPrefrencesKey.userImage.toString(), null);
+    }
+
+    public void setUserImage(String userImage) {
+        mEditor.putString(SharedPrefrencesKey.userImage.toString(), userImage);
         mEditor.commit();
     }
 }

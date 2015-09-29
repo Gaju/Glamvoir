@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,11 +43,13 @@ import glamvoir.appzstack.glamvoir.activity.AlertActivity;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctask.PhotoUploadAsyncTask;
+import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
+import glamvoir.appzstack.glamvoir.network.NetworkCall;
 import retrofit.mime.TypedFile;
 
 /**
@@ -53,14 +57,13 @@ import retrofit.mime.TypedFile;
  */
 public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener {
 
-
     private static String TAG = FragmentDrawer_Lv.class.getSimpleName();
     private static final int CAPTURE_IMAGE_CAMERA = 1;
     private static final int CAPTURE_IMAGE_GALLARY = 2;
     private Bitmap mbitmap;
     private ImageView proFile_Image;
     private ImageView alert;
-    File file;
+    private File file;
     int save = -1;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -69,16 +72,22 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private ListView listView;
     private Toolbar mtoolbar;
     private ProgressBar progressbar;
-
     String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTING"};
 
-    int ICONS[] = {R.drawable.feed_active, R.drawable.fleamarket, R.drawable.followers, R.drawable.following,
-            R.drawable.mysave, R.drawable.mypost,R.drawable.setting};
+    int ICONS[] = {R.drawable.feed_active,
+            R.drawable.fleamarket,
+            R.drawable.followers,
+            R.drawable.following,
+            R.drawable.mysave,
+            R.drawable.mypost,
+            R.drawable.setting};
+
     private StringBuilder mName;
     private String mEmail;
     int PROFILE = R.drawable.camera;
     private FragmentDrawerListener_Lv drawerListener_lv;
 
+    private AppPreferences appPreferences;
 
     public FragmentDrawer_Lv() {
 
@@ -91,6 +100,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        appPreferences = new AppPreferences(getActivity());
         AppPreferences appPreferences = new AppPreferences(getActivity());
 
         if (appPreferences.getFirstName() != null && appPreferences.getEmailID() != null) {
@@ -99,10 +109,8 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer_lv, container, false);
         TextView tv_name = (TextView) layout.findViewById(R.id.name);
@@ -119,11 +127,13 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
 
+        if (appPreferences.getUserImage() != null)
+            displayImage(proFile_Image, appPreferences.getUserImage());
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
 
                /* parent.getChildAt(position).setBackgroundColor(
                         Color.parseColor("#A9BCF5"));*/
@@ -193,7 +203,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-
         new BottomSheet.Builder(getActivity()).title("Upload Profile Pic").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
 
             @Override
@@ -240,8 +249,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 break;
 
         }
-
-
     }
 
 
@@ -254,34 +261,32 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         options.inSampleSize = 2;
 
         if (requestCode == CAPTURE_IMAGE_CAMERA) {
-           // photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), file.getAbsolutePath());
+            photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), file.getAbsolutePath());
 
-            mbitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-            proFile_Image.setImageBitmap(mbitmap);
+            //mbitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+            //proFile_Image.setImageBitmap(mbitmap);
 
         } else if (requestCode == CAPTURE_IMAGE_GALLARY) {
             try {
                 // We need to recyle unused bitmaps
-                if (mbitmap != null) {
-                    mbitmap.recycle();
-                }
-              //  photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), getRealPathFromURI(data.getData()));
+//                if (mbitmap != null) {
+//                    mbitmap.recycle();
+//                }
+                photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), getRealPathFromURI(data.getData()));
 
-                InputStream stream = getActivity().getContentResolver().openInputStream(
-                        data.getData());
-                new TypedFile("image/jpeg", new File(data.getData().toString()));
-                mbitmap = BitmapFactory.decodeStream(stream);
-                stream.close();
-                proFile_Image.setImageBitmap(mbitmap);
+//                InputStream stream = getActivity().getContentResolver().openInputStream(
+//                        data.getData());
+//                new TypedFile("image/jpeg", new File(data.getData().toString()));
+//                mbitmap = BitmapFactory.decodeStream(stream);
+//                stream.close();
+//                proFile_Image.setImageBitmap(mbitmap);
 
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+
             }
         }
     }
-
 
     private String getRealPathFromURI(Uri contentURI) {
         String result;
@@ -316,18 +321,20 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 public void successWithresult(List<Object> sucessObject, String message, String listenerId) {
                     progressbar.setVisibility(View.GONE);
                     Utility.showToast(getActivity(), "success");
+                    PhotoUploadResponse response = (PhotoUploadResponse) sucessObject.get(0);
 
-                    PhotoUploadResponse photoUploadResponse = (PhotoUploadResponse) sucessObject.get(0);
-
+                    appPreferences.setUserImage(response.results.get(0).user_image);
+                    if (appPreferences.getUserImage() != null)
+                        displayImage(proFile_Image, appPreferences.getUserImage());
                 }
             }, "photo_upload").execute(methodName, mUserID, mpath);
         }
     }
 
-
     private void displayImage(ImageView imageView, String path) {
 
         ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
 //        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
 //                .cacheOnDisc(true).resetViewBeforeLoading(true)
 //                .showImageForEmptyUri(fallback)

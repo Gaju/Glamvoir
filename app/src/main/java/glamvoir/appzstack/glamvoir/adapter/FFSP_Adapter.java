@@ -117,6 +117,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             holder.subtitle.setText(singleFollow.post_description);
             holder.icon.setImageResource(R.drawable.delete);
             holder.icon_title.setText("Delete");
+
         } else if (context instanceof MyPostActivity) {
 
             //holder.subtitle.setVisibility(View.INVISIBLE);
@@ -129,19 +130,22 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
     private void performAction(View view) {
 
         AppPreferences appPreferences = new AppPreferences(context);
+        FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
         if (context instanceof MysaveActivity) {
-            FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
-            ((FFSPActivity) context).removeItem(mPosition, singleFollow.user_id, singleFollow.post_id);
+
+            ((FFSPActivity) context).removeItem(mPosition, appPreferences.getUserId(), singleFollow.post_id);
 
         } else if (context instanceof FollowingActivity) {
 
-            FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
-            ((FFSPActivity) context).followFollower(singleFollow.user_id, mPosition);
+            // FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
+            ((FFSPActivity) context).followFollower(appPreferences.getUserId(), mPosition);
 
         } else if (context instanceof FollowersActivity) {
 
-            FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
-            ((FFSPActivity) context).followFollower(singleFollow.user_id, mPosition);
+            //  FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
+            ((FFSPActivity) context).followFollower(appPreferences.getUserId(), mPosition);
+        } else if (context instanceof MyPostActivity) {
+
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
+import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.network.Communication;
 
@@ -14,7 +15,7 @@ public class DeleteMySaveAsyncTask extends AsyncTask<String, Void, Void> {
     private AsynTaskListener mAsynTaskListener;
     private String mAsynTaskId;
     private Context mContext;
-    private DeleteMySaveResponse response = new DeleteMySaveResponse();
+    private FFSP_Response response = new FFSP_Response();
 
     public DeleteMySaveAsyncTask(Context mCtx, AsynTaskListener asT, String AsyntaskId) {
         mAsynTaskListener = asT;

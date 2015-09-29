@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollable_header"
+    android:orientation="vertical" >
+
+     <View
+        android:id="@+id/placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+  
+  <View
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="#00f" android:visibility="gone" />
+   
+
+</LinearLayout>

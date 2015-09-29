@@ -40,25 +40,13 @@ import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
  * Created by jaim on 9/11/2015.
  */
 public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClickListener {
-
-    private static LayoutInflater inflater = null;
-    ImagePagerAdapter adapter;
-    Context context;
-    ArrayList<ParentPostBean> list;
-    ImageLoader imageLoader;
-    DisplayImageOptions options;
-    ParentPostBean item;
-    Fragment frag;
-
-//    public Custome_All_ListAdapter(FragmentActivity activity, ArrayList<ParentPostBean> allPostsBeans) {
-//        this.context = activity;
-//        this.list = allPostsBeans;
-//        inflater = (LayoutInflater) frag.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        imageLoader = ImageLoader.getInstance();
-//        imageLoader.init(ImageLoaderConfiguration.createDefault(frag.getActivity()));
-//
-//        options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
-//    }
+    private LayoutInflater inflater = null;
+    private ImagePagerAdapter adapter;
+    private ArrayList<ParentPostBean> list;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions options;
+    private ParentPostBean item;
+    private Fragment frag;
 
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
@@ -66,7 +54,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         inflater = (LayoutInflater) frag.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(frag.getActivity()));
-
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
@@ -145,9 +132,10 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder = (ViewHolder) convertView.getTag();
         }
 
-
         holder.checkBox_ff_shell.setTag(position);
         holder.bt_ff_shell_like.setTag(position);
+        holder.bt_ff_shell_comments.setTag(position);
+        holder.bt_ff_shell_shave.setTag(position);
 
 
         if (item.getUser_fname() != null) {
@@ -227,7 +215,16 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     @Override
     public void onClick(View v) {
 
+        int pos = 0;
+        String postID = null;
+
+        if (v.getTag() != null) {
+            pos = (Integer) v.getTag();
+            postID = list.get(pos).getPost_id();
+        }
+
         switch (v.getId()) {
+
             case R.id.bt_ff_shell_complain:
                 new BottomSheet.Builder(frag.getActivity()).title("Take action on post").sheet(R.menu.menu_complain).listener(new DialogInterface.OnClickListener() {
 
@@ -258,19 +255,19 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 break;
             case R.id.checkBox_ff_shell:
                 // Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
-                NetworkIntentService.startFollowIntentServicen(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), item.user_id, (Integer) v.getTag(), AppConstant.GETPOST_FOLLOW);
+                String followerID = list.get(pos).getUser_id();
+                NetworkIntentService.startFollowIntentServicen(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), followerID, pos, AppConstant.GETPOST_FOLLOW);
                 break;
             case R.id.bt_ff_shell_shave:
                 //  Toast.makeText(frag.getActivity(), "You click connect shave", Toast.LENGTH_LONG).show();
-                savePost(item.getUser_id(), item.getPost_id());
+                savePost(AppPreferences.getInstance(frag.getActivity()).getUserId(), list.get(pos).getPost_id());
                 break;
             case R.id.bt_ff_shell_comments:
-                CommentActivity.startActvity(frag.getActivity(), item.getPost_id(), null);
+                CommentActivity.startActvity(frag.getActivity(), postID, null);
                 break;
             case R.id.bt_ff_shell_like:
                 // Toast.makeText(frag.getActivity(), "You click connect like", Toast.LENGTH_LONG).show();
-                int positiona = (Integer) v.getTag();
-                NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), item.post_id, (Integer) v.getTag(), AppConstant.GETPOST_LIKE);
+                NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, pos, AppConstant.GETPOST_LIKE);
                 break;
             case R.id.bt_ff_shell_whatapp:
                 Toast.makeText(frag.getActivity(), "You click connect whatapp", Toast.LENGTH_LONG).show();

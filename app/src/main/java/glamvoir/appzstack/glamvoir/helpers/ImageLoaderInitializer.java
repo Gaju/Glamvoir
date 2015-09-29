@@ -19,10 +19,8 @@ public class ImageLoaderInitializer {
             .cacheOnDisc(true)
             .build();
 
-    public static void initImageLoaderIfNotInited(Context context)
-    {
-        if (!ImageLoader.getInstance().isInited())
-        {
+    public static void initImageLoaderIfNotInited(Context context) {
+        if (!ImageLoader.getInstance().isInited()) {
             DisplayImageOptions imageDefaultOptions = new DisplayImageOptions.Builder()
                     .resetViewBeforeLoading(true)
                     .cacheInMemory(Utility.shouldEnableCacheOnMemory())
@@ -46,7 +44,7 @@ public class ImageLoaderInitializer {
         }
     }
 
-    public static DisplayImageOptions getDisplayImageOptionWithFade(){
+    public static DisplayImageOptions getDisplayImageOptionWithFade() {
         return displayImageOptionWithFade;
     }
 }

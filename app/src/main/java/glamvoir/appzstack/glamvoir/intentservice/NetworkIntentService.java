@@ -72,6 +72,8 @@ public class NetworkIntentService extends IntentService {
                     String postID = intent.getStringExtra(INTENT_ARG_POSTID);
                     int position = intent.getIntExtra(INTENT_ARG_POSITION, 0);
 
+                    String url = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_LIKESTATUS + "&post_id=" + postID + "&user_id=" + userID;
+
                     response.data = Communication.likeStatus(AppConstant.METHOD_LIKESTATUS, userID, postID);
 
                     if (response.data.isSucceeded()) {
@@ -86,6 +88,8 @@ public class NetworkIntentService extends IntentService {
                     String userID1 = intent.getStringExtra(INTENT_ARG_USERID);
                     String follower_ID = intent.getStringExtra(INTENT_ARG_FOLLOWERID);
                     int position1 = intent.getIntExtra(INTENT_ARG_POSITION, 0);
+
+                    String url1 = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_FOLLOWER_FOLLOWING + "&following_user_id=" + follower_ID + "&follower_user_id=" + userID1;
 
                     response.data = Communication.getPostFollow(AppConstant.METHOD_FOLLOWER_FOLLOWING, userID1, follower_ID);
                     if (response.data.isSucceeded()) {

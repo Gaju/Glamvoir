@@ -15,5 +15,14 @@ import glamvoir.appzstack.glamvoir.model.net.response.UserDetails;
 public class PhotoUploadResponse extends BaseResponse {
 
     @JsonProperty("results")
-    public List<String> url;
+    public List<Image> results;
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Image {
+
+        @JsonProperty("user_image")
+        public String user_image;
+    }
+
 }
+

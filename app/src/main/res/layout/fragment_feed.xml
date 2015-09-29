@@ -17,18 +17,18 @@
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/edit_text_border"
-            android:drawableLeft="@drawable/search"
             android:cursorVisible="false"
-            android:visibility="gone"
-            android:hint="Search Here..." />
+            android:drawableLeft="@drawable/search"
+            android:hint="Search Here..."
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/lv_all"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="6dp"
-            android:divider="@null"
-            />
+            android:layout_margin="3dp"
+            android:scrollbars="none"
+            android:divider="@null" />
 
     </LinearLayout>
 

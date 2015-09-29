@@ -89,9 +89,6 @@ public class ALL extends Fragment {
         //Utility.showToast(getActivity(), "onActivityCreated");
     }
 
-    //onRestart() --> onStart() --> onResume()
-
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -100,7 +97,7 @@ public class ALL extends Fragment {
 
 
     protected void loadData() {
-        getLoaderManager().restartLoader(LoaderID.GETPOST, null, ffspCallback);
+        getLoaderManager().initLoader(LoaderID.GETPOST, null, ffspCallback);
     }
 
     LoaderManager.LoaderCallbacks<AllPostsBean> ffspCallback =
@@ -120,6 +117,7 @@ public class ALL extends Fragment {
                         } else {
                             list.addAll(data.results);
                             getAdapter().notifyDataSetChanged();
+                            // getLoaderManager().destroyLoader(LoaderID.GETPOST);
                         }
                     }
                 }
@@ -211,7 +209,7 @@ public class ALL extends Fragment {
                 public void successWithresult(List<Object> sucessObject, String message, String listenerId) {
 
                     if (message.equalsIgnoreCase("0"))
-                        Utility.showToast(getActivity(), "success");
+                        Utility.showToast(getActivity(), "Post saved");
                     else Utility.showToast(getActivity(), message);
 
                 }

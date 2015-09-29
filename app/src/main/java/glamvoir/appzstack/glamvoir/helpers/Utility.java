@@ -37,6 +37,7 @@ public class Utility {
         mAppPreferences.setFirstName(userDetails.user_fname);
         mAppPreferences.setLastName(userDetails.user_lname);
         mAppPreferences.setUserId(userDetails.user_id);
+        mAppPreferences.setUserImage(userDetails.user_image);
     }
 
     public static boolean shouldEnableCacheOnMemory(){

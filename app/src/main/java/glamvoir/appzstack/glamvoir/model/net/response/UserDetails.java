@@ -15,6 +15,9 @@ public class UserDetails implements Parcelable {
     @JsonProperty("user_id")
     public String user_id;
 
+    @JsonProperty("user_image")
+    public String user_image;
+
     @JsonProperty("user_fname")
     public String user_fname;
 

@@ -163,6 +163,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
                             if (data.data != null && data.data.error_code != null) {
                                 dataLoaded(data.data);
                             }
+                            getLoaderManager().destroyLoader(LoaderID.FFSP);
                         }
                     }
                 }
@@ -177,6 +178,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
         if (responseData != null && responseData.results.size() > 0) {
             if (this.data != null)
+                data.clear();
                 this.data.addAll(responseData.results);
             adapter.notifyDataSetChanged();
         } else {
@@ -222,8 +224,12 @@ public abstract class FFSPActivity extends AppCompatActivity {
                 public void successWithresult(List<Object> sucessObject, String message, String listenerId) {
 
                     if (message.equalsIgnoreCase("0")) {
-                        Utility.showToast(FFSPActivity.this, "success");
-                        adapter.removeItem(position);
+                        Utility.showToast(FFSPActivity.this, "Post Deleted");
+                        //adapter.removeItem(position);
+                       // FFSP_Response.SingleFollow response = (FFSP_Response.SingleFollow)sucessObject.get(0);
+                       // data.clear();
+                        //data.add(response);
+                        //adapter.notifyDataSetChanged();
                     } else {
                         Utility.showToast(FFSPActivity.this, message);
                     }

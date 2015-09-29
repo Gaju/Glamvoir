@@ -60,7 +60,7 @@ public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> implements B
         AppPreferences appPreferences = AppPreferences.getInstance(requestBean.getContext());
         String url = null;
         try {
-            url = mUrl + "method=" + AppConstant.METHOD_GETPOST + "&user_gender=1"  /*+ appPreferences.getGender()*/ + "&cat_id=" + categoryID + "&user_id=21" /*+ appPreferences.getUserId()*/;
+            url = mUrl + "method=" + AppConstant.METHOD_GETPOST + "&user_gender=1"  /*+ appPreferences.getGender()*/ + "&cat_id=" + categoryID + "&user_id=" + appPreferences.getUserId();
             String serverResponseString = networkCall.getResponseFromServer(url.trim());
 
             ParserClass parserClass = ParserClass.getsInstance(requestBean.getContext());
@@ -70,14 +70,12 @@ public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> implements B
             e.printStackTrace();
             allPostsBean.setSuccessCode(1);
         }
-
         return allPostsBean;
     }
 
 
     @Override
     public void showLoaderDialog() {
-
         if (requestBean.isLoader()) {
             networkCall.showProgressDialog(requestBean.getActivity(), "Loading", false);
         }
@@ -85,7 +83,6 @@ public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> implements B
 
     @Override
     public void hideLoaderDialog() {
-
         if (requestBean.isLoader()) {
             networkCall.dismissDialog();
         }

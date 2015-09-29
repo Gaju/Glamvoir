@@ -51,9 +51,9 @@ public class Communication {
         return response;
     }
 
-    public static DeleteMySaveResponse deleteMySave(String methodType, String userID, String postID) {
+    public static FFSP_Response deleteMySave(String methodType, String userID, String postID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        DeleteMySaveResponse response = service.deleteMySave(methodType, userID, postID);
+        FFSP_Response response = service.deleteMySave(methodType, userID, postID);
         return response;
     }
 
@@ -87,17 +87,16 @@ public class Communication {
         File requestFilePath = new File(imagePath);
         String filename = imagePath.substring(imagePath.lastIndexOf("/") + 1);
 
-
-        MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-        multipartTypedOutput.addPart("method", new TypedString(methodType));
-        multipartTypedOutput.addPart("user_id", new TypedString(userID));
-        multipartTypedOutput.addPart("user_image", new TypedString(filename));
-        multipartTypedOutput.addPart("file", new TypedFile("image/*", requestFilePath));
+//        MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+//        multipartTypedOutput.addPart("method", new TypedString(methodType));
+//        multipartTypedOutput.addPart("user_id", new TypedString(userID));
+//        multipartTypedOutput.addPart("user_image", new TypedString(filename));
+//        multipartTypedOutput.addPart("file", new TypedFile("image/*", requestFilePath));
 
 
         // PhotoUploadResponse response = service.uploadPhoto(multipartTypedOutput);
 
-        PhotoUploadResponse response = service.uploadPhoto(new TypedFile("image/*", requestFilePath), methodType, userID, filename);
+        PhotoUploadResponse response = service.uploadPhoto(new TypedFile("image/*", requestFilePath), new TypedString(methodType), new TypedString(userID));
         return response;
     }
 }

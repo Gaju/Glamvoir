@@ -2,7 +2,6 @@ package glamvoir.appzstack.glamvoir.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -12,9 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 
@@ -45,22 +41,17 @@ public class FleaFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(getActivity());
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
         mlistView = (ListView) rootView.findViewById(R.id.lv_all);
-        tv_search= (TextView) rootView.findViewById(R.id.tv_search);
+        tv_search = (TextView) rootView.findViewById(R.id.tv_search);
         tv_search.setVisibility(View.VISIBLE);
-
 
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,7 +64,7 @@ public class FleaFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated( Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
     }
@@ -84,8 +75,8 @@ public class FleaFragment extends Fragment {
 
     }
 
-    protected void loadData() {
-        getLoaderManager().restartLoader(LoaderID.GETPOST, null, ffspCallback);
+    private void loadData() {
+        getLoaderManager().restartLoader(LoaderID.FLEAMARKET, null, ffspCallback);
     }
 
     LoaderManager.LoaderCallbacks<AllPostsBean> ffspCallback =
@@ -105,6 +96,7 @@ public class FleaFragment extends Fragment {
                         } else {
                             list.addAll(data.results);
                             setAdapter();
+                            getLoaderManager().destroyLoader(LoaderID.FLEAMARKET);
                         }
                     }
                 }
@@ -114,7 +106,7 @@ public class FleaFragment extends Fragment {
                 }
             };
 
-    private void setAdapter(){
+    private void setAdapter() {
         mlistView.setAdapter(new Custome_All_ListAdapter(FleaFragment.this, list));
     }
 
