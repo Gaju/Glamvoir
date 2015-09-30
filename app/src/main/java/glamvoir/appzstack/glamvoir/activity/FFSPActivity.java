@@ -179,7 +179,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
         if (responseData != null && responseData.results.size() > 0) {
             if (this.data != null)
                 data.clear();
-                this.data.addAll(responseData.results);
+            this.data.addAll(responseData.results);
             adapter.notifyDataSetChanged();
         } else {
             txt_Nodata.setVisibility(View.VISIBLE);
@@ -226,10 +226,10 @@ public abstract class FFSPActivity extends AppCompatActivity {
                     if (message.equalsIgnoreCase("0")) {
                         Utility.showToast(FFSPActivity.this, "Post Deleted");
                         //adapter.removeItem(position);
-                       // FFSP_Response.SingleFollow response = (FFSP_Response.SingleFollow)sucessObject.get(0);
-                       // data.clear();
-                        //data.add(response);
-                        //adapter.notifyDataSetChanged();
+                        FFSP_Response response = (FFSP_Response) sucessObject.get(0);
+                        data.clear();
+                        data.addAll(response.results);
+                        adapter.notifyDataSetChanged();
                     } else {
                         Utility.showToast(FFSPActivity.this, message);
                     }

@@ -36,7 +36,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 
     public ImagePagerAdapter(Context context, List<ChildPostBean> list) {
         mContext = context;
-
         this.list = list;
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
@@ -67,15 +66,18 @@ public class ImagePagerAdapter extends PagerAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View convertView = inflater.inflate(R.layout.view_item_shell, null);
 
-
         item = list.get(position);
+
         String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
+
         ImageView view_image = (ImageView) convertView
                 .findViewById(R.id.view_image);
+
         TextView description = (TextView) convertView
                 .findViewById(R.id.description);
 
         view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
         view_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +96,6 @@ public class ImagePagerAdapter extends PagerAdapter {
         description.setText(item.getPost_description());
 
         container.addView(convertView, 0);
-
 
         return convertView;
     }

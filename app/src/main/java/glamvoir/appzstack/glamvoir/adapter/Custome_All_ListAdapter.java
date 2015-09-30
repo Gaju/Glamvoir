@@ -142,7 +142,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_username.setText(item.getUser_fname() + " " + item.getUser_lname());
         }
 
-
         if (item.getTotal_like() > 0) {
             holder.tv_ff_shell_like_count.setVisibility(View.VISIBLE);
             if (item.getTotal_like() == 1) {
@@ -260,7 +259,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 break;
             case R.id.bt_ff_shell_shave:
                 //  Toast.makeText(frag.getActivity(), "You click connect shave", Toast.LENGTH_LONG).show();
-                savePost(AppPreferences.getInstance(frag.getActivity()).getUserId(), list.get(pos).getPost_id());
+                savePost(AppPreferences.getInstance(frag.getActivity()).getUserId(), list.get(pos).getPost_id(), pos);
                 break;
             case R.id.bt_ff_shell_comments:
                 CommentActivity.startActvity(frag.getActivity(), postID, null);
@@ -300,9 +299,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         ImageView user_Image;
     }
 
-    private void savePost(String userID, String postID) {
+    private void savePost(String userID, String postID, int pos) {
         //  SendServerIntentService.startSavePostService(frag.getActivity(), userID, postID, AppConstant.METHOD_SAVEPOST);
-        ((ALL) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID);
+        ((ALL) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
     }
 
 

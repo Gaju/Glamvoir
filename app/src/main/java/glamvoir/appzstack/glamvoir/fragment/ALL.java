@@ -192,7 +192,7 @@ public class ALL extends Fragment {
     }
 
 
-    public void savePost(String methodName, String mUserID, String postID) {
+    public void savePost(String methodName, String mUserID, String postID, int pos) {
         if (InternetStatus.isInternetAvailable(getActivity(), true)) {
             new SavePostAsyncTask(getActivity(), new AsynTaskListener() {
                 @Override
@@ -206,14 +206,21 @@ public class ALL extends Fragment {
                 }
 
                 @Override
-                public void successWithresult(List<Object> sucessObject, String message, String listenerId) {
+                public void successWithresult(List<Object> sucessObject, String message, String pos) {
 
-                    if (message.equalsIgnoreCase("0"))
+                    if (message.equalsIgnoreCase("0")) {
                         Utility.showToast(getActivity(), "Post saved");
-                    else Utility.showToast(getActivity(), message);
+
+                        ParentPostBean item = list.get(Integer.parseInt(pos));
+                        item.setIs_saved(Integer.parseInt("1"));
+                        adapter.notifyDataSetChanged();
+
+                    } else {
+                        Utility.showToast(getActivity(), message);
+                    }
 
                 }
-            }, "server").execute(methodName, mUserID, postID);
+            }, "server").execute(methodName, mUserID, postID, String.valueOf(pos));
         }
     }
 

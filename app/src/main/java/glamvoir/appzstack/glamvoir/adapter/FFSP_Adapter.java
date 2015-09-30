@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import glamvoir.appzstack.glamvoir.activity.FollowingActivity;
 import glamvoir.appzstack.glamvoir.activity.MyPostActivity;
 import glamvoir.appzstack.glamvoir.activity.MysaveActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.config.AppConfig;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.holder.FFSP_ViewHolder;
 import glamvoir.appzstack.glamvoir.intentservice.ObserveFFSPIntentService;
@@ -44,10 +46,12 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         adImages = new HashMap<String, ArrayList<String>>();
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        ImageLoaderInitializer.initImageLoaderIfNotInited(context);
-        imageOptions = ImageLoaderInitializer.getDisplayImageOptionWithFade();
+        // ImageLoaderInitializer.initImageLoaderIfNotInited(context);
+        // imageOptions = ImageLoaderInitializer.getDisplayImageOptionWithFade();
 
         imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        imageOptions = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
 
@@ -78,15 +82,14 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
         holder.icon.setTag(singleFollow);
 
-        if (singleFollow.user_fname != null && singleFollow.user_lname != null)
-            holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);
-
         if (context instanceof FollowingActivity) {
+
+            if (singleFollow.user_fname != null && singleFollow.user_lname != null)
+                holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);
 
             if (Integer.parseInt(singleFollow.total_following) < 1)
                 holder.subtitle.setText(singleFollow.total_following + " follower");
             else holder.subtitle.setText(singleFollow.total_following + " followers");
-
 
             if (singleFollow.is_following.equalsIgnoreCase("1")) {
                 holder.icon.setImageResource(R.drawable.following);
@@ -94,14 +97,22 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             } else {
                 holder.icon.setImageResource(R.drawable.followers);
                 holder.icon_title.setText("Follower");
+            }
+
+            if (singleFollow.user_image != null && !singleFollow.user_image.equals("")) {
+                imageLoader.displayImage(singleFollow.user_image, holder.user_img, imageOptions);
+            } else {
+                holder.user_img.setImageResource(R.drawable.userimg);
             }
 
         } else if (context instanceof FollowersActivity) {
 
+            if (singleFollow.user_fname != null && singleFollow.user_lname != null)
+                holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);
+
             if (Integer.parseInt(singleFollow.total_following) < 1)
                 holder.subtitle.setText(singleFollow.total_following + " follower");
             else holder.subtitle.setText(singleFollow.total_following + " followers");
-
 
             if (singleFollow.is_following.equalsIgnoreCase("1")) {
                 holder.icon.setImageResource(R.drawable.following);
@@ -111,7 +122,22 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
                 holder.icon_title.setText("Follower");
             }
 
+            if (singleFollow.user_image != null && !singleFollow.user_image.equals("")) {
+                imageLoader.displayImage(singleFollow.user_image, holder.user_img, imageOptions);
+            } else {
+                holder.user_img.setImageResource(R.drawable.userimg);
+            }
+
         } else if (context instanceof MysaveActivity) {
+
+            if (singleFollow.user_fname != null && singleFollow.user_lname != null)
+                holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);
+
+            if (singleFollow.post_image != null && !singleFollow.post_image.equals("")) {
+                imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + singleFollow.post_image, holder.user_img, imageOptions);
+            } else {
+                holder.user_img.setImageResource(R.drawable.userimg);
+            }
 
             //holder.subtitle.setVisibility(View.INVISIBLE);
             holder.subtitle.setText(singleFollow.post_description);
@@ -142,8 +168,8 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
         } else if (context instanceof FollowersActivity) {
 
-            //  FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
-            ((FFSPActivity) context).followFollower(appPreferences.getUserId(), mPosition);
+            // FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
+            ((FFSPActivity) context).followFollower(singleFollow.user_id, mPosition);
         } else if (context instanceof MyPostActivity) {
 
         }

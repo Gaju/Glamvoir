@@ -72,7 +72,6 @@ public class ParserClass {
                                 ParentPostBean.setPost_id(obj.optString("post_id"));
                             }
 
-
                             if (Utils.contains(obj, "user_fname")) {
                                 ParentPostBean.setUser_fname(obj.optString("user_fname"));
                             }
@@ -92,7 +91,6 @@ public class ParserClass {
                             if (Utils.contains(obj, "user_contact")) {
                                 ParentPostBean.setContact_no(obj.optString("user_contact"));
                             }
-
 
                             if (Utils.contains(obj, "post_parent_id")) {
                                 ParentPostBean.setPost_parent_id(obj.optString("post_parent_id"));
@@ -165,7 +163,6 @@ public class ParserClass {
                             parentPostBeanList.add(ParentPostBean);
                             allPostsBean.setResults(parentPostBeanList);
 
-
                             if (obj.has("child_data")) {
                                 ChildPostBean childPostBean = null;
                                 List<ChildPostBean> childPostBeanList = new ArrayList<ChildPostBean>();
@@ -178,50 +175,63 @@ public class ParserClass {
 
                                     //get the partia
                                     if (Utils.contains(childObj, "post_id")) {
-                                        childPostBean.setPost_id(obj.optString("post_id"));
+                                        childPostBean.setPost_id(childObj.optString("post_id"));
                                     }
 
                                     if (Utils.contains(childObj, "post_parent_id")) {
-                                        childPostBean.setPost_parent_id(obj.optString("post_parent_id"));
+                                        childPostBean.setPost_parent_id(childObj.optString("post_parent_id"));
                                     }
 
                                     //get the partial
                                     if (Utils.contains(childObj, "user_id")) {
-                                        childPostBean.setUser_id(obj.optString("user_id"));
+                                        childPostBean.setUser_id(childObj.optString("user_id"));
                                     }
 
                                     //get the partial
                                     if (Utils.contains(childObj, "cat_id")) {
-                                        childPostBean.setCat_id(obj.optString("cat_id"));
+                                        childPostBean.setCat_id(childObj.optString("cat_id"));
                                     }
 
                                     //get the partial
                                     if (Utils.contains(childObj, "post_gender")) {
-                                        childPostBean.setPost_gender(obj.optString("post_gender"));
+                                        childPostBean.setPost_gender(childObj.optString("post_gender"));
                                     }
 
                                     //get the partial
                                     if (Utils.contains(childObj, "post_description")) {
-                                        childPostBean.setPost_description(obj.optString("post_description"));
+                                        childPostBean.setPost_description(childObj.optString("post_description"));
                                     }
 
                                     //get the partial
                                     if (Utils.contains(childObj, "post_video")) {
-                                        childPostBean.setPost_video(obj.optString("post_video"));
+                                        childPostBean.setPost_video(childObj.optString("post_video"));
                                     }
 
                                     //get the partial
                                     if (Utils.contains(childObj, "post_image")) {
-                                        childPostBean.setPost_image(obj.optString("post_image"));
+                                        childPostBean.setPost_image(childObj.optString("post_image"));
+                                    }
+
+                                    if (Utils.contains(childObj, "post_title")) {
+                                        childPostBean.setPost_title(childObj.optString("post_title"));
                                     }
 
                                     //get the partial
                                     if (Utils.contains(childObj, "post_end_date")) {
-                                        childPostBean.setPost_end_date(obj.optString("post_end_date"));
+                                        childPostBean.setPost_end_date(childObj.optString("post_end_date"));
                                     }
 
                                     childPostBeanList.add(childPostBean);
                                     ParentPostBean.setChildResult(childPostBeanList);
+                                }
+
+                                if (ParentPostBean.getPost_image() != null) {
+                                    ChildPostBean bean = new ChildPostBean();
+                                    bean.setPost_image(ParentPostBean.getPost_image());
+                                    if (ParentPostBean.getPost_description() != null) {
+                                        bean.setPost_description(ParentPostBean.getPost_description());
+                                    }
+                                    childPostBeanList.add(bean);
                                 }
                             }
                         }

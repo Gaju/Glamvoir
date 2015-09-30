@@ -16,6 +16,15 @@ public class ChildPostBean extends BaseBean implements Serializable{
     public String post_video;
     public String post_image;
     public String post_end_date;
+    public String post_title;
+
+    public String getPost_title() {
+        return post_title;
+    }
+
+    public void setPost_title(String post_title) {
+        this.post_title = post_title;
+    }
 
     public String getPost_id() {
         return post_id;

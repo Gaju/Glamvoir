@@ -47,15 +47,8 @@ public class ObserveFFSPIntentService extends IntentService {
 
         String followerID = intent.getStringExtra(INTENT_ARG_FOLLOW_USER);
         int position = intent.getIntExtra(INTENT_ARG_FLAG, 0);
-        String isFollowiing = "0";
-        ArrayList<String> followIds = new ArrayList<String>();
 
-//        if (advert.is_following.equalsIgnoreCase("1")) {
-//            isFollowiing = "0";
-//        } else {
-//            isFollowiing = "1";
-//        }
-
+        String url = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_FOLLOWER_FOLLOWING + "&follower_user_id=" + followerID + "&following_user_id=" + intent.getStringExtra(INTENT_ARG_MYUSERID);
         TaskResponse<ObservedFollowResponse> response = new TaskResponse<ObservedFollowResponse>();
         try {
             response.data = Communication.toggleFollow(AppConstant.METHOD_FOLLOWER_FOLLOWING, intent.getStringExtra(INTENT_ARG_MYUSERID), followerID);

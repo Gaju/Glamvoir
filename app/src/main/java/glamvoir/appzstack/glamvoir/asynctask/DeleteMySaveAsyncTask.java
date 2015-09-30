@@ -3,6 +3,9 @@ package glamvoir.appzstack.glamvoir.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
@@ -16,6 +19,7 @@ public class DeleteMySaveAsyncTask extends AsyncTask<String, Void, Void> {
     private String mAsynTaskId;
     private Context mContext;
     private FFSP_Response response = new FFSP_Response();
+    List<Object> mLIList = new ArrayList<Object>();
 
     public DeleteMySaveAsyncTask(Context mCtx, AsynTaskListener asT, String AsyntaskId) {
         mAsynTaskListener = asT;
@@ -32,6 +36,7 @@ public class DeleteMySaveAsyncTask extends AsyncTask<String, Void, Void> {
                 String postID = params[2];
                 
                 response = Communication.deleteMySave(methodName, userID, postID);
+                mLIList.add(response);
 
             }
         } catch (Exception e) {
@@ -45,7 +50,7 @@ public class DeleteMySaveAsyncTask extends AsyncTask<String, Void, Void> {
         super.onPostExecute(result);
         if (response != null) {
             if (response.error_code.equalsIgnoreCase("0")) {
-                mAsynTaskListener.successWithresult(null, response.error_code, mAsynTaskId);
+                mAsynTaskListener.successWithresult(mLIList, response.error_code, mAsynTaskId);
             } else {
                 mAsynTaskListener.error(response.msg_string, response.error_code, mAsynTaskId);
             }

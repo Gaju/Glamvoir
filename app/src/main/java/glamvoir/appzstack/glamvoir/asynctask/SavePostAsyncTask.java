@@ -14,6 +14,7 @@ public class SavePostAsyncTask extends AsyncTask<String, Void, Void> {
     private AsynTaskListener mAsynTaskListener;
     private String mAsynTaskId;
     private Context mContext;
+    int pos;
     private ServerResponse response = new ServerResponse();
 
     public SavePostAsyncTask(Context mCtx, AsynTaskListener asT, String AsyntaskId) {
@@ -29,6 +30,7 @@ public class SavePostAsyncTask extends AsyncTask<String, Void, Void> {
                 String methodName = params[0];
                 String userID = params[1];
                 String postID = params[2];
+                pos = Integer.parseInt(params[3]);
                 response = Communication.savePost(methodName, userID, postID);
 
             }
@@ -43,7 +45,7 @@ public class SavePostAsyncTask extends AsyncTask<String, Void, Void> {
         super.onPostExecute(result);
         if (response != null) {
             if (response.error_code.equalsIgnoreCase("0")) {
-                mAsynTaskListener.successWithresult(null, response.error_code, mAsynTaskId);
+                mAsynTaskListener.successWithresult(null, response.error_code, String.valueOf(pos));
             } else {
                 mAsynTaskListener.error(response.msg_string, response.error_code, mAsynTaskId);
             }
