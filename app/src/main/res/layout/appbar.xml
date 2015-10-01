@@ -11,11 +11,29 @@
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/CustomToolbarTheme"
-        local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    <Spinner
-        android:id="@+id/spinner_nav"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:dropDownVerticalOffset="52dp"
-        android:visibility="gone"/>
+        local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/lltool"
+            android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:text="POST TO"/>
+        <Spinner
+            android:id="@+id/spinner_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:dropDownVerticalOffset="52dp"
+            />
+        </LinearLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
 </android.support.design.widget.AppBarLayout>

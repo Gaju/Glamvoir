@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class AddStory extends AppCompatActivity {
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     Spinner dropDownMenu;
+    private LinearLayout lltool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +121,11 @@ public class AddStory extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        getSupportActionBar().setTitle(getResources().getString(R.string.mypost));
+
+        //getSupportActionBar().setTitle(getResources().getString(R.string.mypost));
     }
 
     /**
@@ -135,10 +140,10 @@ public class AddStory extends AppCompatActivity {
      * initialize all views
      */
     private void initViews() {
-
+        lltool= (LinearLayout) findViewById(R.id.lltool);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu= (Spinner) findViewById(R.id.spinner_nav);
-        dropDownMenu.setVisibility(View.VISIBLE);
+        lltool.setVisibility(View.VISIBLE);
 
 
 
