@@ -34,4 +34,14 @@ public class Validation {
         }
         return false;
     }
+
+    public static boolean isValidMobile(String phone2) {
+        boolean check;
+        if (phone2.length() < 6 || phone2.length() > 13) {
+            check = false;
+        } else {
+            check = true;
+        }
+        return check;
+    }
 }

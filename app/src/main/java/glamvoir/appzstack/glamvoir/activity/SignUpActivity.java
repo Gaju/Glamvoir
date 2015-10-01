@@ -181,6 +181,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         btn_Signup = (Button) findViewById(R.id.join_glamvoir);
+
         edt_fName = (EditText) findViewById(R.id.firstname);
         edt_lName = (EditText) findViewById(R.id.lastname);
         edt_Email = (EditText) findViewById(R.id.email);
@@ -190,6 +191,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         tl_lName = (TextInputLayout) findViewById(R.id.inputlastname);
         tl_Email = (TextInputLayout) findViewById(R.id.inputemail);
         tl_Password = (TextInputLayout) findViewById(R.id.inputpassword);
+
         rgGender = (RadioGroup) findViewById(R.id.rgGender);
         rdbMale = (RadioButton) findViewById(R.id.rdbMale);
         rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
