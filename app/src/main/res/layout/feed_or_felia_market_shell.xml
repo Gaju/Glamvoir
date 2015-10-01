@@ -30,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
                 android:weightSum="4"
                 android:orientation="horizontal">
 
@@ -110,11 +111,10 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
-
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="300dp"
                     android:layout_gravity="center" />
 
                 <com.viewpagerindicator.CirclePageIndicator

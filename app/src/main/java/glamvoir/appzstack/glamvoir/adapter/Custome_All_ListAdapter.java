@@ -61,7 +61,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     private DisplayImageOptions options;
     private ParentPostBean item;
     private Fragment frag;
-    String url_post="http://glamvoir.com/assests/post_images/";
+    String url_post = "http://glamvoir.com/assests/post_images/";
 
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
@@ -90,10 +90,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-
         convertView = null;
         item = list.get(position);
-
         if (convertView == null) {
 
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
@@ -205,7 +203,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
         if (item.getPost_end_date() != null) {
             holder.tv_ff_shell_time.setText(item.getPost_end_date());
-        }else{
+        } else {
             holder.tv_ff_shell_time.setVisibility(View.GONE);
         }
 
@@ -297,24 +295,24 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, pos, AppConstant.GETPOST_LIKE);
                 break;
             case R.id.bt_ff_shell_whatapp:
-                try{
+                try {
                     GetXMLTask task = new GetXMLTask();
-                    if (item.getPost_image()!=null||item.getPost_image()!=""){
-                        task.execute(url_post+item.getPost_image());
+                    if (item.getPost_image() != null || item.getPost_image() != "") {
+                        task.execute(url_post + item.getPost_image());
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.getMessage();
                 }
 
-              break;
+                break;
             case R.id.bt_ff_shell_share:
                 Toast.makeText(frag.getActivity(), "You click connect share", Toast.LENGTH_LONG).show();
                 Intent txtIntent = new Intent(android.content.Intent.ACTION_SEND);
-                txtIntent .setType("text/plain");
+                txtIntent.setType("text/plain");
 
-                txtIntent .putExtra(android.content.Intent.EXTRA_TEXT, item.getPost_description());
-                frag.startActivity(Intent.createChooser(txtIntent ,"Share"));
+                txtIntent.putExtra(android.content.Intent.EXTRA_TEXT, item.getPost_description());
+                frag.startActivity(Intent.createChooser(txtIntent, "Share"));
                 break;
             case R.id.bt_ff_shell_map:
                 Toast.makeText(frag.getActivity(), "You click connect Map", Toast.LENGTH_LONG).show();
@@ -388,32 +386,25 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         // Sets the Bitmap returned by doInBackground
         @Override
         protected void onPostExecute(Bitmap result) {
-           // imageView.setImageBitmap(result);
+            // imageView.setImageBitmap(result);
 
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, item.getPost_description());
             intent.setType("text/plain");
 
-                   String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
-                  if (path==null){
+            String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
+            if (path == null) {
 
-                  }
-            else {
-                      Uri uri = Uri.parse(path);
-                      intent.putExtra(Intent.EXTRA_STREAM, uri);
-                      intent.setType("image/*");
+            } else {
+                Uri uri = Uri.parse(path);
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                intent.setType("image/*");
 
-                      intent.setType("image/jpeg");
-                      intent.setPackage("com.whatsapp");
-                      frag.startActivity(intent);
-                  }
-
-
-
-
-
-
+                intent.setType("image/jpeg");
+                intent.setPackage("com.whatsapp");
+                frag.startActivity(intent);
+            }
 
 
         }
