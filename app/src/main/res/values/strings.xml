@@ -233,6 +233,12 @@
     </string>
 
 
+<string name="nice_html">
+<![CDATA[
+<p1>1. APPLICABILITY:</p1>
+<p>This is another paragraph of the same string.</p>
+]]>
+</string>
 
     <string name="term_one"> 1. Acceptable use</string>
     <string name="term_one_answer"> This Privacy Policy governs the manner in which Boom Marcom Services Private Limited (“Glamvoir”) collects, uses, maintains and discloses information collected from user(s) (“User”) of the www.glamvoir.com website and mobile app Glamvoir (the “Site”). This Privacy Policy applies only to the Site and any products and services offered directly by Glamvoir.

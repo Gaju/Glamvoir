@@ -20,9 +20,9 @@ import retrofit.mime.TypedString;
  */
 public class Communication {
 
-    public static LoginResponse loginSignup(String methodType, String emailId, String password, String fName, String gender, String deviceToken, String deviceType) {
+    public static LoginResponse loginSignup(String methodType, String emailId, String password, String fName, String lName, String gender, String deviceToken,String deviceType) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        LoginResponse response = service.loginSignup(methodType, emailId, password, fName, gender, deviceToken, deviceType);
+        LoginResponse response = service.loginSignup(methodType, emailId, password, fName,lName, gender, deviceToken, deviceType);
         return response;
     }
 

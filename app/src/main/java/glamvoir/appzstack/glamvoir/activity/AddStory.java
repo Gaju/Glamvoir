@@ -52,7 +52,7 @@ public class AddStory extends AppCompatActivity {
         initListener();
 
         getToolbar(toolbar);
-       // addItemsToSpinner();
+        addItemsToSpinner();
     }
 
     // add items into spinner dynamically
@@ -119,7 +119,7 @@ public class AddStory extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         getSupportActionBar().setTitle(getResources().getString(R.string.mypost));
     }
 
@@ -135,9 +135,12 @@ public class AddStory extends AppCompatActivity {
      * initialize all views
      */
     private void initViews() {
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu= (Spinner) findViewById(R.id.spinner_nav);
         dropDownMenu.setVisibility(View.VISIBLE);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
 
     }
 
@@ -160,9 +163,9 @@ public class AddStory extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuView.ItemView post;
-        post=(MenuView.ItemView)menu.findItem(R.id.action_uplaod);
-        post.setTitle("POST");
+        //MenuView.ItemView post;
+        //post=(MenuView.ItemView)menu.findItem(R.id.action_uplaod);
+        //post.setTitle("POST");
 
         return true;
     }
@@ -175,7 +178,7 @@ public class AddStory extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_uplaod) {
 
-            Toast.makeText(getApplicationContext(), "Settings Clicked",
+            Toast.makeText(getApplicationContext(), "upload Clicked",
                     Toast.LENGTH_SHORT).show();
             return true;
         }

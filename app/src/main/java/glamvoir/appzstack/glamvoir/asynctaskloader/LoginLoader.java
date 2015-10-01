@@ -18,6 +18,7 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
     private String deviceToken;
     private String deviceType;
     private String fName;
+    private String lName;
     private RequestBean requestBean;
     private ShowDialog dialog;
     public static final int LOGIN_GLAMVOIR = 0;
@@ -27,12 +28,13 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
     private int loginType;
     private TaskResponse response = null;
 
-    public LoginLoader(RequestBean requestBean, String email, String password, String fName,String fgender, String deviceToken, String deviceType, int loginType) {
+    public LoginLoader(RequestBean requestBean, String email, String password, String fName, String lName, String fgender, String deviceToken, String deviceType, int loginType) {
         super(requestBean.getContext());
         this.email = email;
         this.password = password;
         this.fName = fName;
-        this.fgender=fgender;
+        this.lName = lName;
+        this.fgender = fgender;
         this.deviceToken = deviceToken;
         this.deviceType = deviceType;
         this.requestBean = requestBean;
@@ -51,7 +53,7 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
                     response.data = Communication.loginGlamvoir("user_login", email, password, deviceToken, deviceType);
                     break;
                 case LOGIN_SIGNUP:
-                    response.data = Communication.loginSignup("add_user", email, password, fName, fgender, deviceToken, deviceType);
+                    response.data = Communication.loginSignup("add_user", email, password, fName, lName, fgender, deviceToken, deviceType);
                     break;
             }
         } catch (Exception e) {
@@ -74,6 +76,7 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
 
     @Override
     protected void onStopLoading() {
+
         cancelLoad();
     }
 

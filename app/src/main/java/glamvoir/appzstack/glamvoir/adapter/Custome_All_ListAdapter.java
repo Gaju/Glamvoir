@@ -4,6 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -25,6 +30,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
@@ -47,6 +57,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     private DisplayImageOptions options;
     private ParentPostBean item;
     private Fragment frag;
+    String url_post="http://glamvoir.com/assests/post_images/";
 
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
@@ -76,6 +87,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
+        convertView = null;
         item = list.get(position);
 
         if (convertView == null) {
@@ -136,11 +148,15 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_like.setTag(position);
         holder.bt_ff_shell_comments.setTag(position);
         holder.bt_ff_shell_shave.setTag(position);
+        holder.bt_ff_shell_share.setTag(position);
+        holder.bt_ff_shell_whatapp.setTag(position);
+
 
 
         if (item.getUser_fname() != null) {
             holder.tv_ff_shell_username.setText(item.getUser_fname() + " " + item.getUser_lname());
         }
+
 
         if (item.getTotal_like() > 0) {
             holder.tv_ff_shell_like_count.setVisibility(View.VISIBLE);
@@ -269,10 +285,24 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, pos, AppConstant.GETPOST_LIKE);
                 break;
             case R.id.bt_ff_shell_whatapp:
-                Toast.makeText(frag.getActivity(), "You click connect whatapp", Toast.LENGTH_LONG).show();
-                break;
+                try{
+                    GetXMLTask task = new GetXMLTask();
+                    if (item.getPost_image()!=null||item.getPost_image()!=""){
+                        task.execute(url_post+item.getPost_image());
+                    }
+
+                }catch (Exception e){
+                    e.getMessage();
+                }
+
+              break;
             case R.id.bt_ff_shell_share:
                 Toast.makeText(frag.getActivity(), "You click connect share", Toast.LENGTH_LONG).show();
+                Intent txtIntent = new Intent(android.content.Intent.ACTION_SEND);
+                txtIntent .setType("text/plain");
+
+                txtIntent .putExtra(android.content.Intent.EXTRA_TEXT, item.getPost_description());
+                frag.startActivity(Intent.createChooser(txtIntent ,"Share"));
                 break;
             case R.id.bt_ff_shell_map:
                 Toast.makeText(frag.getActivity(), "You click connect Map", Toast.LENGTH_LONG).show();
@@ -332,5 +362,89 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             }
         }
     };
+
+
+    private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap map = null;
+            for (String url : urls) {
+                map = downloadImage(url);
+            }
+            return map;
+        }
+
+        // Sets the Bitmap returned by doInBackground
+        @Override
+        protected void onPostExecute(Bitmap result) {
+           // imageView.setImageBitmap(result);
+
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, item.getPost_description());
+            intent.setType("text/plain");
+
+                   String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
+                  if (path==null){
+
+                  }
+            else {
+                      Uri uri = Uri.parse(path);
+                      intent.putExtra(Intent.EXTRA_STREAM, uri);
+                      intent.setType("image/*");
+
+                      intent.setType("image/jpeg");
+                      intent.setPackage("com.whatsapp");
+                      frag.startActivity(intent);
+                  }
+
+
+
+
+
+
+
+
+        }
+
+        // Creates Bitmap from InputStream and returns it
+        private Bitmap downloadImage(String url) {
+            Bitmap bitmap = null;
+            InputStream stream = null;
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inSampleSize = 1;
+
+            try {
+                stream = getHttpConnection(url);
+                bitmap = BitmapFactory.
+                        decodeStream(stream, null, bmOptions);
+                stream.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        // Makes HttpURLConnection and returns InputStream
+        private InputStream getHttpConnection(String urlString)
+                throws IOException {
+            InputStream stream = null;
+            URL url = new URL(urlString);
+            URLConnection connection = url.openConnection();
+
+            try {
+                HttpURLConnection httpConnection = (HttpURLConnection) connection;
+                httpConnection.setRequestMethod("GET");
+                httpConnection.connect();
+
+                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    stream = httpConnection.getInputStream();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return stream;
+        }
+    }
 
 }

@@ -134,7 +134,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public Loader<TaskResponse<LoginResponse>> onCreateLoader(int id, Bundle args) {
                     AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
-                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), null, appPreferences.getDeviceToken(), appPreferences.getDeviceType(), appPreferences.getDeviceType(), LoginLoader.LOGIN_GLAMVOIR);
+                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(),null,null, appPreferences.getDeviceToken(), appPreferences.getDeviceType(), appPreferences.getDeviceType(), LoginLoader.LOGIN_GLAMVOIR);
                 }
 
                 @Override

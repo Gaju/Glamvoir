@@ -35,7 +35,8 @@ import glamvoir.appzstack.glamvoir.model.net.response.UserDetails;
  * Created by jaim on 7/21/2015.
  */
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
-
+    private static final String GENDER_MALE = "1";
+    private static final String GENDER_FEMALE = "2";
     private EditText edt_fName, edt_lName, edt_Email, edt_Password;
     private TextInputLayout tl_fName, tl_lName, tl_Email, tl_Password;
     RadioButton rdbMale, rdbFemale;
@@ -43,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private Button btn_Signup;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
-    String gender;
+
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SignUpActivity.class);
@@ -236,7 +237,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public Loader<TaskResponse<LoginResponse>> onCreateLoader(int id, Bundle args) {
                     AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
-                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), edt_fName.getText().toString(),gender, appPreferences.getDeviceToken(), appPreferences.getDeviceType(), LoginLoader.LOGIN_SIGNUP);
+                    return new LoginLoader(mRequestBean, edt_Email.getText().toString(), edt_Password.getText().toString(), edt_fName.getText().toString(), edt_lName.getText().toString(), AppPreferences.getInstance(mRequestBean.getContext()).getGender(), appPreferences.getDeviceToken(), appPreferences.getDeviceType(), LoginLoader.LOGIN_SIGNUP);
                 }
 
                 @Override
@@ -291,10 +292,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         // TODO Auto-generated method stub
         switch (checkedId) {
             case R.id.rdbMale:
-                gender="1";
+                AppPreferences.getInstance(this).setGender(GENDER_MALE);
+
                 break;
             case R.id.rdbFemale:
-                gender="0";
+                AppPreferences.getInstance(this).setGender(GENDER_FEMALE);
+
                 break;
 
             default:
