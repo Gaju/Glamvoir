@@ -19,7 +19,6 @@ import glamvoir.appzstack.glamvoir.adapter.FFSP_Adapter;
 import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctask.DeleteMySaveAsyncTask;
-import glamvoir.appzstack.glamvoir.asynctask.SavePostAsyncTask;
 import glamvoir.appzstack.glamvoir.asynctaskloader.FFSPLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -45,7 +44,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_following);
+        setContentView(R.layout.layout_ffsp);
 
         //initialize all views
         initViews();
@@ -225,11 +224,11 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
                     if (message.equalsIgnoreCase("0")) {
                         Utility.showToast(FFSPActivity.this, "Post Deleted");
-                        //adapter.removeItem(position);
-                        FFSP_Response response = (FFSP_Response) sucessObject.get(0);
-                        data.clear();
-                        data.addAll(response.results);
-                        adapter.notifyDataSetChanged();
+                        adapter.removeItem(position);
+//                        FFSP_Response response = (FFSP_Response) sucessObject.get(0);
+//                        data.clear();
+//                        data.addAll(response.results);
+//                        adapter.notifyDataSetChanged();
                     } else {
                         Utility.showToast(FFSPActivity.this, message);
                     }

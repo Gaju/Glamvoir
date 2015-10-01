@@ -13,7 +13,7 @@ import glamvoir.appzstack.glamvoir.network.ParserClass;
 /**
  * Created by gajendran on 9/9/15.
  */
-public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> implements BaseLoader {
+public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean>  {
 
     private RequestBean requestBean;
     private NetworkCall networkCall;
@@ -36,7 +36,6 @@ public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> implements B
         }
 
         if (allPostsBean == null || takeContentChanged()) {
-            showLoaderDialog();
             forceLoad();
         }
     }
@@ -73,18 +72,4 @@ public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> implements B
         return allPostsBean;
     }
 
-
-    @Override
-    public void showLoaderDialog() {
-        if (requestBean.isLoader()) {
-            networkCall.showProgressDialog(requestBean.getActivity(), "Loading", false);
-        }
-    }
-
-    @Override
-    public void hideLoaderDialog() {
-        if (requestBean.isLoader()) {
-            networkCall.dismissDialog();
-        }
-    }
 }

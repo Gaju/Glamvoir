@@ -23,6 +23,7 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public String contact_no;
     public String user_signup_type;
     public String user_image;
+    public String post_title;
 
     public int total_comment;
     public int is_following;
@@ -30,6 +31,16 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public int total_dislike;
     public int like_dislike_status;
     public int is_saved;
+
+    public List<ChildPostBean> childResult;
+
+    public String getPost_title() {
+        return post_title;
+    }
+
+    public void setPost_title(String post_title) {
+        this.post_title = post_title;
+    }
 
     public int getIs_saved() {
         return is_saved;
@@ -87,7 +98,6 @@ public class ParentPostBean extends BaseBean implements Serializable {
         this.contact_no = contact_no;
     }
 
-    public List<ChildPostBean> childResult;
 
     public List<ChildPostBean> getChildResult() {
         return childResult;

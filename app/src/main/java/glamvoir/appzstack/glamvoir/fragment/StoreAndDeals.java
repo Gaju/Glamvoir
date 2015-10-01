@@ -27,18 +27,9 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 /**
  * Created by jaim on 7/21/2015.
  */
-public class StoreAndDeals extends Fragment {
+public class StoreAndDeals extends BaseFragment {
 
-
-    //ImagePagerAdapter adapter;
-    private ListView mlistView;
     private RequestBean mRequestBean;
-
-    private ArrayList<ParentPostBean> list = new ArrayList<ParentPostBean>();
-
-    public StoreAndDeals() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,67 +41,28 @@ public class StoreAndDeals extends Fragment {
     }
 
     @Override
+    protected RequestBean getRequestBean() {
+        return mRequestBean;
+    }
+
+    @Override
+    protected String getPostType() {
+        return AppConfig.GETALLPOST;
+    }
+
+    @Override
+    protected String getCategoryType() {
+        return AppConstant.CATEGORY_STORE_DEAL;
+    }
+
+    @Override
+    protected Fragment getFragment() {
+        return StoreAndDeals.this;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
-        mlistView = (ListView) rootView.findViewById(R.id.lv_all);
-
-        mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        return rootView;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        loadData();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-    }
-
-    protected void loadData() {
-        getLoaderManager().restartLoader(LoaderID.GETPOST, null, ffspCallback);
-    }
-
-    LoaderManager.LoaderCallbacks<AllPostsBean> ffspCallback =
-            new LoaderManager.LoaderCallbacks<AllPostsBean>() {
-
-                @Override
-                public Loader<AllPostsBean> onCreateLoader(int id, Bundle args) {
-                    return new GetAllPostLoader(mRequestBean, AppConfig.GETALLPOST, AppConstant.CATEGORY_STORE_DEAL);
-                }
-
-                @Override
-                public void onLoadFinished(Loader<AllPostsBean> loader, AllPostsBean data) {
-                    if (loader instanceof GetAllPostLoader) {
-                        ((GetAllPostLoader) loader).hideLoaderDialog();
-                        if (data.getSuccessCode() == 1) {
-                            //error
-                        } else {
-                            list.addAll(data.results);
-                            setAdapter();
-                        }
-                    }
-                }
-
-                @Override
-                public void onLoaderReset(Loader<AllPostsBean> loader) {
-                }
-            };
-
-    private void setAdapter(){
-        mlistView.setAdapter(new Custome_All_ListAdapter(StoreAndDeals.this,list));
-    }
-
-
 }

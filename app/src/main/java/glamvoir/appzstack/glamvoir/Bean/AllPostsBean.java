@@ -12,16 +12,6 @@ public class AllPostsBean extends BaseBean implements Serializable {
     public String msg_string;
     public List<ParentPostBean> results;
 
-//    public List<ChildPostBean> childResult;
-//
-//    public List<ChildPostBean> getChildResult() {
-//        return childResult;
-//    }
-//
-//    public void setChildResult(List<ChildPostBean> childResult) {
-//        this.childResult = childResult;
-//    }
-
     public String getError_code() {
         return error_code;
     }

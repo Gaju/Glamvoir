@@ -38,10 +38,10 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private ImageButton bt_sent;
     private String userID;
     private ArrayList<CommentResponse.AllCommentResponse> list = new ArrayList<>();
+    protected View loadIndicator;
 
     public static void startActvity(Context context, String postID, String comment) {
         Intent intent = new Intent(context, CommentActivity.class);
-        //intent.putExtra("ParentClassName", "All");
         intent.putExtra("postID", postID);
         intent.putExtra("comment", comment);
         context.startActivity(intent);
@@ -51,9 +51,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_comment);
+
         iniview();
+
         getToolbar(toolbar);
-        listner();
+
+        initClickListener();
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -66,18 +69,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             getLoaderManager().initLoader(LoaderID.COMMENT, extras, commentCallback);
         }
 
-        iniview();
-
-        getToolbar(toolbar);
-
         adapter = new CommentCustomAdapter(CommentActivity.this, list);
         mlistView.setAdapter(adapter);
     }
 
-    private void listner() {
-
+    private void initClickListener() {
         bt_sent.setOnClickListener(this);
-
     }
 
     /**
@@ -95,12 +92,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     private void iniview() {
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mlistView = (ListView) findViewById(R.id.listView);
         mlistView = (ListView) findViewById(R.id.listView);
         et_comment = (EditText) findViewById(R.id.et_comment);
         bt_sent = (ImageButton) findViewById(R.id.bt_sent);
+        loadIndicator = findViewById(R.id.loadIndicator);
     }
 
     @Override
@@ -125,6 +122,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public Loader<TaskResponse<CommentResponse>> onCreateLoader(int id, Bundle args) {
                     AppPreferences appPreferences = new AppPreferences(mRequestBean.getContext());
+                    loadIndicator.setVisibility(View.VISIBLE);
                     if (args.getString("comment") != null) {
                         Loader loader = new CommentLoader(mRequestBean, AppConstant.METHOD_ADDCOMMENT, appPreferences.getUserId(), args.getString("postID"), args.getString("comment"));
                         return loader;
@@ -137,14 +135,15 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void onLoadFinished(android.content.Loader<TaskResponse<CommentResponse>> loader, TaskResponse<CommentResponse> data) {
                     if (loader instanceof CommentLoader) {
-                        // ((CommentLoader) loader).hideLoaderDialog();
+                        loadIndicator.setVisibility(View.GONE);
                         if (data.error != null) {
                             Utility.showToast(CommentActivity.this, data.error.toString());
                         } else {
-
+                            clearComment();
                             list.clear();
                             list.addAll(data.data.results);
                             adapter.notifyDataSetChanged();
+                            mlistView.setSelection(list.size());
                             getLoaderManager().destroyLoader(LoaderID.COMMENT);
                         }
                     }
@@ -162,5 +161,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             Utility.showToast(mRequestBean.getContext(), "Comment should not be empty");
         }
+    }
+
+    private void clearComment() {
+        et_comment.setText("");
     }
 }

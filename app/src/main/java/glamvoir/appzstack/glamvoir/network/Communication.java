@@ -10,6 +10,7 @@ import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
 import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
@@ -35,6 +36,12 @@ public class Communication {
     public static FFSP_Response _FFSP(String methodType, String userID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         FFSP_Response response = service.following(methodType, userID);
+        return response;
+    }
+
+    public static ProfileResponse getProfile(String methodType, String userID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        ProfileResponse response = service.getProfile(methodType, userID);
         return response;
     }
 

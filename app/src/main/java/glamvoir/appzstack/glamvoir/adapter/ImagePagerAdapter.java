@@ -27,7 +27,6 @@ import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 public class ImagePagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private int mPosition;
     ChildPostBean item;
 
     private List<ChildPostBean> list = null;
@@ -60,15 +59,13 @@ public class ImagePagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        mPosition = position;
-
         LayoutInflater inflater = (LayoutInflater) container.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View convertView = inflater.inflate(R.layout.view_item_shell, null);
 
         item = list.get(position);
 
-        String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
+        // String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
 
         ImageView view_image = (ImageView) convertView
                 .findViewById(R.id.view_image);
@@ -78,6 +75,8 @@ public class ImagePagerAdapter extends PagerAdapter {
 
         view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
+        view_image.setTag(position);
+
         view_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,15 +85,13 @@ public class ImagePagerAdapter extends PagerAdapter {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layout_fullscreen_image);
                 imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
-                imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), imgDisplay, options);
+                imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + list.get((Integer) v.getTag()).getPost_image(), imgDisplay, options);
                 dialog.show();
             }
         });
 
         imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
-
         description.setText(item.getPost_description());
-
         container.addView(convertView, 0);
 
         return convertView;
