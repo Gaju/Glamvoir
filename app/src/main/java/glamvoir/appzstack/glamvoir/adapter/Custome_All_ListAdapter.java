@@ -40,9 +40,13 @@ import java.util.ArrayList;
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
+import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.ALL;
+import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
+import glamvoir.appzstack.glamvoir.fragment.Fashion;
+import glamvoir.appzstack.glamvoir.fragment.FleaFragment;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 
@@ -57,7 +61,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     private DisplayImageOptions options;
     private ParentPostBean item;
     private Fragment frag;
-    String url_post="http://glamvoir.com/assests/post_images/";
+    String url_post = "http://glamvoir.com/assests/post_images/";
 
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
@@ -86,10 +90,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-
         convertView = null;
         item = list.get(position);
-
         if (convertView == null) {
 
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
@@ -150,13 +152,12 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_shave.setTag(position);
         holder.bt_ff_shell_share.setTag(position);
         holder.bt_ff_shell_whatapp.setTag(position);
-
+        holder.user_Image.setTag(position);
 
 
         if (item.getUser_fname() != null) {
             holder.tv_ff_shell_username.setText(item.getUser_fname() + " " + item.getUser_lname());
         }
-
 
         if (item.getTotal_like() > 0) {
             holder.tv_ff_shell_like_count.setVisibility(View.VISIBLE);
@@ -169,11 +170,11 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_like_count.setVisibility(View.GONE);
         }
 
-        if (item.is_following == 0) {
-            holder.tv_actiontext_checkBox_ff_shell.setText("Following");
+        if (item.getIs_following() == 0) {
+            holder.tv_actiontext_checkBox_ff_shell.setText("Follower");
             holder.checkBox_ff_shell.setChecked(false);
         } else {
-            holder.tv_actiontext_checkBox_ff_shell.setText("Follower");
+            holder.tv_actiontext_checkBox_ff_shell.setText("Following");
             holder.checkBox_ff_shell.setChecked(true);
         }
 
@@ -202,6 +203,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
         if (item.getPost_end_date() != null) {
             holder.tv_ff_shell_time.setText(item.getPost_end_date());
+        } else {
+            holder.tv_ff_shell_time.setVisibility(View.GONE);
         }
 
         if (item.getUser_image() != null) {
@@ -223,6 +226,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_complain.setOnClickListener(this);
         holder.bt_ff_shell_map.setOnClickListener(this);
         holder.checkBox_ff_shell.setOnClickListener(this);
+        holder.user_Image.setOnClickListener(this);
 
         return convertView;
     }
@@ -268,6 +272,12 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             case R.id.bt_connect_with_seller:
                 Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
                 break;
+
+            case R.id.imageView:
+
+                ProfileActivity.startActivity(frag.getActivity(), list.get(pos).user_id);
+                break;
+
             case R.id.checkBox_ff_shell:
                 // Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
                 String followerID = list.get(pos).getUser_id();
@@ -285,24 +295,24 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, pos, AppConstant.GETPOST_LIKE);
                 break;
             case R.id.bt_ff_shell_whatapp:
-                try{
+                try {
                     GetXMLTask task = new GetXMLTask();
-                    if (item.getPost_image()!=null||item.getPost_image()!=""){
-                        task.execute(url_post+item.getPost_image());
+                    if (item.getPost_image() != null || item.getPost_image() != "") {
+                        task.execute(url_post + item.getPost_image());
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.getMessage();
                 }
 
-              break;
+                break;
             case R.id.bt_ff_shell_share:
                 Toast.makeText(frag.getActivity(), "You click connect share", Toast.LENGTH_LONG).show();
                 Intent txtIntent = new Intent(android.content.Intent.ACTION_SEND);
-                txtIntent .setType("text/plain");
+                txtIntent.setType("text/plain");
 
-                txtIntent .putExtra(android.content.Intent.EXTRA_TEXT, item.getPost_description());
-                frag.startActivity(Intent.createChooser(txtIntent ,"Share"));
+                txtIntent.putExtra(android.content.Intent.EXTRA_TEXT, item.getPost_description());
+                frag.startActivity(Intent.createChooser(txtIntent, "Share"));
                 break;
             case R.id.bt_ff_shell_map:
                 Toast.makeText(frag.getActivity(), "You click connect Map", Toast.LENGTH_LONG).show();
@@ -330,8 +340,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     }
 
     private void savePost(String userID, String postID, int pos) {
-        //  SendServerIntentService.startSavePostService(frag.getActivity(), userID, postID, AppConstant.METHOD_SAVEPOST);
-        ((ALL) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
+        ((BaseFragment) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
     }
 
 
@@ -377,32 +386,25 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         // Sets the Bitmap returned by doInBackground
         @Override
         protected void onPostExecute(Bitmap result) {
-           // imageView.setImageBitmap(result);
+            // imageView.setImageBitmap(result);
 
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, item.getPost_description());
             intent.setType("text/plain");
 
-                   String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
-                  if (path==null){
+            String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
+            if (path == null) {
 
-                  }
-            else {
-                      Uri uri = Uri.parse(path);
-                      intent.putExtra(Intent.EXTRA_STREAM, uri);
-                      intent.setType("image/*");
+            } else {
+                Uri uri = Uri.parse(path);
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                intent.setType("image/*");
 
-                      intent.setType("image/jpeg");
-                      intent.setPackage("com.whatsapp");
-                      frag.startActivity(intent);
-                  }
-
-
-
-
-
-
+                intent.setType("image/jpeg");
+                intent.setPackage("com.whatsapp");
+                frag.startActivity(intent);
+            }
 
 
         }

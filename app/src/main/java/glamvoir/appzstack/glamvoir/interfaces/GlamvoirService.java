@@ -7,6 +7,7 @@ import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
 import retrofit.http.Body;
 import retrofit.http.Field;
@@ -38,6 +39,9 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     FFSP_Response following(@Query("method") String methodType, @Query("user_id") String user_id);
+
+    @GET("/index.php/api")
+    ProfileResponse getProfile(@Query("method") String methodType, @Query("user_id") String user_id);
 
     @GET("/index.php/api")
     ObservedFollowResponse toggleFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);

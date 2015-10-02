@@ -1,5 +1,6 @@
 package glamvoir.appzstack.glamvoir.model.net.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -7,12 +8,14 @@ import java.util.List;
 /**
  * Created by gajendran on 26/9/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CommentResponse extends BaseResponse {
 
     @JsonProperty("results")
     public List<AllCommentResponse> results;
 
-   public static class AllCommentResponse {
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class AllCommentResponse {
 
         @JsonProperty("user_image")
         public String user_image;

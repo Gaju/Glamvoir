@@ -32,12 +32,11 @@ public class CommentCustomAdapter extends BaseAdapter {
     ArrayList<CommentResponse.AllCommentResponse> list;
     private int mPosition;
 
-
     public CommentCustomAdapter(CommentActivity commentActivity, ArrayList<CommentResponse.AllCommentResponse> list) {
         inflater = (LayoutInflater) commentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.list = list;
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(commentActivity));
-        this.list = list;
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
@@ -60,7 +59,7 @@ public class CommentCustomAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
-        mPosition=position;
+        mPosition = position;
         CommentResponse.AllCommentResponse item = list.get(position);
 
         if (convertView == null) {
@@ -86,6 +85,10 @@ public class CommentCustomAdapter extends BaseAdapter {
 
         if (item.comment_date != null) {
             holder.comment_time.setText(item.comment_date);
+        }
+
+        if (item.user_image != null && !item.user_image.equals("")) {
+            imageLoader.displayImage(item.user_image, holder.user_image, options);
         }
 
         return convertView;

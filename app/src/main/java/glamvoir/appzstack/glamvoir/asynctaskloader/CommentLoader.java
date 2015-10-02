@@ -12,7 +12,7 @@ import glamvoir.appzstack.glamvoir.widgets.ShowDialog;
 /**
  * Created by gajendran on 26/9/15.
  */
-public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>> implements BaseLoader {
+public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>> {
 
     private RequestBean requestBean;
     private String userID;
@@ -20,7 +20,6 @@ public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>
     private String methodType;
     private String comment;
     private TaskResponse response = null;
-    private ShowDialog dialog;
 
     public CommentLoader(RequestBean requestBean, String methodType, String userID, String postID, String comment) {
         super(requestBean.getContext());
@@ -29,7 +28,6 @@ public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>
         this.postID = postID;
         this.methodType = methodType;
         this.comment = comment;
-        dialog = new ShowDialog();
     }
 
     public CommentLoader(RequestBean requestBean, String methodType, String userID, String postID) {
@@ -38,7 +36,6 @@ public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>
         this.userID = userID;
         this.postID = postID;
         this.methodType = methodType;
-        dialog = new ShowDialog();
     }
 
 
@@ -71,7 +68,6 @@ public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>
         }
 
         if (response == null || takeContentChanged()) {
-            //showLoaderDialog();
             forceLoad();
         }
     }
@@ -86,19 +82,5 @@ public class CommentLoader extends AsyncTaskLoader<TaskResponse<CommentResponse>
         super.onReset();
         onStopLoading();
         response = null;
-    }
-
-    @Override
-    public void showLoaderDialog() {
-        if (requestBean.isLoader()) {
-            dialog.showProgressDialog(requestBean.getActivity(), "Loading", false);
-        }
-    }
-
-    @Override
-    public void hideLoaderDialog() {
-        if (requestBean.isLoader()) {
-            dialog.dismissDialog();
-        }
     }
 }

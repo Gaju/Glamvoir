@@ -21,7 +21,6 @@ public class FollowersActivity extends FFSPActivity {
     private RequestBean mRequestBean;
     private Toolbar toolbar;
 
-
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, FollowersActivity.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());

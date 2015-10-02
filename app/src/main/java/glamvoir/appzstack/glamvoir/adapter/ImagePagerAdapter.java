@@ -27,7 +27,6 @@ import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 public class ImagePagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private int mPosition;
     ChildPostBean item;
 
     private List<ChildPostBean> list = null;
@@ -60,40 +59,57 @@ public class ImagePagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        mPosition = position;
-
         LayoutInflater inflater = (LayoutInflater) container.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View convertView = inflater.inflate(R.layout.view_item_shell, null);
 
         item = list.get(position);
 
-        String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
+        // String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
 
         ImageView view_image = (ImageView) convertView
                 .findViewById(R.id.view_image);
 
         TextView description = (TextView) convertView
                 .findViewById(R.id.description);
-
+        TextView post_header = (TextView) convertView.findViewById(R.id.post_header);
         view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        view_image.setTag(position);
 
         view_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TouchImageView imgDisplay;
-                final Dialog dialog = new Dialog(mContext);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.layout_fullscreen_image);
-                imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
-                imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), imgDisplay, options);
-                dialog.show();
+
+                if (list.get((Integer) v.getTag()).getPost_image() != null && !list.get((Integer) v.getTag()).getPost_image().equals("")) {
+
+                    TouchImageView imgDisplay;
+                    final Dialog dialog = new Dialog(mContext);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.layout_fullscreen_image);
+                    imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
+                    imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + list.get((Integer) v.getTag()).getPost_image(), imgDisplay, options);
+                    dialog.show();
+
+                }
             }
         });
 
-        imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
+        if (item.getPost_image() != null || !item.getPost_image().equals("")) {
+            imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
+        } else {
+            view_image.setImageResource(R.drawable.pic);
+        }
 
-        description.setText(item.getPost_description());
+        if (item.getPost_title() != null && !item.getPost_title().equals("")) {
+            post_header.setText(item.getPost_title());
+        }
+        if (item.getPost_description() != null && !item.getPost_description().
+
+                equals("")) {
+            description.setText(item.getPost_description());
+        }
+
 
         container.addView(convertView, 0);
 

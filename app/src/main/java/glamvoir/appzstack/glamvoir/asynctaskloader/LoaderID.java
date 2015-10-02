@@ -9,5 +9,5 @@ public class LoaderID {
     public static final int FFSP = 2;
     public static final int GETPOST = 3;
     public static final int COMMENT = 4;
-    public static final int FLEAMARKET = 5;
+    public static final int GETPROFILE = 5;
 }

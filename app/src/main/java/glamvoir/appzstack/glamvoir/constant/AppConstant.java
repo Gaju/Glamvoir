@@ -22,6 +22,7 @@ public class AppConstant {
     public static final String METHOD_DELETE_SAVE_POST = "deletemysavedpost";
     public static final String METHOD_SAVEPOST = "savemypost";
     public static final String METHOD_LIKESTATUS = "likedislike";
+    public static final String METHOD_GETPROFILE = "getprofile";
 
 
     public static final int GETPOST_LIKE = 1;
