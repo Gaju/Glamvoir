@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ import retrofit.mime.TypedFile;
 public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener {
 
     private static String TAG = FragmentDrawer_Lv.class.getSimpleName();
+    private RelativeLayout rl_nav_drawer;
     private static final int CAPTURE_IMAGE_CAMERA = 1;
     private static final int CAPTURE_IMAGE_GALLARY = 2;
     private Bitmap mbitmap;
@@ -116,6 +118,8 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         TextView tv_name = (TextView) layout.findViewById(R.id.name);
         TextView tv_email = (TextView) layout.findViewById(R.id.email);
         progressbar = (ProgressBar) layout.findViewById(R.id.progressbar);
+        rl_nav_drawer= (RelativeLayout) layout.findViewById(R.id.rl_nav_drawer);
+        rl_nav_drawer.setOnClickListener(this);
         proFile_Image = (ImageView) layout.findViewById(R.id.circleView);
         proFile_Image.setOnClickListener(this);
         alert = (ImageView) layout.findViewById(R.id.alert);
@@ -203,47 +207,55 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        new BottomSheet.Builder(getActivity()).title("Upload Profile Pic").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case R.id.share:
-                        Toast.makeText(getActivity(), "Gallery", Toast.LENGTH_LONG).show();
-                        file = new File(Environment.getExternalStorageDirectory() + "/" + getDateTime() + ".jpg");
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                            intent.setType("image/*");
-                            startActivityForResult(intent, CAPTURE_IMAGE_GALLARY);
-                        } catch (ActivityNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case R.id.upload:
-                        Toast.makeText(getActivity(), "Camera", Toast.LENGTH_LONG).show();
-                        file = new File(Environment.getExternalStorageDirectory() + "/" + getDateTime() + ".jpg");
-                        // capture image from camera.
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                        startActivityForResult(intent, CAPTURE_IMAGE_CAMERA);
-
-                        break;
-                    case R.id.call:
-                        Toast.makeText(getActivity(), "Delete", Toast.LENGTH_LONG).show();
-                        mbitmap.recycle();
-                        break;
-                    case R.id.help:
-                        Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
-                        break;
-                }
-            }
-        }).show();
 
         switch (v.getId()) {
+
+            case R.id.circleView:
+                new BottomSheet.Builder(getActivity()).title("Upload Profile Pic").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case R.id.share:
+                                Toast.makeText(getActivity(), "Gallery", Toast.LENGTH_LONG).show();
+                                file = new File(Environment.getExternalStorageDirectory() + "/" + getDateTime() + ".jpg");
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                                    intent.setType("image/*");
+                                    startActivityForResult(intent, CAPTURE_IMAGE_GALLARY);
+                                } catch (ActivityNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case R.id.upload:
+                                Toast.makeText(getActivity(), "Camera", Toast.LENGTH_LONG).show();
+                                file = new File(Environment.getExternalStorageDirectory() + "/" + getDateTime() + ".jpg");
+                                // capture image from camera.
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                                startActivityForResult(intent, CAPTURE_IMAGE_CAMERA);
+
+                                break;
+                            case R.id.call:
+                                Toast.makeText(getActivity(), "Delete", Toast.LENGTH_LONG).show();
+                                mbitmap.recycle();
+                                break;
+                            case R.id.help:
+                                Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                }).show();
+ break;
+
+
             case R.id.alert:
                 AlertActivity.startActivity(getActivity());
+                break;
+            case R.id.rl_nav_drawer:
                 break;
             default:
                 break;

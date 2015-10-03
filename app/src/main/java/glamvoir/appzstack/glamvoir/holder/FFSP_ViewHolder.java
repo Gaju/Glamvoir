@@ -37,8 +37,9 @@ public class FFSP_ViewHolder extends RecyclerView.ViewHolder implements View.OnC
         //bt_shell_following_action = (ImageButton) view.findViewById(R.id.bt_shell_action);
         //followingBy_Action = (TextView) view.findViewById(R.id.tv_shell_action_name);
 
-
+        user_img.setOnClickListener(this);
         icon.setOnClickListener(this);
+        title.setOnClickListener(this);
     }
 
     @Override

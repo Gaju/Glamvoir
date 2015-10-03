@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
         mSlidingTabLayout.setDistributeEvenly(true);
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), titlesTAB, Numboftabs));
         mSlidingTabLayout.setViewPager(mViewPager);
-        mViewPager.setCurrentItem(0);
+        mViewPager.setCurrentItem(1);
         // Tab events
         if (mSlidingTabLayout != null) {
             mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -51,6 +51,7 @@ public class Privacy_Policy  extends AppCompatActivity {
         try {
             //you need to define the class with package name
             newIntent = new Intent(Privacy_Policy.this, Class.forName(AppConstant.PACKAGE + className));
+            newIntent.putExtra("ParentClassName", "HomeActivity");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -54,6 +54,7 @@ public class Contact_Us  extends AppCompatActivity implements View.OnClickListen
         try {
             //you need to define the class with package name
             newIntent = new Intent(Contact_Us.this, Class.forName(AppConstant.PACKAGE + className));
+            newIntent.putExtra("ParentClassName", "HomeActivity");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

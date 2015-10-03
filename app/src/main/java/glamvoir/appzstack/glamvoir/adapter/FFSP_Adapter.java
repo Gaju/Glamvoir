@@ -21,6 +21,7 @@ import glamvoir.appzstack.glamvoir.activity.FollowersActivity;
 import glamvoir.appzstack.glamvoir.activity.FollowingActivity;
 import glamvoir.appzstack.glamvoir.activity.MyPostActivity;
 import glamvoir.appzstack.glamvoir.activity.MysaveActivity;
+import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.config.AppConfig;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
@@ -64,10 +65,19 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
             @Override
             public void _OnClick(View view, int position) {
-
+                FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
                 mPosition = position;
                 if (view.getId() == R.id.icon) {
                     performAction(view);
+                }
+
+                if(view.getId()==R.id.user_img){
+                    ProfileActivity.startActivity(context, singleFollow.user_id);
+
+                }
+                if(view.getId()==R.id.title){
+                    ProfileActivity.startActivity(context, singleFollow.user_id);
+
                 }
             }
         });
@@ -81,6 +91,8 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) getItem(position);
 
         holder.icon.setTag(singleFollow);
+        holder.user_img.setTag(singleFollow);
+        holder.title.setTag(singleFollow);
 
         if (context instanceof FollowingActivity) {
 
@@ -193,4 +205,6 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             }
         }
     };
+
+
 }

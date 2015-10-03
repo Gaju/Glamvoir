@@ -47,6 +47,7 @@ public class MyCityActivity extends AppCompatActivity{
         try {
             //you need to define the class with package name
             newIntent = new Intent(MyCityActivity.this, Class.forName(AppConstant.PACKAGE + className));
+            newIntent.putExtra("ParentClassName", "HomeActivity");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

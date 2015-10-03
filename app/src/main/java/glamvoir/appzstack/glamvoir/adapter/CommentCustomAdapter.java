@@ -75,6 +75,8 @@ public class CommentCustomAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+
+
         if (item.user_fname != null) {
             holder.user_name.setText(item.user_fname + " " + item.user_id == null ? "" : item.user_lname);
         }

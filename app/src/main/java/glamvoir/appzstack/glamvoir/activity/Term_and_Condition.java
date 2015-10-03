@@ -51,6 +51,7 @@ public class Term_and_Condition extends AppCompatActivity {
         try {
             //you need to define the class with package name
             newIntent = new Intent(Term_and_Condition.this, Class.forName(AppConstant.PACKAGE + className));
+            newIntent.putExtra("ParentClassName", "HomeActivity");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

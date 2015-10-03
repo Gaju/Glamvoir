@@ -12,6 +12,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -26,6 +28,8 @@ public class MyAccountActivity extends AppCompatActivity {
 
     private EditText edt_fName, edt_Phone, edt_Email, edt_Password;
     private TextInputLayout tl_fName, tl_Phone, tl_Email, tl_Password;
+    RadioButton rdbMale, rdbFemale;
+    RadioGroup rgGender;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MyAccountActivity.class);
@@ -131,7 +135,11 @@ public class MyAccountActivity extends AppCompatActivity {
         edt_Email.setClickable(true);
 
         AppPreferences preferences = new AppPreferences(MyAccountActivity.this);
-        edt_fName.setText(preferences.getFirstTime() + " " + preferences.getLastName());
+
+
+        edt_fName.setText(preferences.getFirstName() + " " + preferences.getLastName());
+
+
         edt_Email.setText(preferences.getEmailID());
 
     }
@@ -144,14 +152,16 @@ public class MyAccountActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        edt_fName = (EditText) findViewById(R.id.myaccount_mail);
+        edt_fName = (EditText) findViewById(R.id.myaccount_name);
         edt_Phone = (EditText) findViewById(R.id.myaccount_phone);
         edt_Email = (EditText) findViewById(R.id.myaccount_mail);
 
         tl_fName = (TextInputLayout) findViewById(R.id.myaccount_inputname);
         tl_Phone = (TextInputLayout) findViewById(R.id.myaccount_inputphone);
         tl_Email = (TextInputLayout) findViewById(R.id.myaccount_inputmail);
-
+        rgGender = (RadioGroup) findViewById(R.id.rgGender);
+        rdbMale = (RadioButton) findViewById(R.id.rdbMale);
+        rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
     }
 
     @Override
@@ -162,6 +172,7 @@ public class MyAccountActivity extends AppCompatActivity {
         try {
             //you need to define the class with package name
             newIntent = new Intent(MyAccountActivity.this, Class.forName(AppConstant.PACKAGE + className));
+            newIntent.putExtra("ParentClassName", "HomeActivity");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
