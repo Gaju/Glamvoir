@@ -22,10 +22,10 @@
         android:layout_marginTop="10dp"
         android:text="TextView"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
-    <TextView
+    <glamvoir.appzstack.glamvoir.customview.CustomTestLight
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +36,6 @@
         android:maxLines="4"
         android:text="TextView"
         android:textColor="@color/sub_tittle"
-        android:textSize="16sp" />
+        android:textSize="10sp" />
 
 </LinearLayout>

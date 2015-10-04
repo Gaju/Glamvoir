@@ -26,7 +26,7 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class MyAccountActivity extends AppCompatActivity {
 
-    private EditText edt_fName, edt_Phone, edt_Email, edt_Password;
+    private EditText edt_fName, edt_Phone, edt_Email, edt_Password,myaccount_lastname;
     private TextInputLayout tl_fName, tl_Phone, tl_Email, tl_Password;
     RadioButton rdbMale, rdbFemale;
     RadioGroup rgGender;
@@ -155,7 +155,7 @@ public class MyAccountActivity extends AppCompatActivity {
         edt_fName = (EditText) findViewById(R.id.myaccount_name);
         edt_Phone = (EditText) findViewById(R.id.myaccount_phone);
         edt_Email = (EditText) findViewById(R.id.myaccount_mail);
-
+        myaccount_lastname = (EditText) findViewById(R.id.myaccount_lastname);
         tl_fName = (TextInputLayout) findViewById(R.id.myaccount_inputname);
         tl_Phone = (TextInputLayout) findViewById(R.id.myaccount_inputphone);
         tl_Email = (TextInputLayout) findViewById(R.id.myaccount_inputmail);
