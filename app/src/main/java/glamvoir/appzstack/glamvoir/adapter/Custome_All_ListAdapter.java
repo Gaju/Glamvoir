@@ -43,10 +43,7 @@ import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
-import glamvoir.appzstack.glamvoir.fragment.ALL;
 import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
-import glamvoir.appzstack.glamvoir.fragment.Fashion;
-import glamvoir.appzstack.glamvoir.fragment.FleaFragment;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 

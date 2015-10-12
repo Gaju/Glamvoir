@@ -1,10 +1,5 @@
 package glamvoir.appzstack.glamvoir.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,6 +8,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -20,16 +16,23 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.PauseOnScrollListener;
+import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-public class CustomGalleryActivity extends Activity {
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.Action;
+import glamvoir.appzstack.glamvoir.adapter.GalleryAdapter;
+
+public class CustomGalleryActivity extends AppCompatActivity {
 
 	GridView gridGallery;
 	Handler handler;
@@ -43,8 +46,9 @@ public class CustomGalleryActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		super.onCreate(savedInstanceState);
+	//
 		setContentView(R.layout.gallery);
 
 		action = getIntent().getAction();
@@ -70,7 +74,7 @@ public class CustomGalleryActivity extends Activity {
 			ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
 					getBaseContext())
 					.defaultDisplayImageOptions(defaultOptions)
-					.discCache(new UnlimitedDiscCache(cacheDir))
+				/*.discCache(new UnlimitedDiscCache(cacheDir))*/
 					.memoryCache(new WeakMemoryCache());
 
 			ImageLoaderConfiguration config = builder.build();
@@ -88,7 +92,7 @@ public class CustomGalleryActivity extends Activity {
 		gridGallery = (GridView) findViewById(R.id.gridGallery);
 		gridGallery.setFastScrollEnabled(true);
 		adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
-		PauseOnScrollListener listener = new PauseOnScrollListener(imageLoader,
+		 PauseOnScrollListener listener = new PauseOnScrollListener(imageLoader,
 				true, true);
 		gridGallery.setOnScrollListener(listener);
 

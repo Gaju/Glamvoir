@@ -1,16 +1,21 @@
 package glamvoir.appzstack.glamvoir.adapter;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import java.util.ArrayList;
+
+import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.activity.CustomGallery;
 
 public class GalleryAdapter extends BaseAdapter {
 
@@ -132,11 +137,17 @@ public class GalleryAdapter extends BaseAdapter {
 
 			holder.imgQueueMultiSelected = (ImageView) convertView
 					.findViewById(R.id.imgQueueMultiSelected);
+			holder.ll_head_and_description= (LinearLayout) convertView.findViewById(R.id.ll_head_and_description);
+			holder.et_heading= (TextView) convertView.findViewById(R.id.et_heading);
+			holder.et_description= (TextView) convertView.findViewById(R.id.et_description);
+
+
 
 			if (isActionMultiplePick) {
 				holder.imgQueueMultiSelected.setVisibility(View.VISIBLE);
 			} else {
 				holder.imgQueueMultiSelected.setVisibility(View.GONE);
+				holder.ll_head_and_description.setVisibility(View.VISIBLE);
 			}
 
 			convertView.setTag(holder);
@@ -175,6 +186,8 @@ public class GalleryAdapter extends BaseAdapter {
 	public class ViewHolder {
 		ImageView imgQueue;
 		ImageView imgQueueMultiSelected;
+		TextView et_heading,et_description;
+		LinearLayout ll_head_and_description;
 	}
 
 	public void clearCache() {

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -88,7 +89,8 @@
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
             android:name=".activity.AddStory"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            </activity>
         <activity
             android:name=".activity.MyCityActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
@@ -112,6 +114,21 @@
         <activity
             android:name=".activity.CommentActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".activity.RequestToChangePasswordActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity android:name=".activity.CustomGalleryActivity" >
+            <intent-filter>
+                <action android:name="luminous.ACTION_MULTIPLE_PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
 
         <service

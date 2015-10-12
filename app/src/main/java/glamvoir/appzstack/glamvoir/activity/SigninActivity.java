@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -36,6 +37,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     private Button btn_SignIn;
+    private TextView change_password;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SigninActivity.class);
@@ -121,6 +123,12 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                 }
 
                 break;
+
+            case R.id.change_password:
+
+                ChangePasswordActivity.startActivity(SigninActivity.this);
+
+                break;
         }
     }
 
@@ -187,6 +195,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
      */
     private void initListener() {
         btn_SignIn.setOnClickListener(this);
+        change_password.setOnClickListener(this);
     }
 
 
@@ -201,6 +210,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
         edt_Password = (EditText) findViewById(R.id.signin_pwd);
         tl_Email = (TextInputLayout) findViewById(R.id.signin_inputemail);
         tl_Password = (TextInputLayout) findViewById(R.id.signin_inputpwd);
+        change_password= (TextView) findViewById(R.id.change_password);
 
     }
 
