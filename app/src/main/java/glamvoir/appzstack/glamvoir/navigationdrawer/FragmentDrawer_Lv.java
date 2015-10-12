@@ -30,11 +30,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -50,8 +46,6 @@ import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
-import glamvoir.appzstack.glamvoir.network.NetworkCall;
-import retrofit.mime.TypedFile;
 
 /**
  * Created by jaim on 8/10/2015.
@@ -139,21 +133,10 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-               /* parent.getChildAt(position).setBackgroundColor(
-                        Color.parseColor("#A9BCF5"));*/
                 drawerListener_lv.onDrawerItemSelected_Lv(position);
                 mDrawerLayout.closeDrawer(containerView);
 
-                /*if (save != -1 && save != position) {
-                    parent.getChildAt(save).setBackgroundColor(
-                            Color.parseColor("#d6e6ff"));
-                    drawerListener_lv.onDrawerItemSelected_Lv(position);
-                    mDrawerLayout.closeDrawer(containerView);
-                    drawerListener_lv.onDrawerItemSelected_Lv(position);
-                    mDrawerLayout.closeDrawer(containerView);
-                }
 
-                save = position;*/
             }
         });
 
@@ -275,23 +258,13 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         if (requestCode == CAPTURE_IMAGE_CAMERA) {
             photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), file.getAbsolutePath());
 
-            //mbitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-            //proFile_Image.setImageBitmap(mbitmap);
+
 
         } else if (requestCode == CAPTURE_IMAGE_GALLARY) {
             try {
-                // We need to recyle unused bitmaps
-//                if (mbitmap != null) {
-//                    mbitmap.recycle();
-//                }
+
                 photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), getRealPathFromURI(data.getData()));
 
-//                InputStream stream = getActivity().getContentResolver().openInputStream(
-//                        data.getData());
-//                new TypedFile("image/jpeg", new File(data.getData().toString()));
-//                mbitmap = BitmapFactory.decodeStream(stream);
-//                stream.close();
-//                proFile_Image.setImageBitmap(mbitmap);
 
             } catch (Exception e) {
                 e.printStackTrace();
