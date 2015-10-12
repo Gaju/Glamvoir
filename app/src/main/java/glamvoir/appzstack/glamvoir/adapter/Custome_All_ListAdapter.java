@@ -209,7 +209,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             imageLoader.displayImage(item.getUser_image(), holder.user_Image, options);
         }
         else {
-            holder.user_Image.setImageResource(R.drawable.no_media);
+            holder.user_Image.setBackgroundResource(R.drawable.no_media);
         }
 
         if (item.getContact_no().length() == 10) {
