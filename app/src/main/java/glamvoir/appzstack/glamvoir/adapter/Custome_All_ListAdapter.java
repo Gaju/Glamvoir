@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,10 +43,7 @@ import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
-import glamvoir.appzstack.glamvoir.fragment.ALL;
 import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
-import glamvoir.appzstack.glamvoir.fragment.Fashion;
-import glamvoir.appzstack.glamvoir.fragment.FleaFragment;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 
@@ -98,15 +93,15 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
-            if (item.getChildResult() != null) {
+          /*  if (item.getChildResult() != null) {*/
                 final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
                 adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
                 viewPager.setAdapter(adapter);
                 final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
                 circleIndicator.setViewPager(viewPager);
 
-            } else {
-                LinearLayout ll_view_pager = (LinearLayout) convertView.findViewById(R.id.ll_view_pager);
+          //  }/* else {
+               /* LinearLayout ll_view_pager = (LinearLayout) convertView.findViewById(R.id.ll_view_pager);
 
                 final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
                 viewPager.setVisibility(View.GONE);
@@ -121,7 +116,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 defaultTextView.setText("Image Not Available");
                 ll_view_pager.addView(defaultImage);
                 ll_view_pager.addView(defaultTextView);
-            }
+            }*/
 
 
             holder.tv_ff_shell_username = (TextView) convertView.findViewById(R.id.tv_ff_shell_username);

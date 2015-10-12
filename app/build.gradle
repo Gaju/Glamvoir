@@ -32,8 +32,9 @@ repositories {
            }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
+    compile 'com.github.chrisbanes.photoview:library:+'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.cocosw:bottomsheet:1.+@aar'
     compile 'com.android.support:cardview-v7:22.2.1'
@@ -43,24 +44,20 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.android.support:recyclerview-v7:22.0.+'
     compile 'com.android.support:design:22.2.0'
-    compile('com.squareup.okhttp:okhttp:2.0.0'){
+    compile('com.squareup.okhttp:okhttp:2.0.0') {
         exclude group: 'com.squareup.okio', module: 'okio'
     }
-
-    compile ('com.squareup.okhttp:okhttp-urlconnection:2.0.0'){
+    compile('com.squareup.okhttp:okhttp-urlconnection:2.0.0') {
         exclude module: 'okhttp'
     }
     compile 'com.squareup.okio:okio:1.0.1'
     compile('com.squareup.retrofit:retrofit:1.6.1') {
         exclude group: 'commons-io', module: 'commons-io'
     }
-
     compile 'com.fasterxml.jackson.core:jackson-core:2.+'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.+'
-    compile ('com.fasterxml.jackson.core:jackson-databind:2.+'){
+    compile('com.fasterxml.jackson.core:jackson-databind:2.+') {
         exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
     }
-    compile ('com.squareup.retrofit:converter-jackson:1.6.+')
-
-
+    compile 'com.squareup.retrofit:converter-jackson:1.6.+'
 }

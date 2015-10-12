@@ -9,7 +9,7 @@
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     app:theme="@style/CustomToolbarTheme"
-    local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+    local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     <Spinner
         android:id="@+id/spinner_nav"

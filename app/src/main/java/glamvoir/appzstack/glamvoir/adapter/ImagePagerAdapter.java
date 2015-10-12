@@ -2,6 +2,7 @@ package glamvoir.appzstack.glamvoir.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,7 @@ public class ImagePagerAdapter extends PagerAdapter {
                     TouchImageView imgDisplay;
                     final Dialog dialog = new Dialog(mContext);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                     dialog.setContentView(R.layout.layout_fullscreen_image);
                     imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
                     imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + list.get((Integer) v.getTag()).getPost_image(), imgDisplay, options);
