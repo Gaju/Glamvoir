@@ -39,6 +39,7 @@ public class AppConstant {
     public static final String CATEGORY_FOOD_PLACE = "3";
     public static final String CATEGORY_INTEREST = "4";
     public static final String CATEGORY_STORE_DEAL = "5";
+    public static final String CATEGORY_FLEA_MARKET = "6";
 
     public static String getDeviceToken(Context context) {
         String deviceId = Settings.Secure.getString(context.getContentResolver(),

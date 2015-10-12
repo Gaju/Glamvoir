@@ -38,7 +38,7 @@ public class FleaFragment extends BaseFragment {
 
     @Override
     protected String getCategoryType() {
-        return AppConstant.CATEGORY_ALL;
+        return AppConstant.CATEGORY_FLEA_MARKET;
     }
 
     @Override

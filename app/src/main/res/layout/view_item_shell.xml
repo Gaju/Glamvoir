@@ -8,12 +8,12 @@
         android:id="@+id/view_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@drawable/pic">
 
     </ImageView>
 
-    <TextView
+    <glamvoir.appzstack.glamvoir.customview.CustomTextBold
         android:id="@+id/post_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_marginTop="10dp"
         android:text="TextView"
         android:textColor="@android:color/black"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <glamvoir.appzstack.glamvoir.customview.CustomTestLight

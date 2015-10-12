@@ -76,6 +76,8 @@ public class ImagePagerAdapter extends PagerAdapter {
         TextView post_header = (TextView) convertView.findViewById(R.id.post_header);
         view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
+
+
         view_image.setTag(position);
 
         view_image.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +101,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 
         if (item.getPost_image() != null || !item.getPost_image().equals("")) {
             imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
+
         } else {
             view_image.setImageResource(R.drawable.pic);
         }

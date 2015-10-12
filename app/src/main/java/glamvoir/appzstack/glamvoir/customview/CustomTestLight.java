@@ -14,21 +14,21 @@ public class CustomTestLight extends TextView {
     public CustomTestLight (Context c) {
         super(c);
         this.c = c;
-        Typeface face=Typeface.createFromAsset(c.getAssets(), "nexa_bold-webfont.ttf");
+        Typeface face=Typeface.createFromAsset(c.getAssets(), "nexa_light-webfont.ttf");
         setTypeface(face);
 
     }
     public CustomTestLight (Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.c = context;
-        Typeface face=Typeface.createFromAsset(c.getAssets(), "nexa_bold-webfont.ttf");
+        Typeface face=Typeface.createFromAsset(c.getAssets(), "nexa_light-webfont.ttf");
         setTypeface(face);
     }
 
     public CustomTestLight (Context context, AttributeSet attrs) {
         super(context, attrs);
         this.c = context;
-        Typeface face=Typeface.createFromAsset(c.getAssets(), "nexa_bold-webfont.ttf");
+        Typeface face=Typeface.createFromAsset(c.getAssets(), "nexa_light-webfont.ttf");
         setTypeface(face);
 
     }

@@ -56,26 +56,26 @@
 
             </RelativeLayout>
 
-            <TextView
+            <glamvoir.appzstack.glamvoir.customview.CustomTextBold
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_normal"
                 android:text="@string/user_name"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_xlarge"
+                android:textSize="@dimen/textsize_medium"
                 android:textStyle="bold"
 
                 />
 
-            <TextView
+            <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/member_period"
                 android:textColor="#2a2a2a"
-                android:textSize="@dimen/textsize_large"
+                android:textSize="@dimen/textsize_small"
                 android:textStyle="normal"
 
                 />

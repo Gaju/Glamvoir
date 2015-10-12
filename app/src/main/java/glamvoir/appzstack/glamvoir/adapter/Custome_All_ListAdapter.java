@@ -208,6 +208,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         if (item.getUser_image() != null) {
             imageLoader.displayImage(item.getUser_image(), holder.user_Image, options);
         }
+        else {
+            holder.user_Image.setImageResource(R.drawable.no_media);
+        }
 
         if (item.getContact_no().length() == 10) {
             holder.bt_connect_with_seller.setVisibility(View.VISIBLE);
@@ -249,14 +252,14 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-                            case R.id.wrong_category:
+                           /* case R.id.wrong_category:
                                 Toast.makeText(frag.getActivity(), "wrong_category", Toast.LENGTH_LONG).show();
 
                                 break;
                             case R.id.dont_show:
                                 Toast.makeText(frag.getActivity(), "dont_show", Toast.LENGTH_LONG).show();
 
-                                break;
+                                break;*/
                             case R.id.roport:
                                 Toast.makeText(frag.getActivity(), "roport", Toast.LENGTH_LONG).show();
                                 break;
