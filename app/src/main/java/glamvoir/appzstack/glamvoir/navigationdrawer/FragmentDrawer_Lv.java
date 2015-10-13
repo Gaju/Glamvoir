@@ -260,6 +260,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
 
 
+
         } else if (requestCode == CAPTURE_IMAGE_GALLARY) {
             try {
 

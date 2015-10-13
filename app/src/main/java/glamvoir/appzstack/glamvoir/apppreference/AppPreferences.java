@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
+
 /**
  * Created by gajendran on 03-08-2015..
  * This is singleton class for SharedPreference of application
@@ -27,7 +29,10 @@ public class AppPreferences {
         deviceType,
         firstTime,
         gender,
-        userImage
+        userImage,
+        userAbout,
+        userContact,
+        userCity
     }
 
     public AppPreferences(Context context) {
@@ -135,6 +140,34 @@ public class AppPreferences {
 
     public void setUserImage(String userImage) {
         mEditor.putString(SharedPrefrencesKey.userImage.toString(), userImage);
+        mEditor.commit();
+    }
+
+    public String getUserAbout() {
+        return mPreferences.getString(SharedPrefrencesKey.userAbout.toString(), null);
+    }
+
+    public void setUserAbout(String userAbout) {
+        mEditor.putString(SharedPrefrencesKey.userAbout.toString(), userAbout);
+        mEditor.commit();
+    }
+
+
+    public String getUserCity() {
+        return mPreferences.getString(SharedPrefrencesKey.userCity.toString(), null);
+    }
+
+    public void setUserCity(String userCity) {
+        mEditor.putString(SharedPrefrencesKey.userCity.toString(), userCity);
+        mEditor.commit();
+    }
+
+    public String getUserContact() {
+        return mPreferences.getString(SharedPrefrencesKey.userContact.toString(), null);
+    }
+
+    public void setUserContact(String userContact) {
+        mEditor.putString(SharedPrefrencesKey.userContact.toString(), userContact);
         mEditor.commit();
     }
 }

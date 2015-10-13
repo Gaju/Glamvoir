@@ -23,6 +23,11 @@ public class AppConstant {
     public static final String METHOD_SAVEPOST = "savemypost";
     public static final String METHOD_LIKESTATUS = "likedislike";
     public static final String METHOD_GETPROFILE = "getprofile";
+    public static final String METHOD_UPDATEPROFILE = "updateprofile";
+
+    public static final String METHOD_FORGOT_PASSWORD = "forgotpassword";
+    public static final String METHOD_RESET_PASSWORD = "resetpassword";
+    public static final String METHOD_UPDATE_PASSWORD = "updastepassword";
 
 
     public static final int GETPOST_LIKE = 1;

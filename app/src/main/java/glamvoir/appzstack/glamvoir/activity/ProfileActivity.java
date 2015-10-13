@@ -18,7 +18,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.asynctaskloader.GetProfileLoader;
+import glamvoir.appzstack.glamvoir.asynctaskloader.ProfileLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
@@ -93,12 +93,12 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public Loader<TaskResponse<ProfileResponse>> onCreateLoader(int id, Bundle args) {
                     loadIndicator.setVisibility(View.VISIBLE);
-                    return new GetProfileLoader(mRequestBean, AppConstant.METHOD_GETPROFILE, args.getString("userID"));
+                    return new ProfileLoader(mRequestBean, AppConstant.METHOD_GETPROFILE, args.getString("userID"));
                 }
 
                 @Override
                 public void onLoadFinished(Loader<TaskResponse<ProfileResponse>> loader, TaskResponse<ProfileResponse> data) {
-                    if (loader instanceof GetProfileLoader) {
+                    if (loader instanceof ProfileLoader) {
                         loadIndicator.setVisibility(View.GONE);
                         if (data.error != null) {
                             Utility.showToast(mRequestBean.getContext(), data.error.toString());

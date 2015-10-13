@@ -9,6 +9,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.UserDetails;
 
 /**
@@ -38,10 +39,24 @@ public class Utility {
         mAppPreferences.setLastName(userDetails.user_lname);
         mAppPreferences.setUserId(userDetails.user_id);
         mAppPreferences.setUserImage(userDetails.user_image);
+        mAppPreferences.setGender(userDetails.user_gender);
     }
 
-    public static boolean shouldEnableCacheOnMemory(){
-        if(Build.MODEL.equalsIgnoreCase("GT-N7100")||(Build.MANUFACTURER.equalsIgnoreCase("SAMSUNG")&&android.os.Build.VERSION.RELEASE.equalsIgnoreCase("4.4.2"))) {
+    public static void updateUserData(Context context, List<ProfileResponse.GetProfileResponse> userDetailsList) {
+        ProfileResponse.GetProfileResponse userDetails = userDetailsList.get(0);
+        AppPreferences mAppPreferences = new AppPreferences(context);
+        mAppPreferences.setFirstName(userDetails.user_fname);
+        mAppPreferences.setLastName(userDetails.user_lname);
+        mAppPreferences.setUserId(userDetails.user_id);
+
+        mAppPreferences.setGender(userDetails.user_gender);
+        mAppPreferences.setUserAbout(userDetails.user_about);
+        mAppPreferences.setUserContact(userDetails.user_contact);
+        mAppPreferences.setUserCity(userDetails.user_city);
+    }
+
+    public static boolean shouldEnableCacheOnMemory() {
+        if (Build.MODEL.equalsIgnoreCase("GT-N7100") || (Build.MANUFACTURER.equalsIgnoreCase("SAMSUNG") && android.os.Build.VERSION.RELEASE.equalsIgnoreCase("4.4.2"))) {
             return false;
         }
         return true;

@@ -30,6 +30,9 @@ public class UserDetails implements Parcelable {
     @JsonProperty("user_authtoken")
     public String user_authtoken;
 
+    @JsonProperty("user_gender")
+    public String user_gender;
+
     @Override
     public int describeContents() {
         return 0;
@@ -42,6 +45,7 @@ public class UserDetails implements Parcelable {
         dest.writeString(this.user_lname);
         dest.writeString(this.user_email);
         dest.writeString(this.user_authtoken);
+        dest.writeString(this.user_gender);
     }
 
     public UserDetails() {
@@ -53,6 +57,7 @@ public class UserDetails implements Parcelable {
         this.user_lname = in.readString();
         this.user_email = in.readString();
         this.user_authtoken = in.readString();
+        this.user_gender = in.readString();
 
     }
 

@@ -10,4 +10,5 @@ public class LoaderID {
     public static final int GETPOST = 3;
     public static final int COMMENT = 4;
     public static final int GETPROFILE = 5;
+    public static final int UPDATE_PASSWORD = 6;
 }

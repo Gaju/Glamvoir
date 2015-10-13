@@ -1,7 +1,9 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,20 +15,28 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
+import glamvoir.appzstack.glamvoir.asynctaskloader.PasswordLoader;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.helpers.Validation;
+import glamvoir.appzstack.glamvoir.model.TaskResponse;
+import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
+import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
 
 /**
  * Created by jaim on 10/12/2015.
  */
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final int FORGOT_PASSWORD = 1;
+    private static final int UPDATE_PASSWORD = 2;
+    private static final int RESET_PASSWORD = 3;
     private Toolbar toolbar;
-    private EditText gmail_otp,password,veri_password;
-    private Button bt_changepassword,bt_requestTochange;
-    private TextInputLayout tl_fpassword, tl_verifypassword,tl_gmialOtp;
-
+    private EditText gmail_otp, password, veri_password;
+    private Button bt_changepassword, bt_requestTochange;
+    private TextInputLayout tl_fpassword, tl_verifypassword, tl_gmialOtp;
+    private RequestBean mRequestBean;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ChangePasswordActivity.class);
@@ -38,6 +48,12 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.changed_password);
+
+        mRequestBean = new RequestBean();
+        mRequestBean.setLoader(true);
+        mRequestBean.setActivity(this);
+        mRequestBean.setLoader(true);
+
         //initialize all views
         initViews();
 
@@ -116,19 +132,18 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     private void initViews() {
 
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        gmail_otp= (EditText) findViewById(R.id.gmail_otp);
-        password= (EditText) findViewById(R.id.password);
-        veri_password= (EditText) findViewById(R.id.veri_password);
+        gmail_otp = (EditText) findViewById(R.id.gmail_otp);
+        password = (EditText) findViewById(R.id.password);
+        veri_password = (EditText) findViewById(R.id.veri_password);
 
 
         tl_gmialOtp = (TextInputLayout) findViewById(R.id.inputgmail_otp);
         tl_fpassword = (TextInputLayout) findViewById(R.id.inputpassword);
         tl_verifypassword = (TextInputLayout) findViewById(R.id.inputveri_password);
 
-        bt_changepassword= (Button) findViewById(R.id.bt_changepassword);
-        bt_requestTochange= (Button) findViewById(R.id.bt_requestTochange);
+        bt_changepassword = (Button) findViewById(R.id.bt_changepassword);
+        bt_requestTochange = (Button) findViewById(R.id.bt_requestTochange);
 
     }
 
@@ -164,7 +179,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
 
             case R.id.bt_changepassword:
 
@@ -172,23 +187,21 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                     if (Validation.isValidPassword(password.getText().toString())) {
                         //call signup
                         if (password.getText().toString().equals(veri_password.getText().toString())) {
-                            resetPassword();
+                           // callPasswordLoader();
                             Utility.hideKeyboard(this, password);
-                        }
-                        else {
+                        } else {
                             tl_verifypassword.setError(getResources().getString(R.string.password_mismatch));
                         }
                     } else {
                         tl_fpassword.setError(getResources().getString(R.string.password_short));
                     }
-                }
-                else {
+                } else {
                     tl_gmialOtp.setError(getResources().getString(R.string.gmail_otp));
                 }
 
                 break;
 
-            case  R.id.bt_requestTochange:
+            case R.id.bt_requestTochange:
 
                 RequestToChangePasswordActivity.startActivity(ChangePasswordActivity.this);
 
@@ -199,14 +212,56 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                 break;
 
         }
-
-
-
     }
 
-    private void resetPassword() {
-
+    private void callPasswordLoader(int type) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("Type", type);
+        getLoaderManager().restartLoader(LoaderID.UPDATE_PASSWORD, bundle, passwordCallback);
     }
 
+    LoaderManager.LoaderCallbacks<TaskResponse<PasswordResponse>> passwordCallback =
+            new LoaderManager.LoaderCallbacks<TaskResponse<PasswordResponse>>() {
+
+                @Override
+                public Loader<TaskResponse<PasswordResponse>> onCreateLoader(int id, Bundle args) {
+                    // loadIndicator.setVisibility(View.VISIBLE);
+                    int type = args.getInt("Type");
+                    Loader loader = null;
+
+                    switch (type) {
+                        case FORGOT_PASSWORD:
+                            loader = new PasswordLoader(mRequestBean, AppConstant.METHOD_FORGOT_PASSWORD);
+                            break;
+                        case RESET_PASSWORD:
+                            loader = new PasswordLoader(mRequestBean, AppConstant.METHOD_RESET_PASSWORD, gmail_otp.getText().toString());
+                            break;
+                        case UPDATE_PASSWORD:
+                            loader = new PasswordLoader(mRequestBean, AppConstant.METHOD_UPDATE_PASSWORD, "", "");
+                            break;
+                    }
+
+                    return loader;
+                }
+
+                @Override
+                public void onLoadFinished(Loader<TaskResponse<PasswordResponse>> loader, TaskResponse<PasswordResponse> data) {
+                    if (loader instanceof PasswordLoader) {
+                        //  loadIndicator.setVisibility(View.GONE);
+                        if (data.error != null) {
+                            Utility.showToast(mRequestBean.getContext(), data.error.toString());
+                        } else {
+                            if (data.data != null && data.data.error_code != null) {
+
+                                Utility.showToast(mRequestBean.getContext(),"success");
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoaderReset(Loader<TaskResponse<PasswordResponse>> loader) {
+                }
+            };
 
 }

@@ -108,7 +108,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.singnin:
+            case R.id.done:
                 //HomeActivity.startActivityWithClearTop(SigninActivity.this);
                 if (Validation.isValidEmail(edt_Email.getText().toString())) {
                     if (Validation.isValidPassword(edt_Password.getText().toString())) {
@@ -205,7 +205,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     private void initViews() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        btn_SignIn = (Button) findViewById(R.id.singnin);
+        btn_SignIn = (Button) findViewById(R.id.done);
         edt_Email = (EditText) findViewById(R.id.signin_email);
         edt_Password = (EditText) findViewById(R.id.signin_pwd);
         tl_Email = (TextInputLayout) findViewById(R.id.signin_inputemail);

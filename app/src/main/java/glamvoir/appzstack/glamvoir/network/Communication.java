@@ -6,13 +6,12 @@ import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
-import glamvoir.appzstack.glamvoir.model.net.response.DeleteMySaveResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
-import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
 
@@ -21,9 +20,9 @@ import retrofit.mime.TypedString;
  */
 public class Communication {
 
-    public static LoginResponse loginSignup(String methodType, String emailId, String password, String fName, String lName, String gender, String deviceToken,String deviceType) {
+    public static LoginResponse loginSignup(String methodType, String emailId, String password, String fName, String lName, String gender, String deviceToken, String deviceType) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        LoginResponse response = service.loginSignup(methodType, emailId, password, fName,lName, gender, deviceToken, deviceType);
+        LoginResponse response = service.loginSignup(methodType, emailId, password, fName, lName, gender, deviceToken, deviceType);
         return response;
     }
 
@@ -44,6 +43,32 @@ public class Communication {
         ProfileResponse response = service.getProfile(methodType, userID);
         return response;
     }
+
+    public static PasswordResponse updatePassword(String methodType, String userID, String email, String oldPassword, String newPassword) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        PasswordResponse response = service.updatePassword(methodType, userID, email, oldPassword, newPassword);
+        return response;
+    }
+
+    public static PasswordResponse forgotPassword(String methodType, String email) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        PasswordResponse response = service.forgotPassword(methodType, email);
+        return response;
+    }
+
+    public static PasswordResponse resetPassword(String methodType, String email, String otp) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        PasswordResponse response = service.resetPassword(methodType, email, otp);
+        return response;
+    }
+
+
+    public static ProfileResponse updateProfile(String methodType, String userID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        ProfileResponse response = service.updateProfile(methodType, userID);
+        return response;
+    }
+
 
     public static ObservedFollowResponse toggleFollow(String methodType, String followingUserID, String followerUserID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();

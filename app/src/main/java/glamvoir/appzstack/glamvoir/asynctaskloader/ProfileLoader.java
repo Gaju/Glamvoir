@@ -2,6 +2,8 @@ package glamvoir.appzstack.glamvoir.asynctaskloader;
 
 import android.content.AsyncTaskLoader;
 
+import glamvoir.appzstack.glamvoir.config.AppConfig;
+import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
@@ -10,14 +12,14 @@ import glamvoir.appzstack.glamvoir.network.Communication;
 /**
  * Created by gajendran on 1/10/15.
  */
-public class GetProfileLoader extends AsyncTaskLoader<TaskResponse<ProfileResponse>> {
+public class ProfileLoader extends AsyncTaskLoader<TaskResponse<ProfileResponse>> {
 
     private RequestBean requestBean;
     private TaskResponse response = null;
     private String methodName;
     private String user_id;
 
-    public GetProfileLoader(RequestBean requestBean, String methodName, String user_id) {
+    public ProfileLoader(RequestBean requestBean, String methodName, String user_id) {
         super(requestBean.getContext());
         this.requestBean = requestBean;
         this.methodName = methodName;
@@ -30,7 +32,16 @@ public class GetProfileLoader extends AsyncTaskLoader<TaskResponse<ProfileRespon
         response = new TaskResponse();
         try {
             String url = "http://glamvoir.com/index.php/api?method=" + methodName + "&user_id=" + user_id;
-            response.data = Communication.getProfile(methodName, user_id);
+
+            switch (methodName) {
+                case AppConstant.METHOD_GETPROFILE:
+                    response.data = Communication.getProfile(methodName, user_id);
+                    break;
+                case AppConstant.METHOD_UPDATEPROFILE:
+                    response.data = Communication.updateProfile(methodName, user_id);
+                    break;
+            }
+
         } catch (Exception e) {
             response.error = e;
         }
