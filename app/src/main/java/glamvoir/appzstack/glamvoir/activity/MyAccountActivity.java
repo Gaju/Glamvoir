@@ -1,6 +1,7 @@
 package glamvoir.appzstack.glamvoir.activity;
 
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -11,9 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import java.util.Calendar;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -24,12 +29,16 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 /**
  * Created by acer pc on 09-08-2015.
  */
-public class MyAccountActivity extends AppCompatActivity {
+public class MyAccountActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText edt_fName, edt_Phone, edt_Email, edt_Password,myaccount_lastname,edt_age;
     private TextInputLayout tl_fName, tl_Phone, tl_Email, tl_Password;
     RadioButton rdbMale, rdbFemale;
     RadioGroup rgGender;
+    private Calendar cal;
+    private int day;
+    private int month;
+    private int year;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MyAccountActivity.class);
@@ -126,7 +135,7 @@ public class MyAccountActivity extends AppCompatActivity {
      * initialize all views listeners
      */
     private void initListener() {
-
+        edt_age.setOnClickListener(this);
     }
 
     private void updateUI(){
@@ -179,5 +188,27 @@ public class MyAccountActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return newIntent;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.myaccount_age:
+                // Launch Date Picker Dialog
+                DatePickerDialog dpd = new DatePickerDialog(this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // Display Selected date in textbox
+                                edt_age.setText( year + "-"+(monthOfYear + 1)+ "-"+dayOfMonth);
+                               // 2008-07-01"
+                            }
+                        }, year, month, day);
+                dpd.show();
+
+                break;
+        }
     }
 }

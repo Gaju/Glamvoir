@@ -52,6 +52,8 @@
     <string name="invalid_fname">Please enter the first name</string>
     <string name="invalid_lname">Please enter the last name</string>
     <string name="password_short">Minimum password length is 5</string>
+    <string name="password_mismatch">Password mismatch</string>
+    <string name="gmail_otp">OTP Length is 4</string>
     <string name="signup">SIGNUP</string>
     <string name="signin">SIGN IN</string>
     <string name="followers">FOLLOWERS</string>

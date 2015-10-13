@@ -16,32 +16,23 @@ public class Validation {
     }
 
     public static boolean isValidPassword(String pass) {
-        if (pass != null && pass.length() >= 5) {
-            return true;
-        }
-        return false;
+        return pass != null && pass.length() >= 5;
+    }
+    public static boolean isGmailOTP(String pass) {
+        return pass != null && pass.length() == 4;
     }
 
     public static boolean isTextEmpty(String message) {
-        if (message.length() == 0)
-            return true;
-        return false;
+        return message.length() == 0;
     }
 
     public static boolean isValidName(String name) {
-        if (name != null && name.length() >= 1) {
-            return true;
-        }
-        return false;
+        return name != null && name.length() >= 1;
     }
 
     public static boolean isValidMobile(String phone2) {
         boolean check;
-        if (phone2.length() < 6 || phone2.length() > 13) {
-            check = false;
-        } else {
-            check = true;
-        }
+        check = !(phone2.length() < 6 || phone2.length() > 13);
         return check;
     }
 }
