@@ -1,30 +1,42 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.CustomSpinnerAdapter;
+import glamvoir.appzstack.glamvoir.adapter.GalleryAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
  * Created by jaim on 9/9/2015.
  */
-public class AddStory extends AppCompatActivity {
+public class AddStory extends AppCompatActivity implements View.OnClickListener {
 
 
     public static void startActivity(Context context) {
@@ -32,11 +44,17 @@ public class AddStory extends AppCompatActivity {
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }
+    GridView gridGallery;
+    Handler handler;
+    GalleryAdapter adapter;
+    ImageLoader imageLoader;
+
 
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     Spinner dropDownMenu;
     private LinearLayout lltool;
+    ImageButton galleryImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +67,15 @@ public class AddStory extends AppCompatActivity {
         mRequestBean.setLoader(true);
 
         //initialize all views
+        initImageLoader();
         initViews();
 
         initListener();
 
         getToolbar(toolbar);
         addItemsToSpinner();
+
+    //    init();
     }
 
     // add items into spinner dynamically
@@ -124,14 +145,13 @@ public class AddStory extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-        //getSupportActionBar().setTitle(getResources().getString(R.string.mypost));
     }
 
     /**
      * initialize all views listeners
      */
     private void initListener() {
+        galleryImages.setOnClickListener(this);
 
     }
 
@@ -140,10 +160,17 @@ public class AddStory extends AppCompatActivity {
      * initialize all views
      */
     private void initViews() {
+        handler = new Handler();
         lltool= (LinearLayout) findViewById(R.id.lltool);
+        galleryImages= (ImageButton) findViewById(R.id.button3);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu= (Spinner) findViewById(R.id.spinner_nav);
         lltool.setVisibility(View.VISIBLE);
+        gridGallery = (GridView) findViewById(R.id.gridGallery);
+        gridGallery.setFastScrollEnabled(true);
+        adapter = new GalleryAdapter(AddStory.this, imageLoader);
+        adapter.setMultiplePick(false);
+        gridGallery.setAdapter(adapter);
 
 
 
@@ -188,5 +215,70 @@ public class AddStory extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button3:
+                Intent i = new Intent(AddStory.this,CustomGalleryActivity.class);
+                i.setAction(Action.ACTION_MULTIPLE_PICK);
+                startActivityForResult(i, 200);
+                break;
+
+
+        }
+    }
+
+
+
+    private void initImageLoader() {
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisc().imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
+                this).defaultDisplayImageOptions(defaultOptions).memoryCache(
+                new WeakMemoryCache());
+
+        ImageLoaderConfiguration config = builder.build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+    }
+
+  /*  private void init() {
+
+
+        gridGallery = (GridView) findViewById(R.id.gridGallery);
+        gridGallery.setFastScrollEnabled(true);
+        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
+        adapter.setMultiplePick(false);
+        gridGallery.setAdapter(adapter);
+
+
+
+    }*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+      if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
+            String[] all_path = data.getStringArrayExtra("all_path");
+
+            ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
+
+            for (String string : all_path) {
+                CustomGallery item = new CustomGallery();
+                item.sdcardPath = string;
+
+                dataT.add(item);
+            }
+        adapter.addAll(dataT);
+        }
     }
 }
