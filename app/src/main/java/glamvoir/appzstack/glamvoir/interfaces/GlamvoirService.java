@@ -53,7 +53,7 @@ public interface GlamvoirService {
     PasswordResponse resetPassword(@Query("method") String methodType, @Query("user_email") String user_email, @Query("user_otp") String user_otp);
 
     @GET("/index.php/api")
-    ProfileResponse updateProfile(@Query("method") String methodType, @Query("user_id") String user_id);
+    ProfileResponse updateProfile(@Query("method") String methodType, @Query("user_id") String user_id, @Query("user_fname") String user_fname, @Query("user_lname") String user_lname, @Query("user_dob") String user_dob, @Query("user_gender") String user_gender, @Query("user_about") String user_about, @Query("user_contact") String user_contact, @Query("user_city") String user_city);
 
     @GET("/index.php/api")
     ObservedFollowResponse toggleFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);

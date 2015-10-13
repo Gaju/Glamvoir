@@ -21,8 +21,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import java.util.Calendar;
-
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
@@ -218,7 +216,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         edt_Email.setFocusable(false);
         edt_Email.setClickable(true);
 
-        edt_fName.setText(preferences.getFirstName() + " " + preferences.getLastName());
+        edt_fName.setText(preferences.getFirstName());
+
+        edt_lName.setText(preferences.getLastName());
+
         edt_Email.setText(preferences.getEmailID());
 
         if (preferences.getUserAbout() != null) {
@@ -272,7 +273,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         rgGender = (RadioGroup) findViewById(R.id.rgGender);
         rdbMale = (RadioButton) findViewById(R.id.rdbMale);
-        rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
+        rdbFemale = (RadioButton) findViewById(R.id.rdbFemale);
 
         btn_Done = (Button) findViewById(R.id.done);
         loadIndicator = findViewById(R.id.loadIndicator);
@@ -289,7 +290,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public Loader<TaskResponse<ProfileResponse>> onCreateLoader(int id, Bundle args) {
                     loadIndicator.setVisibility(View.VISIBLE);
-                    return new ProfileLoader(mRequestBean, AppConstant.METHOD_GETPROFILE, preferences.getUserId());
+                    //user_fname, user_lname,user_dob, user_gender, user_about, user_contact, user_city
+
+                    return new ProfileLoader(mRequestBean, AppConstant.METHOD_UPDATEPROFILE, preferences.getUserId(), edt_fName.getText().toString(), edt_lName.getText().toString(), edt_age.getText().toString(), AppPreferences.getInstance(mRequestBean.getContext()).getGender(), edt_AboutMe.getText().toString(), edt_Contact.getText().toString(), edt_City.getText().toString());
                 }
 
                 @Override

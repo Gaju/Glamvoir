@@ -63,9 +63,9 @@ public class Communication {
     }
 
 
-    public static ProfileResponse updateProfile(String methodType, String userID) {
+    public static ProfileResponse updateProfile(String methodType, String userID,String user_fname,String user_lname,String user_dob,String user_gender,String user_about,String user_contact,String user_city) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        ProfileResponse response = service.updateProfile(methodType, userID);
+        ProfileResponse response = service.updateProfile(methodType, userID,user_fname, user_lname,user_dob, user_gender, user_about, user_contact, user_city);
         return response;
     }
 
