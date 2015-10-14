@@ -50,7 +50,7 @@ public interface GlamvoirService {
     PasswordResponse forgotPassword(@Query("method") String methodType, @Query("user_email") String user_email);
 
     @GET("/index.php/api")
-    PasswordResponse resetPassword(@Query("method") String methodType, @Query("user_email") String user_email, @Query("user_otp") String user_otp);
+    PasswordResponse resetPassword(@Query("method") String methodType, @Query("user_email") String user_email, @Query("user_otp") String user_otp,@Query("user_password") String user_password);
 
     @GET("/index.php/api")
     ProfileResponse updateProfile(@Query("method") String methodType, @Query("user_id") String user_id, @Query("user_fname") String user_fname, @Query("user_lname") String user_lname, @Query("user_dob") String user_dob, @Query("user_gender") String user_gender, @Query("user_about") String user_about, @Query("user_contact") String user_contact, @Query("user_city") String user_city);

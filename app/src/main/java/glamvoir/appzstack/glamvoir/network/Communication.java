@@ -56,9 +56,9 @@ public class Communication {
         return response;
     }
 
-    public static PasswordResponse resetPassword(String methodType, String email, String otp) {
+    public static PasswordResponse resetPassword(String methodType, String email, String otp, String password) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        PasswordResponse response = service.resetPassword(methodType, email, otp);
+        PasswordResponse response = service.resetPassword(methodType, email, otp,password);
         return response;
     }
 

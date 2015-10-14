@@ -1,7 +1,9 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,16 +15,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
+import glamvoir.appzstack.glamvoir.asynctaskloader.PasswordLoader;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.helpers.Validation;
+import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
+import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
 
 /**
  * Created by jaim on 10/12/2015.
  */
 public class RequestToChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
-
     private Toolbar toolbar;
     private EditText valid_gmail;
     private Button bt_requestTochange;
@@ -71,7 +76,7 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
             }
         });
 
-}
+    }
 
     private void initListener() {
 
@@ -83,11 +88,10 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
     private void initViews() {
 
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        valid_gmail= (EditText) findViewById(R.id.gmail);
+        valid_gmail = (EditText) findViewById(R.id.gmail);
         tl_Email = (TextInputLayout) findViewById(R.id.inputgmail);
-        bt_requestTochange= (Button) findViewById(R.id.bt_send_request_email);
+        bt_requestTochange = (Button) findViewById(R.id.bt_send_request_email);
 
     }
 
@@ -123,14 +127,13 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
 
             case R.id.bt_send_request_email:
 
                 if (Validation.isValidEmail(valid_gmail.getText().toString())) {
-
-                        requestToChangePassword();
-                        Utility.hideKeyboard(this, valid_gmail);
+                    requestToChangePassword();
+                    Utility.hideKeyboard(this, valid_gmail);
 
                 } else {
                     tl_Email.setError(getResources().getString(R.string.invalid_email));
@@ -143,14 +146,41 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
                 break;
 
         }
-
-
-
     }
+
 
     private void requestToChangePassword() {
-
+        getLoaderManager().restartLoader(LoaderID.UPDATE_PASSWORD, null, passwordCallback);
     }
+
+    LoaderManager.LoaderCallbacks<TaskResponse<PasswordResponse>> passwordCallback =
+            new LoaderManager.LoaderCallbacks<TaskResponse<PasswordResponse>>() {
+
+                @Override
+                public Loader<TaskResponse<PasswordResponse>> onCreateLoader(int id, Bundle args) {
+                    // loadIndicator.setVisibility(View.VISIBLE);
+                    return new PasswordLoader(mRequestBean, AppConstant.METHOD_RESET_PASSWORD, valid_gmail.getText().toString());
+                }
+
+                @Override
+                public void onLoadFinished(Loader<TaskResponse<PasswordResponse>> loader, TaskResponse<PasswordResponse> data) {
+                    if (loader instanceof PasswordLoader) {
+                        //  loadIndicator.setVisibility(View.GONE);
+                        if (data.error != null) {
+                            Utility.showToast(mRequestBean.getContext(), data.error.toString());
+                        } else {
+                            if (data.data != null && data.data.error_code != null) {
+
+                                Utility.showToast(mRequestBean.getContext(), "success");
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoaderReset(Loader<TaskResponse<PasswordResponse>> loader) {
+                }
+            };
 
 
 }
