@@ -20,6 +20,7 @@ public class PasswordLoader extends AsyncTaskLoader<TaskResponse<PasswordRespons
     private String newPassword;
     private String methodType;
     private String otp;
+    private String emailSend;
     private String email;
     private String password;
 
@@ -32,10 +33,10 @@ public class PasswordLoader extends AsyncTaskLoader<TaskResponse<PasswordRespons
     }
 //user_otp,user_password
 
-    public PasswordLoader(RequestBean requestBean, String methodType, String email) {
+    public PasswordLoader(RequestBean requestBean, String methodType, String emailSend) {
         super(requestBean.getContext());
         this.requestBean = requestBean;
-        this.email = email;
+        this.emailSend = emailSend;
         this.methodType = methodType;
     }
 
@@ -62,11 +63,11 @@ public class PasswordLoader extends AsyncTaskLoader<TaskResponse<PasswordRespons
                     response.data = Communication.updatePassword(methodType, appPreferences.getUserId(), appPreferences.getEmailID(), oldPassword, newPassword);
                     break;
                 case AppConstant.METHOD_RESET_PASSWORD:
-                    response.data = Communication.resetPassword(methodType, appPreferences.getEmailID(), otp,password);
+                    response.data = Communication.resetPassword(methodType, emailSend, otp,password);
                     break;
 
                 case AppConstant.METHOD_FORGOT_PASSWORD:
-                    response.data = Communication.forgotPassword(methodType, appPreferences.getEmailID());
+                    response.data = Communication.forgotPassword(methodType, emailSend);
                     break;
             }
 

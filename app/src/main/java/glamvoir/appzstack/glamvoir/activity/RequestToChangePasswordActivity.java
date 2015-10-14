@@ -159,7 +159,7 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
                 @Override
                 public Loader<TaskResponse<PasswordResponse>> onCreateLoader(int id, Bundle args) {
                     // loadIndicator.setVisibility(View.VISIBLE);
-                    return new PasswordLoader(mRequestBean, AppConstant.METHOD_RESET_PASSWORD, valid_gmail.getText().toString());
+                    return new PasswordLoader(mRequestBean, AppConstant.METHOD_FORGOT_PASSWORD, valid_gmail.getText().toString());
                 }
 
                 @Override
