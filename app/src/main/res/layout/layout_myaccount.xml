@@ -209,7 +209,8 @@
                             android:hint="Location"
                             android:imeOptions="actionDone"
                             android:inputType="text"
-                            android:textSize="@dimen/textsize_normal" />
+                            android:textSize="@dimen/textsize_normal"
+                            android:visibility="gone"/>
 
                     </android.support.design.widget.TextInputLayout>
 

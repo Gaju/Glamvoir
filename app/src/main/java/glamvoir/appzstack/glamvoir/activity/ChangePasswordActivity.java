@@ -189,6 +189,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                             if (password.getText().toString().equals(veri_password.getText().toString())) {
                                 callPasswordLoader();
                                 Utility.hideKeyboard(this, password);
+                                finish();
                             } else {
                                 tl_verifypassword.setError(getResources().getString(R.string.password_mismatch));
                             }
@@ -203,13 +204,14 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                 }
 
                 break;
-
+/*
             case R.id.bt_requestTochange:
 
-                RequestToChangePasswordActivity.startActivity(ChangePasswordActivity.this);
+
+                ChangePasswordActivity.startActivity(ChangePasswordActivity.this);
 
 
-                break;
+                break;*/
 
             default:
                 break;
@@ -240,6 +242,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                             if (data.data != null && data.data.error_code != null) {
 
                                 Utility.showToast(mRequestBean.getContext(), "success");
+
                             }
                         }
                     }

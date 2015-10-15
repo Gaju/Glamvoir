@@ -68,7 +68,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private ListView listView;
     private Toolbar mtoolbar;
     private ProgressBar progressbar;
-    String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTING"};
+    String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTINGS"};
 
     int ICONS[] = {R.drawable.feed_active,
             R.drawable.fleamarket,

@@ -179,7 +179,7 @@
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="By joining you are to our"
+                    android:text="By joining you are agree our"
                     android:textColor="@android:color/black" />
 
                 <TextView

@@ -129,11 +129,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    app:radius="8dp"
-                    app:fillColor="@color/tabBarIndicator"
+                    app:fillColor="#000000"
                     app:pageColor="#ffffff"
                     app:strokeColor="#000000"
-                    app:strokeWidth="2dp"
+                    app:strokeWidth="1dp"
 
                     />
 

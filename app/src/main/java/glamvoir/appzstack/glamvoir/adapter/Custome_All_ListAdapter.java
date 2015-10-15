@@ -97,8 +97,12 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
                 adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
                 viewPager.setAdapter(adapter);
+            if(item.getChildResult().size()>1){
                 final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
                 circleIndicator.setViewPager(viewPager);
+            }
+
+
 
           //  }/* else {
                /* LinearLayout ll_view_pager = (LinearLayout) convertView.findViewById(R.id.ll_view_pager);
@@ -169,7 +173,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         }
 
         if (item.getIs_following() == 0) {
-            holder.tv_actiontext_checkBox_ff_shell.setText("Following");
+            holder.tv_actiontext_checkBox_ff_shell.setText("Follow");
             holder.checkBox_ff_shell.setChecked(false);
         } else {
             holder.tv_actiontext_checkBox_ff_shell.setText("Unfollow");
@@ -252,16 +256,16 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-                           /* case R.id.wrong_category:
+                            case R.id.wrong_category:
                                 Toast.makeText(frag.getActivity(), "wrong_category", Toast.LENGTH_LONG).show();
 
                                 break;
-                            case R.id.dont_show:
+                            /*case R.id.dont_show:
                                 Toast.makeText(frag.getActivity(), "dont_show", Toast.LENGTH_LONG).show();
 
                                 break;*/
                             case R.id.roport:
-                                Toast.makeText(frag.getActivity(), "roport", Toast.LENGTH_LONG).show();
+                                Toast.makeText(frag.getActivity(), "Report", Toast.LENGTH_LONG).show();
                                 break;
                             case R.id.cacel:
                                 Toast.makeText(frag.getActivity(), "Cancel", Toast.LENGTH_LONG).show();

@@ -88,6 +88,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 
                     TouchImageView imgDisplay;
                     final Dialog dialog = new Dialog(mContext);
+                    dialog.setCanceledOnTouchOutside(true);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                     dialog.setContentView(R.layout.layout_fullscreen_image);

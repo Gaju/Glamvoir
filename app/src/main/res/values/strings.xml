@@ -55,7 +55,7 @@
     <string name="invalid_number">Not a valid mobile number</string>
     <string name="password_mismatch">Password mismatch</string>
     <string name="gmail_otp">OTP Length is 4</string>
-    <string name="signup">SIGNUP</string>
+    <string name="signup">SIGN UP</string>
     <string name="signin">SIGN IN</string>
     <string name="followers">FOLLOWERS</string>
     <string name="following">FOLLOWING</string>
@@ -81,6 +81,7 @@
     <string name="done">Done</string>
 
     <string name="change_password">Change Password</string>
+    <string name="forgot_password">Forgot Password</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="gender">Gender</string>

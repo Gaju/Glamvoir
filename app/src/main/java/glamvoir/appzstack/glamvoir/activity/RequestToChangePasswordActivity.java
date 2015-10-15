@@ -135,6 +135,7 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
                     requestToChangePassword();
                     Utility.hideKeyboard(this, valid_gmail);
 
+
                 } else {
                     tl_Email.setError(getResources().getString(R.string.invalid_email));
                 }
@@ -172,6 +173,8 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
                             if (data.data != null && data.data.error_code != null) {
 
                                 Utility.showToast(mRequestBean.getContext(), "success");
+                                ChangePasswordActivity.startActivity(RequestToChangePasswordActivity.this);
+                                finish();
                             }
                         }
                     }

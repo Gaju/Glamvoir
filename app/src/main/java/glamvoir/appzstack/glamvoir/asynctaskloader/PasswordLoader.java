@@ -43,6 +43,7 @@ public class PasswordLoader extends AsyncTaskLoader<TaskResponse<PasswordRespons
 
     public PasswordLoader(RequestBean requestBean,String methodType, String email,String otp,String password) {
         super(requestBean.getContext());
+        this.requestBean = requestBean;
         this.methodType = methodType;
         this.email = email;
         this.otp = otp;
@@ -55,15 +56,15 @@ public class PasswordLoader extends AsyncTaskLoader<TaskResponse<PasswordRespons
     public TaskResponse<PasswordResponse> loadInBackground() {
         response = new TaskResponse();
         try {
-            String url = "http://glamvoir.com/index.php/api?method=" + oldPassword + "&newPassword=" + newPassword;
+           String url = "http://glamvoir.com/index.php/api?method=" + oldPassword + "&newPassword=" + newPassword;
             AppPreferences appPreferences = new AppPreferences(requestBean.getContext());
 
             switch (methodType) {
                 case AppConstant.METHOD_UPDATE_PASSWORD:
-                    response.data = Communication.updatePassword(methodType, appPreferences.getUserId(), appPreferences.getEmailID(), oldPassword, newPassword);
+                   response.data = Communication.updatePassword(methodType, appPreferences.getUserId(), appPreferences.getEmailID(), oldPassword, newPassword);
                     break;
                 case AppConstant.METHOD_RESET_PASSWORD:
-                    response.data = Communication.resetPassword(methodType, emailSend, otp,password);
+                    response.data = Communication.resetPassword(methodType, email, otp,password);
                     break;
 
                 case AppConstant.METHOD_FORGOT_PASSWORD:

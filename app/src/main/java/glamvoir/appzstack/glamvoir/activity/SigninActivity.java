@@ -125,8 +125,8 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.change_password:
+                RequestToChangePasswordActivity.startActivity(SigninActivity.this);
 
-                ChangePasswordActivity.startActivity(SigninActivity.this);
 
                 break;
         }

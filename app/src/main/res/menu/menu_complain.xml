@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--<item android:id="@+id/wrong_category" android:title="@string/wrong_category" android:icon="@android:drawable/ic_menu_gallery"/>
-    <item android:id="@+id/dont_show" android:title="@string/dont_show" android:icon="@drawable/camera"/>-->
+    <item android:id="@+id/wrong_category" android:title="@string/wrong_category" android:icon="@android:drawable/ic_menu_gallery"/>
+  <!--  <item android:id="@+id/dont_show" android:title="@string/dont_show" android:icon="@drawable/camera"/>-->
     <item android:id="@+id/roport" android:title="@string/roport" android:icon="@android:drawable/ic_menu_delete"/>
     <group android:id="@android:id/empty">
         <item android:id="@+id/cacel" android:title="@string/cancel" android:icon="@android:drawable/ic_menu_close_clear_cancel"/>
