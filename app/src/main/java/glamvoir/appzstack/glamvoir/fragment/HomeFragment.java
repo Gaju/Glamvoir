@@ -19,8 +19,7 @@ public class HomeFragment extends Fragment {
    /* private FragmentTabHost mTabHost;*/
 
     SlidingTabLayout mSlidingTabLayout;
-    ViewPager mViewPager;
-
+    public static ViewPager mViewPager;
     String[] titlesTAB;
     int Numboftabs = 5;
 
@@ -121,10 +120,12 @@ public class HomeFragment extends Fragment {
 
             if (position == 0) // if the position is 0 we are returning the First tab
             {
+
                 ALL tab1 = new ALL();
                 return tab1;
             } else if (position == 1) // if the position is 0 we are returning the First tab
             {
+
                 Fashion tab2 = new Fashion();
                 return tab2;
             } else if (position == 2) // if the position is 0 we are returning the First tab
@@ -133,10 +134,12 @@ public class HomeFragment extends Fragment {
                 return tab3;
             } else if (position == 3) // if the position is 0 we are returning the First tab
             {
+
                 StoreAndDeals tab4 = new StoreAndDeals();
                 return tab4;
             } else if (position == 4) // if the position is 0 we are returning the First tab
             {
+
                 Interest tab5 = new Interest();
                 return tab5;
             }
@@ -162,6 +165,8 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+
 
 
 }

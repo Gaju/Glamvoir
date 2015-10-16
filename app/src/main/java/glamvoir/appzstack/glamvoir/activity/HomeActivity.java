@@ -32,6 +32,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
     private FragmentDrawer_Lv drawerFragment;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
+    HomeFragment homeFragment;
+    int fleaposition;
+
 
 
     public static void startActivityWithClearTop(Activity activity) {
@@ -122,7 +125,47 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
 */
         if (id == R.id.action_uplaod) {
             Toast.makeText(getApplicationContext(), "Search action is selected!", Toast.LENGTH_SHORT).show();
-            AddStory.startActivity(HomeActivity.this);
+
+
+            if (HomeFragment.mViewPager.getCurrentItem()==1){
+          //      AddStory.startActivity(HomeActivity.this);
+                Intent intent = new Intent(HomeActivity.this, AddStory.class);
+                intent.putExtra("ParentClassName", this.getClass().getSimpleName());
+                intent.putExtra("CATOGERYNAME", "FASHION & LIFESTYLE");
+                startActivity(intent);
+
+            }
+            if (HomeFragment.mViewPager.getCurrentItem()==2){
+              //  AddStory.startActivity(HomeActivity.this);
+                Intent intent = new Intent(HomeActivity.this, AddStory.class);
+                intent.putExtra("ParentClassName", this.getClass().getSimpleName());
+                intent.putExtra("CATOGERYNAME", "FOOD & PLACE");
+                startActivity(intent);
+
+            }
+            if (HomeFragment.mViewPager.getCurrentItem()==3){
+               // AddStory.startActivity(HomeActivity.this);
+                Intent intent = new Intent(HomeActivity.this, AddStory.class);
+                intent.putExtra("ParentClassName", this.getClass().getSimpleName());
+                intent.putExtra("CATOGERYNAME", "MUSIC & GIGS");
+                startActivity(intent);
+
+            }
+            if (HomeFragment.mViewPager.getCurrentItem()==4){
+               // AddStory.startActivity(HomeActivity.this);
+                Intent intent = new Intent(HomeActivity.this, AddStory.class);
+                intent.putExtra("ParentClassName", this.getClass().getSimpleName());
+                intent.putExtra("CATOGERYNAME", "INTEREST");
+                startActivity(intent);
+
+            }
+            if (fleaposition==1){
+                Intent intent = new Intent(HomeActivity.this, AddStory.class);
+                intent.putExtra("ParentClassName", this.getClass().getSimpleName());
+                intent.putExtra("CATOGERYNAME", "FLEA MARKET");
+                startActivity(intent);
+            }
+
             return true;
         }
 
@@ -135,6 +178,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
     }
 
     private void displayView(int position) {
+        fleaposition=position;
         Fragment fragment = null;
         String title = getString(R.string.app_name);
         switch (position) {

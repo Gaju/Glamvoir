@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,8 +123,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 ll_view_pager.addView(defaultTextView);
             }*/
 
-
             holder.tv_ff_shell_username = (TextView) convertView.findViewById(R.id.tv_ff_shell_username);
+            holder.ll_like_comment = (LinearLayout) convertView.findViewById(R.id.ll_like_comment);
             holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
 
             holder.tv_actiontext_checkBox_ff_shell = (TextView) convertView.findViewById(R.id.tv_actiontext_checkBox_ff_shell);
@@ -155,6 +156,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_whatapp.setTag(position);
         holder.user_Image.setTag(position);
         holder.tv_ff_shell_username.setTag(position);
+        holder.ll_like_comment.setTag(position);
 
 
         if (item.getUser_fname() != null) {
@@ -233,6 +235,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.checkBox_ff_shell.setOnClickListener(this);
         holder.user_Image.setOnClickListener(this);
         holder.tv_ff_shell_username.setOnClickListener(this);
+        holder.ll_like_comment.setOnClickListener(this);
 
         return convertView;
     }
@@ -342,6 +345,10 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
                 break;
 
+            case R.id.ll_like_comment:
+                CommentActivity.startActvity(frag.getActivity(), postID, null);
+              break;
+
         }
     }
 
@@ -361,6 +368,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         ImageButton bt_ff_shell_complain;
         ImageButton bt_ff_shell_map;
         ImageView user_Image;
+        LinearLayout ll_like_comment;
     }
 
     private void savePost(String userID, String postID, int pos) {

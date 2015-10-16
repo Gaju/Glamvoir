@@ -11,37 +11,74 @@
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/CustomToolbarTheme"
-        local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/lltool"
-            android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:text="POST TO"/>
-        <Spinner
-            android:id="@+id/spinner_nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:dropDownVerticalOffset="52dp"
-            />
-        </LinearLayout>
+        local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        >
 
-        <TextView
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/lltool"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:weightSum="2">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <glamvoir.appzstack.glamvoir.customview.CustomTextBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:text="POST TO"/>
+                        <glamvoir.appzstack.glamvoir.customview.CustomTextBold
+                            android:paddingTop="10dp"
+                            android:layout_width="300dp"
+                            android:layout_height="match_parent"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/black"
+                            android:id="@+id/selected_text"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingLeft="20dp"
+                            android:visibility="gone"
+                            android:layout_weight="1"
+                            />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_nav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:dropDownVerticalOffset="40dp"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+       <!-- <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="18sp"
+
             android:textColor="@android:color/black"
-            android:id="@+id/selected_text"
+            android:id="@+id/action_text"
             android:visibility="gone"
-            android:text="POST TO"/>
+            android:text="UPLOAD"/>-->
 
 
     </android.support.v7.widget.Toolbar>

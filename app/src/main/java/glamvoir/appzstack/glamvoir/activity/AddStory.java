@@ -1,7 +1,6 @@
 package glamvoir.appzstack.glamvoir.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -39,20 +39,24 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 public class AddStory extends AppCompatActivity implements View.OnClickListener {
 
 
-    public static void startActivity(Context context) {
+
+
+   /* public static void startActivity(Context context) {
         Intent intent = new Intent(context, AddStory.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
-    }
+    }*/
     GridView gridGallery;
     Handler handler;
     GalleryAdapter adapter;
     ImageLoader imageLoader;
+    Bundle bundle;
 
 
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     Spinner dropDownMenu;
+    TextView selected_text;
     private LinearLayout lltool;
     ImageButton galleryImages;
 
@@ -66,7 +70,9 @@ public class AddStory extends AppCompatActivity implements View.OnClickListener 
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
 
-        //initialize all views
+       bundle=getIntent().getExtras();
+
+
         initImageLoader();
         initViews();
 
@@ -82,9 +88,8 @@ public class AddStory extends AppCompatActivity implements View.OnClickListener 
     public void addItemsToSpinner() {
 
         ArrayList<String> list = new ArrayList<String>();
-        list.add("All");
         list.add("FASHION AND LIFESTYLE");
-        list.add("FOOD");
+        list.add("FOOD AND PLACE");
         list.add("MUSIC AND GIGS");
         list.add("INTERST");
 
@@ -166,6 +171,14 @@ public class AddStory extends AppCompatActivity implements View.OnClickListener 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu= (Spinner) findViewById(R.id.spinner_nav);
         lltool.setVisibility(View.VISIBLE);
+        selected_text=(TextView)findViewById(R.id.selected_text);
+        if (bundle!=null){
+            selected_text.setVisibility(View.VISIBLE);
+            selected_text.setText(bundle.getString("CATOGERYNAME"));
+            selected_text.setSelected(true);
+        }
+
+
         gridGallery = (GridView) findViewById(R.id.gridGallery);
         gridGallery.setFastScrollEnabled(true);
         adapter = new GalleryAdapter(AddStory.this, imageLoader);
@@ -184,6 +197,8 @@ public class AddStory extends AppCompatActivity implements View.OnClickListener 
         try {
             //you need to define the class with package name //
             newIntent = new Intent(AddStory.this, Class.forName(AppConstant.PACKAGE + className));
+
+
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -250,18 +265,6 @@ public class AddStory extends AppCompatActivity implements View.OnClickListener 
         imageLoader.init(config);
     }
 
-  /*  private void init() {
-
-
-        gridGallery = (GridView) findViewById(R.id.gridGallery);
-        gridGallery.setFastScrollEnabled(true);
-        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
-        adapter.setMultiplePick(false);
-        gridGallery.setAdapter(adapter);
-
-
-
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
