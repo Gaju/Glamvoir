@@ -32,8 +32,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
     private FragmentDrawer_Lv drawerFragment;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
-    HomeFragment homeFragment;
     int fleaposition;
+
 
 
 
@@ -239,10 +239,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        View view = getCurrentFocus();
+
+        View view2 = getCurrentFocus();
         boolean ret = super.dispatchTouchEvent(event);
 
-        if (view instanceof EditText) {
+        if (view2 instanceof EditText) {
             View w = getCurrentFocus();
             int scrcoords[] = new int[2];
             w.getLocationOnScreen(scrcoords);
@@ -254,6 +255,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                     || y < w.getTop() || y > w.getBottom())) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+
             }
         }
         return ret;

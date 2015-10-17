@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,9 @@ public abstract class BaseFragment extends Fragment {
     protected ArrayList<ParentPostBean> list = new ArrayList<ParentPostBean>();
     protected Custome_All_ListAdapter adapter;
     protected TextView txt_NoDataFound;
-    protected View loadIndicator;
+    protected View loadIndicator, view;
     protected EditText edt_Search;
+
 
 
     protected abstract RequestBean getRequestBean();
@@ -61,10 +63,39 @@ public abstract class BaseFragment extends Fragment {
         txt_NoDataFound = (TextView) rootView.findViewById(R.id.no_data_found);
         loadIndicator = rootView.findViewById(R.id.loadIndicator);
         edt_Search = (EditText) rootView.findViewById(R.id.tv_search);
+        edt_Search.setFocusable(true);
 
         if (getFragment() instanceof FleaFragment) {
             edt_Search.setVisibility(View.VISIBLE);
-        } else {
+
+
+            edt_Search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!edt_Search.isFocusable()) {
+
+                        if (hasFocus) {
+                            Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
+                            edt_Search.setBackgroundResource(R.drawable.edit_text_border);
+                            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
+                            edt_Search.requestFocus();
+
+                        } else {
+                            Toast.makeText(getActivity(), "lost the focus", Toast.LENGTH_LONG).show();
+                            edt_Search.setFocusable(false);
+                            edt_Search.setBackgroundResource(R.drawable.edit_text_border_inactive);
+                            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.checkbox, 0, 0, 0);
+
+                        }
+                    }
+                    Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
+                    edt_Search.setBackgroundResource(R.drawable.edit_text_border);
+                    edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
+                    edt_Search.requestFocus();
+                }
+            });
+        }
+        else {
             edt_Search.setVisibility(View.GONE);
         }
 
@@ -191,4 +222,7 @@ public abstract class BaseFragment extends Fragment {
             }, "server").execute(methodName, mUserID, postID, String.valueOf(pos));
         }
     }
+
+
+
 }

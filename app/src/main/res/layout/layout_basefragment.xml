@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusableInTouchMode="true" >
 
     <TextView
         android:id="@+id/no_data_found"
@@ -29,9 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/edit_text_border"
-            android:cursorVisible="false"
-            android:drawableLeft="@drawable/search"
+            android:background="@drawable/edit_text_border_inactive"
+            android:drawableLeft="@drawable/checkbox"
             android:hint="Search Here..." />
 
         <ListView

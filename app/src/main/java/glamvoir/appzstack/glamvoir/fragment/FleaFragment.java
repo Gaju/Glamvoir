@@ -52,4 +52,5 @@ public class FleaFragment extends BaseFragment {
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
 }
