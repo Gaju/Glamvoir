@@ -3,6 +3,9 @@ package glamvoir.appzstack.glamvoir.intentservice;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
@@ -18,8 +21,9 @@ public class NetworkIntentService extends IntentService {
     public static final String INTENT_ARG_USERID = "user_id";
     public static final String INTENT_ARG_POSTID = "post_id";
     public static final String INTENT_ARG_FLAG = "flag";
-    public static final String INTENT_ARG_LIKE_STATUS = "like_dislike_status";
-    public static final String INTENT_ARG_ACTION = "action";
+    public static final String INTENT_ARG_FNAME = "fname";
+    public static final String INTENT_ARG_LNAME = "lname";
+    public static final String INTENT_ARG_POST_USERID = "post_user_id";
     public static final String INTENT_ARG_POSITION = "position";
     public static final String BROADCAST_EXTRA_POSITION = "position";
     public static final String INTENT_ARG_FOLLOWERID = "followerid";
@@ -27,12 +31,13 @@ public class NetworkIntentService extends IntentService {
     public static final String BROADCAST_EXTRA_TOTAL_FOLLOWE = "total_follower";
     public static final String BROADCAST_EXTRA_IS_FOLLOWING = "is_following";
 
-
     public static final String BROADCAST_LIKE_ACTION = "com.like";
     public static final String BROADCAST_FOLLOW_ACTION = "com.follow";
     public static final String BROADCAST_EXTRA_LIKE = "like";
     public static final String BROADCAST_EXTRA_LIKE_DISLIKE_STATUS = "like_dislike_status";
     public static final String BROADCAST_EXTRA_DISLIKE = "dislike";
+
+    private Handler handler;
 
     public static void startLikeIntentService(Context context, String myUserId, String postid, int position, int flag) {
         Intent serviceIntent = new Intent(context, NetworkIntentService.class);
@@ -53,26 +58,41 @@ public class NetworkIntentService extends IntentService {
         context.startService(serviceIntent);
     }
 
+    public static void startAbuseReportServivce(Context context, String myUserId, String fname, String lname, String postId, String postUserdId, int flag) {
+        Intent serviceIntent = new Intent(context, NetworkIntentService.class);
+        serviceIntent.putExtra(INTENT_ARG_USERID, myUserId);
+        serviceIntent.putExtra(INTENT_ARG_FNAME, fname);
+        serviceIntent.putExtra(INTENT_ARG_LNAME, lname);
+        serviceIntent.putExtra(INTENT_ARG_POSTID, postId);
+        serviceIntent.putExtra(INTENT_ARG_POST_USERID, postUserdId);
+        serviceIntent.putExtra(INTENT_ARG_FLAG, flag);
+        context.startService(serviceIntent);
+    }
+
 
     public NetworkIntentService() {
         super("NetworkIntentService");
+        handler = new Handler();
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
 
         int flag = intent.getIntExtra(INTENT_ARG_FLAG, 0);
+        String userID = null;
+        String postID = null;
+        int position;
 
         TaskResponse<GetPostLikeFollowResponse> response = new TaskResponse<GetPostLikeFollowResponse>();
         try {
             switch (flag) {
                 case AppConstant.GETPOST_LIKE:
 
-                    String userID = intent.getStringExtra(INTENT_ARG_USERID);
-                    String postID = intent.getStringExtra(INTENT_ARG_POSTID);
-                    int position = intent.getIntExtra(INTENT_ARG_POSITION, 0);
+                    userID = intent.getStringExtra(INTENT_ARG_USERID);
+                    postID = intent.getStringExtra(INTENT_ARG_POSTID);
+                    position = intent.getIntExtra(INTENT_ARG_POSITION, 0);
 
-                    String url = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_LIKESTATUS + "&post_id=" + postID + "&user_id=" + userID;
+                    //String url = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_LIKESTATUS + "&post_id=" + postID + "&user_id=" + userID;
 
                     response.data = Communication.likeStatus(AppConstant.METHOD_LIKESTATUS, userID, postID);
 
@@ -85,18 +105,65 @@ public class NetworkIntentService extends IntentService {
 
                 case AppConstant.GETPOST_FOLLOW:
 
-                    String userID1 = intent.getStringExtra(INTENT_ARG_USERID);
+                    userID = intent.getStringExtra(INTENT_ARG_USERID);
                     String follower_ID = intent.getStringExtra(INTENT_ARG_FOLLOWERID);
-                    int position1 = intent.getIntExtra(INTENT_ARG_POSITION, 0);
+                    position = intent.getIntExtra(INTENT_ARG_POSITION, 0);
 
-                    String url1 = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_FOLLOWER_FOLLOWING + "&following_user_id=" + follower_ID + "&follower_user_id=" + userID1;
+                    //String url1 = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_FOLLOWER_FOLLOWING + "&following_user_id=" + follower_ID + "&follower_user_id=" + userID1;
 
-                    response.data = Communication.getPostFollow(AppConstant.METHOD_FOLLOWER_FOLLOWING, userID1, follower_ID);
+                    response.data = Communication.getPostFollow(AppConstant.METHOD_FOLLOWER_FOLLOWING, userID, follower_ID);
                     if (response.data.isSucceeded()) {
                         if (response.data != null) {
-                            sendFollowBroadcast(response.data.list.get(0).total_folower, response.data.list.get(0).is_followng, position1);
+                            sendFollowBroadcast(response.data.list.get(0).total_folower, response.data.list.get(0).is_followng, position);
                         }
                     }
+                    break;
+
+                case AppConstant.ABUSE:
+                    userID = intent.getStringExtra(INTENT_ARG_USERID);
+                    String postUserId = intent.getStringExtra(INTENT_ARG_POST_USERID);
+                    String fName = intent.getStringExtra(INTENT_ARG_FNAME);
+                    String lName = intent.getStringExtra(INTENT_ARG_LNAME);
+                    postID = intent.getStringExtra(INTENT_ARG_POSTID);
+
+                    //String url1 = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_FOLLOWER_FOLLOWING + "&following_user_id=" + follower_ID + "&follower_user_id=" + userID1;
+
+                    response.data = Communication.reportAbuse(AppConstant.METHOD_REPORT_ABUSE, userID, fName, lName, postID, postUserId, String.valueOf(flag));
+                    if (response.data.isSucceeded()) {
+                        if (response.data.error_code.equals(0)) {
+                            //handler = new Handler(Looper.getMainLooper());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "gaja", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                    break;
+
+                case AppConstant.WRONGCATEGORY:
+                    userID = intent.getStringExtra(INTENT_ARG_USERID);
+                    String postUserId1 = intent.getStringExtra(INTENT_ARG_POST_USERID);
+                    String fName1 = intent.getStringExtra(INTENT_ARG_FNAME);
+                    String lName1 = intent.getStringExtra(INTENT_ARG_LNAME);
+                    postID = intent.getStringExtra(INTENT_ARG_POSTID);
+
+                    //String url1 = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_FOLLOWER_FOLLOWING + "&following_user_id=" + follower_ID + "&follower_user_id=" + userID1;
+
+                    response.data = Communication.reportAbuse(AppConstant.METHOD_REPORT_ABUSE, userID, fName1, lName1, postID, postUserId1, String.valueOf(flag));
+                    if (response.data.isSucceeded()) {
+                        if (response.data.error_code.equals(0)) {
+                            //handler = new Handler(Looper.getMainLooper());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "gaja", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+
                     break;
             }
 

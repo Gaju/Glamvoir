@@ -24,6 +24,13 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public String user_signup_type;
     public String user_image;
     public String post_title;
+    public String post_city;
+    public String post_location;
+    public String post_lat;
+    public String post_long;
+
+    public String report_status;
+    public String wrongcat_status;
 
     public int total_comment;
     public int is_following;
@@ -33,6 +40,54 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public int is_saved;
 
     public List<ChildPostBean> childResult;
+
+    public String getReport_status() {
+        return report_status;
+    }
+
+    public void setReport_status(String report_status) {
+        this.report_status = report_status;
+    }
+
+    public String getWrongcat_status() {
+        return wrongcat_status;
+    }
+
+    public void setWrongcat_status(String wrongcat_status) {
+        this.wrongcat_status = wrongcat_status;
+    }
+
+    public String getPost_city() {
+        return post_city;
+    }
+
+    public void setPost_city(String post_city) {
+        this.post_city = post_city;
+    }
+
+    public String getPost_location() {
+        return post_location;
+    }
+
+    public void setPost_location(String post_location) {
+        this.post_location = post_location;
+    }
+
+    public String getPost_lat() {
+        return post_lat;
+    }
+
+    public void setPost_lat(String post_lat) {
+        this.post_lat = post_lat;
+    }
+
+    public String getPost_long() {
+        return post_long;
+    }
+
+    public void setPost_long(String post_long) {
+        this.post_long = post_long;
+    }
 
     public String getPost_title() {
         return post_title;

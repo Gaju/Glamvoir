@@ -24,15 +24,19 @@ public class AppConstant {
     public static final String METHOD_LIKESTATUS = "likedislike";
     public static final String METHOD_GETPROFILE = "getprofile";
     public static final String METHOD_UPDATEPROFILE = "updateprofile";
+    public static final String METHOD_REPORT_ABUSE = "report_abuse";
 
     public static final String METHOD_FORGOT_PASSWORD = "forgotpassword";
     public static final String METHOD_RESET_PASSWORD = "resetpassword";
     public static final String METHOD_UPDATE_PASSWORD = "updastepassword";
 
 
-    public static final int GETPOST_LIKE = 1;
-    public static final int GETPOST_FOLLOW = 2;
+    public static final int GETPOST_LIKE = 11;
+    public static final int GETPOST_FOLLOW = 22;
 
+    public static final int REPORT = 1;
+    public static final int ABUSE = 2;
+    public static final int WRONGCATEGORY = 3;
 
     public static final int FOLLOWER = 1;
     public static final int FOLLOWING = 2;

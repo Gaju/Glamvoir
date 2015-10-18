@@ -45,7 +45,7 @@ public class SendServerIntentService extends IntentService {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), "Handling Intent..", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
             }
         });
     }

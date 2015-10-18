@@ -37,7 +37,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
+import glamvoir.appzstack.glamvoir.Bean.ChildPostBean;
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
@@ -46,6 +48,7 @@ import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 
 /**
@@ -59,7 +62,12 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     private DisplayImageOptions options;
     private ParentPostBean item;
     private Fragment frag;
-    String url_post = "http://glamvoir.com/assests/post_images/";
+    private String url_post = "http://glamvoir.com/assests/post_images/";
+    ViewHolder holder = null;
+    private int pos = 0;
+    private String postID = null;
+
+    List<ChildPostBean> childList = new ArrayList<>();
 
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
@@ -87,51 +95,28 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder = null;
-        convertView = null;
+        //convertView = null;
         item = list.get(position);
         if (convertView == null) {
 
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
-          /*  if (item.getChildResult() != null) {*/
-                final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
-                adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
-                viewPager.setAdapter(adapter);
-            if(item.getChildResult().size()>1){
-                final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
-                circleIndicator.setViewPager(viewPager);
-            }
-
-
-
-          //  }/* else {
-               /* LinearLayout ll_view_pager = (LinearLayout) convertView.findViewById(R.id.ll_view_pager);
-
-                final ViewPager viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
-                viewPager.setVisibility(View.GONE);
-                final CirclePageIndicator circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
-                circleIndicator.setVisibility(View.GONE);
-                ImageView defaultImage = new ImageView(frag.getActivity());
-                defaultImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 300));
-                defaultImage.setImageResource(R.drawable.pic);
-                TextView defaultTextView = new TextView(frag.getActivity());
-                defaultTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                defaultTextView.setGravity(Gravity.CENTER);
-                defaultTextView.setText("Image Not Available");
-                ll_view_pager.addView(defaultImage);
-                ll_view_pager.addView(defaultTextView);
-            }*/
+            holder.viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
+            holder.circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
 
             holder.tv_ff_shell_username = (TextView) convertView.findViewById(R.id.tv_ff_shell_username);
             holder.ll_like_comment = (LinearLayout) convertView.findViewById(R.id.ll_like_comment);
             holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
-
             holder.tv_actiontext_checkBox_ff_shell = (TextView) convertView.findViewById(R.id.tv_actiontext_checkBox_ff_shell);
             holder.tv_ff_shell_like_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_like_count);
             holder.tv_ff_shell_comment_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_comment_count);
+
             holder.checkBox_ff_shell = (CheckBox) convertView.findViewById(R.id.checkBox_ff_shell);
+
             holder.bt_connect_with_seller = (Button) convertView.findViewById(R.id.bt_connect_with_seller);
+
             holder.bt_ff_shell_shave = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_shave);
             holder.bt_ff_shell_comments = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_comments);
             holder.bt_ff_shell_like = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_like);
@@ -157,10 +142,42 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.user_Image.setTag(position);
         holder.tv_ff_shell_username.setTag(position);
         holder.ll_like_comment.setTag(position);
+        holder.bt_ff_shell_complain.setTag(position);
+        holder.viewPager.setTag(position);
+        holder.circleIndicator.setTag(position);
+        holder.bt_ff_shell_complain.setTag(position);
 
+        //adapter = new ImagePagerAdapter(frag.getActivity());
+        //adapter.setImages(item.getChildResult());
+        // childList.addAll(item.getChildResult());
+        //holder.viewPager.setAdapter(adapter);
+
+        //adapter.notifyDataSetChanged();
+
+        adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
+        holder.viewPager.setAdapter(adapter);
+
+
+        // adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
+        //holder.viewPager.setAdapter(adapter);
+
+
+        if (item.getChildResult().size() > 1) {
+            holder.circleIndicator.setVisibility(View.VISIBLE);
+            holder.circleIndicator.setViewPager(holder.viewPager);
+        } else {
+            holder.circleIndicator.setVisibility(View.GONE);
+        }
 
         if (item.getUser_fname() != null) {
             holder.tv_ff_shell_username.setText(item.getUser_fname() + " " + item.getUser_lname());
+        }
+
+
+        if (item.getPost_location() != null && !item.getPost_location().equals("")) {
+            holder.bt_ff_shell_map.setVisibility(View.VISIBLE);
+        } else {
+            holder.bt_ff_shell_map.setVisibility(View.GONE);
         }
 
         if (item.getTotal_like() > 0) {
@@ -213,8 +230,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
         if (item.getUser_image() != null) {
             imageLoader.displayImage(item.getUser_image(), holder.user_Image, options);
-        }
-        else {
+        } else {
             holder.user_Image.setBackgroundResource(R.drawable.no_media);
         }
 
@@ -242,10 +258,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
     @Override
     public void onClick(View v) {
-
-        int pos = 0;
-        String postID = null;
-
         if (v.getTag() != null) {
             pos = (Integer) v.getTag();
             postID = list.get(pos).getPost_id();
@@ -260,15 +272,23 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case R.id.wrong_category:
-                                Toast.makeText(frag.getActivity(), "wrong_category", Toast.LENGTH_LONG).show();
-
+                                //Toast.makeText(frag.getActivity(), "wrong_category", Toast.LENGTH_LONG).show();
+                                if (list.get(pos).getWrongcat_status().equals("0")) {
+                                    NetworkIntentService.startAbuseReportServivce(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), list.get(pos).user_fname, list.get(pos).getUser_lname(), postID, list.get(pos).user_id, AppConstant.WRONGCATEGORY);
+                                } else {
+                                    Utility.showToast(frag.getActivity(), "Already Reported");
+                                }
                                 break;
                             /*case R.id.dont_show:
                                 Toast.makeText(frag.getActivity(), "dont_show", Toast.LENGTH_LONG).show();
 
                                 break;*/
                             case R.id.roport:
-                                Toast.makeText(frag.getActivity(), "Report", Toast.LENGTH_LONG).show();
+                                if (list.get(pos).getWrongcat_status().equals("0")) {
+                                    NetworkIntentService.startAbuseReportServivce(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), list.get(pos).user_fname, list.get(pos).getUser_lname(), postID, list.get(pos).user_id, AppConstant.ABUSE);
+                                } else {
+                                    Utility.showToast(frag.getActivity(), "Already Reported");
+                                }
                                 break;
                             case R.id.cacel:
                                 Toast.makeText(frag.getActivity(), "Cancel", Toast.LENGTH_LONG).show();
@@ -369,6 +389,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         ImageButton bt_ff_shell_map;
         ImageView user_Image;
         LinearLayout ll_like_comment;
+        CirclePageIndicator circleIndicator;
+        ViewPager viewPager;
     }
 
     private void savePost(String userID, String postID, int pos) {
@@ -385,12 +407,13 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 String totalLike = intent.getStringExtra(NetworkIntentService.BROADCAST_EXTRA_LIKE);
                 String like_dislike_status = intent.getStringExtra(NetworkIntentService.BROADCAST_EXTRA_LIKE_DISLIKE_STATUS);
                 int position = intent.getIntExtra(NetworkIntentService.BROADCAST_EXTRA_POSITION, 0);
-                try{
+                try {
                     ParentPostBean item = list.get(position);
                     item.setLike_dislike_status(Integer.parseInt(like_dislike_status));
                     item.setTotal_like(Integer.parseInt(totalLike));
+                    holder.bt_ff_shell_like.setImageResource(R.drawable.heart_active);
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.getMessage();
                 }
 
@@ -404,9 +427,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 try {
                     ParentPostBean item = list.get(position);
                     item.setIs_following(Integer.parseInt(is_followng));
-                }
-                catch (Exception e){
-                 e.getMessage();
+                } catch (Exception e) {
+                    e.getMessage();
                 }
 
                 notifyDataSetChanged();
@@ -487,9 +509,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     }
 
 
-
-
-
     private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... urls) {
@@ -504,7 +523,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         @Override
         protected void onPostExecute(Bitmap result) {
             // imageView.setImageBitmap(result);
-            PackageManager pm=frag.getActivity().getPackageManager();
+            PackageManager pm = frag.getActivity().getPackageManager();
             try {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
@@ -516,7 +535,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
                 } else {
 
-                    PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                    PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
 
                     Uri uri = Uri.parse(path);
                     intent.putExtra(Intent.EXTRA_STREAM, uri);

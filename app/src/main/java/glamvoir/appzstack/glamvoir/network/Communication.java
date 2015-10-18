@@ -11,6 +11,7 @@ import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.ReportAbuse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
@@ -58,14 +59,14 @@ public class Communication {
 
     public static PasswordResponse resetPassword(String methodType, String email, String otp, String password) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        PasswordResponse response = service.resetPassword(methodType, email, otp,password);
+        PasswordResponse response = service.resetPassword(methodType, email, otp, password);
         return response;
     }
 
 
-    public static ProfileResponse updateProfile(String methodType, String userID,String user_fname,String user_lname,String user_dob,String user_gender,String user_about,String user_contact,String user_city) {
+    public static ProfileResponse updateProfile(String methodType, String userID, String user_fname, String user_lname, String user_dob, String user_gender, String user_about, String user_contact, String user_city) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        ProfileResponse response = service.updateProfile(methodType, userID,user_fname, user_lname,user_dob, user_gender, user_about, user_contact, user_city);
+        ProfileResponse response = service.updateProfile(methodType, userID, user_fname, user_lname, user_dob, user_gender, user_about, user_contact, user_city);
         return response;
     }
 
@@ -80,6 +81,12 @@ public class Communication {
     public static GetPostLikeFollowResponse getPostFollow(String methodType, String followingUserID, String followerUserID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         GetPostLikeFollowResponse response = service.getPostFollow(methodType, followingUserID, followerUserID);
+        return response;
+    }
+
+    public static GetPostLikeFollowResponse reportAbuse(String methodType, String userID, String fNmae, String lNmae, String postID, String podtUseriD, String ar_type) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        GetPostLikeFollowResponse response = service.reportAbuse(methodType, userID, fNmae, lNmae, postID, podtUseriD, ar_type);
         return response;
     }
 

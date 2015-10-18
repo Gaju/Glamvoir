@@ -29,17 +29,20 @@ public class ImagePagerAdapter extends PagerAdapter {
 
     private Context mContext;
     ChildPostBean item;
-
     private List<ChildPostBean> list = null;
     ImageLoader imageLoader;
     DisplayImageOptions options;
 
-    public ImagePagerAdapter(Context context, List<ChildPostBean> list) {
+    public ImagePagerAdapter(Context context,List<ChildPostBean> list) {
         mContext = context;
         this.list = list;
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
+    }
+
+    public void setImages(List<ChildPostBean> list){
+        this.list = list;
     }
 
     public int getCount() {
@@ -68,18 +71,12 @@ public class ImagePagerAdapter extends PagerAdapter {
 
         // String url = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
 
-        ImageView view_image = (ImageView) convertView
-                .findViewById(R.id.view_image);
-
-        TextView description = (TextView) convertView
-                .findViewById(R.id.description);
+        ImageView view_image = (ImageView) convertView.findViewById(R.id.view_image);
+        TextView description = (TextView) convertView.findViewById(R.id.description);
         TextView post_header = (TextView) convertView.findViewById(R.id.post_header);
+
         view_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
-
-
         view_image.setTag(position);
-
         view_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +92,6 @@ public class ImagePagerAdapter extends PagerAdapter {
                     imgDisplay = (TouchImageView) dialog.findViewById(R.id.imgDisplay);
                     imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + list.get((Integer) v.getTag()).getPost_image(), imgDisplay, options);
                     dialog.show();
-
                 }
             }
         });
@@ -115,7 +111,6 @@ public class ImagePagerAdapter extends PagerAdapter {
                 equals("")) {
             description.setText(item.getPost_description());
         }
-
 
         container.addView(convertView, 0);
 

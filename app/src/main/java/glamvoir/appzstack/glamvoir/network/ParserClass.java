@@ -166,6 +166,31 @@ public class ParserClass {
                                 ParentPostBean.setTotal_comment(obj.optInt("total_comment"));
                             }
 
+
+                            if (Utils.contains(obj, "post_city")) {
+                                ParentPostBean.setPost_city(obj.optString("post_city"));
+                            }
+
+                            if (Utils.contains(obj, "post_location")) {
+                                ParentPostBean.setPost_location(obj.optString("post_location"));
+                            }
+
+                            if (Utils.contains(obj, "post_lat")) {
+                                ParentPostBean.setPost_lat(obj.optString("post_lat"));
+                            }
+
+                            if (Utils.contains(obj, "post_long")) {
+                                ParentPostBean.setPost_long(obj.optString("post_long"));
+                            }
+
+                            if (Utils.contains(obj, "report_status")) {
+                                ParentPostBean.setReport_status(obj.optString("report_status"));
+                            }
+
+                            if (Utils.contains(obj, "wrongcat_status")) {
+                                ParentPostBean.setWrongcat_status(obj.optString("wrongcat_status"));
+                            }
+
                             parentPostBeanList.add(ParentPostBean);
                             allPostsBean.setResults(parentPostBeanList);
 
