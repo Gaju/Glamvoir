@@ -367,7 +367,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
             case R.id.ll_like_comment:
                 CommentActivity.startActvity(frag.getActivity(), postID, null);
-              break;
+                break;
 
         }
     }
@@ -591,7 +591,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             return stream;
         }
     }
-
 
 
 }

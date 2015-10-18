@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.network.Communication;
@@ -33,9 +33,9 @@ public class NetworkIntentService extends IntentService {
 
     public static final String BROADCAST_LIKE_ACTION = "com.like";
     public static final String BROADCAST_FOLLOW_ACTION = "com.follow";
+
     public static final String BROADCAST_EXTRA_LIKE = "like";
     public static final String BROADCAST_EXTRA_LIKE_DISLIKE_STATUS = "like_dislike_status";
-    public static final String BROADCAST_EXTRA_DISLIKE = "dislike";
 
     private Handler handler;
 
@@ -72,7 +72,6 @@ public class NetworkIntentService extends IntentService {
 
     public NetworkIntentService() {
         super("NetworkIntentService");
-        handler = new Handler();
     }
 
     @Override
@@ -130,12 +129,12 @@ public class NetworkIntentService extends IntentService {
 
                     response.data = Communication.reportAbuse(AppConstant.METHOD_REPORT_ABUSE, userID, fName, lName, postID, postUserId, String.valueOf(flag));
                     if (response.data.isSucceeded()) {
-                        if (response.data.error_code.equals(0)) {
-                            //handler = new Handler(Looper.getMainLooper());
+                        if (response.data.error_code.equals("0")) {
+                            handler = new Handler(Looper.getMainLooper());
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "gaja", Toast.LENGTH_LONG).show();
+                                    Utility.showToast(getBaseContext(), "success");
                                 }
                             });
                         }
@@ -153,17 +152,16 @@ public class NetworkIntentService extends IntentService {
 
                     response.data = Communication.reportAbuse(AppConstant.METHOD_REPORT_ABUSE, userID, fName1, lName1, postID, postUserId1, String.valueOf(flag));
                     if (response.data.isSucceeded()) {
-                        if (response.data.error_code.equals(0)) {
-                            //handler = new Handler(Looper.getMainLooper());
+                        if (response.data.error_code.equals("0")) {
+                            handler = new Handler(Looper.getMainLooper());
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "gaja", Toast.LENGTH_LONG).show();
+                                    Utility.showToast(getBaseContext(), "success");
                                 }
                             });
                         }
                     }
-
                     break;
             }
 
