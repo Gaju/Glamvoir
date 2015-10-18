@@ -131,6 +131,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
                 if (!Validation.isValidMobile(s.toString())) {
                     tl_Phone.setErrorEnabled(true);
+                }else{
+                    tl_Phone.setErrorEnabled(false);
                 }
             }
 

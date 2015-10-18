@@ -40,6 +40,9 @@ public class Utility {
         mAppPreferences.setUserId(userDetails.user_id);
         mAppPreferences.setUserImage(userDetails.user_image);
         mAppPreferences.setGender(userDetails.user_gender);
+        mAppPreferences.setUserAbout(userDetails.user_about);
+        //mAppPreferences.setUserContact(userDetails.user_contact);
+        //mAppPreferences.setUserCity(userDetails.user_city);
     }
 
     public static void updateUserData(Context context, List<ProfileResponse.GetProfileResponse> userDetailsList) {
