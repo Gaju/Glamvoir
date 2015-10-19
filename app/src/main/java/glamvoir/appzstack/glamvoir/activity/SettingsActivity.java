@@ -3,6 +3,7 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.SettingAdapter;
@@ -120,8 +122,12 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
             case 2:
 
                 Intent email = new Intent(Intent.ACTION_SEND);
+                email.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                email.setData(Uri.parse("mailto:"));
+                email.setType("plain/text");
+                email.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
                 email.putExtra(Intent.EXTRA_EMAIL,new String[]{"jobs@boommarcom.com"});
-                email.putExtra(Intent.EXTRA_SUBJECT, "Hiring");
+                email.putExtra(Intent.EXTRA_SUBJECT, "");
                 email.putExtra(Intent.EXTRA_TEXT, "");
                 email.setType("message/rfc822");
                 startActivity(Intent.createChooser(email, "Select Email Client"));
@@ -129,7 +135,26 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
                 break;
             case 3:
 
-                Contact_Us.startActivity(SettingsActivity.this);
+              //  Contact_Us.startActivity(SettingsActivity.this);
+                try {
+                Intent emailContact = new Intent(Intent.ACTION_SEND);
+                emailContact.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                emailContact.setData(Uri.parse("mailto:"));
+                emailContact.setType("plain/text");
+                emailContact.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+                emailContact.putExtra(Intent.EXTRA_EMAIL,new String[]{"glamvoir@gmail.com"});
+                emailContact.putExtra(Intent.EXTRA_SUBJECT, "Contact Us");
+                emailContact.putExtra(Intent.EXTRA_TEXT, "");
+                emailContact.setType("message/rfc822");
+                startActivity(Intent.createChooser(emailContact, "Select Email Client"));
+
+
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+
+
+
                 break;
             case 4:
                 Term_and_Condition.startActivity(SettingsActivity.this);

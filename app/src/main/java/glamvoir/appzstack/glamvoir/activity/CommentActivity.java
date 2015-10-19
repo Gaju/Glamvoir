@@ -7,10 +7,13 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -166,4 +169,30 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private void clearComment() {
         et_comment.setText("");
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_likes, menu);
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.likes) {
+
+
+            LikeListActivity.startActivity(CommentActivity.this);
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

@@ -78,7 +78,7 @@ public class CommentCustomAdapter extends BaseAdapter {
 
 
         if (item.user_fname != null) {
-            holder.user_name.setText(item.user_fname + " " + item.user_id == null ? "" : item.user_lname);
+            holder.user_name.setText(item.user_fname +" "+ item.user_lname);
         }
 
         if (item.comment_text != null) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,27 +26,28 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
 
 /**
- * Created by jaim on 10/12/2015.
+ * Created by jai on 10/18/2015.
  */
-public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class MyUpdatePassword extends AppCompatActivity implements View.OnClickListener {
+
     private Toolbar toolbar;
     private EditText valid_gmail;
     private TextInputLayout tl_Email;
-    private EditText gmail_otp, password, veri_password;
-    private Button bt_changepassword, bt_requestTochange;
-    private TextInputLayout tl_fpassword, tl_verifypassword, tl_gmialOtp;
+    private EditText  oldpassword, new_password;
+    private Button bt_changepassword;
+    private TextInputLayout tl_newpassword, tl_oldpassword;
     private RequestBean mRequestBean;
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, ChangePasswordActivity.class);
+        Intent intent = new Intent(context, MyUpdatePassword.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.changed_password);
+        setContentView(R.layout.activity_update_password);
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -59,27 +61,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
         getToolbar(toolbar);
 
-        gmail_otp.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if (Validation.isGmailOTP(s.toString())) {
-                    tl_gmialOtp.setErrorEnabled(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        password.addTextChangedListener(new TextWatcher() {
+        oldpassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -89,7 +71,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (Validation.isValidPassword(s.toString())) {
-                    tl_fpassword.setErrorEnabled(false);
+                    tl_oldpassword.setErrorEnabled(false);
                 }
             }
 
@@ -99,7 +81,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             }
         });
 
-        veri_password.addTextChangedListener(new TextWatcher() {
+        new_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -109,7 +91,27 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (Validation.isValidPassword(s.toString())) {
-                    tl_verifypassword.setErrorEnabled(false);
+                    tl_newpassword.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        valid_gmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (Validation.isValidEmail(s.toString())) {
+                    tl_Email.setErrorEnabled(false);
                 }
             }
 
@@ -122,85 +124,60 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
     }
 
-    private void initListener() {
-        bt_changepassword.setOnClickListener(this);
-        bt_requestTochange.setOnClickListener(this);
-
-
-    }
-
-    private void initViews() {
-
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        gmail_otp = (EditText) findViewById(R.id.gmail_otp);
-        password = (EditText) findViewById(R.id.password);
-        veri_password = (EditText) findViewById(R.id.veri_password);
-        valid_gmail = (EditText) findViewById(R.id.gmail);
-        tl_Email = (TextInputLayout) findViewById(R.id.inputgmail);
-
-
-        tl_gmialOtp = (TextInputLayout) findViewById(R.id.inputgmail_otp);
-        tl_fpassword = (TextInputLayout) findViewById(R.id.inputpassword);
-        tl_verifypassword = (TextInputLayout) findViewById(R.id.inputveri_password);
-
-        bt_changepassword = (Button) findViewById(R.id.bt_changepassword);
-        bt_requestTochange = (Button) findViewById(R.id.bt_requestTochange);
-
-    }
-
-    /**
-     * customize the toolbar
-     *
-     * @param toolbar : pass the toolbar reference
-     */
     private void getToolbar(Toolbar toolbar) {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("CHANGE PASSWORD");
+        getSupportActionBar().setTitle("UPDATE PASSWORD");
     }
 
-    @Override
-    public Intent getSupportParentActivityIntent() {
-        Intent parentIntent = getIntent();
-        String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
-        Intent newIntent = null;
-        try {
-            //you need to define the class with package name
-            newIntent = new Intent(ChangePasswordActivity.this, Class.forName(AppConstant.PACKAGE + className));
-            newIntent.putExtra("ParentClassName", "HomeActivity");
+    private void initListener() {
+        bt_changepassword.setOnClickListener(this);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return newIntent;
+
+
     }
 
-    @Override
-    public void onClick(View view) {
+    private void initViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        oldpassword = (EditText) findViewById(R.id.oldpassword);
+        new_password = (EditText) findViewById(R.id.new_password);
+        valid_gmail = (EditText) findViewById(R.id.gmail);
+        tl_Email = (TextInputLayout) findViewById(R.id.inputgmail);
+        tl_oldpassword = (TextInputLayout) findViewById(R.id.inputoldpassword);
+        tl_newpassword = (TextInputLayout) findViewById(R.id.inputnew_password);
 
-        switch (view.getId()) {
+        bt_changepassword = (Button) findViewById(R.id.bt_changepassword);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
 
             case R.id.bt_changepassword:
                 if (Validation.isValidEmail(valid_gmail.getText().toString())) {
-                    if (Validation.isGmailOTP(gmail_otp.getText().toString())) {
-                        if (Validation.isValidPassword(password.getText().toString())) {
+
+                        if (Validation.isValidPassword(oldpassword.getText().toString())) {
                             //call signup
-                            if (password.getText().toString().equals(veri_password.getText().toString())) {
+                            if (Validation.isValidPassword(new_password.getText().toString())){
+                            if (!oldpassword.getText().toString().equals(new_password.getText().toString())) {
                                 callPasswordLoader();
-                                Utility.hideKeyboard(this, password);
-                                finish();
+                                Utility.hideKeyboard(this, new_password);
+
                             } else {
-                                tl_verifypassword.setError(getResources().getString(R.string.password_mismatch));
+                                tl_newpassword.setError(getResources().getString(R.string.password_same));
                             }
-                        } else {
-                            tl_fpassword.setError(getResources().getString(R.string.password_short));
                         }
-                    } else {
-                        tl_gmialOtp.setError(getResources().getString(R.string.gmail_otp));
-                    }
+                            else {
+                                tl_newpassword.setError(getResources().getString(R.string.password_short));
+                            }
+                        }
+                        else {
+                            tl_oldpassword.setError(getResources().getString(R.string.password_short));
+                        }
+
                 } else {
                     tl_Email.setError(getResources().getString(R.string.invalid_email));
                 }
@@ -223,7 +200,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                 @Override
                 public Loader<TaskResponse<PasswordResponse>> onCreateLoader(int id, Bundle args) {
                     // loadIndicator.setVisibility(View.VISIBLE);
-                    return new PasswordLoader(mRequestBean, AppConstant.METHOD_RESET_PASSWORD, valid_gmail.getText().toString(), gmail_otp.getText().toString(), password.getText().toString());
+
+                    return new PasswordLoader(mRequestBean, AppConstant.METHOD_RESET_PASSWORD, valid_gmail.getText().toString(), oldpassword.getText().toString(),new_password.getText().toString());
                 }
 
                 @Override
@@ -236,6 +214,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                             if (data.data != null && data.data.error_code != null) {
 
                                 Utility.showToast(mRequestBean.getContext(), "success");
+                                finish();
 
                             }
                         }
@@ -247,4 +226,19 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                 }
             };
 
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        Intent parentIntent = getIntent();
+        String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
+        Intent newIntent = null;
+        try {
+            //you need to define the class with package name
+            newIntent = new Intent(MyUpdatePassword.this, Class.forName(AppConstant.PACKAGE + className));
+            newIntent.putExtra("ParentClassName", "HomeActivity");
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return newIntent;
+    }
 }

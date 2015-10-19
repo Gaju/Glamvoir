@@ -61,7 +61,7 @@ public class PasswordLoader extends AsyncTaskLoader<TaskResponse<PasswordRespons
 
             switch (methodType) {
                 case AppConstant.METHOD_UPDATE_PASSWORD:
-                   response.data = Communication.updatePassword(methodType, appPreferences.getUserId(), appPreferences.getEmailID(), oldPassword, newPassword);
+                   response.data = Communication.updatePassword(methodType, appPreferences.getUserId(), email, oldPassword, newPassword);
                     break;
                 case AppConstant.METHOD_RESET_PASSWORD:
                     response.data = Communication.resetPassword(methodType, email, otp,password);

@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -43,6 +44,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private EditText edt_fName, edt_age, edt_Phone, myaccount_lastname, edt_Email, edt_lName, edt_AboutMe, edt_City, edt_Contact;
     private TextInputLayout tl_fName, tl_Phone, tl_Email, tl_lName, tl_AboutMe, tl_City, tl_Contact;
     private RadioButton rdbMale, rdbFemale;
+    private TextView changepwd;
     private RadioGroup rgGender;
     private Button btn_Done;
     protected View loadIndicator;
@@ -170,6 +172,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         edt_age.setOnClickListener(this);
 
         btn_Done.setOnClickListener(this);
+        changepwd.setOnClickListener(this);
     }
 
     @Override
@@ -209,6 +212,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 dpd.show();
 
                 break;
+            case R.id.changepwd:
+                MyUpdatePassword.startActivity(MyAccountActivity.this);
+
             default:
                 break;
         }
@@ -276,6 +282,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         rgGender = (RadioGroup) findViewById(R.id.rgGender);
         rdbMale = (RadioButton) findViewById(R.id.rdbMale);
         rdbFemale = (RadioButton) findViewById(R.id.rdbFemale);
+
+        changepwd= (TextView) findViewById(R.id.changepwd);
 
         btn_Done = (Button) findViewById(R.id.done);
         loadIndicator = findViewById(R.id.loadIndicator);

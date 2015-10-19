@@ -26,6 +26,8 @@ public class NetworkIntentService extends IntentService {
     public static final String INTENT_ARG_POST_USERID = "post_user_id";
     public static final String INTENT_ARG_POSITION = "position";
     public static final String BROADCAST_EXTRA_POSITION = "position";
+
+    public static final String BROADCAST_EXTRA_ERROR = "error";
     public static final String INTENT_ARG_FOLLOWERID = "followerid";
 
     public static final String BROADCAST_EXTRA_TOTAL_FOLLOWE = "total_follower";
@@ -33,6 +35,8 @@ public class NetworkIntentService extends IntentService {
 
     public static final String BROADCAST_LIKE_ACTION = "com.like";
     public static final String BROADCAST_FOLLOW_ACTION = "com.follow";
+    public static final String BROADCAST_FOLLOW_ERROR = "com.error";
+
 
     public static final String BROADCAST_EXTRA_LIKE = "like";
     public static final String BROADCAST_EXTRA_LIKE_DISLIKE_STATUS = "like_dislike_status";
@@ -169,7 +173,7 @@ public class NetworkIntentService extends IntentService {
         } catch (RetrofitError e) {
             response.error = e;
             //  response.errorCode = ErrorHelper.getStandardErrorCode(e.getCause());
-            // sendObservedBroadcastError(e, isFollowiing, advert.id);
+             sendObservedBroadcastError(response.error.getMessage());
         }
     }
 
@@ -188,6 +192,14 @@ public class NetworkIntentService extends IntentService {
         infoIntent.putExtra(BROADCAST_EXTRA_TOTAL_FOLLOWE, totalFollower);
         infoIntent.putExtra(BROADCAST_EXTRA_IS_FOLLOWING, isFollowing);
         infoIntent.putExtra(BROADCAST_EXTRA_POSITION, position);
+
+        sendBroadcast(infoIntent);
+    }
+
+    private void sendObservedBroadcastError(String error){
+        Intent infoIntent = new Intent();
+        infoIntent.setAction(BROADCAST_FOLLOW_ERROR);
+        infoIntent.putExtra(BROADCAST_EXTRA_ERROR, error);
 
         sendBroadcast(infoIntent);
     }

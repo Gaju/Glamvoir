@@ -54,6 +54,7 @@
     <string name="password_short">Minimum password length is 5</string>
     <string name="invalid_number">Not a valid mobile number</string>
     <string name="password_mismatch">Password mismatch</string>
+    <string name="password_same">New password can not same</string>
     <string name="gmail_otp">OTP Length is 4</string>
     <string name="signup">SIGN UP</string>
     <string name="signin">SIGN IN</string>
@@ -256,6 +257,7 @@ This electronic record is digitally generated and does not require any kind of s
 
 
     <string name="about_us">About Us</string>
+    <string name="likes">Who Likes</string>
 
     <string name="txtCredits"><a href="glamvoir@gmail.com">Contact Us:glamvoir@gmail.com </a></string>
 

@@ -71,11 +71,8 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
                     performAction(view);
                 }
 
-                if(view.getId()==R.id.user_img){
-                    ProfileActivity.startActivity(context, singleFollow.user_id);
 
-                }
-                if(view.getId()==R.id.title){
+                if(view.getId()==R.id.ll_shell_follow){
                     ProfileActivity.startActivity(context, singleFollow.user_id);
 
                 }
@@ -91,8 +88,8 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) getItem(position);
 
         holder.icon.setTag(singleFollow);
-        holder.user_img.setTag(singleFollow);
-        holder.title.setTag(singleFollow);
+      //  holder.user_img.setTag(singleFollow);
+        holder.ll_shell_follow.setTag(singleFollow);
 
         if (context instanceof FollowingActivity) {
 
@@ -105,10 +102,10 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
             if (singleFollow.is_following.equalsIgnoreCase("1")) {
                 holder.icon.setImageResource(R.drawable.following);
-                holder.icon_title.setText("Following");
+                holder.icon_title.setText("UnFollow");
             } else {
                 holder.icon.setImageResource(R.drawable.followers);
-                holder.icon_title.setText("Follower");
+                holder.icon_title.setText("Follow");
             }
 
             if (singleFollow.user_image != null && !singleFollow.user_image.equals("")) {
@@ -128,10 +125,10 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
             if (singleFollow.is_following.equalsIgnoreCase("1")) {
                 holder.icon.setImageResource(R.drawable.following);
-                holder.icon_title.setText("Following");
+                holder.icon_title.setText("UnFollow");
             } else {
                 holder.icon.setImageResource(R.drawable.followers);
-                holder.icon_title.setText("Follower");
+                holder.icon_title.setText("Follow");
             }
 
             if (singleFollow.user_image != null && !singleFollow.user_image.equals("")) {

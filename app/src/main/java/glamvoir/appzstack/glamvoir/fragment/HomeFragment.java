@@ -2,17 +2,23 @@ package glamvoir.appzstack.glamvoir.fragment;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.SlidingTabs.SlidingTabLayout;
+import glamvoir.appzstack.glamvoir.activity.HomeActivity;
 
 
 public class HomeFragment extends Fragment {
@@ -20,6 +26,7 @@ public class HomeFragment extends Fragment {
 
     SlidingTabLayout mSlidingTabLayout;
     public static ViewPager mViewPager;
+    EditText search_tab ;
     String[] titlesTAB;
     int Numboftabs = 5;
 
@@ -36,6 +43,29 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        search_tab= (EditText) rootView.findViewById(R.id.search_tab);
+        search_tab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+
+                if (hasFocus) {
+                    Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
+                    search_tab.setBackgroundResource(R.drawable.edit_text_border);
+                    search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
+                    search_tab.setCursorVisible(true);
+                    search_tab.requestFocus();
+
+                } else {
+                    Toast.makeText(getActivity(), "lost the focus", Toast.LENGTH_LONG).show();
+                    search_tab.setCursorVisible(false);
+                    search_tab.setBackgroundResource(R.drawable.edit_text_border_inactive);
+                    search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
+
+                }
+            }
+
+        });
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
         // mViewPager.setOffscreenPageLimit(2);

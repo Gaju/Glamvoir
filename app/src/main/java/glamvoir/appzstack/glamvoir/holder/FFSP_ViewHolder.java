@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import glamvoir.appzstack.glamvoir.R;
@@ -21,6 +22,7 @@ public class FFSP_ViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public ImageView icon;
     public ImageView user_img;
     public TextView subtitle, followers;
+    public LinearLayout ll_shell_follow;
 
     public LoadableListAdapter.MyViewHolderClick mListener;
 
@@ -34,12 +36,14 @@ public class FFSP_ViewHolder extends RecyclerView.ViewHolder implements View.OnC
         user_img = (ImageView) view.findViewById(R.id.user_img);
         subtitle = (TextView) view.findViewById(R.id.subtitle);
         icon_title = (TextView) view.findViewById(R.id.icon_title);
+        ll_shell_follow = (LinearLayout) view.findViewById(R.id.ll_shell_follow);
         //bt_shell_following_action = (ImageButton) view.findViewById(R.id.bt_shell_action);
         //followingBy_Action = (TextView) view.findViewById(R.id.tv_shell_action_name);
 
-        user_img.setOnClickListener(this);
+      //  user_img.setOnClickListener(this);
         icon.setOnClickListener(this);
-        title.setOnClickListener(this);
+      //  title.setOnClickListener(this);
+        ll_shell_follow.setOnClickListener(this);
     }
 
     @Override

@@ -432,6 +432,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 }
 
                 notifyDataSetChanged();
+            } else if (action.equals(NetworkIntentService.BROADCAST_FOLLOW_ERROR)) {
+                String error = intent.getStringExtra(NetworkIntentService.BROADCAST_EXTRA_ERROR);
+                Utility.showToast(frag.getActivity(), error);
             }
         }
     };
@@ -457,6 +460,10 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             intent.setType("text/plain");
             String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
             if (path == null) {
+                Uri uri = Uri.parse(path);
+                intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
+                intent.setType("text/plain");
+                frag.startActivity(Intent.createChooser(intent, "Share"));
             } else {
                 Uri uri = Uri.parse(path);
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -530,9 +537,16 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 intent.putExtra(Intent.EXTRA_TEXT, item.getPost_description());
                 intent.setType("text/plain");
 
-                String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
+                String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_title() + "" + item.getPost_description(), null);
                 if (path == null) {
 
+                    PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+
+                    Uri uri = Uri.parse(path);
+                    intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
+                    intent.setType("text/plain");
+                    intent.setPackage("com.whatsapp");
+                    frag.startActivity(intent);
                 } else {
 
                     PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);

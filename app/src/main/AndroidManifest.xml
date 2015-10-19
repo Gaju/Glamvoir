@@ -143,6 +143,15 @@
             android:name=".activity.ChangePasswordActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait"></activity>
+        <activity
+        android:name=".activity.MyUpdatePassword"
+        android:windowSoftInputMode="stateHidden|adjustResize"
+        android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".activity.LikeListActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".activity.CustomGalleryActivity"
             android:screenOrientation="portrait">

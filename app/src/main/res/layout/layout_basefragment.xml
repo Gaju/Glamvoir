@@ -29,10 +29,10 @@
         <EditText
             android:id="@+id/tv_search"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/edit_text_border_inactive"
-            android:drawableLeft="@drawable/checkbox"
+            android:drawableLeft="@android:drawable/ic_menu_search"
             android:hint="Search Here..." />
 
         <ListView

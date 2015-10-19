@@ -63,7 +63,6 @@ public abstract class BaseFragment extends Fragment {
         txt_NoDataFound = (TextView) rootView.findViewById(R.id.no_data_found);
         loadIndicator = rootView.findViewById(R.id.loadIndicator);
         edt_Search = (EditText) rootView.findViewById(R.id.tv_search);
-        edt_Search.setFocusable(true);
 
         if (getFragment() instanceof FleaFragment) {
             edt_Search.setVisibility(View.VISIBLE);
@@ -72,7 +71,7 @@ public abstract class BaseFragment extends Fragment {
             edt_Search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (!edt_Search.isFocusable()) {
+
 
                         if (hasFocus) {
                             Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
@@ -82,17 +81,12 @@ public abstract class BaseFragment extends Fragment {
 
                         } else {
                             Toast.makeText(getActivity(), "lost the focus", Toast.LENGTH_LONG).show();
-                            edt_Search.setFocusable(false);
                             edt_Search.setBackgroundResource(R.drawable.edit_text_border_inactive);
-                            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.checkbox, 0, 0, 0);
+                            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
 
                         }
                     }
-                    Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
-                    edt_Search.setBackgroundResource(R.drawable.edit_text_border);
-                    edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
-                    edt_Search.requestFocus();
-                }
+
             });
         }
         else {
@@ -167,7 +161,7 @@ public abstract class BaseFragment extends Fragment {
 
 
     public Custome_All_ListAdapter getAdapter() {
-        return (Custome_All_ListAdapter) adapter;
+        return adapter;
     }
 
 
@@ -177,6 +171,7 @@ public abstract class BaseFragment extends Fragment {
         IntentFilter filter = new IntentFilter();
         filter.addAction(NetworkIntentService.BROADCAST_LIKE_ACTION);
         filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ACTION);
+        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ERROR);
         getActivity().registerReceiver(getAdapter().observeLikeReceiver, filter);
         registered = true;
     }

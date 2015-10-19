@@ -2,6 +2,7 @@ package glamvoir.appzstack.glamvoir.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,7 +44,7 @@ public class Contact_Us  extends AppCompatActivity implements View.OnClickListen
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Term and Agreement");
+        getSupportActionBar().setTitle("CONTACT US");
     }
 
     @Override
@@ -65,6 +66,7 @@ public class Contact_Us  extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         Intent email = new Intent(Intent.ACTION_SEND);
+        email.setData(Uri.parse("mailto:"));
         email.putExtra(Intent.EXTRA_EMAIL,new String[]{"glamvoir@gmail.com"});
         email.putExtra(Intent.EXTRA_SUBJECT, "Hiring");
         email.putExtra(Intent.EXTRA_TEXT, "");

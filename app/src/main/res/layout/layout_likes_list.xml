@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/appbar" />
+
+    <include layout="@layout/loading_with_circle"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llcoment"
+        android:layout_below="@+id/include" />
+
+
+</RelativeLayout>

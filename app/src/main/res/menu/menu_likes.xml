@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LikesListActivity">
+
+    <item
+        android:id="@+id/likes"
+        android:title="@string/likes"
+        android:orderInCategory="400"
+        app:showAsAction="always|withText" />
+
+</menu>
