@@ -38,8 +38,9 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
     protected ImageLoader imageLoader;
     protected HashMap<String, ArrayList<String>> adImages;
     private int mPosition;
+    boolean canDelete = false;
+   // private FFSP_ViewHolder tempHolder = null;
 
-    //RecyclerViewOnItemClick onItemClick;
 
     public FFSP_Adapter(Context context, ArrayList<FFSP_Response> items) {
         super(context, items);
@@ -47,14 +48,19 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         adImages = new HashMap<String, ArrayList<String>>();
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // ImageLoaderInitializer.initImageLoaderIfNotInited(context);
-        // imageOptions = ImageLoaderInitializer.getDisplayImageOptionWithFade();
-
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         imageOptions = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
+    public void canDelete(boolean edit) {
+        if (edit) {
+            canDelete = true;
+           // updateUI();
+        } else {
+            canDelete = false;
+        }
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
@@ -71,8 +77,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
                     performAction(view);
                 }
 
-
-                if(view.getId()==R.id.ll_shell_follow){
+                if (view.getId() == R.id.ll_shell_follow) {
                     ProfileActivity.startActivity(context, singleFollow.user_id);
 
                 }
@@ -86,9 +91,10 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
         FFSP_ViewHolder holder = ((FFSP_ViewHolder) holder1);
         FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) getItem(position);
+       // tempHolder=holder;
 
         holder.icon.setTag(singleFollow);
-      //  holder.user_img.setTag(singleFollow);
+        //  holder.user_img.setTag(singleFollow);
         holder.ll_shell_follow.setTag(singleFollow);
 
         if (context instanceof FollowingActivity) {
@@ -162,11 +168,18 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         }
     }
 
+//    private void updateUI() {
+//        if (context instanceof MysaveActivity || context instanceof MyPostActivity){
+//            tempHolder.icon.setImageResource(R.drawable.delete);
+//            tempHolder = null;
+//        }
+//    }
+
     private void performAction(View view) {
 
         AppPreferences appPreferences = new AppPreferences(context);
         FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
-        if (context instanceof MysaveActivity) {
+        if (context instanceof MysaveActivity && canDelete) {
 
             ((FFSPActivity) context).removeItem(mPosition, appPreferences.getUserId(), singleFollow.post_id);
 

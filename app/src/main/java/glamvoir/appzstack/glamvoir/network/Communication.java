@@ -7,6 +7,7 @@ import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.LikedUsers;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
@@ -74,6 +75,12 @@ public class Communication {
     public static ObservedFollowResponse toggleFollow(String methodType, String followingUserID, String followerUserID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         ObservedFollowResponse response = service.toggleFollow(methodType, followingUserID, followerUserID);
+        return response;
+    }
+
+    public static LikedUsers getLikedUsers(String methodType, String userID, String postID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        LikedUsers response = service.getLikedUsers(methodType, userID, postID);
         return response;
     }
 

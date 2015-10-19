@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -39,7 +38,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private CommentCustomAdapter adapter;
     private EditText et_comment;
     private ImageButton bt_sent;
-    private String userID;
+    private String postID;
     private ArrayList<CommentResponse.AllCommentResponse> list = new ArrayList<>();
     protected View loadIndicator;
 
@@ -68,7 +67,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             // comment(extras.getString("postID"), extras.getString("postID"));
-            userID = extras.getString("postID");
+            postID = extras.getString("postID");
             getLoaderManager().initLoader(LoaderID.COMMENT, extras, commentCallback);
         }
 
@@ -96,7 +95,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private void iniview() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mlistView = (ListView) findViewById(R.id.listView);
         mlistView = (ListView) findViewById(R.id.listView);
         et_comment = (EditText) findViewById(R.id.et_comment);
         bt_sent = (ImageButton) findViewById(R.id.bt_sent);
@@ -160,7 +158,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (et_comment.getText().toString().length() > 0) {
-            comment(userID, et_comment.getText().toString());
+            comment(postID, et_comment.getText().toString());
         } else {
             Utility.showToast(mRequestBean.getContext(), "Comment should not be empty");
         }
@@ -186,8 +184,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         int id = item.getItemId();
         if (id == R.id.likes) {
 
-
-            LikeListActivity.startActivity(CommentActivity.this);
+            LikeListActivity.startActivity(CommentActivity.this,postID);
 
             return true;
         }

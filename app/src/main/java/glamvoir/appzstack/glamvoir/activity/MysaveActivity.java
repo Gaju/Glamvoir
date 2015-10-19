@@ -85,24 +85,24 @@ public class MysaveActivity extends FFSPActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == R.id.edit) {
-
-            Toast.makeText(getApplicationContext(), "EDIT CLICKED",
-                    Toast.LENGTH_SHORT).show();
-            canDelete();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void canDelete() {
-
-        Toast.makeText(getApplicationContext(), "Happy",
-                Toast.LENGTH_SHORT).show();
-
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        int id = item.getItemId();
+//        if (id == R.id.edit) {
+//
+//            Toast.makeText(getApplicationContext(), "EDIT CLICKED",
+//                    Toast.LENGTH_SHORT).show();
+//            canDelete();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    private void canDelete() {
+//
+//        Toast.makeText(getApplicationContext(), "Happy",
+//                Toast.LENGTH_SHORT).show();
+//
+//    }
 }

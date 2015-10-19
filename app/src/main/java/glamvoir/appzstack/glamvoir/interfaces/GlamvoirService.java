@@ -4,6 +4,7 @@ import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.LikedUsers;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
@@ -58,6 +59,9 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     ObservedFollowResponse toggleFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);
+
+    @GET("/index.php/api")
+    LikedUsers getLikedUsers(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
 
     @GET("/index.php/api")
     GetPostLikeFollowResponse getPostFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);

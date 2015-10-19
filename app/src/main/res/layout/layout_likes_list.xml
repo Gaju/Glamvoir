@@ -9,7 +9,7 @@
         android:id="@+id/include"
         layout="@layout/appbar" />
 
-    <include layout="@layout/loading_with_circle"/>
+    <include layout="@layout/loading_with_circle" />
 
     <ListView
         android:id="@+id/listView"
