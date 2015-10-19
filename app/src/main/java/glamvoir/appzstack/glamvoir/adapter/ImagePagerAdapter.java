@@ -33,7 +33,7 @@ public class ImagePagerAdapter extends PagerAdapter {
     ImageLoader imageLoader;
     DisplayImageOptions options;
 
-    public ImagePagerAdapter(Context context,List<ChildPostBean> list) {
+    public ImagePagerAdapter(Context context, List<ChildPostBean> list) {
         mContext = context;
         this.list = list;
         imageLoader = ImageLoader.getInstance();
@@ -41,7 +41,7 @@ public class ImagePagerAdapter extends PagerAdapter {
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 
-    public void setImages(List<ChildPostBean> list){
+    public void setImages(List<ChildPostBean> list) {
         this.list = list;
     }
 
@@ -97,18 +97,18 @@ public class ImagePagerAdapter extends PagerAdapter {
         });
 
         if (item.getPost_image() != null || !item.getPost_image().equals("")) {
+            String sss = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
             imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
 
         } else {
-            view_image.setImageResource(R.drawable.pic);
+            view_image.setVisibility(View.GONE);
         }
 
         if (item.getPost_title() != null && !item.getPost_title().equals("")) {
             post_header.setText(item.getPost_title());
         }
-        if (item.getPost_description() != null && !item.getPost_description().
 
-                equals("")) {
+        if (item.getPost_description() != null && !item.getPost_description().equals("")) {
             description.setText(item.getPost_description());
         }
 

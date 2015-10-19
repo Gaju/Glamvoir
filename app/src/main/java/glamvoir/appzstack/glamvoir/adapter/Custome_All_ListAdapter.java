@@ -67,8 +67,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     private int pos = 0;
     private String postID = null;
 
-    List<ChildPostBean> childList = new ArrayList<>();
-
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
         this.list = allPostsBeans;
@@ -103,6 +101,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
             convertView = inflater.inflate(R.layout.feed_or_felia_market_shell, null);
             holder = new ViewHolder();
+
             holder.viewPager = (ViewPager) convertView.findViewById(R.id.view_pager);
             holder.circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
 
@@ -147,20 +146,28 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.circleIndicator.setTag(position);
         holder.bt_ff_shell_complain.setTag(position);
 
-        //adapter = new ImagePagerAdapter(frag.getActivity());
-        //adapter.setImages(item.getChildResult());
-        // childList.addAll(item.getChildResult());
-        //holder.viewPager.setAdapter(adapter);
+        if (item.getChildResult().size() < 1) {
+            if (item.getChildResult().get(0).getPost_image().equals("")) {
 
-        //adapter.notifyDataSetChanged();
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
-        holder.viewPager.setAdapter(adapter);
+                //setting margins around imageimageview
+                params.height = frag.getActivity().getResources().getDimensionPixelOffset(R.dimen.height_100dp);
 
+                //adding attributes to the imageview
+                holder.viewPager.setLayoutParams(params);
 
-        // adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
-        //holder.viewPager.setAdapter(adapter);
-
+                adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
+                holder.viewPager.setAdapter(adapter);
+                //adapter.setImages(item.getChildResult());
+                //adapter.notifyDataSetChanged();
+            }
+        } else {
+            adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
+            holder.viewPager.setAdapter(adapter);
+            //adapter.setImages(item.getChildResult());
+            //adapter.notifyDataSetChanged();
+        }
 
         if (item.getChildResult().size() > 1) {
             holder.circleIndicator.setVisibility(View.VISIBLE);

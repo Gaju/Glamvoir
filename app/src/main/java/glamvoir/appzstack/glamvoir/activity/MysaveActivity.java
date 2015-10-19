@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,7 +13,6 @@ import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.FFSP_Adapter;
 import glamvoir.appzstack.glamvoir.adapter.LoadableListAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
-import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
@@ -76,33 +74,22 @@ public class MysaveActivity extends FFSPActivity {
         }
         return newIntent;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.mysave_menu, menu);
-
-
+        getMenuInflater().inflate(R.menu.menu_save_edit, menu);
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        int id = item.getItemId();
-//        if (id == R.id.edit) {
-//
-//            Toast.makeText(getApplicationContext(), "EDIT CLICKED",
-//                    Toast.LENGTH_SHORT).show();
-//            canDelete();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    private void canDelete() {
-//
-//        Toast.makeText(getApplicationContext(), "Happy",
-//                Toast.LENGTH_SHORT).show();
-//
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.edit) {
+            getAdapter().canDelete(true);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

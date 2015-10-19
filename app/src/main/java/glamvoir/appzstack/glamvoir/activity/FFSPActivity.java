@@ -239,26 +239,4 @@ public abstract class FFSPActivity extends AppCompatActivity {
             }, "server").execute(methodName, mUserID, postID);
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_ffsp, menu);
-
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == R.id.edit) {
-            getAdapter().canDelete(true);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
 }
