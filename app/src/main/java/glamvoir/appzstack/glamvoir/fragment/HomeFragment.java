@@ -2,23 +2,21 @@ package glamvoir.appzstack.glamvoir.fragment;
 
 
 import android.app.Activity;
-import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.SlidingTabs.SlidingTabLayout;
-import glamvoir.appzstack.glamvoir.activity.HomeActivity;
 
 
 public class HomeFragment extends Fragment {
@@ -43,33 +41,20 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         search_tab= (EditText) rootView.findViewById(R.id.search_tab);
-        search_tab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+
+        search_tab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-
-
-                if (hasFocus) {
-                    Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
-                    search_tab.setBackgroundResource(R.drawable.edit_text_border);
-                    search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
-                    search_tab.setCursorVisible(true);
-                    search_tab.requestFocus();
-
-                } else {
-                    Toast.makeText(getActivity(), "lost the focus", Toast.LENGTH_LONG).show();
-                    search_tab.setCursorVisible(false);
-                    search_tab.setBackgroundResource(R.drawable.edit_text_border_inactive);
-                    search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
-
-                }
+            public void onGlobalLayout() {
+                isKeyboardShown(search_tab.getRootView());
             }
-
         });
+    
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
-        // mViewPager.setOffscreenPageLimit(2);
-        // tabcachesize (=tabcount for better performance)
+
         titlesTAB = new String[]{"All", "FASHION & LIFESTYLE", "FOOD & PLACE", "MUSIC & GIGS", "INTEREST"};
         mSlidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.sliding_tabs);
 
@@ -115,6 +100,38 @@ public class HomeFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    private boolean isKeyboardShown(View rootView) {
+        final int SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD = 128;
+
+        Rect r = new Rect();
+        rootView.getWindowVisibleDisplayFrame(r);
+        DisplayMetrics dm = rootView.getResources().getDisplayMetrics();
+    /* heightDiff = rootView height - status bar height (r.top) - visible frame height (r.bottom - r.top) */
+        int heightDiff = rootView.getBottom() - r.bottom;
+    /* Threshold size: dp to pixels, multiply with display density */
+        boolean isKeyboardShown = heightDiff > SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD * dm.density;
+
+        if (isKeyboardShown){
+
+            search_tab.setBackgroundResource(R.drawable.edit_text_border);
+            search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
+            search_tab.setCursorVisible(true);
+            search_tab.requestFocus();
+        }
+      else {
+
+
+                search_tab.setCursorVisible(false);
+                search_tab.setBackgroundResource(R.drawable.edit_text_border_inactive);
+                search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
+
+
+        }
+
+
+        return isKeyboardShown;
     }
 
     @Override

@@ -1,19 +1,21 @@
 package glamvoir.appzstack.glamvoir.fragment;
 
 import android.content.IntentFilter;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,28 +68,14 @@ public abstract class BaseFragment extends Fragment {
 
         if (getFragment() instanceof FleaFragment) {
             edt_Search.setVisibility(View.VISIBLE);
-
-
-            edt_Search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            edt_Search.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-
-
-                        if (hasFocus) {
-                            Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
-                            edt_Search.setBackgroundResource(R.drawable.edit_text_border);
-                            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
-                            edt_Search.requestFocus();
-
-                        } else {
-                            Toast.makeText(getActivity(), "lost the focus", Toast.LENGTH_LONG).show();
-                            edt_Search.setBackgroundResource(R.drawable.edit_text_border_inactive);
-                            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
-
-                        }
-                    }
-
+                public void onGlobalLayout() {
+                    isKeyboardShown(edt_Search.getRootView());
+                }
             });
+
+
         }
         else {
             edt_Search.setVisibility(View.GONE);
@@ -217,6 +205,36 @@ public abstract class BaseFragment extends Fragment {
             }, "server").execute(methodName, mUserID, postID, String.valueOf(pos));
         }
     }
+
+    private boolean isKeyboardShown(View rootView) {
+        final int SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD = 128;
+
+        Rect r = new Rect();
+        rootView.getWindowVisibleDisplayFrame(r);
+        DisplayMetrics dm = rootView.getResources().getDisplayMetrics();
+    /* heightDiff = rootView height - status bar height (r.top) - visible frame height (r.bottom - r.top) */
+        int heightDiff = rootView.getBottom() - r.bottom;
+    /* Threshold size: dp to pixels, multiply with display density */
+        boolean isKeyboardShown = heightDiff > SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD * dm.density;
+
+        if (isKeyboardShown){
+
+            edt_Search.setBackgroundResource(R.drawable.edit_text_border);
+            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
+            edt_Search.setCursorVisible(true);
+            edt_Search.requestFocus();
+        }
+        else {
+
+            edt_Search.setCursorVisible(false);
+            edt_Search.setBackgroundResource(R.drawable.edit_text_border_inactive);
+            edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
+        }
+
+
+        return isKeyboardShown;
+    }
+
 
 
 
