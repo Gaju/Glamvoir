@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -29,6 +31,7 @@ import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
@@ -52,6 +55,8 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     // Creating Facebook CallbackManager Value
     public static CallbackManager callbackmanager;
     private static final int RC_SIGN_IN = 0;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+
     // Logcat tag
     private static final String TAG = "MainActivity";
 
@@ -71,8 +76,16 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
     private ConnectionResult mConnectionResult;
 
-    private Button btnSignIn, btn_SignUp, btn_LoginGmain,bt_facebook;
+    private Button btnSignIn, btn_SignUp, btn_LoginGmain, bt_facebook;
     private CoordinatorLayout coordinatorLayout;
+
+
+    private GoogleCloudMessaging gcm;
+    private final int ACTION_PLAY_SERVICES_DIALOG = 100;
+    private String gcmRegId;
+    private int currentAppVersion;
+    AppPreferences appPreferences;
+
 
     public static void startActivityWithClearTop(Activity activity) {
         Intent intent = new Intent(activity, FrontPageActivity.class);
@@ -111,6 +124,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         callbackmanager = CallbackManager.Factory.create();
         // Add code to print out the key hash
 
+        appPreferences = new AppPreferences(this);
 
         checkUserSession();
 
@@ -139,6 +153,92 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 //        }
 //    }
 
+
+    private void checkForRegisteration() {
+
+
+        // Check device for Play Services APK.
+        if (checkPlayServices()) {
+
+            gcm = GoogleCloudMessaging.getInstance(this);
+
+            // Read saved registration id from shared preferences.
+            gcmRegId = appPreferences.getGcmID();
+
+            // Read saved app version
+            int savedAppVersion = appPreferences.getAppVersion();
+
+            // Get current Application version
+            currentAppVersion = getAppVersion(getApplicationContext());
+
+            // register if saved registration id not found
+            if (gcmRegId.isEmpty() || savedAppVersion != currentAppVersion) {
+                registerInBackground();
+            }
+
+            // // register if saved registration id not found
+            // if (gcmRegId.isEmpty()) {
+            // registerInBackground();
+            // }
+        }
+    }
+
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p/>
+     * Stores the registration ID and app versionCode in the application's
+     * shared preferences.
+     */
+    private void registerInBackground() {
+        new RegistrationTask().execute(null, null, null);
+    }
+
+    // Async task to register in background
+    private class RegistrationTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String msg = "";
+            try {
+                if (gcm == null) {
+                    gcm = GoogleCloudMessaging
+                            .getInstance(getApplicationContext());
+                }
+            //    gcmRegId = gcm.register(AppConstant.GCM_SENDER_ID);
+                String sss = gcmRegId;
+                System.out.println(sss);
+
+				/*
+                 * At this point, you have gcm registration id. Save this
+				 * registration id in your users table against this user. This
+				 * id will be used to send push notifications from server.
+				 */
+
+                msg = "Successfully Registered for GCM";
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                msg = "Error while registering for GCM.";
+            }
+            return msg;
+        }
+
+        @Override
+        protected void onPostExecute(String msg) {
+            if (!gcmRegId.isEmpty()) {
+                appPreferences.setGcmID(gcmRegId);
+                appPreferences.setAppVersion(currentAppVersion);
+            }
+        }
+    }
+
+
     /**
      * Initializing google plus api client
      */
@@ -159,7 +259,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         btnSignIn = (Button) findViewById(R.id.frontpage_signin);
         btn_SignUp = (Button) findViewById(R.id.frontpage_signup);
         btn_LoginGmain = (Button) findViewById(R.id.login_gmail);
-        bt_facebook= (Button) findViewById(R.id.bt_facebook);
+        bt_facebook = (Button) findViewById(R.id.bt_facebook);
     }
 
     /**
@@ -412,8 +512,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     // Private method to handle Facebook login and callback
-    private void onFblogin()
-    {
+    private void onFblogin() {
 
 
         // Set permissions
@@ -428,7 +527,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
                         Bundle parameters = new Bundle();
                         parameters.putString("fields", "id,name,last_name,link,email,picture");
 
-                        GraphRequest request     =     GraphRequest.newMeRequest(
+                        GraphRequest request = GraphRequest.newMeRequest(
                                 loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
                                     @Override
@@ -476,6 +575,41 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
                         //  Log.dddddr(TAG_ERROR,error.toString());
                     }
                 });
+    }
+
+    /**
+     * Method to verify google play services on the device
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(FrontPageActivity.this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return Application's version code from the {@code PackageManager}.
+     */
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
     }
 
 }

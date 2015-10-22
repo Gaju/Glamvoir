@@ -1,36 +1,29 @@
 package glamvoir.appzstack.glamvoir.asynctaskloader;
 
 import android.content.AsyncTaskLoader;
+import android.content.Context;
 
-import glamvoir.appzstack.glamvoir.model.FFSP_Response;
+import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
-import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
+import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 import glamvoir.appzstack.glamvoir.network.Communication;
 
 /**
- * Created by gajendran on 10/9/15.
+ * Created by gajendran on 22/10/15.
  */
-public class FFSPLoader extends AsyncTaskLoader<TaskResponse<FFSP_Response>> {
+public class CityLoader extends AsyncTaskLoader<TaskResponse<CityResponse>> {
 
-    private RequestBean requestBean;
     private TaskResponse response = null;
-    private String methodName;
-    private String user_id;
 
-    public FFSPLoader(RequestBean requestBean, String methodName, String user_id) {
-        super(requestBean.getContext());
-        this.requestBean = requestBean;
-        this.methodName = methodName;
-        this.user_id = user_id;
+    public CityLoader(Context context) {
+        super(context);
     }
 
-
     @Override
-    public TaskResponse<FFSP_Response> loadInBackground() {
+    public TaskResponse<CityResponse> loadInBackground() {
         response = new TaskResponse();
         try {
-            String url = "http://glamvoir.com/index.php/api?method=" + methodName + "&user_id=" + user_id;
-            response.data = Communication._FFSP(methodName, user_id);
+            response.data = Communication.getCity(AppConstant.METHOD_GET_CITY);
         } catch (Exception e) {
             response.error = e;
         }
@@ -59,4 +52,5 @@ public class FFSPLoader extends AsyncTaskLoader<TaskResponse<FFSP_Response>> {
         onStopLoading();
         response = null;
     }
+
 }

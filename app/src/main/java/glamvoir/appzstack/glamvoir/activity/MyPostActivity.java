@@ -3,8 +3,9 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  * Created by gajendran on 5/8/15.
  */
 public class MyPostActivity extends FFSPActivity {
+    private boolean canDelete = false;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MyPostActivity.class);
@@ -108,5 +110,32 @@ public class MyPostActivity extends FFSPActivity {
             e.printStackTrace();
         }
         return newIntent;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.edit) {
+
+            if (!canDelete) {
+                getAdapter().canDelete(true);
+                canDelete = true;
+            } else {
+                getAdapter().canDelete(false);
+                canDelete = false;
+            }
+
+            getAdapter().notifyDataSetChanged();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

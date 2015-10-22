@@ -6,6 +6,9 @@
 
     <include layout="@layout/appbar" />
 
+    <include
+        layout="@layout/loading_with_circle"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/nodata"

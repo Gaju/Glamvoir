@@ -39,7 +39,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
     protected HashMap<String, ArrayList<String>> adImages;
     private int mPosition;
     boolean canDelete = false;
-   // private FFSP_ViewHolder tempHolder = null;
+    // private FFSP_ViewHolder tempHolder = null;
 
 
     public FFSP_Adapter(Context context, ArrayList<FFSP_Response> items) {
@@ -47,7 +47,6 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         //   this.onItemClick = onItemClick;
         adImages = new HashMap<String, ArrayList<String>>();
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         imageOptions = ImageLoaderInitializer.getDisplayImageOptionWithFade();
@@ -56,7 +55,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
     public void canDelete(boolean edit) {
         if (edit) {
             canDelete = true;
-           // updateUI();
+            // updateUI();
         } else {
             canDelete = false;
         }
@@ -91,7 +90,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
         FFSP_ViewHolder holder = ((FFSP_ViewHolder) holder1);
         FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) getItem(position);
-       // tempHolder=holder;
+        // tempHolder=holder;
 
         holder.icon.setTag(singleFollow);
         //  holder.user_img.setTag(singleFollow);
@@ -156,8 +155,17 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 
             //holder.subtitle.setVisibility(View.INVISIBLE);
             holder.subtitle.setText(singleFollow.post_description);
-            holder.icon.setImageResource(R.drawable.delete);
-            holder.icon_title.setText("Delete");
+
+            if (canDelete) {
+                holder.icon.setVisibility(View.VISIBLE);
+                holder.icon_title.setVisibility(View.VISIBLE);
+                holder.icon.setImageResource(R.drawable.delete);
+                holder.icon_title.setText("Delete");
+            } else {
+                holder.icon.setVisibility(View.INVISIBLE);
+                holder.icon_title.setVisibility(View.INVISIBLE);
+
+            }
 
         } else if (context instanceof MyPostActivity) {
 

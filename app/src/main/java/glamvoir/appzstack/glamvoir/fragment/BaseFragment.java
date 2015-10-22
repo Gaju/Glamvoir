@@ -66,6 +66,8 @@ public abstract class BaseFragment extends Fragment {
         loadIndicator = rootView.findViewById(R.id.loadIndicator);
         edt_Search = (EditText) rootView.findViewById(R.id.tv_search);
 
+        loadData();
+
         if (getFragment() instanceof FleaFragment) {
             edt_Search.setVisibility(View.VISIBLE);
             edt_Search.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -96,7 +98,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadData();
+
     }
 
     protected void loadData() {

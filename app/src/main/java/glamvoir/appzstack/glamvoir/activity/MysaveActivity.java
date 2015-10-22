@@ -19,6 +19,7 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  * Created by gajendran on 5/8/15.
  */
 public class MysaveActivity extends FFSPActivity {
+    private boolean canDelete = false;
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MysaveActivity.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
@@ -78,7 +79,7 @@ public class MysaveActivity extends FFSPActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_save_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
@@ -87,7 +88,16 @@ public class MysaveActivity extends FFSPActivity {
 
         int id = item.getItemId();
         if (id == R.id.edit) {
-            getAdapter().canDelete(true);
+
+            if (!canDelete) {
+                getAdapter().canDelete(true);
+                canDelete = true;
+            } else {
+                getAdapter().canDelete(false);
+                canDelete = false;
+            }
+
+            getAdapter().notifyDataSetChanged();
             return true;
         }
         return super.onOptionsItemSelected(item);

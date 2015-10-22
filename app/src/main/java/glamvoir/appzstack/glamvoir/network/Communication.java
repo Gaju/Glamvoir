@@ -5,6 +5,7 @@ import java.io.File;
 import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LikedUsers;
@@ -81,6 +82,12 @@ public class Communication {
     public static LikedUsers getLikedUsers(String methodType, String userID, String postID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         LikedUsers response = service.getLikedUsers(methodType, userID, postID);
+        return response;
+    }
+
+    public static CityResponse getCity(String methodType) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        CityResponse response = service.getCity(methodType);
         return response;
     }
 

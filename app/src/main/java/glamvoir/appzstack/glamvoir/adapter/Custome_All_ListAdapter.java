@@ -37,9 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.List;
 
-import glamvoir.appzstack.glamvoir.Bean.ChildPostBean;
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
@@ -89,6 +87,13 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    private void setAdapter() {
+        adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
+        holder.viewPager.setAdapter(adapter);
+        //adapter.setImages(item.getChildResult());
+        //adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -146,10 +151,10 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.circleIndicator.setTag(position);
         holder.bt_ff_shell_complain.setTag(position);
 
-        if (item.getChildResult().size() < 1) {
+        if (item.getChildResult().size() <= 1) {
             if (item.getChildResult().get(0).getPost_image().equals("")) {
 
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
                 //setting margins around imageimageview
                 params.height = frag.getActivity().getResources().getDimensionPixelOffset(R.dimen.height_100dp);
@@ -159,14 +164,13 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
                 adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
                 holder.viewPager.setAdapter(adapter);
-                //adapter.setImages(item.getChildResult());
-                //adapter.notifyDataSetChanged();
+            } else {
+                adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
+                holder.viewPager.setAdapter(adapter);
             }
         } else {
             adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
             holder.viewPager.setAdapter(adapter);
-            //adapter.setImages(item.getChildResult());
-            //adapter.notifyDataSetChanged();
         }
 
         if (item.getChildResult().size() > 1) {

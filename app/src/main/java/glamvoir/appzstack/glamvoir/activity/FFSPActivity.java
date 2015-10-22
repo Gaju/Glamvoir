@@ -42,6 +42,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
     protected ArrayList<FFSP_Response.SingleFollow> data = new ArrayList<FFSP_Response.SingleFollow>();
     protected LoadableListAdapter<FFSP_Response.SingleFollow> adapter;
     protected TextView txt_Nodata;
+    protected View loadIndicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,6 +142,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         txt_Nodata = (TextView) findViewById(R.id.nodata);
+        loadIndicator = findViewById(R.id.loadIndicator);
 
     }
 
@@ -149,6 +151,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
                 @Override
                 public Loader<TaskResponse<FFSP_Response>> onCreateLoader(int id, Bundle args) {
+                    loadIndicator.setVisibility(View.VISIBLE);
                     AppPreferences appPreferences = new AppPreferences(getRequestBean().getContext());
                     return new FFSPLoader(getRequestBean(), getMethodName(), appPreferences.getUserId());
                 }
@@ -156,7 +159,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
                 @Override
                 public void onLoadFinished(Loader<TaskResponse<FFSP_Response>> loader, TaskResponse<FFSP_Response> data) {
                     if (loader instanceof FFSPLoader) {
-                        ((FFSPLoader) loader).hideLoaderDialog();
+                        loadIndicator.setVisibility(View.GONE);
                         if (data.error != null) {
                             Utility.showToast(getRequestBean().getContext(), data.error.toString());
                         } else {

@@ -29,6 +29,8 @@ public class AppPreferences {
         deviceType,
         firstTime,
         gender,
+        gcmID,
+        appVersion,
         userImage,
         userAbout,
         userContact,
@@ -168,6 +170,24 @@ public class AppPreferences {
 
     public void setUserContact(String userContact) {
         mEditor.putString(SharedPrefrencesKey.userContact.toString(), userContact);
+        mEditor.commit();
+    }
+
+    public String getGcmID() {
+        return mPreferences.getString(SharedPrefrencesKey.gcmID.toString(), "");
+    }
+
+    public void setGcmID(String gcmid) {
+        mEditor.putString(SharedPrefrencesKey.gcmID.toString(), gcmid);
+        mEditor.commit();
+    }
+
+    public int getAppVersion() {
+        return mPreferences.getInt(SharedPrefrencesKey.appVersion.toString(), Integer.MIN_VALUE);
+    }
+
+    public void setAppVersion(int appVersion) {
+        mEditor.putInt(SharedPrefrencesKey.appVersion.toString(), appVersion);
         mEditor.commit();
     }
 }

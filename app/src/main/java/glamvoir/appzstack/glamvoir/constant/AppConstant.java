@@ -19,6 +19,7 @@ public class AppConstant {
     public static final String METHOD_ADDCOMMENT = "addcomment";
     public static final String METHOD_FOLLOWER_FOLLOWING = "followerfollowing";
     public static final String METHOD_LIKED_USERS= "get_likeduser";
+    public static final String METHOD_GET_CITY= "getcity";
 
     public static final String METHOD_DELETE_SAVE_POST = "deletemysavedpost";
     public static final String METHOD_SAVEPOST = "savemypost";

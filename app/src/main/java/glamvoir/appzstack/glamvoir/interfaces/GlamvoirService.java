@@ -2,6 +2,7 @@ package glamvoir.appzstack.glamvoir.interfaces;
 
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LikedUsers;
@@ -62,6 +63,9 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     LikedUsers getLikedUsers(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
+
+    @GET("/index.php/api")
+    CityResponse getCity(@Query("method") String methodType);
 
     @GET("/index.php/api")
     GetPostLikeFollowResponse getPostFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);
