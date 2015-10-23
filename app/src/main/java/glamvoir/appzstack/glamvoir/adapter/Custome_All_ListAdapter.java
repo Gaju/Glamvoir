@@ -117,6 +117,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_like_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_like_count);
             holder.tv_ff_shell_comment_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_comment_count);
 
+            holder.ll_view_pager = (LinearLayout) convertView.findViewById(R.id.ll_view_pager);
+
             holder.checkBox_ff_shell = (CheckBox) convertView.findViewById(R.id.checkBox_ff_shell);
 
             holder.bt_connect_with_seller = (Button) convertView.findViewById(R.id.bt_connect_with_seller);
@@ -150,25 +152,33 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.viewPager.setTag(position);
         holder.circleIndicator.setTag(position);
         holder.bt_ff_shell_complain.setTag(position);
+        holder.ll_view_pager.setTag(position);
 
         if (item.getChildResult().size() <= 1) {
             if (item.getChildResult().get(0).getPost_image().equals("")) {
 
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-                //setting margins around imageimageview
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.height = frag.getActivity().getResources().getDimensionPixelOffset(R.dimen.height_100dp);
-
-                //adding attributes to the imageview
                 holder.viewPager.setLayoutParams(params);
 
                 adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
                 holder.viewPager.setAdapter(adapter);
             } else {
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.height = frag.getActivity().getResources().getDimensionPixelOffset(R.dimen.height_300dp);
+                holder.viewPager.setLayoutParams(params);
+
+
                 adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
                 holder.viewPager.setAdapter(adapter);
             }
         } else {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.height = frag.getActivity().getResources().getDimensionPixelOffset(R.dimen.height_300dp);
+            holder.viewPager.setLayoutParams(params);
+
+
             adapter = new ImagePagerAdapter(frag.getActivity(), item.getChildResult());
             holder.viewPager.setAdapter(adapter);
         }
@@ -402,6 +412,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         LinearLayout ll_like_comment;
         CirclePageIndicator circleIndicator;
         ViewPager viewPager;
+        LinearLayout ll_view_pager;
     }
 
     private void savePost(String userID, String postID, int pos) {

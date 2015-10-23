@@ -5,6 +5,7 @@
     <dimen name="nav_drawer_width">290dp</dimen>
     <dimen name="listview_swipe_progress_height">3dp</dimen>
     <dimen name="height_100dp">100dp</dimen>
+    <dimen name="height_300dp">300dp</dimen>
 
     <!-- Text sizes -->
     <dimen name="textsize_small">12sp</dimen>

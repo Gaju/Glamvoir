@@ -96,8 +96,9 @@ public class ImagePagerAdapter extends PagerAdapter {
             }
         });
 
-        if (item.getPost_image() != null || !item.getPost_image().equals("")) {
-            String sss = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
+        if (item.getPost_image() != null && !item.getPost_image().equals("")) {
+           // String sss = AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image();
+            view_image.setVisibility(View.VISIBLE);
             imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + item.getPost_image(), view_image, options);
 
         } else {
