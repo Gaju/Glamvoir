@@ -29,16 +29,18 @@ import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
  */
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
     private Toolbar toolbar;
-    private EditText valid_gmail;
-    private TextInputLayout tl_Email;
+
     private EditText gmail_otp, password, veri_password;
     private Button bt_changepassword, bt_requestTochange;
     private TextInputLayout tl_fpassword, tl_verifypassword, tl_gmialOtp;
     private RequestBean mRequestBean;
+    String email;
+    protected View loadIndicator;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, String e_mailId) {
         Intent intent = new Intent(context, ChangePasswordActivity.class);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
+        intent.putExtra("EMAILID", e_mailId);
         context.startActivity(intent);
     }
 
@@ -53,6 +55,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         mRequestBean.setLoader(true);
 
         //initialize all views
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null) {
+            email=bundle.getString("EMAILID");
+        }
+
         initViews();
 
         initListener();
@@ -136,9 +143,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         gmail_otp = (EditText) findViewById(R.id.gmail_otp);
         password = (EditText) findViewById(R.id.password);
         veri_password = (EditText) findViewById(R.id.veri_password);
-        valid_gmail = (EditText) findViewById(R.id.gmail);
-        tl_Email = (TextInputLayout) findViewById(R.id.inputgmail);
 
+        loadIndicator = findViewById(R.id.loadIndicator);
 
         tl_gmialOtp = (TextInputLayout) findViewById(R.id.inputgmail_otp);
         tl_fpassword = (TextInputLayout) findViewById(R.id.inputpassword);
@@ -184,14 +190,14 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
 
             case R.id.bt_changepassword:
-                if (Validation.isValidEmail(valid_gmail.getText().toString())) {
+
                     if (Validation.isGmailOTP(gmail_otp.getText().toString())) {
                         if (Validation.isValidPassword(password.getText().toString())) {
                             //call signup
                             if (password.getText().toString().equals(veri_password.getText().toString())) {
                                 callPasswordLoader();
                                 Utility.hideKeyboard(this, password);
-                                finish();
+
                             } else {
                                 tl_verifypassword.setError(getResources().getString(R.string.password_mismatch));
                             }
@@ -201,9 +207,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                     } else {
                         tl_gmialOtp.setError(getResources().getString(R.string.gmail_otp));
                     }
-                } else {
-                    tl_Email.setError(getResources().getString(R.string.invalid_email));
-                }
+
 
                 break;
 
@@ -222,20 +226,25 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
                 @Override
                 public Loader<TaskResponse<PasswordResponse>> onCreateLoader(int id, Bundle args) {
-                    // loadIndicator.setVisibility(View.VISIBLE);
-                    return new PasswordLoader(mRequestBean, AppConstant.METHOD_RESET_PASSWORD, valid_gmail.getText().toString(), gmail_otp.getText().toString(), password.getText().toString());
+                     loadIndicator.setVisibility(View.VISIBLE);
+                    return new PasswordLoader(mRequestBean, AppConstant.METHOD_RESET_PASSWORD, email, gmail_otp.getText().toString(), password.getText().toString());
                 }
 
                 @Override
                 public void onLoadFinished(Loader<TaskResponse<PasswordResponse>> loader, TaskResponse<PasswordResponse> data) {
                     if (loader instanceof PasswordLoader) {
-                        //  loadIndicator.setVisibility(View.GONE);
+                         loadIndicator.setVisibility(View.GONE);
                         if (data.error != null) {
                             Utility.showToast(mRequestBean.getContext(), data.error.toString());
                         } else {
                             if (data.data != null && data.data.error_code != null) {
 
-                                Utility.showToast(mRequestBean.getContext(), "success");
+                              if(data.data.error_code.equals("0")){
+                                    Utility.showToast(mRequestBean.getContext(), data.data.msg_string);
+                                    finish();
+                                }else{
+                                    Utility.showToast(mRequestBean.getContext(), data.data.msg_string);
+                                }
 
                             }
                         }

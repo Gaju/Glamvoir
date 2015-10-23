@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.ListView;
 
@@ -16,6 +18,7 @@ import glamvoir.appzstack.glamvoir.adapter.LikedUserAdapter;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctaskloader.GetLikedUsersLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
+import glamvoir.appzstack.glamvoir.customview.CustomTextBold;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
@@ -111,7 +114,12 @@ public class LikeListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("LIKE");
+        SpannableString s = new SpannableString("LIKE");
+        s.setSpan(new CustomTextBold(this), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        getSupportActionBar().setTitle(s);
+
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.ExpandableListView;
 
@@ -15,6 +17,7 @@ import java.util.List;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.ExpandableListAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.customview.CustomTextBold;
 
 /**
  * Created by jaim on 9/14/2015.
@@ -113,7 +116,12 @@ public class FaqActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("FAQ");
+        SpannableString s = new SpannableString("FAQ");
+        s.setSpan(new CustomTextBold(this), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        getSupportActionBar().setTitle(s);
+
     }
 
     private void prepareListData() {

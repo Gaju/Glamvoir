@@ -33,6 +33,7 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
     private Button bt_requestTochange;
     private TextInputLayout tl_Email;
     private RequestBean mRequestBean;
+    protected View loadIndicator;
 
 
     public static void startActivity(Context context) {
@@ -92,6 +93,7 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
         valid_gmail = (EditText) findViewById(R.id.gmail);
         tl_Email = (TextInputLayout) findViewById(R.id.inputgmail);
         bt_requestTochange = (Button) findViewById(R.id.bt_send_request_email);
+        loadIndicator = findViewById(R.id.loadIndicator);
 
     }
 
@@ -159,22 +161,28 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
 
                 @Override
                 public Loader<TaskResponse<PasswordResponse>> onCreateLoader(int id, Bundle args) {
-                    // loadIndicator.setVisibility(View.VISIBLE);
+                    loadIndicator.setVisibility(View.VISIBLE);
                     return new PasswordLoader(mRequestBean, AppConstant.METHOD_FORGOT_PASSWORD, valid_gmail.getText().toString());
                 }
 
                 @Override
                 public void onLoadFinished(Loader<TaskResponse<PasswordResponse>> loader, TaskResponse<PasswordResponse> data) {
                     if (loader instanceof PasswordLoader) {
-                        //  loadIndicator.setVisibility(View.GONE);
+                          loadIndicator.setVisibility(View.GONE);
                         if (data.error != null) {
                             Utility.showToast(mRequestBean.getContext(), data.error.toString());
                         } else {
-                            if (data.data != null && data.data.error_code != null) {
+                            if (data.data != null && data.data.error_code !=null) {
 
-                                Utility.showToast(mRequestBean.getContext(), "success");
-                                ChangePasswordActivity.startActivity(RequestToChangePasswordActivity.this);
-                                finish();
+                                if(data.data.error_code.equals("0")){
+                                    Utility.showToast(mRequestBean.getContext(), data.data.msg_string);
+                                    ChangePasswordActivity.startActivity(RequestToChangePasswordActivity.this,valid_gmail.getText().toString());
+                                    finish();
+                                }else{
+                                    Utility.showToast(mRequestBean.getContext(), data.data.msg_string);
+                                }
+
+
                             }
                         }
                     }

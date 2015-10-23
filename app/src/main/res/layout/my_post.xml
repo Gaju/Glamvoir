@@ -13,7 +13,7 @@
         android:weightSum="7"
         android:orientation="vertical">
 
-        <TextView
+        <glamvoir.appzstack.glamvoir.customview.CustomTestLight
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -49,7 +49,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="WOMAN"
+                android:text="WOMEN"
                 android:layout_weight="1"
                 android:id="@+id/button8" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="MAN"
+                android:text="MEN"
                 android:layout_weight="1"
                 android:id="@+id/button9" />
         </LinearLayout>
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:text="ALL CITY"
+                android:text="ALL CITIES"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_weight="1"
                 android:id="@+id/button10" />
@@ -108,15 +108,9 @@
                 android:layout_weight="1"
                 android:weightSum="2"
                 android:orientation="horizontal">
-                <glamvoir.appzstack.glamvoir.customview.RoundedImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/imageView3"
-                    android:layout_gravity="center"
-                    android:background="@drawable/camera"
-                    />
 
-                <TextView
+
+                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Whats's on your mind"

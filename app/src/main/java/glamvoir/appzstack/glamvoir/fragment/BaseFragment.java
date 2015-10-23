@@ -222,15 +222,20 @@ public abstract class BaseFragment extends Fragment {
         if (isKeyboardShown){
 
             edt_Search.setBackgroundResource(R.drawable.edit_text_border);
+            edt_Search.setPadding(20,0,0,0);
             edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
+
             edt_Search.setCursorVisible(true);
             edt_Search.requestFocus();
+
         }
         else {
 
             edt_Search.setCursorVisible(false);
             edt_Search.setBackgroundResource(R.drawable.edit_text_border_inactive);
+            edt_Search.setPadding(20,0,0,0);
             edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
+
         }
 
 

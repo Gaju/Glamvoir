@@ -40,7 +40,7 @@
                 android:layout_weight="2"
                 android:orientation="vertical">
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTextBold
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/black" />
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTextBold
                     android:id="@+id/name_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
 
                     />
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -172,19 +172,19 @@
 
                 android:orientation="horizontal">
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="By joining you are agree our"
+                    android:text="By joining you are agreeing our"
                     android:textColor="@android:color/black" />
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:id="@+id/textView5"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_weight=".5"
@@ -193,7 +193,7 @@
 
                     android:textColor="@color/navigationBarColor" />
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
             </LinearLayout>
 
 
-            <TextView
+            <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

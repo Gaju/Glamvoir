@@ -128,7 +128,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.bt_ff_shell_like = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_like);
             holder.bt_ff_shell_whatapp = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_whatapp);
             holder.bt_ff_shell_share = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_share);
-            holder.bt_ff_shell_complain = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_complain);
+            //@@@@@@@
+
+            holder.ll_ff_shell_complain = (LinearLayout) convertView.findViewById(R.id.ll_ff_shell_complain);
             holder.bt_ff_shell_map = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_map);
 
             holder.user_Image = (ImageView) convertView.findViewById(R.id.imageView);
@@ -148,10 +150,11 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.user_Image.setTag(position);
         holder.tv_ff_shell_username.setTag(position);
         holder.ll_like_comment.setTag(position);
-        holder.bt_ff_shell_complain.setTag(position);
+     //   holder.bt_ff_shell_complain.setTag(position);
         holder.viewPager.setTag(position);
         holder.circleIndicator.setTag(position);
-        holder.bt_ff_shell_complain.setTag(position);
+        //@@@@@@@
+        holder.ll_ff_shell_complain.setTag(position);
         holder.ll_view_pager.setTag(position);
 
         if (item.getChildResult().size() <= 1) {
@@ -267,7 +270,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_like.setOnClickListener(this);
         holder.bt_ff_shell_whatapp.setOnClickListener(this);
         holder.bt_ff_shell_share.setOnClickListener(this);
-        holder.bt_ff_shell_complain.setOnClickListener(this);
+        holder.ll_ff_shell_complain.setOnClickListener(this);
         holder.bt_ff_shell_map.setOnClickListener(this);
         holder.checkBox_ff_shell.setOnClickListener(this);
         holder.user_Image.setOnClickListener(this);
@@ -286,7 +289,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
         switch (v.getId()) {
 
-            case R.id.bt_ff_shell_complain:
+            case R.id.ll_ff_shell_complain:
                 new BottomSheet.Builder(frag.getActivity()).title("Take action on post").sheet(R.menu.menu_complain).listener(new DialogInterface.OnClickListener() {
 
                     @Override
@@ -406,13 +409,14 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         ImageButton bt_ff_shell_like;
         ImageButton bt_ff_shell_whatapp;
         ImageButton bt_ff_shell_share;
-        ImageButton bt_ff_shell_complain;
+     //   ImageButton bt_ff_shell_complain;
         ImageButton bt_ff_shell_map;
         ImageView user_Image;
         LinearLayout ll_like_comment;
         CirclePageIndicator circleIndicator;
         ViewPager viewPager;
         LinearLayout ll_view_pager;
+        LinearLayout ll_ff_shell_complain;
     }
 
     private void savePost(String userID, String postID, int pos) {
@@ -480,11 +484,10 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, item.getPost_description());
             intent.setType("text/plain");
-            String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_description(), null);
+            String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result,item.getPost_title() + "" + item.getPost_description(), null);
             if (path == null) {
-                Uri uri = Uri.parse(path);
-                intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
                 intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
                 frag.startActivity(Intent.createChooser(intent, "Share"));
             } else {
                 Uri uri = Uri.parse(path);
@@ -556,19 +559,23 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             try {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, item.getPost_description());
+                intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" +item.getPost_description());
                 intent.setType("text/plain");
 
                 String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_title() + "" + item.getPost_description(), null);
                 if (path == null) {
 
                     PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-
-                    Uri uri = Uri.parse(path);
-                    intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
                     intent.setType("text/plain");
                     intent.setPackage("com.whatsapp");
-                    frag.startActivity(intent);
+                    intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
+                    try {
+                        frag.startActivity(intent);
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(frag.getActivity(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
                 } else {
 
                     PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);

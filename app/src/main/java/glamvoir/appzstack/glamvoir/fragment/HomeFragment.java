@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
 
-        titlesTAB = new String[]{"All", "FASHION & LIFESTYLE", "FOOD & PLACE", "MUSIC & GIGS", "INTEREST"};
+        titlesTAB = new String[]{"All", "FASHION & LIFESTYLE", "FOOD & PLACES", "MUSIC & GIGS", "INTERESTS"};
         mSlidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.sliding_tabs);
 
 
@@ -116,6 +116,7 @@ public class HomeFragment extends Fragment {
         if (isKeyboardShown){
 
             search_tab.setBackgroundResource(R.drawable.edit_text_border);
+            search_tab.setPadding(20,0,0,0);
             search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
             search_tab.setCursorVisible(true);
             search_tab.requestFocus();
@@ -124,6 +125,8 @@ public class HomeFragment extends Fragment {
 
 
                 search_tab.setCursorVisible(false);
+
+            search_tab.setPadding(20,0,0,0);
                 search_tab.setBackgroundResource(R.drawable.edit_text_border_inactive);
                 search_tab.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
 

@@ -36,17 +36,17 @@
                 android:layout_weight="2"
                 android:orientation="vertical">
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTextBold
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="asdfghmm"
                     android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/textsize_xlarge"
+                    android:textSize="@dimen/textsize_normal"
                     android:textStyle="bold" />
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:id="@+id/subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                     android:maxLines="2"
                     android:minLines="1"
                     android:text="billa"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textsize_small" />
 
             </LinearLayout>
 
@@ -78,7 +78,7 @@
                     android:layout_marginRight="@dimen/padding_top_normal"
                     android:src="@drawable/followers" />
 
-                <TextView
+                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:id="@+id/icon_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

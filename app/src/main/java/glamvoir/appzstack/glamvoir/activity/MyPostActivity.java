@@ -73,7 +73,8 @@ public class MyPostActivity extends FFSPActivity {
 
     @Override
     protected String getAppBarTitle() {
-        return getResources().getString(R.string.mypost);
+
+        return "MY POSTS";
     }
 
     @Override

@@ -53,12 +53,8 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
     }
 
     public void canDelete(boolean edit) {
-        if (edit) {
-            canDelete = true;
-            // updateUI();
-        } else {
-            canDelete = false;
-        }
+        // updateUI();
+        canDelete = edit;
     }
 
     @Override
@@ -106,10 +102,10 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             else holder.subtitle.setText(singleFollow.total_following + " followers");
 
             if (singleFollow.is_following.equalsIgnoreCase("1")) {
-                holder.icon.setImageResource(R.drawable.following);
-                holder.icon_title.setText("UnFollow");
+                holder.icon.setImageResource(R.drawable.following_active);
+                holder.icon_title.setText("Unfollow");
             } else {
-                holder.icon.setImageResource(R.drawable.followers);
+                holder.icon.setImageResource(R.drawable.following);
                 holder.icon_title.setText("Follow");
             }
 
@@ -129,10 +125,10 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             else holder.subtitle.setText(singleFollow.total_following + " followers");
 
             if (singleFollow.is_following.equalsIgnoreCase("1")) {
-                holder.icon.setImageResource(R.drawable.following);
-                holder.icon_title.setText("UnFollow");
+                holder.icon.setImageResource(R.drawable.following_active);
+                holder.icon_title.setText("Unfollow");
             } else {
-                holder.icon.setImageResource(R.drawable.followers);
+                holder.icon.setImageResource(R.drawable.following);
                 holder.icon_title.setText("Follow");
             }
 
@@ -143,9 +139,11 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             }
 
         } else if (context instanceof MysaveActivity) {
-
+/*
             if (singleFollow.user_fname != null && singleFollow.user_lname != null)
-                holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);
+                holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);*/
+            if (singleFollow.post_title != null )
+                holder.title.setText(singleFollow.post_title);
 
             if (singleFollow.post_image != null && !singleFollow.post_image.equals("")) {
                 imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + singleFollow.post_image, holder.user_img, imageOptions);
@@ -170,9 +168,26 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         } else if (context instanceof MyPostActivity) {
 
             //holder.subtitle.setVisibility(View.INVISIBLE);
+            if (singleFollow.post_title != null )
+                holder.title.setText(singleFollow.post_title);
+
+            if (singleFollow.post_image != null && !singleFollow.post_image.equals("")) {
+                imageLoader.displayImage(AppConfig.POST_IMAGE_BASE_PATH + singleFollow.post_image, holder.user_img, imageOptions);
+            } else {
+                holder.user_img.setImageResource(R.drawable.userimg);
+            }
+
             holder.subtitle.setText(singleFollow.post_description);
-            holder.icon.setImageResource(R.drawable.delete);
-            holder.icon_title.setText("Delete");
+            if (canDelete) {
+                holder.icon.setVisibility(View.VISIBLE);
+                holder.icon_title.setVisibility(View.VISIBLE);
+                holder.icon.setImageResource(R.drawable.delete);
+                holder.icon_title.setText("Delete");
+            } else {
+                holder.icon.setVisibility(View.INVISIBLE);
+                holder.icon_title.setVisibility(View.INVISIBLE);
+
+            }
         }
     }
 

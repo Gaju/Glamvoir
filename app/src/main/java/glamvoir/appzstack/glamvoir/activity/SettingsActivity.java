@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.widget.ListView;
@@ -17,6 +19,7 @@ import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.SettingAdapter;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.customview.CustomTextBold;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
@@ -74,7 +77,11 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.setting));
+        SpannableString s = new SpannableString(getResources().getString(R.string.setting));
+        s.setSpan(new CustomTextBold(this), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        getSupportActionBar().setTitle(s);
     }
 
     /**
@@ -121,28 +128,32 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
                 break;
             case 2:
 
-                Intent email = new Intent(Intent.ACTION_SEND);
+
+                Contact_Us.startActivity(SettingsActivity.this);
+               /* Intent email = new Intent(Intent.ACTION_SEND);
                 email.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 email.setData(Uri.parse("mailto:"));
                 email.setType("plain/text");
                 email.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-                email.putExtra(Intent.EXTRA_EMAIL,new String[]{"jobs@boommarcom.com"});
+                email.putExtra(Intent.EXTRA_EMAIL,new String[]{"glamvoir@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, "");
                 email.putExtra(Intent.EXTRA_TEXT, "");
                 email.setType("message/rfc822");
-                startActivity(Intent.createChooser(email, "Select Email Client"));
+                startActivity(Intent.createChooser(email, "Select Email Client"));*/
 
                 break;
             case 3:
 
               //  Contact_Us.startActivity(SettingsActivity.this);
+
+
                 try {
                 Intent emailContact = new Intent(Intent.ACTION_SEND);
                 emailContact.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 emailContact.setData(Uri.parse("mailto:"));
                 emailContact.setType("plain/text");
                 emailContact.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-                emailContact.putExtra(Intent.EXTRA_EMAIL,new String[]{"glamvoir@gmail.com"});
+                emailContact.putExtra(Intent.EXTRA_EMAIL,new String[]{"jobs@boommarcom.com"});
                 emailContact.putExtra(Intent.EXTRA_SUBJECT, "Contact Us");
                 emailContact.putExtra(Intent.EXTRA_TEXT, "");
                 emailContact.setType("message/rfc822");

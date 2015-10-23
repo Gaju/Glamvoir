@@ -8,7 +8,7 @@
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="home_descriptiopn">Discover, Inspire, share...\n Fashion, Food and More</string>
+    <string name="home_descriptiopn">Discover, Inspire, share...\nFashion, Food and More</string>
     <string name="nav_item_home">FLEA MARKET</string>
     <string name="nav_item_friends">FOLLOWER</string>
     <string name="nav_item_follwing">FOLLOWING</string>
@@ -62,7 +62,7 @@
     <string name="following">FOLLOWING</string>
     <string name="mysave">MY SAVE</string>
     <string name="alert">ALERTS</string>
-    <string name="mypost">MY POST</string>
+    <string name="mypost">MY POSTS</string>
     <string name="setting">SETTINGS</string>
     <string name="user_name">Hello Glamvoir</string>
     <string name="member_period">Member since jan 2000</string>
@@ -106,8 +106,8 @@
     <string name="camera">Camera</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="email_description">We have send an OTP on your email, Please enter that</string>
     <string name="app_id">1645342315721002</string>
-
     <string name="wrong_category">Wrong category</string>
     <string name="dont_show">Dont not show me post from this user</string>
     <string name="roport">Report Abuse</string>

@@ -37,6 +37,7 @@ import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.AlertActivity;
+import glamvoir.appzstack.glamvoir.activity.MyAccountActivity;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctask.PhotoUploadAsyncTask;
@@ -120,6 +121,8 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         alert.setOnClickListener(this);
         tv_name.setText(mName);
         tv_email.setText(mEmail);
+        tv_name.setOnClickListener(this);
+        tv_email.setOnClickListener(this);
         listView = (ListView) layout.findViewById(R.id.drawerList);
         adapter = new NavigationDrawerAdapter_Lv(getActivity(), TITLES, ICONS);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -239,6 +242,12 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 AlertActivity.startActivity(getActivity());
                 break;
             case R.id.rl_nav_drawer:
+                break;
+            case R.id.email:
+                MyAccountActivity.startActivity(getActivity());
+                break;
+            case  R.id.name:
+                MyAccountActivity.startActivity(getActivity());
                 break;
             default:
                 break;
