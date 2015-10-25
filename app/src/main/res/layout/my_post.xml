@@ -151,7 +151,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_weight=".5"
-            android:weightSum="5"
+            android:weightSum="7"
             android:background="@android:color/transparent"
             android:layout_height="50dp"
             >
@@ -201,7 +201,23 @@
                 android:src="@drawable/calendar_up"
                 android:background="@android:color/transparent"
                 android:layout_weight="1"
-                android:id="@+id/galleryImages" />
+                android:id="@+id/calender_item" />
+            <ImageButton
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_lock_idle_alarm"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:id="@+id/time_calender" />
+            <ImageButton
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_input_get"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:id="@+id/only_text" />
         </LinearLayout>
 
         <LinearLayout
