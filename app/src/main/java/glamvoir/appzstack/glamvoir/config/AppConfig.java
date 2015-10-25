@@ -15,6 +15,7 @@ public class AppConfig {
 
     public final static String POST_IMAGE_BASE_PATH = "http://glamvoir.com/assests/post_images/";
 
+    public static final String GCM_SENDER_ID = "790774834022"; //glamvoir-1107
 
     public static String getDomain() {
         return DOMAIN;

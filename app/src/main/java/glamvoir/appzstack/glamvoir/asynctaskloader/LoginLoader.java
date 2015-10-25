@@ -2,6 +2,7 @@ package glamvoir.appzstack.glamvoir.asynctaskloader;
 
 import android.content.AsyncTaskLoader;
 
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.helpers.Logger;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
@@ -27,6 +28,7 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
     public static final int LOGIN_SIGNUP = 3;
     private int loginType;
     private TaskResponse response = null;
+    AppPreferences appPreferences = null;
 
     public LoginLoader(RequestBean requestBean, String email, String password, String fName, String lName, String fgender, String deviceToken, String deviceType, int loginType) {
         super(requestBean.getContext());
@@ -40,6 +42,7 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
         this.requestBean = requestBean;
         this.loginType = loginType;
         dialog = new ShowDialog();
+        appPreferences = new AppPreferences(requestBean.getContext());
     }
 
     @Override
@@ -50,10 +53,10 @@ public class LoginLoader extends AsyncTaskLoader<TaskResponse<LoginResponse>> im
             Logger.push(Logger.LogType.LOG_DEBUG, TAG, email + "," + password + "," + deviceToken + "," + deviceType);
             switch (loginType) {
                 case LOGIN_GLAMVOIR:
-                    response.data = Communication.loginGlamvoir("user_login", email, password, deviceToken, deviceType);
+                    response.data = Communication.loginGlamvoir("user_login", email, password, deviceToken, deviceType, appPreferences.getGcmID());
                     break;
                 case LOGIN_SIGNUP:
-                    response.data = Communication.loginSignup("add_user", email, password, fName, lName, fgender, deviceToken, deviceType);
+                    response.data = Communication.loginSignup("add_user", email, password, fName, lName, fgender, deviceToken, deviceType, appPreferences.getGcmID());
                     break;
             }
         } catch (Exception e) {

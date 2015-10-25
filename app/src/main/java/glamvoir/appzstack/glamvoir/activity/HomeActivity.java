@@ -35,8 +35,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
     int fleaposition;
 
 
-
-
     public static void startActivityWithClearTop(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

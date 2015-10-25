@@ -13,7 +13,6 @@ import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
-import glamvoir.appzstack.glamvoir.model.net.response.ReportAbuse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
@@ -23,15 +22,15 @@ import retrofit.mime.TypedString;
  */
 public class Communication {
 
-    public static LoginResponse loginSignup(String methodType, String emailId, String password, String fName, String lName, String gender, String deviceToken, String deviceType) {
+    public static LoginResponse loginSignup(String methodType, String emailId, String password, String fName, String lName, String gender, String deviceToken, String deviceType, String user_gcm_token) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        LoginResponse response = service.loginSignup(methodType, emailId, password, fName, lName, gender, deviceToken, deviceType);
+        LoginResponse response = service.loginSignup(methodType, emailId, password, fName, lName, gender, deviceToken, deviceType, user_gcm_token);
         return response;
     }
 
-    public static LoginResponse loginGlamvoir(String methodType, String emailId, String password, String deviceToken, String deviceType) {
+    public static LoginResponse loginGlamvoir(String methodType, String emailId, String password, String deviceToken, String deviceType, String user_gcm_token) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
-        LoginResponse response = service.loginGlamvoir(methodType, emailId, password, deviceToken, deviceType);
+        LoginResponse response = service.loginGlamvoir(methodType, emailId, password, deviceToken, deviceType, user_gcm_token);
         return response;
     }
 

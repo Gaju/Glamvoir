@@ -10,7 +10,6 @@ import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ProfileResponse;
-import glamvoir.appzstack.glamvoir.model.net.response.ReportAbuse;
 import glamvoir.appzstack.glamvoir.model.net.response.ServerResponse;
 import retrofit.http.Body;
 import retrofit.http.Field;
@@ -35,10 +34,10 @@ public interface GlamvoirService {
 
     @FormUrlEncoded
     @POST("/index.php/api")
-    LoginResponse loginSignup(@Field("method") String methodType, @Field("user_email") String email, @Field("user_password") String password, @Field("user_fname") String fName, @Field("user_lname") String lName, @Field("user_gender") String gender, @Field("user_device_token") String deviToken, @Field("user_device_type") String deviceType);
+    LoginResponse loginSignup(@Field("method") String methodType, @Field("user_email") String email, @Field("user_password") String password, @Field("user_fname") String fName, @Field("user_lname") String lName, @Field("user_gender") String gender, @Field("user_device_token") String deviToken, @Field("user_device_type") String deviceType, @Query("user_gcm_token") String user_gcm_token);
 
     @GET("/index.php/api")
-    LoginResponse loginGlamvoir(@Query("method") String methodType, @Query("user_email") String email, @Query("user_password") String password, @Query("user_device_token") String deviToken, @Query("user_device_type") String deviceType);
+    LoginResponse loginGlamvoir(@Query("method") String methodType, @Query("user_email") String email, @Query("user_password") String password, @Query("user_device_token") String deviToken, @Query("user_device_type") String deviceType, @Query("user_gcm_token") String user_gcm_token);
 
     @GET("/index.php/api")
     FFSP_Response following(@Query("method") String methodType, @Query("user_id") String user_id);

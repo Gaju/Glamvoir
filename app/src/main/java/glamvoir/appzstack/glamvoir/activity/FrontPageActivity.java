@@ -43,6 +43,7 @@ import java.util.Arrays;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.config.AppConfig;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
 
@@ -136,6 +137,8 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
         saveDeviceToken();
 
+        checkForGCMRegisteration();
+
         // Initializing google Api
         //   initGoogleApi();
 
@@ -154,8 +157,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 //    }
 
 
-    private void checkForRegisteration() {
-
+    private void checkForGCMRegisteration() {
 
         // Check device for Play Services APK.
         if (checkPlayServices()) {
@@ -210,7 +212,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
                     gcm = GoogleCloudMessaging
                             .getInstance(getApplicationContext());
                 }
-            //    gcmRegId = gcm.register(AppConstant.GCM_SENDER_ID);
+                gcmRegId = gcm.register(AppConfig.GCM_SENDER_ID);
                 String sss = gcmRegId;
                 System.out.println(sss);
 
