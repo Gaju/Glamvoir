@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:hint="Add a title"
         android:id="@+id/addstory_heading"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+        android:hint="Add a description"
         android:id="@+id/addstory_description"
         android:maxLength="300"
         android:layout_gravity="center_horizontal" />

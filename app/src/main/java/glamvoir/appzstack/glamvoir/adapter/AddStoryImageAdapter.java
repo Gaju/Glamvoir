@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
     ImageLoader imageLoader;
     private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
     private Activity parentActivity;
+    ViewHolder holder;
 
     public AddStoryImageAdapter(Context c, ImageLoader imageLoader, Activity parentActivity) {
 
@@ -98,7 +100,7 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-       final ViewHolder holder;
+
 
         if (convertView == null) {
 
@@ -114,11 +116,13 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
 
         } else {
             holder = (ViewHolder) convertView.getTag();
+
+
         }
         holder.upload_Image.setTag(position);
         holder.tv_add_heading.setTag(position);
         holder.tv_add_description.setTag(position);
-        holder.ll_heading_description.setTag(position);
+
         try {
 
             imageLoader.displayImage("file://" + data.get(position).sdcardPath,
@@ -135,8 +139,9 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
             e.printStackTrace();
         }
 
-       holder.tv_add_heading.setOnClickListener(this);
-       holder.tv_add_description.setOnClickListener(this);
+      // holder.tv_add_heading.setOnClickListener(this);
+      // holder.tv_add_description.setOnClickListener(this);
+       holder.ll_heading_description.setOnClickListener(this);
 
 
 
@@ -168,18 +173,19 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_heading_description:
-
-                LayoutInflater inflater = parentActivity.getLayoutInflater();;
+                LayoutInflater inflater = parentActivity.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.add_story_alertdialog_head_des, null);
-                AlertDialog.Builder builder =
-                        new AlertDialog.Builder(parentActivity,R.style.MyMaterialTheme);
 
-
-                builder.setTitle("Dialog");
-
+                AlertDialog.Builder builder =new AlertDialog.Builder(parentActivity);
+                builder.setView(dialogView);
+                final   EditText heading= (EditText) dialogView.findViewById(R.id.heading);
+                final EditText description=  (EditText) dialogView.findViewById(R.id.description);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        holder.tv_add_heading.setText(heading.getText().toString());
+                        holder.tv_add_description.setText(description.getText().toString());
 
                     }
                 });
@@ -187,9 +193,13 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+
                     }
                 });
+                builder.create();
                 builder.show();
+
+
 
                 break;
 
