@@ -31,16 +31,18 @@ public class GalleryAdapter extends BaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mContext = c;
 		this.imageLoader = imageLoader;
-		// clearCache();
+		clearCache();
 	}
 
 	@Override
 	public int getCount() {
+
 		return data.size();
 	}
 
 	@Override
 	public CustomGallery getItem(int position) {
+
 		return data.get(position);
 	}
 

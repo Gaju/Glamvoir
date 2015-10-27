@@ -63,6 +63,7 @@
         <item name="elevation">10dp</item>
     </style>
 
+
     <style name="PagerSlidingTabStripStyle" parent="ThemeOverlay.AppCompat.Dark">
         <!-- Customize your theme here. -->
         <item name="android:textColorPrimary">@color/colorAccent</item>

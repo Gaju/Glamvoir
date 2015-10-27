@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -43,8 +43,8 @@ import java.util.Date;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Action;
+import glamvoir.appzstack.glamvoir.adapter.AddStoryImageAdapter;
 import glamvoir.appzstack.glamvoir.adapter.CustomSpinnerAdapter;
-import glamvoir.appzstack.glamvoir.adapter.GalleryAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
@@ -67,14 +67,17 @@ public class AddStory extends AppCompatActivity implements
     String userCurrentDate;
     String userCooseDate,finalDate;
 
+
     GridView gridGallery;
     Handler handler;
-    GalleryAdapter adapter;
+   // GalleryAdapter adapter;
     ImageLoader imageLoader;
     Bundle bundle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
 
+    AddStoryImageAdapter addStoryImageAdapter;
+    private ListView lv_addstory;
     String result=null;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
@@ -282,6 +285,8 @@ public class AddStory extends AppCompatActivity implements
         handler = new Handler();
         lltool = (LinearLayout) findViewById(R.id.lltool);
         galleryImages = (ImageButton) findViewById(R.id.button3);
+        lv_addstory= (ListView) findViewById(R.id.lv_addstory);
+        lv_addstory.setFastScrollEnabled(true);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu = (Spinner) findViewById(R.id.spinner_nav);
         lltool.setVisibility(View.VISIBLE);
@@ -294,11 +299,13 @@ public class AddStory extends AppCompatActivity implements
             selected_text.setSelected(true);
         }
 
-        gridGallery = (GridView) findViewById(R.id.gridGallery);
-        gridGallery.setFastScrollEnabled(true);
-        adapter = new GalleryAdapter(AddStory.this, imageLoader);
-        adapter.setMultiplePick(false);
-        gridGallery.setAdapter(adapter);
+        //gridGallery = (GridView) findViewById(R.id.gridGallery);
+       // gridGallery.setFastScrollEnabled(true);
+        addStoryImageAdapter= new AddStoryImageAdapter(this,imageLoader,AddStory.this);
+        lv_addstory.setAdapter(addStoryImageAdapter);
+      // adapter = new GalleryAdapter(AddStory.this, imageLoader);
+       // adapter.setMultiplePick(false);
+      //  gridGallery.setAdapter(adapter);
     }
 
     @Override
@@ -433,7 +440,7 @@ public class AddStory extends AppCompatActivity implements
 
                 dataT.add(item);
             }
-            adapter.addAll(dataT);
+            addStoryImageAdapter.addAll(dataT);
         }
     }
 
