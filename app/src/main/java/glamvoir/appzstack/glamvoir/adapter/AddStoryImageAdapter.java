@@ -49,6 +49,7 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
         this.imageLoader = imageLoader;
         this.parentActivity = parentActivity;
         clearCache();
+
     }
 
     /**
