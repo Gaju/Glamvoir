@@ -74,7 +74,7 @@ public class AddStory extends AppCompatActivity implements
 
     private static Uri picUri = null;
 
-    // Variable for storing current date and time
+    // Variable for storing current date and time.
     private int mYear, mMonth, mDay, mHour, mMinute;
     String userCurrentDate;
     String userCooseDate, finalDate;
