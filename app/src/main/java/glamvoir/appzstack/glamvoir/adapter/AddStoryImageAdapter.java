@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -26,11 +27,14 @@ import glamvoir.appzstack.glamvoir.activity.CustomGallery;
  */
 public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickListener {
 
+
     private Context mContext;
     private LayoutInflater infalter;
     ImageLoader imageLoader;
-    private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
+   private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
+
     private Activity parentActivity;
+    private DisplayImageOptions options;
     ViewHolder holder;
 
     public AddStoryImageAdapter(Context c, ImageLoader imageLoader, Activity parentActivity) {
@@ -124,7 +128,7 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
         holder.tv_add_description.setTag(position);
 
         try {
-
+          //  imageLoader.displayImage("file://" + data.get(position).sdcardPath,  holder.upload_Image, options);
             imageLoader.displayImage("file://" + data.get(position).sdcardPath,
                     holder.upload_Image, new SimpleImageLoadingListener() {
                         @Override

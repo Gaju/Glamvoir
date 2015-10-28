@@ -12,84 +12,84 @@
         android:layout_height="match_parent"
         android:weightSum="7"
         android:orientation="vertical">
-<!--
-        <glamvoir.appzstack.glamvoir.customview.CustomTestLight
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:textColor="#707070"
-            android:text="Share With"
-            android:id="@+id/textView8"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight=".5" />-->
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_weight=".5"
             android:weightSum="3"
-            android:layout_height="40dp"
-            android:background="@drawable/rounder_corner"
+            android:layout_height="48dp"
+
             android:layout_margin="8dp"
             >
-
-            <Button
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_weight="1"
-                android:text="BOTH"
-                android:id="@+id/button7" />
+                android:id="@+id/rgGender"
+                android:orientation="horizontal"
+                android:layout_weight="3">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="WOMEN"
-                android:layout_weight="1"
-                android:id="@+id/button8" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="MEN"
-                android:layout_weight="1"
-                android:id="@+id/button9" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="BOTH"
+                    android:layout_weight="1"
+                    android:background="@drawable/yourbuttonbackground"
+                    android:button="@android:color/transparent"
+
+                    android:layout_marginLeft="4dp"
+                    android:gravity="center"
+
+                    android:id="@+id/rdbboth" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text=" WOMEN"
+                    android:id="@+id/rdbFemale"
+                    android:background="@drawable/yourbuttonbackground"
+                    android:layout_marginLeft="4dp"
+                    android:gravity="center"
+                    android:button="@android:color/transparent"
+
+                    />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=" MEN"
+                    android:id="@+id/rdbmen"
+                    android:background="@drawable/yourbuttonbackground"
+                    android:button="@android:color/transparent"
+                    android:layout_marginLeft="4dp"
+                    android:gravity="center"
+                    android:layout_weight="1" />
+
+
+            </RadioGroup>
+
+
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_weight=".5"
-            android:weightSum="2"
-            android:background="@drawable/rounder_corner"
-            android:layout_margin="8dp"
+
+            android:layout_margin="10dp"
             android:layout_marginTop="10dp"
-            android:layout_height="40dp">
+            android:layout_marginLeft="4dp"
+            android:layout_height="48dp">
 
-            <Button
+            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="NEW DELHI"
                 android:layout_weight="1"
-                style="?android:attr/borderlessButtonStyle"
-                android:background="@android:color/transparent"
-                android:id="@+id/button11" />
+                android:id="@+id/spinner" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:text="ALL CITIES"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_weight="1"
-                android:id="@+id/button10" />
+
         </LinearLayout>
 
 
@@ -102,57 +102,17 @@
             android:layout_margin="8dp"
             android:layout_height="wrap_content"
             >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:weightSum="3"
-                android:orientation="vertical">
 
-
-                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Whats's on your mind"
-                    android:layout_gravity="center"
-                    android:gravity="left"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/textView9"
-                    android:layout_weight="1" />
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:id="@+id/lv_addstory"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:scrollbars="none"
                     android:divider="@null" />
 
-            </LinearLayout>
 
 
-
-            <!-- <EditText
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:inputType="textMultiLine"
-                 android:ems="10"
-                 android:id="@+id/editText"
-                 android:layout_weight="2" />-->
-           <!-- <GridView
-                android:id="@+id/gridGallery"
-                android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                android:layout_gravity="top"
-                android:layout_marginBottom="-10dp"
-                android:layout_marginLeft="-10dp"
-                android:layout_marginRight="-10dp"
-                android:layout_marginTop="-10dp"
-                android:horizontalSpacing="-15dp"
-                android:numColumns="1"
-                android:padding="0dp"
-                android:verticalSpacing="-15dp"
-                tools:listitem="@layout/gallery_item" >
-            </GridView>-->
 
         </LinearLayout>
 

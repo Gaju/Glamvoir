@@ -16,10 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -53,13 +54,9 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class AddStory extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener{
 
-    /* public static void startActivity(Context context) {
-         Intent intent = new Intent(context, AddStory.class);
-         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
-         context.startActivity(intent);
-     }*/
+
     private static final String TAG = "AddStory";
 
     // Variable for storing current date and time
@@ -68,23 +65,27 @@ public class AddStory extends AppCompatActivity implements
     String userCooseDate,finalDate;
 
 
-    GridView gridGallery;
+   // GridView gridGallery;
     Handler handler;
    // GalleryAdapter adapter;
     ImageLoader imageLoader;
     Bundle bundle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-
+    RadioButton rdbMale, rdbFemale,rblboth;
+    RadioGroup rgGender;
     AddStoryImageAdapter addStoryImageAdapter;
     private ListView lv_addstory;
     String result=null;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
-    Spinner dropDownMenu;
+    Spinner dropDownMenu,dropCitySpinner;
     TextView selected_text;
     private LinearLayout lltool;
     ImageButton galleryImages,time_calender,calender_item;
+    ArrayList<CustomGallery> dataT;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +112,14 @@ public class AddStory extends AppCompatActivity implements
 
         initImageLoader();
         initViews();
-
+        getToolbar(toolbar);
         initListener();
 
-        getToolbar(toolbar);
+
+
         addItemsToSpinner();
+
+        addItemsCityToSpinner();
         CurrentDate();
 
         //    init();
@@ -203,35 +207,46 @@ public class AddStory extends AppCompatActivity implements
     }
 
 
-    // add items into spinner dynamically
+   // add items into spinner dynamically
     public void addItemsToSpinner() {
 
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("FASHION AND LIFESTYLE");
-        list.add("FOOD AND PLACE");
-        list.add("MUSIC AND GIGS");
-        list.add("INTERST");
+        ArrayList<String> list= new ArrayList<String>();
+        list.add("FASHION & LIFESTYLE");
+        list.add("FOOD & PLACES");
+        list.add("MUSIC & GIGS");
+        list.add("INTERESTS");
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 
         CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
                 getApplicationContext(), list);
 
-
-        // Default ArrayAdapter with default spinner item layout, getting some
-        // view rendering problem in lollypop device, need to test in other
-        // devices
-
-		/*
-         * ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this,
-		 * android.R.layout.simple_spinner_item, list);
-		 * spinAdapter.setDropDownViewResource
-		 * (android.R.layout.simple_spinner_dropdown_item);
-		 */
-
         dropDownMenu.setAdapter(spinAdapter);
 
-        dropDownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
+    }
+
+
+
+
+    public void addItemsCityToSpinner() {
+
+        ArrayList<String> list= new ArrayList<String>();
+        list.add("All");
+        list.add("Delhi");
+        list.add("Mumbai");
+        list.add("Kolkata");
+        list.add("Gurgaon");
+
+        // Custom ArrayAdapter with spinner item layout to set popup background
+
+        CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
+                getApplicationContext(), list);
+
+        dropCitySpinner.setAdapter(spinAdapter);
+
+      /*  dropCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v,
@@ -239,9 +254,11 @@ public class AddStory extends AppCompatActivity implements
                 // On selecting a spinner item
                 String item = adapter.getItemAtPosition(position).toString();
 
-                // Showing selected spinner item
+
                 Toast.makeText(getApplicationContext(), "Selected  : " + item,
                         Toast.LENGTH_LONG).show();
+
+
             }
 
             @Override
@@ -250,8 +267,14 @@ public class AddStory extends AppCompatActivity implements
 
             }
         });
-
+*/
     }
+
+
+
+
+
+
 
 
     /**
@@ -275,6 +298,72 @@ public class AddStory extends AppCompatActivity implements
         galleryImages.setOnClickListener(this);
         calender_item.setOnClickListener(this);
         time_calender.setOnClickListener(this);
+        rgGender.setOnCheckedChangeListener(this);
+        dropDownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
+
+                String item = adapter.getItemAtPosition(position).toString();
+
+                // Showing selected spinner item
+                if (item.equalsIgnoreCase("FASHION & LIFESTYLE")){
+                    selected_text.setText(item);
+                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                            Toast.LENGTH_LONG).show();
+                }
+                else if (item.equalsIgnoreCase("FOOD & PLACES")){
+                    selected_text.setText(item);
+                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                            Toast.LENGTH_LONG).show();
+                }
+
+                else if (item.equalsIgnoreCase("MUSIC & GIGS")){
+                    selected_text.setText(item);
+                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                            Toast.LENGTH_LONG).show();
+                }
+
+                else if (item.equalsIgnoreCase("INTERESTS")){
+                    selected_text.setText(item);
+                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                            Toast.LENGTH_LONG).show();
+                }
+                else if (item.equalsIgnoreCase("FLEA MARKET")){
+                    selected_text.setText(item);
+                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+     //   dropCitySpinner.setOnItemSelectedListener(this);
+
+        dropCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View v,
+                                       int position, long id) {
+                // On selecting a spinner item
+                String item = adapter.getItemAtPosition(position).toString();
+
+
+                Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                        Toast.LENGTH_LONG).show();
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
     }
 
 
@@ -289,15 +378,26 @@ public class AddStory extends AppCompatActivity implements
         lv_addstory.setFastScrollEnabled(true);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu = (Spinner) findViewById(R.id.spinner_nav);
+        dropCitySpinner = (Spinner) findViewById(R.id.spinner);
         lltool.setVisibility(View.VISIBLE);
         selected_text = (TextView) findViewById(R.id.selected_text);
         calender_item=(ImageButton)findViewById(R.id.calender_item);
         time_calender=(ImageButton)findViewById(R.id.time_calender);
+
+        rgGender = (RadioGroup) findViewById(R.id.rgGender);
+        rdbMale = (RadioButton) findViewById(R.id.rdbMale);
+        rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
+        rblboth=(RadioButton)findViewById(R.id.rdbboth);
+
         if (bundle != null) {
             selected_text.setVisibility(View.VISIBLE);
             selected_text.setText(bundle.getString("CATOGERYNAME"));
             selected_text.setSelected(true);
+
+
+
         }
+        dropDownMenu.setSelection(getIndex(dropDownMenu, selected_text.getText().toString()));
 
         //gridGallery = (GridView) findViewById(R.id.gridGallery);
        // gridGallery.setFastScrollEnabled(true);
@@ -307,6 +407,19 @@ public class AddStory extends AppCompatActivity implements
        // adapter.setMultiplePick(false);
       //  gridGallery.setAdapter(adapter);
     }
+
+    private int getIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
+
 
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -411,6 +524,34 @@ public class AddStory extends AppCompatActivity implements
     }
 
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // TODO Auto-generated method stub
+        switch (checkedId) {
+
+            case R.id.rdbboth:
+                // AppPreferences.getInstance(this).setGender(GENDER_MALE);
+                Toast.makeText(AddStory.this,"Selected both",Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.rdbMale:
+               // AppPreferences.getInstance(this).setGender(GENDER_MALE);
+                Toast.makeText(AddStory.this,"Selected Men",Toast.LENGTH_LONG).show();
+
+                break;
+            case R.id.rdbFemale:
+             //   AppPreferences.getInstance(this).setGender(GENDER_FEMALE);
+                Toast.makeText(AddStory.this,"Selected Women",Toast.LENGTH_LONG).show();
+
+                break;
+
+            default:
+
+
+                break;
+        }
+    }
+
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc().imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -432,7 +573,7 @@ public class AddStory extends AppCompatActivity implements
         if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
             String[] all_path = data.getStringArrayExtra("all_path");
 
-            ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
+             dataT = new ArrayList<CustomGallery>();
 
             for (String string : all_path) {
                 CustomGallery item = new CustomGallery();
@@ -441,6 +582,7 @@ public class AddStory extends AppCompatActivity implements
                 dataT.add(item);
             }
             addStoryImageAdapter.addAll(dataT);
+           // list.addAll(dataT);
         }
     }
 
