@@ -14,15 +14,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.activity.AddStory;
 import glamvoir.appzstack.glamvoir.activity.CustomGallery;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 
@@ -31,11 +30,14 @@ import glamvoir.appzstack.glamvoir.helpers.Utility;
  */
 public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickListener {
 
+
     private Context mContext;
     private LayoutInflater infalter;
     ImageLoader imageLoader;
-    private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
+   private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
+
     private Activity parentActivity;
+    private DisplayImageOptions options;
     ViewHolder holder;
     private String[] tempHeading;
     private String[] tempDescription;
@@ -47,6 +49,7 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
         this.imageLoader = imageLoader;
         this.parentActivity = parentActivity;
         clearCache();
+
     }
 
     /**
@@ -128,7 +131,7 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
         holder.tv_add_description.setText(tempDescription[position]);
 
         try {
-
+          //  imageLoader.displayImage("file://" + data.get(position).sdcardPath,  holder.upload_Image, options);
             imageLoader.displayImage("file://" + data.get(position).sdcardPath,
                     holder.upload_Image, new SimpleImageLoadingListener() {
                         @Override

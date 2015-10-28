@@ -137,7 +137,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
               //  AddStory.startActivity(HomeActivity.this);
                 Intent intent = new Intent(HomeActivity.this, AddStory.class);
                 intent.putExtra("ParentClassName", this.getClass().getSimpleName());
-                intent.putExtra("CATOGERYNAME", "FOOD & PLACE");
+                intent.putExtra("CATOGERYNAME", "FOOD & PLACES");
                 startActivity(intent);
 
             }
@@ -153,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                // AddStory.startActivity(HomeActivity.this);
                 Intent intent = new Intent(HomeActivity.this, AddStory.class);
                 intent.putExtra("ParentClassName", this.getClass().getSimpleName());
-                intent.putExtra("CATOGERYNAME", "INTEREST");
+                intent.putExtra("CATOGERYNAME", "INTERESTS");
                 startActivity(intent);
 
             }
