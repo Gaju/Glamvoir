@@ -2,10 +2,13 @@ package glamvoir.appzstack.glamvoir.helpers;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Environment;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
@@ -65,4 +68,35 @@ public class Utility {
         return true;
     }
 
+    /**
+     * @return True if the external storage is available.
+     * False otherwise.
+     */
+    public static boolean checkAvailable() {
+
+        // Retrieving the external storage state
+        String state = Environment.getExternalStorageState();
+
+        // Check if available
+        if (Environment.MEDIA_MOUNTED.equals(state)
+                || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * method to get current date and time
+     *
+     * @return
+     */
+    public static String getDateTime(boolean seperator) {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf;
+        if (seperator)
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        else
+            sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return sdf.format(c.getTime());
+    }
 }
