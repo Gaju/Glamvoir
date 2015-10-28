@@ -32,6 +32,7 @@ import java.util.List;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.GalleryAdapter;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
 
 public class CustomGalleryActivity extends AppCompatActivity {
 
@@ -171,7 +172,12 @@ public class CustomGalleryActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-            adapter.changeSelection(v, position);
+            maxLength.add(position);
+            if (maxLength.size() <= MAX_PHOTO || maxLength.contains(position)) {
+                adapter.changeSelection(v, position);
+            } else {
+                Utility.showToast(CustomGalleryActivity.this, "not possible");
+            }
         }
     };
 

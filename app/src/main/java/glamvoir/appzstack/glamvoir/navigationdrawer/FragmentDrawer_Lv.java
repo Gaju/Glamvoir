@@ -252,9 +252,10 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 }).show();
                 break;
 
+
             case R.id.alertlayout:
                 AlertActivity.startActivity(getActivity());
-                removeAlert();
+                alertCount.setVisibility(View.GONE);
 
                 break;
             case R.id.rl_nav_drawer:
@@ -269,14 +270,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                 break;
 
         }
-    }
-
-    /**
-     * method to remove the alert view
-     */
-    private void removeAlert() {
-        alertCount.setVisibility(View.GONE);
-        AppConfig.ALERT_COUNTER = 0;
     }
 
 

@@ -6,8 +6,11 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,11 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -36,6 +38,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +50,7 @@ import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.AddStoryImageAdapter;
 import glamvoir.appzstack.glamvoir.adapter.CustomSpinnerAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
@@ -54,38 +58,46 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class AddStory extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener{
+        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
-
+    /* public static void startActivity(Context context) {
+         Intent intent = new Intent(context, AddStory.class);
+         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
+         context.startActivity(intent);
+     }*/
     private static final String TAG = "AddStory";
+    private static final int CAPTURE_IMAGE_CAMERA = 1;
+    private static final String DIRECTORY_NAME = "Glamvoir";
+    private static final String IMAGE_EXTENSION = ".jpg";
+    private static final String IMAGE_PREFIX = "IMG";
+    private static final int MAX_PHOTOS = 5;
 
-    // Variable for storing current date and time.
+    private static Uri picUri = null;
+
+    // Variable for storing current date and time
     private int mYear, mMonth, mDay, mHour, mMinute;
     String userCurrentDate;
-    String userCooseDate,finalDate;
+    String userCooseDate, finalDate;
 
+    ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
 
-   // GridView gridGallery;
+    GridView gridGallery;
     Handler handler;
-   // GalleryAdapter adapter;
+    // GalleryAdapter adapter;
     ImageLoader imageLoader;
     Bundle bundle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-    RadioButton rdbMale, rdbFemale,rblboth;
-    RadioGroup rgGender;
+
     AddStoryImageAdapter addStoryImageAdapter;
     private ListView lv_addstory;
-    String result=null;
+    String result = null;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
-    Spinner dropDownMenu,dropCitySpinner;
+    Spinner dropDownMenu;
     TextView selected_text;
     private LinearLayout lltool;
-    ImageButton galleryImages,time_calender,calender_item;
-    ArrayList<CustomGallery> dataT;
-
-
+    ImageButton galleryImages, time_calender, calender_item, cameraImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,14 +124,11 @@ public class AddStory extends AppCompatActivity implements
 
         initImageLoader();
         initViews();
-        getToolbar(toolbar);
+
         initListener();
 
-
-
+        getToolbar(toolbar);
         addItemsToSpinner();
-
-        addItemsCityToSpinner();
         CurrentDate();
 
         //    init();
@@ -207,46 +216,35 @@ public class AddStory extends AppCompatActivity implements
     }
 
 
-   // add items into spinner dynamically
+    // add items into spinner dynamically
     public void addItemsToSpinner() {
 
-        ArrayList<String> list= new ArrayList<String>();
-        list.add("FASHION & LIFESTYLE");
-        list.add("FOOD & PLACES");
-        list.add("MUSIC & GIGS");
-        list.add("INTERESTS");
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("FASHION AND LIFESTYLE");
+        list.add("FOOD AND PLACE");
+        list.add("MUSIC AND GIGS");
+        list.add("INTERST");
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 
         CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
                 getApplicationContext(), list);
+
+
+        // Default ArrayAdapter with default spinner item layout, getting some
+        // view rendering problem in lollypop device, need to test in other
+        // devices
+
+		/*
+         * ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this,
+		 * android.R.layout.simple_spinner_item, list);
+		 * spinAdapter.setDropDownViewResource
+		 * (android.R.layout.simple_spinner_dropdown_item);
+		 */
 
         dropDownMenu.setAdapter(spinAdapter);
 
-
-
-    }
-
-
-
-
-    public void addItemsCityToSpinner() {
-
-        ArrayList<String> list= new ArrayList<String>();
-        list.add("All");
-        list.add("Delhi");
-        list.add("Mumbai");
-        list.add("Kolkata");
-        list.add("Gurgaon");
-
-        // Custom ArrayAdapter with spinner item layout to set popup background
-
-        CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
-                getApplicationContext(), list);
-
-        dropCitySpinner.setAdapter(spinAdapter);
-
-      /*  dropCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dropDownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v,
@@ -254,11 +252,9 @@ public class AddStory extends AppCompatActivity implements
                 // On selecting a spinner item
                 String item = adapter.getItemAtPosition(position).toString();
 
-
+                // Showing selected spinner item
                 Toast.makeText(getApplicationContext(), "Selected  : " + item,
                         Toast.LENGTH_LONG).show();
-
-
             }
 
             @Override
@@ -267,14 +263,8 @@ public class AddStory extends AppCompatActivity implements
 
             }
         });
-*/
+
     }
-
-
-
-
-
-
 
 
     /**
@@ -298,72 +288,6 @@ public class AddStory extends AppCompatActivity implements
         galleryImages.setOnClickListener(this);
         calender_item.setOnClickListener(this);
         time_calender.setOnClickListener(this);
-        rgGender.setOnCheckedChangeListener(this);
-        dropDownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
-
-                String item = adapter.getItemAtPosition(position).toString();
-
-                // Showing selected spinner item
-                if (item.equalsIgnoreCase("FASHION & LIFESTYLE")){
-                    selected_text.setText(item);
-                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                            Toast.LENGTH_LONG).show();
-                }
-                else if (item.equalsIgnoreCase("FOOD & PLACES")){
-                    selected_text.setText(item);
-                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                            Toast.LENGTH_LONG).show();
-                }
-
-                else if (item.equalsIgnoreCase("MUSIC & GIGS")){
-                    selected_text.setText(item);
-                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                            Toast.LENGTH_LONG).show();
-                }
-
-                else if (item.equalsIgnoreCase("INTERESTS")){
-                    selected_text.setText(item);
-                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                            Toast.LENGTH_LONG).show();
-                }
-                else if (item.equalsIgnoreCase("FLEA MARKET")){
-                    selected_text.setText(item);
-                    Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-     //   dropCitySpinner.setOnItemSelectedListener(this);
-
-        dropCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View v,
-                                       int position, long id) {
-                // On selecting a spinner item
-                String item = adapter.getItemAtPosition(position).toString();
-
-
-                Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                        Toast.LENGTH_LONG).show();
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-
     }
 
 
@@ -374,52 +298,30 @@ public class AddStory extends AppCompatActivity implements
         handler = new Handler();
         lltool = (LinearLayout) findViewById(R.id.lltool);
         galleryImages = (ImageButton) findViewById(R.id.button3);
-        lv_addstory= (ListView) findViewById(R.id.lv_addstory);
+        cameraImages = (ImageButton) findViewById(R.id.button2);
+        cameraImages.setOnClickListener(this);
+        lv_addstory = (ListView) findViewById(R.id.lv_addstory);
         lv_addstory.setFastScrollEnabled(true);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu = (Spinner) findViewById(R.id.spinner_nav);
-        dropCitySpinner = (Spinner) findViewById(R.id.spinner);
         lltool.setVisibility(View.VISIBLE);
         selected_text = (TextView) findViewById(R.id.selected_text);
-        calender_item=(ImageButton)findViewById(R.id.calender_item);
-        time_calender=(ImageButton)findViewById(R.id.time_calender);
-
-        rgGender = (RadioGroup) findViewById(R.id.rgGender);
-        rdbMale = (RadioButton) findViewById(R.id.rdbMale);
-        rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
-        rblboth=(RadioButton)findViewById(R.id.rdbboth);
-
+        calender_item = (ImageButton) findViewById(R.id.calender_item);
+        time_calender = (ImageButton) findViewById(R.id.time_calender);
         if (bundle != null) {
             selected_text.setVisibility(View.VISIBLE);
             selected_text.setText(bundle.getString("CATOGERYNAME"));
             selected_text.setSelected(true);
-
-
-
         }
-        dropDownMenu.setSelection(getIndex(dropDownMenu, selected_text.getText().toString()));
 
         //gridGallery = (GridView) findViewById(R.id.gridGallery);
-       // gridGallery.setFastScrollEnabled(true);
-        addStoryImageAdapter= new AddStoryImageAdapter(this,imageLoader,AddStory.this);
+        // gridGallery.setFastScrollEnabled(true);
+        addStoryImageAdapter = new AddStoryImageAdapter(this, imageLoader, AddStory.this);
         lv_addstory.setAdapter(addStoryImageAdapter);
-      // adapter = new GalleryAdapter(AddStory.this, imageLoader);
-       // adapter.setMultiplePick(false);
-      //  gridGallery.setAdapter(adapter);
+        // adapter = new GalleryAdapter(AddStory.this, imageLoader);
+        // adapter.setMultiplePick(false);
+        //  gridGallery.setAdapter(adapter);
     }
-
-    private int getIndex(Spinner spinner, String myString){
-
-        int index = 0;
-
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).equals(myString)){
-                index = i;
-            }
-        }
-        return index;
-    }
-
 
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -476,6 +378,7 @@ public class AddStory extends AppCompatActivity implements
                 i.setAction(Action.ACTION_MULTIPLE_PICK);
                 startActivityForResult(i, 200);
                 break;
+
             case R.id.calender_item:
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
@@ -490,20 +393,19 @@ public class AddStory extends AppCompatActivity implements
                                                   int monthOfYear, int dayOfMonth) {
 
                                 Toast.makeText(AddStory.this, dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, Toast.LENGTH_LONG).show();
-                                userCooseDate = year+ "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-                                DataComprision(userCooseDate,userCurrentDate);
-                                if (result.equals("1")||result.equals("0")){
-                                    finalDate=year+ "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-                                }
-                                else {
-                                    Toast.makeText(AddStory.this,"Please give current and future event date",Toast.LENGTH_LONG).show();
+                                userCooseDate = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+                                DataComprision(userCooseDate, userCurrentDate);
+                                if (result.equals("1") || result.equals("0")) {
+                                    finalDate = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+                                } else {
+                                    Toast.makeText(AddStory.this, "Please give current and future event date", Toast.LENGTH_LONG).show();
                                 }
 
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
-
                 break;
+
             case R.id.time_calender:
                 TimePickerDialog tpd = new TimePickerDialog(this,
                         new TimePickerDialog.OnTimeSetListener() {
@@ -511,46 +413,48 @@ public class AddStory extends AppCompatActivity implements
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-
                                 Toast.makeText(AddStory.this, hourOfDay + ":" + minute, Toast.LENGTH_LONG).show();
-
-
                             }
                         }, mHour, mMinute, false);
                 tpd.show();
                 break;
 
-        }
-    }
+            case R.id.button2:
 
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        // TODO Auto-generated method stub
-        switch (checkedId) {
-
-            case R.id.rdbboth:
-                // AppPreferences.getInstance(this).setGender(GENDER_MALE);
-                Toast.makeText(AddStory.this,"Selected both",Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.rdbMale:
-               // AppPreferences.getInstance(this).setGender(GENDER_MALE);
-                Toast.makeText(AddStory.this,"Selected Men",Toast.LENGTH_LONG).show();
-
-                break;
-            case R.id.rdbFemale:
-             //   AppPreferences.getInstance(this).setGender(GENDER_FEMALE);
-                Toast.makeText(AddStory.this,"Selected Women",Toast.LENGTH_LONG).show();
-
-                break;
-
-            default:
-
-
+                if (Utility.checkAvailable()) {
+                    Intent i1 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    File file = getOutputMediaFile();
+                    picUri = Uri.fromFile(file); // create
+                    i1.putExtra(MediaStore.EXTRA_OUTPUT, picUri); // set the image file
+                    startActivityForResult(i1, CAPTURE_IMAGE_CAMERA);
+                } else {
+                    Utility.showToast(AddStory.this, "No External Storage");
+                }
                 break;
         }
     }
+
+
+    /**
+     * Create a File for saving an image
+     */
+    private File getOutputMediaFile() {
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), DIRECTORY_NAME);
+
+        /**Create the storage directory if it does not exist*/
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+
+        File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                IMAGE_PREFIX + Utility.getDateTime(false) + IMAGE_EXTENSION);
+        return mediaFile;
+    }
+
 
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -573,52 +477,59 @@ public class AddStory extends AppCompatActivity implements
         if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
             String[] all_path = data.getStringArrayExtra("all_path");
 
-             dataT = new ArrayList<CustomGallery>();
-
             for (String string : all_path) {
                 CustomGallery item = new CustomGallery();
                 item.sdcardPath = string;
-
                 dataT.add(item);
             }
-            addStoryImageAdapter.addAll(dataT);
-           // list.addAll(dataT);
+
+        } else if (requestCode == CAPTURE_IMAGE_CAMERA) {
+            if (dataT.size() <= MAX_PHOTOS) {
+                CustomGallery item = new CustomGallery();
+                String modifyURL = picUri.toString().replace("file://","");
+                item.sdcardPath = modifyURL;
+                dataT.add(item);
+            } else {
+                Utility.showToast(AddStory.this, "canot able to add more than 5 photos");
+            }
         }
+        addStoryImageAdapter.addAll(dataT);
     }
 
-   public String DataComprision(String userCooseDate, String userCurrentDate) {
 
-       try{
+    public String DataComprision(String userCooseDate, String userCurrentDate) {
 
-           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        try {
 
-           Date date1 = sdf.parse(userCooseDate);
-           Date date2 = sdf.parse(userCurrentDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-           System.out.println(sdf.format(date1));
-           System.out.println(sdf.format(date2));
+            Date date1 = sdf.parse(userCooseDate);
+            Date date2 = sdf.parse(userCurrentDate);
 
-           if(date1.after(date2)){
-               System.out.println("Date1 is after Date2");
-               result="1";
+            System.out.println(sdf.format(date1));
+            System.out.println(sdf.format(date2));
 
-           }
+            if (date1.after(date2)) {
+                System.out.println("Date1 is after Date2");
+                result = "1";
 
-           if(date1.before(date2)){
-               System.out.println("Date1 is before Date2");
-               result="-1";
-           }
+            }
 
-           if(date1.equals(date2)){
-               System.out.println("Date1 is equal Date2");
-               result="0";
-           }
+            if (date1.before(date2)) {
+                System.out.println("Date1 is before Date2");
+                result = "-1";
+            }
 
-       }catch( ParseException ex){
-           ex.printStackTrace();
-       }
+            if (date1.equals(date2)) {
+                System.out.println("Date1 is equal Date2");
+                result = "0";
+            }
 
-       return result;
-   }
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
 
 }
