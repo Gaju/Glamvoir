@@ -18,12 +18,10 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.activity.AddStory;
 import glamvoir.appzstack.glamvoir.activity.CustomGallery;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 
