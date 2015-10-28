@@ -20,4 +20,6 @@ public class AppConfig {
     public static String getDomain() {
         return DOMAIN;
     }
+
+    public static int ALERT_COUNTER ;
 }

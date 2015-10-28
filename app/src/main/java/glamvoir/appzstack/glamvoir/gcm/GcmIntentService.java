@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.HomeActivity;
+import glamvoir.appzstack.glamvoir.config.AppConfig;
 
 public class GcmIntentService extends IntentService {
 
@@ -72,6 +73,9 @@ public class GcmIntentService extends IntentService {
         String notification_type = extras.getString("notification_type");
         String message = extras.getString("message");
         String creation_date = extras.getString("creation_date");
+
+        //storing alert counter globally
+        AppConfig.ALERT_COUNTER = extras.getInt("badge");
 
 
         // Invoking the default notification service

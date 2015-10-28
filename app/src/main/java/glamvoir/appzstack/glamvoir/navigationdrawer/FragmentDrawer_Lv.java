@@ -41,6 +41,7 @@ import glamvoir.appzstack.glamvoir.activity.MyAccountActivity;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctask.PhotoUploadAsyncTask;
+import glamvoir.appzstack.glamvoir.config.AppConfig;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
@@ -59,7 +60,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private static final int CAPTURE_IMAGE_GALLARY = 2;
     private Bitmap mbitmap;
     private ImageView proFile_Image;
-    private ImageView alert;
+    private RelativeLayout alertLayout;
     private File file;
     int save = -1;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -69,6 +70,8 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private ListView listView;
     private Toolbar mtoolbar;
     private ProgressBar progressbar;
+    private TextView alertCount;
+
     String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTINGS"};
 
     int ICONS[] = {R.drawable.feed_active,
@@ -106,6 +109,15 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         }
     }
 
+    /**
+     * method to set the alert counter
+     */
+    private void setAlertCount() {
+        if (AppConfig.ALERT_COUNTER != 0) {
+            alertCount.setText(AppConfig.ALERT_COUNTER);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflating view layout
@@ -113,12 +125,13 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         TextView tv_name = (TextView) layout.findViewById(R.id.name);
         TextView tv_email = (TextView) layout.findViewById(R.id.email);
         progressbar = (ProgressBar) layout.findViewById(R.id.progressbar);
-        rl_nav_drawer= (RelativeLayout) layout.findViewById(R.id.rl_nav_drawer);
+        rl_nav_drawer = (RelativeLayout) layout.findViewById(R.id.rl_nav_drawer);
         rl_nav_drawer.setOnClickListener(this);
         proFile_Image = (ImageView) layout.findViewById(R.id.circleView);
         proFile_Image.setOnClickListener(this);
-        alert = (ImageView) layout.findViewById(R.id.alert);
-        alert.setOnClickListener(this);
+        alertCount = (TextView) layout.findViewById(R.id.alertcounter);
+        alertLayout = (RelativeLayout) layout.findViewById(R.id.alertlayout);
+        alertLayout.setOnClickListener(this);
         tv_name.setText(mName);
         tv_email.setText(mEmail);
         tv_name.setOnClickListener(this);
@@ -142,6 +155,8 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
             }
         });
+
+        setAlertCount();
 
         return layout;
     }
@@ -235,24 +250,33 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
                         }
                     }
                 }).show();
- break;
+                break;
 
-
-            case R.id.alert:
+            case R.id.alertlayout:
                 AlertActivity.startActivity(getActivity());
+                removeAlert();
+
                 break;
             case R.id.rl_nav_drawer:
                 break;
             case R.id.email:
                 MyAccountActivity.startActivity(getActivity());
                 break;
-            case  R.id.name:
+            case R.id.name:
                 MyAccountActivity.startActivity(getActivity());
                 break;
             default:
                 break;
 
         }
+    }
+
+    /**
+     * method to remove the alert view
+     */
+    private void removeAlert() {
+        alertCount.setVisibility(View.GONE);
+        AppConfig.ALERT_COUNTER = 0;
     }
 
 
@@ -266,8 +290,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
         if (requestCode == CAPTURE_IMAGE_CAMERA) {
             photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), file.getAbsolutePath());
-
-
 
 
         } else if (requestCode == CAPTURE_IMAGE_GALLARY) {

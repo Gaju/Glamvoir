@@ -6,8 +6,11 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,6 +38,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +50,7 @@ import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.AddStoryImageAdapter;
 import glamvoir.appzstack.glamvoir.adapter.CustomSpinnerAdapter;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 
 /**
@@ -61,16 +66,24 @@ public class AddStory extends AppCompatActivity implements
          context.startActivity(intent);
      }*/
     private static final String TAG = "AddStory";
+    private static final int CAPTURE_IMAGE_CAMERA = 1;
+    private static final String DIRECTORY_NAME = "Glamvoir";
+    private static final String IMAGE_EXTENSION = ".jpg";
+    private static final String IMAGE_PREFIX = "IMG";
+    private static final int MAX_PHOTOS = 5;
+
+    private static Uri picUri = null;
 
     // Variable for storing current date and time
     private int mYear, mMonth, mDay, mHour, mMinute;
     String userCurrentDate;
-    String userCooseDate,finalDate;
+    String userCooseDate, finalDate;
 
+    ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
 
     GridView gridGallery;
     Handler handler;
-   // GalleryAdapter adapter;
+    // GalleryAdapter adapter;
     ImageLoader imageLoader;
     Bundle bundle;
     private GoogleApiClient mGoogleApiClient;
@@ -78,13 +91,13 @@ public class AddStory extends AppCompatActivity implements
 
     AddStoryImageAdapter addStoryImageAdapter;
     private ListView lv_addstory;
-    String result=null;
+    String result = null;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     Spinner dropDownMenu;
     TextView selected_text;
     private LinearLayout lltool;
-    ImageButton galleryImages,time_calender,calender_item;
+    ImageButton galleryImages, time_calender, calender_item, cameraImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,14 +298,16 @@ public class AddStory extends AppCompatActivity implements
         handler = new Handler();
         lltool = (LinearLayout) findViewById(R.id.lltool);
         galleryImages = (ImageButton) findViewById(R.id.button3);
-        lv_addstory= (ListView) findViewById(R.id.lv_addstory);
+        cameraImages = (ImageButton) findViewById(R.id.button2);
+        cameraImages.setOnClickListener(this);
+        lv_addstory = (ListView) findViewById(R.id.lv_addstory);
         lv_addstory.setFastScrollEnabled(true);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         dropDownMenu = (Spinner) findViewById(R.id.spinner_nav);
         lltool.setVisibility(View.VISIBLE);
         selected_text = (TextView) findViewById(R.id.selected_text);
-        calender_item=(ImageButton)findViewById(R.id.calender_item);
-        time_calender=(ImageButton)findViewById(R.id.time_calender);
+        calender_item = (ImageButton) findViewById(R.id.calender_item);
+        time_calender = (ImageButton) findViewById(R.id.time_calender);
         if (bundle != null) {
             selected_text.setVisibility(View.VISIBLE);
             selected_text.setText(bundle.getString("CATOGERYNAME"));
@@ -300,12 +315,12 @@ public class AddStory extends AppCompatActivity implements
         }
 
         //gridGallery = (GridView) findViewById(R.id.gridGallery);
-       // gridGallery.setFastScrollEnabled(true);
-        addStoryImageAdapter= new AddStoryImageAdapter(this,imageLoader,AddStory.this);
+        // gridGallery.setFastScrollEnabled(true);
+        addStoryImageAdapter = new AddStoryImageAdapter(this, imageLoader, AddStory.this);
         lv_addstory.setAdapter(addStoryImageAdapter);
-      // adapter = new GalleryAdapter(AddStory.this, imageLoader);
-       // adapter.setMultiplePick(false);
-      //  gridGallery.setAdapter(adapter);
+        // adapter = new GalleryAdapter(AddStory.this, imageLoader);
+        // adapter.setMultiplePick(false);
+        //  gridGallery.setAdapter(adapter);
     }
 
     @Override
@@ -363,6 +378,7 @@ public class AddStory extends AppCompatActivity implements
                 i.setAction(Action.ACTION_MULTIPLE_PICK);
                 startActivityForResult(i, 200);
                 break;
+
             case R.id.calender_item:
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
@@ -377,20 +393,19 @@ public class AddStory extends AppCompatActivity implements
                                                   int monthOfYear, int dayOfMonth) {
 
                                 Toast.makeText(AddStory.this, dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, Toast.LENGTH_LONG).show();
-                                userCooseDate = year+ "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-                                DataComprision(userCooseDate,userCurrentDate);
-                                if (result.equals("1")||result.equals("0")){
-                                    finalDate=year+ "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-                                }
-                                else {
-                                    Toast.makeText(AddStory.this,"Please give current and future event date",Toast.LENGTH_LONG).show();
+                                userCooseDate = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+                                DataComprision(userCooseDate, userCurrentDate);
+                                if (result.equals("1") || result.equals("0")) {
+                                    finalDate = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+                                } else {
+                                    Toast.makeText(AddStory.this, "Please give current and future event date", Toast.LENGTH_LONG).show();
                                 }
 
                             }
                         }, mYear, mMonth, mDay);
                 dpd.show();
-
                 break;
+
             case R.id.time_calender:
                 TimePickerDialog tpd = new TimePickerDialog(this,
                         new TimePickerDialog.OnTimeSetListener() {
@@ -398,16 +413,46 @@ public class AddStory extends AppCompatActivity implements
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-
                                 Toast.makeText(AddStory.this, hourOfDay + ":" + minute, Toast.LENGTH_LONG).show();
-
-
                             }
                         }, mHour, mMinute, false);
                 tpd.show();
                 break;
 
+            case R.id.button2:
+
+                if (Utility.checkAvailable()) {
+                    Intent i1 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    File file = getOutputMediaFile();
+                    picUri = Uri.fromFile(file); // create
+                    i1.putExtra(MediaStore.EXTRA_OUTPUT, picUri); // set the image file
+                    startActivityForResult(i1, CAPTURE_IMAGE_CAMERA);
+                } else {
+                    Utility.showToast(AddStory.this, "No External Storage");
+                }
+                break;
         }
+    }
+
+
+    /**
+     * Create a File for saving an image
+     */
+    private File getOutputMediaFile() {
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), DIRECTORY_NAME);
+
+        /**Create the storage directory if it does not exist*/
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+
+        File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                IMAGE_PREFIX + Utility.getDateTime(false) + IMAGE_EXTENSION);
+        return mediaFile;
     }
 
 
@@ -432,51 +477,59 @@ public class AddStory extends AppCompatActivity implements
         if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
             String[] all_path = data.getStringArrayExtra("all_path");
 
-            ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
-
             for (String string : all_path) {
                 CustomGallery item = new CustomGallery();
                 item.sdcardPath = string;
-
                 dataT.add(item);
             }
-            addStoryImageAdapter.addAll(dataT);
+
+        } else if (requestCode == CAPTURE_IMAGE_CAMERA) {
+            if (dataT.size() <= MAX_PHOTOS) {
+                CustomGallery item = new CustomGallery();
+                String modifyURL = picUri.toString().replace("file://","");
+                item.sdcardPath = modifyURL;
+                dataT.add(item);
+            } else {
+                Utility.showToast(AddStory.this, "canot able to add more than 5 photos");
+            }
         }
+        addStoryImageAdapter.addAll(dataT);
     }
 
-   public String DataComprision(String userCooseDate, String userCurrentDate) {
 
-       try{
+    public String DataComprision(String userCooseDate, String userCurrentDate) {
 
-           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        try {
 
-           Date date1 = sdf.parse(userCooseDate);
-           Date date2 = sdf.parse(userCurrentDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-           System.out.println(sdf.format(date1));
-           System.out.println(sdf.format(date2));
+            Date date1 = sdf.parse(userCooseDate);
+            Date date2 = sdf.parse(userCurrentDate);
 
-           if(date1.after(date2)){
-               System.out.println("Date1 is after Date2");
-               result="1";
+            System.out.println(sdf.format(date1));
+            System.out.println(sdf.format(date2));
 
-           }
+            if (date1.after(date2)) {
+                System.out.println("Date1 is after Date2");
+                result = "1";
 
-           if(date1.before(date2)){
-               System.out.println("Date1 is before Date2");
-               result="-1";
-           }
+            }
 
-           if(date1.equals(date2)){
-               System.out.println("Date1 is equal Date2");
-               result="0";
-           }
+            if (date1.before(date2)) {
+                System.out.println("Date1 is before Date2");
+                result = "-1";
+            }
 
-       }catch( ParseException ex){
-           ex.printStackTrace();
-       }
+            if (date1.equals(date2)) {
+                System.out.println("Date1 is equal Date2");
+                result = "0";
+            }
 
-       return result;
-   }
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
 
 }

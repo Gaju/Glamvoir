@@ -3,6 +3,7 @@ package glamvoir.appzstack.glamvoir.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.activity.AddStory;
 import glamvoir.appzstack.glamvoir.activity.CustomGallery;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
 
 /**
  * Created by jaim on 10/26/2015.
  */
-public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickListener {
+public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickListener {
 
     private Context mContext;
     private LayoutInflater infalter;
@@ -32,6 +37,8 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
     private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
     private Activity parentActivity;
     ViewHolder holder;
+    private String[] tempHeading;
+    private String[] tempDescription;
 
     public AddStoryImageAdapter(Context c, ImageLoader imageLoader, Activity parentActivity) {
 
@@ -40,8 +47,6 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
         this.imageLoader = imageLoader;
         this.parentActivity = parentActivity;
         clearCache();
-
-
     }
 
     /**
@@ -52,7 +57,7 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
     @Override
     public int getCount() {
 
-      return data.size();
+        return data.size();
     }
 
     /**
@@ -107,7 +112,7 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
             convertView = infalter.inflate(R.layout.addstory_imageupload_shell, null);
             holder = new ViewHolder();
 
-            holder.ll_heading_description= (LinearLayout) convertView.findViewById(R.id.ll_heading_description);
+            holder.ll_heading_description = (LinearLayout) convertView.findViewById(R.id.ll_heading_description);
             holder.tv_add_heading = (TextView) convertView.findViewById(R.id.addstory_heading);
             holder.tv_add_description = (TextView) convertView.findViewById(R.id.addstory_description);
             holder.upload_Image = (ImageView) convertView.findViewById(R.id.addshell_images);
@@ -116,12 +121,11 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
 
         } else {
             holder = (ViewHolder) convertView.getTag();
-
-
         }
-        holder.upload_Image.setTag(position);
-        holder.tv_add_heading.setTag(position);
-        holder.tv_add_description.setTag(position);
+
+        holder.ref = position;
+        holder.tv_add_heading.setText(tempHeading[position]);
+        holder.tv_add_description.setText(tempDescription[position]);
 
         try {
 
@@ -132,18 +136,38 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
                             holder.upload_Image.setImageResource(R.drawable.no_media);
                             super.onLoadingStarted(imageUri, view);
                         }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            // Empty implementation
+                            Utility.showToast(mContext,failReason.toString());
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            // Empty implementation
+                            //Utility.showToast(mContext,"uri = "+imageUri);
+                            holder.upload_Image.setImageBitmap(loadedImage);
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String imageUri, View view) {
+                            // Empty implementation
+                            Utility.showToast(mContext,"cancelled");
+                        }
+
                     });
+
+
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-      // holder.tv_add_heading.setOnClickListener(this);
-      // holder.tv_add_description.setOnClickListener(this);
-       holder.ll_heading_description.setOnClickListener(this);
-
-
+        // holder.tv_add_heading.setOnClickListener(this);
+        // holder.tv_add_description.setOnClickListener(this);
+        holder.ll_heading_description.setOnClickListener(this);
 
 
         return convertView;
@@ -151,11 +175,12 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
     }
 
 
-
     public void addAll(ArrayList<CustomGallery> files) {
         try {
             this.data.clear();
             this.data.addAll(files);
+            tempHeading = new String[files.size()];
+            tempDescription = new String[files.size()];
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,22 +196,21 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_heading_description:
                 LayoutInflater inflater = parentActivity.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.add_story_alertdialog_head_des, null);
 
-                AlertDialog.Builder builder =new AlertDialog.Builder(parentActivity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
                 builder.setView(dialogView);
-                final   EditText heading= (EditText) dialogView.findViewById(R.id.heading);
-                final EditText description=  (EditText) dialogView.findViewById(R.id.description);
+                final EditText heading = (EditText) dialogView.findViewById(R.id.heading);
+                final EditText description = (EditText) dialogView.findViewById(R.id.description);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        holder.tv_add_heading.setText(heading.getText().toString());
-                        holder.tv_add_description.setText(description.getText().toString());
-
+                        tempHeading[holder.ref] = heading.getText().toString();
+                        tempDescription[holder.ref] = description.getText().toString();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -200,10 +224,7 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
                 builder.show();
 
 
-
                 break;
-
-
         }
     }
 
@@ -212,8 +233,9 @@ public class AddStoryImageAdapter  extends BaseAdapter implements View.OnClickLi
         TextView tv_add_description;
         ImageView upload_Image;
         LinearLayout ll_heading_description;
-
+        int ref;
     }
+
     public void clearCache() {
         imageLoader.clearDiscCache();
         imageLoader.clearMemoryCache();
