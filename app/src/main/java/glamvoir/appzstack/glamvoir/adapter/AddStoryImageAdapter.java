@@ -17,12 +17,10 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.activity.AddStory;
 import glamvoir.appzstack.glamvoir.activity.CustomGallery;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 
@@ -140,27 +138,22 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
                         @Override
                         public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                             // Empty implementation
-                            Utility.showToast(mContext,failReason.toString());
+                            Utility.showToast(mContext, failReason.toString());
                         }
 
                         @Override
                         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                             // Empty implementation
-                            Utility.showToast(mContext,"uri = "+imageUri);
+                            Utility.showToast(mContext, "uri = " + imageUri);
                             holder.upload_Image.setImageBitmap(loadedImage);
                         }
 
                         @Override
                         public void onLoadingCancelled(String imageUri, View view) {
                             // Empty implementation
-                            Utility.showToast(mContext,"canccel");
+                            Utility.showToast(mContext, "canccel");
                         }
-
                     });
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

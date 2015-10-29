@@ -172,12 +172,12 @@ public class CustomGalleryActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-            maxLength.add(position);
-            if (maxLength.size() <= MAX_PHOTO || maxLength.contains(position)) {
+//            maxLength.add(position);
+//            if (maxLength.size() <= MAX_PHOTO || maxLength.contains(position)) {
                 adapter.changeSelection(v, position);
-            } else {
-                Utility.showToast(CustomGalleryActivity.this, "not possible");
-            }
+//            } else {
+//                Utility.showToast(CustomGalleryActivity.this, "not possible");
+//            }
         }
     };
 

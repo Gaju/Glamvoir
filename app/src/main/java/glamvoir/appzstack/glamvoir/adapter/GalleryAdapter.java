@@ -117,7 +117,7 @@ public class GalleryAdapter extends BaseAdapter {
 
 	public void changeSelection(View v, int position) {
 
-		if(data.size()<5) {
+		//if(data.size()<5) {
 			if (data.get(position).isSeleted) {
 				data.get(position).isSeleted = false;
 			} else {
@@ -126,9 +126,9 @@ public class GalleryAdapter extends BaseAdapter {
 
 			((ViewHolder) v.getTag()).imgQueueMultiSelected.setSelected(data
 					.get(position).isSeleted);
-		}else{
-			Utility.showToast(mContext,"not possible");
-		}
+//		}else{
+//			Utility.showToast(mContext,"not possible");
+//		}
 	}
 
 	@Override

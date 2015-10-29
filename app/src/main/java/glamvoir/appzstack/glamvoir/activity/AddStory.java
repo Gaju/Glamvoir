@@ -138,7 +138,7 @@ public class AddStory extends AppCompatActivity implements
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         userCurrentDate = df.format(c.getTime());
-        Toast.makeText(this, userCurrentDate, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, userCurrentDate, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -253,8 +253,8 @@ public class AddStory extends AppCompatActivity implements
                 String item = adapter.getItemAtPosition(position).toString();
 
                 // Showing selected spinner item
-                Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Selected  : " + item,
+//                        Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -357,9 +357,6 @@ public class AddStory extends AppCompatActivity implements
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_uplaod) {
-
-            Toast.makeText(getApplicationContext(), "upload Clicked",
-                    Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -486,11 +483,13 @@ public class AddStory extends AppCompatActivity implements
         } else if (requestCode == CAPTURE_IMAGE_CAMERA) {
             if (dataT.size() <= MAX_PHOTOS) {
                 CustomGallery item = new CustomGallery();
-                String modifyURL = picUri.toString().replace("file://","");
-                item.sdcardPath = modifyURL;
-                dataT.add(item);
+                if (picUri != null) {
+                    String modifyURL = picUri.toString().replace("file://", "");
+                    item.sdcardPath = modifyURL;
+                    dataT.add(item);
+                }
             } else {
-                Utility.showToast(AddStory.this, "canot able to add more than 5 photos");
+                Utility.showToast(AddStory.this, "can't able to add more than 5 photos");
             }
         }
         addStoryImageAdapter.addAll(dataT);
@@ -498,21 +497,14 @@ public class AddStory extends AppCompatActivity implements
 
 
     public String DataComprision(String userCooseDate, String userCurrentDate) {
-
         try {
-
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-
             Date date1 = sdf.parse(userCooseDate);
             Date date2 = sdf.parse(userCurrentDate);
-
-            System.out.println(sdf.format(date1));
-            System.out.println(sdf.format(date2));
 
             if (date1.after(date2)) {
                 System.out.println("Date1 is after Date2");
                 result = "1";
-
             }
 
             if (date1.before(date2)) {
@@ -531,5 +523,4 @@ public class AddStory extends AppCompatActivity implements
 
         return result;
     }
-
 }
