@@ -12,7 +12,6 @@ import android.support.v4.app.NotificationCompat;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.HomeActivity;
 import glamvoir.appzstack.glamvoir.config.AppConfig;
-import glamvoir.appzstack.glamvoir.navigationdrawer.FragmentDrawer_Lv;
 
 public class GcmIntentService extends IntentService {
 
@@ -64,9 +63,6 @@ public class GcmIntentService extends IntentService {
 //                        creation_date=2015-10-2414: 29: 46
 
 
-
-
-
         String user_id = extras.getString("user_id");
         String title = extras.getString("title");
         String user_image = extras.getString("user_image");
@@ -76,9 +72,7 @@ public class GcmIntentService extends IntentService {
         String creation_date = extras.getString("creation_date");
 
         //storing alert counter globally
-       // AppConfig.ALERT_COUNTER = extras.getInt("badge");
-
-        sendAlertCounterBroadcast(extras.getInt("badge"));
+        AppConfig.ALERT_COUNTER = extras.getInt("badge");
 
         // Invoking the default notification service
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
@@ -105,11 +99,11 @@ public class GcmIntentService extends IntentService {
 //                break;
 //        }
 
-       // if (!driverName.equals("")) {
+        // if (!driverName.equals("")) {
 
-            events = new String[3];
-            events[0] = new String(title);
-            events[2] = new String(message);
+        events = new String[3];
+        events[0] = new String(title);
+        events[2] = new String(message);
 //        } else {
 //            events = new String[1];
 //            events[0] = new String(title);
@@ -149,18 +143,11 @@ public class GcmIntentService extends IntentService {
 
         myNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // pass the Notification object to the system
+        // pass the Notification object to the swipeRefreshLayoutsystem
         myNotificationManager.notify(notificationIdOne, mBuilder.build());
 
         // mNotificationManager.cancel(numMessagesOne);
 
     }
 
-
-    private void sendAlertCounterBroadcast(int alertCounter) {
-        Intent infoIntent = new Intent();
-        infoIntent.setAction(FragmentDrawer_Lv.BROADCAST_ALERT_ACTION);
-        infoIntent.putExtra(FragmentDrawer_Lv.BROADCAST_EXTRA_COUNTER, alertCounter);
-        sendBroadcast(infoIntent);
-    }
 }

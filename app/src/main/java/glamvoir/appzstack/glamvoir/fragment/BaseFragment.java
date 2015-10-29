@@ -7,11 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -36,7 +38,7 @@ import glamvoir.appzstack.glamvoir.network.InternetStatus;
 /**
  * Created by gajendran on 1/10/15.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     protected ListView mlistView;
     protected ArrayList<ParentPostBean> list = new ArrayList<ParentPostBean>();
@@ -44,8 +46,12 @@ public abstract class BaseFragment extends Fragment {
     protected TextView txt_NoDataFound;
     protected View loadIndicator, view;
     protected EditText edt_Search;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-
+    @Override
+    public void onRefresh() {
+        loadData();
+    }
 
     protected abstract RequestBean getRequestBean();
 
@@ -65,6 +71,8 @@ public abstract class BaseFragment extends Fragment {
         txt_NoDataFound = (TextView) rootView.findViewById(R.id.no_data_found);
         loadIndicator = rootView.findViewById(R.id.loadIndicator);
         edt_Search = (EditText) rootView.findViewById(R.id.tv_search);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         loadData();
 
@@ -78,8 +86,7 @@ public abstract class BaseFragment extends Fragment {
             });
 
 
-        }
-        else {
+        } else {
             edt_Search.setVisibility(View.GONE);
         }
 
@@ -89,6 +96,20 @@ public abstract class BaseFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
+
+        mlistView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0) {
+                    swipeRefreshLayout.setEnabled(true);
+                } else swipeRefreshLayout.setEnabled(false);
             }
         });
 
@@ -135,6 +156,10 @@ public abstract class BaseFragment extends Fragment {
                             } else {
                                 txt_NoDataFound.setVisibility(View.VISIBLE);
                             }
+                        }
+
+                        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }
@@ -219,30 +244,23 @@ public abstract class BaseFragment extends Fragment {
     /* Threshold size: dp to pixels, multiply with display density */
         boolean isKeyboardShown = heightDiff > SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD * dm.density;
 
-        if (isKeyboardShown){
+        if (isKeyboardShown) {
 
             edt_Search.setBackgroundResource(R.drawable.edit_text_border);
-            edt_Search.setPadding(20,0,0,0);
+            edt_Search.setPadding(20, 0, 0, 0);
             edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.search, 0, 0, 0);
 
             edt_Search.setCursorVisible(true);
             edt_Search.requestFocus();
 
-        }
-        else {
+        } else {
 
             edt_Search.setCursorVisible(false);
             edt_Search.setBackgroundResource(R.drawable.edit_text_border_inactive);
-            edt_Search.setPadding(20,0,0,0);
+            edt_Search.setPadding(20, 0, 0, 0);
             edt_Search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_white_24dp, 0, 0, 0);
 
         }
-
-
         return isKeyboardShown;
     }
-
-
-
-
 }

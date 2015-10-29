@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activityRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/activityRoot"
     android:clickable="true"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/no_data_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:textSize="20sp"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:text="No data found" />
+        android:layout_margin="3dp"
+        android:text="No data found"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
 
     <include layout="@layout/loading_with_circle" />
 
-    <LinearLayout
-        android:id="@+id/main_content"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
 
         <EditText
             android:id="@+id/tv_search"
@@ -35,17 +40,21 @@
             android:background="@drawable/edit_text_border_inactive"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:drawablePadding="2dip"
-            android:paddingLeft="10dp"
-            android:hint="Search Here..." />
+            android:hint="Search Here..."
+            android:paddingLeft="10dp" />
 
         <ListView
             android:id="@+id/lv_all"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
-            android:scrollbars="none"
-            android:divider="@null" />
+            android:divider="@null"
+            android:scrollbars="none" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-</RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+    </RelativeLayout>

@@ -1,8 +1,6 @@
 package glamvoir.appzstack.glamvoir.navigationdrawer;
 
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -43,6 +41,7 @@ import glamvoir.appzstack.glamvoir.activity.MyAccountActivity;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctask.PhotoUploadAsyncTask;
+import glamvoir.appzstack.glamvoir.config.AppConfig;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
@@ -116,9 +115,17 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     /**
      * method to set the alert counter
      */
-    private void setAlertCount(int count) {
-        alertCount.setVisibility(View.VISIBLE);
-        alertCount.setText(count);
+    private void setAlertCount() {
+        if (AppConfig.ALERT_COUNTER > 0) {
+            alertCount.setVisibility(View.VISIBLE);
+            alertCount.setText(AppConfig.ALERT_COUNTER);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAlertCount();
     }
 
     @Override
@@ -272,7 +279,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     }
 
     private void removeAlertcount() {
-        //AppConfig.ALERT_COUNTER = 0;
+        AppConfig.ALERT_COUNTER = 0;
         alertCount.setVisibility(View.GONE);
     }
 
@@ -366,19 +373,19 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         return sdf.format(c.getTime());
     }
 
-    /**
-     * clas to handle the broadcast counter when gcm trigger
-     */
-    public class ObserveAlertBroadcast extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(BROADCAST_ALERT_ACTION)) {
-                int count = intent.getIntExtra(BROADCAST_EXTRA_COUNTER, 0);
-                if (count > 0)
-                    setAlertCount(count);
-            }
-        }
-    }
+//    /**
+//     * clas to handle the broadcast counter when gcm trigger
+//     */
+//    public class ObserveAlertBroadcast extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            String action = intent.getAction();
+//            if (action.equals(BROADCAST_ALERT_ACTION)) {
+//                int count = intent.getIntExtra(BROADCAST_EXTRA_COUNTER, 0);
+//                if (count > 0)
+//                    setAlertCount(count);
+//            }
+//        }
+//    }
 }
