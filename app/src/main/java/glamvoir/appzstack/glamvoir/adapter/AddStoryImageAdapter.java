@@ -169,7 +169,6 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
         // holder.tv_add_description.setOnClickListener(this);
         holder.ll_heading_description.setOnClickListener(this);
 
-
         return convertView;
 
     }

@@ -9,6 +9,7 @@ import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LikedUsers;
+import glamvoir.appzstack.glamvoir.model.net.response.ListNotificationResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
@@ -83,6 +84,14 @@ public class Communication {
         LikedUsers response = service.getLikedUsers(methodType, userID, postID);
         return response;
     }
+
+    public static ListNotificationResponse getListNotification(String methodType, String userID) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        ListNotificationResponse response = service.getListNotification(methodType, userID);
+        return response;
+    }
+
+
 
     public static CityResponse getCity(String methodType) {
         GlamvoirService service = RestAdapter.getGlamvoirService();

@@ -21,6 +21,8 @@ public class AppConstant {
     public static final String METHOD_LIKED_USERS= "get_likeduser";
     public static final String METHOD_GET_CITY= "getcity";
 
+    public static final String METHOD_GET_NOTIFICATION= "listnotification";
+
     public static final String METHOD_DELETE_SAVE_POST = "deletemysavedpost";
     public static final String METHOD_SAVEPOST = "savemypost";
     public static final String METHOD_LIKESTATUS = "likedislike";

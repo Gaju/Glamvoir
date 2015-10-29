@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.HomeActivity;
 import glamvoir.appzstack.glamvoir.config.AppConfig;
+import glamvoir.appzstack.glamvoir.navigationdrawer.FragmentDrawer_Lv;
 
 public class GcmIntentService extends IntentService {
 
@@ -75,8 +76,9 @@ public class GcmIntentService extends IntentService {
         String creation_date = extras.getString("creation_date");
 
         //storing alert counter globally
-        AppConfig.ALERT_COUNTER = extras.getInt("badge");
+       // AppConfig.ALERT_COUNTER = extras.getInt("badge");
 
+        sendAlertCounterBroadcast(extras.getInt("badge"));
 
         // Invoking the default notification service
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
@@ -152,5 +154,13 @@ public class GcmIntentService extends IntentService {
 
         // mNotificationManager.cancel(numMessagesOne);
 
+    }
+
+
+    private void sendAlertCounterBroadcast(int alertCounter) {
+        Intent infoIntent = new Intent();
+        infoIntent.setAction(FragmentDrawer_Lv.BROADCAST_ALERT_ACTION);
+        infoIntent.putExtra(FragmentDrawer_Lv.BROADCAST_EXTRA_COUNTER, alertCounter);
+        sendBroadcast(infoIntent);
     }
 }

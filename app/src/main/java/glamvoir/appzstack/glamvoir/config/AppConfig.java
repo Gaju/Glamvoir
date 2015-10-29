@@ -21,5 +21,5 @@ public class AppConfig {
         return DOMAIN;
     }
 
-    public static int ALERT_COUNTER ;
+    //public static int ALERT_COUNTER = 0;
 }

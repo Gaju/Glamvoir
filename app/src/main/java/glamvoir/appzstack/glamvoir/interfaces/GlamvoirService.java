@@ -6,6 +6,7 @@ import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LikedUsers;
+import glamvoir.appzstack.glamvoir.model.net.response.ListNotificationResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.LoginResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.PasswordResponse;
@@ -62,6 +63,9 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     LikedUsers getLikedUsers(@Query("method") String methodType, @Query("user_id") String user_id, @Query("post_id") String post_id);
+
+    @GET("/index.php/api")
+    ListNotificationResponse getListNotification(@Query("method") String methodType, @Query("user_id") String user_id);
 
     @GET("/index.php/api")
     CityResponse getCity(@Query("method") String methodType);

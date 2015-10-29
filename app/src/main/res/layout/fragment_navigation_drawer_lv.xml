@@ -37,8 +37,8 @@
                 android:layout_alignRight="@+id/alert"
                 android:background="@drawable/circletextview"
                 android:gravity="center"
-                android:text="1"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

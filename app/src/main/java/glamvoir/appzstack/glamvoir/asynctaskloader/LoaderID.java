@@ -13,4 +13,5 @@ public class LoaderID {
     public static final int UPDATE_PASSWORD = 6;
     public static final int LIKED_USERS = 7;
     public static final int GET_CITY = 8;
+    public static final int GET_NOTIFICATION = 9;
 }

@@ -16,21 +16,20 @@ import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
-import glamvoir.appzstack.glamvoir.model.net.response.LikedUsers;
+import glamvoir.appzstack.glamvoir.model.net.response.ListNotificationResponse;
 
 /**
- * Created by gajendran on 19/10/15.
+ * Created by gajendran on 29/10/15.
  */
-public class LikedUserAdapter extends BaseAdapter {
+public class NotificationAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
-    ImagePagerAdapter adapter;
-    Context context;
-    ImageLoader imageLoader;
-    DisplayImageOptions options;
-    List<LikedUsers.LikedUser> list;
-    private int mPosition;
+    private ImagePagerAdapter adapter;
+    private Context context;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions options;
+    private List<ListNotificationResponse.ListNotification> list;
 
-    public LikedUserAdapter(Context context, List<LikedUsers.LikedUser> list) {
+    public NotificationAdapter(Context context, List<ListNotificationResponse.ListNotification> list) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.list = list;
         imageLoader = ImageLoader.getInstance();
@@ -57,8 +56,7 @@ public class LikedUserAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
-        mPosition = position;
-        LikedUsers.LikedUser item = list.get(position);
+        ListNotificationResponse.ListNotification item = list.get(position);
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.layout_comment_shell, null);
@@ -73,23 +71,28 @@ public class LikedUserAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        holder.comment_time.setVisibility(View.GONE);
 
-        if (item.user_fname != null) {
-            holder.user_name.setText(item.user_fname + " " + item.user_lname);
+        if (item.title != null) {
+            holder.user_name.setText(item.title);
         }
 
         if (item.user_image != null && !item.user_image.equals("")) {
             imageLoader.displayImage(item.user_image, holder.user_image, options);
         }
 
+        if (item.message != null) {
+            holder.comment.setText(item.message);
+        }
+
         return convertView;
     }
 
     static class ViewHolder {
-
         ImageView user_image;
         TextView user_name;
         TextView comment;
         TextView comment_time;
     }
 }
+
