@@ -1,6 +1,8 @@
 package glamvoir.appzstack.glamvoir.navigationdrawer;
 
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -75,7 +77,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private ProgressBar progressbar;
     private TextView alertCount;
 
-    String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POSTS", "SETTINGS"};
+    String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTINGS"};
 
     int ICONS[] = {R.drawable.feed_active,
             R.drawable.fleamarket,
@@ -120,6 +122,11 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
             alertCount.setVisibility(View.VISIBLE);
             alertCount.setText(AppConfig.ALERT_COUNTER);
         }
+    }
+
+    private void setAlertCount(int count) {
+            alertCount.setVisibility(View.VISIBLE);
+            alertCount.setText(count);
     }
 
     @Override
@@ -373,19 +380,19 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         return sdf.format(c.getTime());
     }
 
-//    /**
-//     * clas to handle the broadcast counter when gcm trigger
-//     */
-//    public class ObserveAlertBroadcast extends BroadcastReceiver {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            String action = intent.getAction();
-//            if (action.equals(BROADCAST_ALERT_ACTION)) {
-//                int count = intent.getIntExtra(BROADCAST_EXTRA_COUNTER, 0);
-//                if (count > 0)
-//                    setAlertCount(count);
-//            }
-//        }
-//    }
+    /**
+     * clas to handle the broadcast counter when gcm trigger
+     */
+    public class ObserveAlertBroadcast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(BROADCAST_ALERT_ACTION)) {
+                int count = intent.getIntExtra(BROADCAST_EXTRA_COUNTER, 0);
+                if (count > 0)
+                    setAlertCount(count);
+            }
+        }
+    }
 }
