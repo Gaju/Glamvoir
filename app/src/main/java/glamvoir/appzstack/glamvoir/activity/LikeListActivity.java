@@ -42,6 +42,13 @@ public class LikeListActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
+    public static void startActvity(Context context, String postID) {
+        Intent intent = new Intent(context, LikeListActivity.class);
+        intent.putExtra("postID", postID);
+        intent.putExtra("ParentClassName", context.getClass().getSimpleName());
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +121,7 @@ public class LikeListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        SpannableString s = new SpannableString("LIKE");
+        SpannableString s = new SpannableString("LIKES");
         s.setSpan(new CustomTextBold(this), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -128,4 +135,7 @@ public class LikeListActivity extends AppCompatActivity {
         finish();
         return newIntent;
     }
+
+
+
 }

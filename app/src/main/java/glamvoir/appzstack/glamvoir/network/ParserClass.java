@@ -133,8 +133,8 @@ public class ParserClass {
                                 ParentPostBean.setPost_image(obj.optString("post_image"));
                             }
 
-                            if (Utils.contains(obj, "post_start_date")) {
-                                ParentPostBean.setPost_start_date(obj.optString("post_start_date"));
+                            if (Utils.contains(obj, "creation_date")) {
+                                ParentPostBean.setcreation_date(obj.optString("creation_date"));
                             }
 
                             if (Utils.contains(obj, "post_title")) {

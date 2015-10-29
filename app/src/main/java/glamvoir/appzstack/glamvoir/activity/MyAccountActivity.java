@@ -44,10 +44,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private int day;
     private int month;
     private int year;
-    private EditText edt_fName, edt_age, edt_Phone, myaccount_lastname, edt_Email, edt_lName, edt_AboutMe, edt_City, edt_Contact;
+    private EditText edt_fName, edt_Phone, myaccount_lastname, edt_Email, edt_lName, edt_AboutMe, edt_City, edt_Contact;
     private TextInputLayout tl_fName, tl_Phone, tl_Email, tl_lName, tl_AboutMe, tl_City, tl_Contact;
     private RadioButton rdbMale, rdbFemale;
-    private TextView changepwd;
+    private TextView changepwd,edt_age;
     private RadioGroup rgGender;
     private Button btn_Done;
     protected View loadIndicator;
@@ -271,7 +271,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         edt_fName = (EditText) findViewById(R.id.myaccount_name);
         edt_Phone = (EditText) findViewById(R.id.myaccount_phone);
         edt_Email = (EditText) findViewById(R.id.myaccount_mail);
-        edt_age = (EditText) findViewById(R.id.myaccount_age);
+        edt_age = (TextView) findViewById(R.id.myaccount_age);
         myaccount_lastname = (EditText) findViewById(R.id.myaccount_lastname);
         edt_lName = (EditText) findViewById(R.id.myaccount_lastname);
         edt_AboutMe = (EditText) findViewById(R.id.myaccount_abtme);

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -80,7 +81,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     private Button btnSignIn, btn_SignUp, btn_LoginGmain, bt_facebook;
     private CoordinatorLayout coordinatorLayout;
 
-
+    private TextView term_click,tv_click_privacy_policy;
     private GoogleCloudMessaging gcm;
     private final int ACTION_PLAY_SERVICES_DIALOG = 100;
     private String gcmRegId;
@@ -262,6 +263,8 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         btn_SignUp = (Button) findViewById(R.id.frontpage_signup);
         btn_LoginGmain = (Button) findViewById(R.id.login_gmail);
         bt_facebook = (Button) findViewById(R.id.bt_facebook);
+        term_click= (TextView) findViewById(R.id. term_click);
+        tv_click_privacy_policy= (TextView) findViewById(R.id.tv_click_privacy_policy);
     }
 
     /**
@@ -273,6 +276,8 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
         btn_SignUp.setOnClickListener(this);
         btn_LoginGmain.setOnClickListener(this);
         bt_facebook.setOnClickListener(this);
+        term_click.setOnClickListener(this);
+        tv_click_privacy_policy.setOnClickListener(this);
 
 
     }
@@ -304,6 +309,16 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.bt_facebook:
                 // Signin button clicked
                 onFblogin();
+                break;
+
+            case R.id.term_click:
+                Term_and_Condition.startActivity(FrontPageActivity.this);
+
+                break;
+
+            case R.id.tv_click_privacy_policy:
+
+                Privacy_Policy.startActivity(FrontPageActivity.this);
                 break;
 
             default:

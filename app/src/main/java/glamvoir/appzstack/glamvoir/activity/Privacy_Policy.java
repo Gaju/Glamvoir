@@ -10,7 +10,6 @@ import android.text.SpannableString;
 import android.webkit.WebView;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.customview.CustomTextBold;
 
 /**
@@ -56,14 +55,16 @@ public class Privacy_Policy  extends AppCompatActivity {
         Intent parentIntent = getIntent();
         String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
         Intent newIntent = null;
-        try {
+
+        finish();
+       /* try {
             //you need to define the class with package name
             newIntent = new Intent(Privacy_Policy.this, Class.forName(AppConstant.PACKAGE + className));
             newIntent.putExtra("ParentClassName", "HomeActivity");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
         return newIntent;
     }
 }

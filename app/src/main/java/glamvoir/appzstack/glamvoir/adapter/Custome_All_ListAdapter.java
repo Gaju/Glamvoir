@@ -36,11 +36,16 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.TimeAgo.TimeAgo;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
+import glamvoir.appzstack.glamvoir.activity.LikeListActivity;
 import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -64,6 +69,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     ViewHolder holder = null;
     private int pos = 0;
     private String postID = null;
+    TimeAgo timeAgo;
 
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
@@ -111,8 +117,12 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.circleIndicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
 
             holder.tv_ff_shell_username = (TextView) convertView.findViewById(R.id.tv_ff_shell_username);
-            holder.ll_like_comment = (LinearLayout) convertView.findViewById(R.id.ll_like_comment);
-            holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
+            holder.ll_like_click = (LinearLayout) convertView.findViewById(R.id.ll_like_click);
+            holder.ll_comment_click = (LinearLayout) convertView.findViewById(R.id.ll_comment_click);
+            //@@@@@@@@
+             holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
+             holder.tv_posting_date_of_post = (TextView) convertView.findViewById(R.id.tv_posting_date_of_post);
+
             holder.tv_actiontext_checkBox_ff_shell = (TextView) convertView.findViewById(R.id.tv_actiontext_checkBox_ff_shell);
             holder.tv_ff_shell_like_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_like_count);
             holder.tv_ff_shell_comment_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_comment_count);
@@ -128,7 +138,6 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.bt_ff_shell_like = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_like);
             holder.bt_ff_shell_whatapp = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_whatapp);
             holder.bt_ff_shell_share = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_share);
-            //@@@@@@@
 
             holder.ll_ff_shell_complain = (LinearLayout) convertView.findViewById(R.id.ll_ff_shell_complain);
             holder.bt_ff_shell_map = (ImageButton) convertView.findViewById(R.id.bt_ff_shell_map);
@@ -149,7 +158,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.bt_ff_shell_whatapp.setTag(position);
         holder.user_Image.setTag(position);
         holder.tv_ff_shell_username.setTag(position);
-        holder.ll_like_comment.setTag(position);
+        holder.ll_like_click.setTag(position);
+        holder. ll_comment_click.setTag(position);
      //   holder.bt_ff_shell_complain.setTag(position);
         holder.viewPager.setTag(position);
         holder.circleIndicator.setTag(position);
@@ -246,10 +256,28 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.bt_ff_shell_shave.setImageResource(R.drawable.mysave_active);
         }
 
-        if (item.getPost_end_date() != null) {
-            holder.tv_ff_shell_time.setText(item.getPost_end_date());
+        if (item.getcreation_date() != null) {
+            String string_date = item.getcreation_date();
+
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d = null;
+            try {
+                d = f.parse(string_date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long milliseconds = d.getTime();
+            timeAgo= new TimeAgo();
+            String setTimeago=  timeAgo.DateDifference(milliseconds);
+            holder.tv_ff_shell_time.setText(setTimeago);
         } else {
             holder.tv_ff_shell_time.setVisibility(View.GONE);
+        }
+
+        if (item.getcreation_date() != null) {
+            holder.tv_posting_date_of_post.setText(item.getcreation_date());
+        } else {
+            holder.tv_posting_date_of_post.setVisibility(View.GONE);
         }
 
         if (item.getUser_image() != null) {
@@ -275,7 +303,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.checkBox_ff_shell.setOnClickListener(this);
         holder.user_Image.setOnClickListener(this);
         holder.tv_ff_shell_username.setOnClickListener(this);
-        holder.ll_like_comment.setOnClickListener(this);
+        holder.ll_like_click.setOnClickListener(this);
+        holder.ll_comment_click.setOnClickListener(this);
 
         return convertView;
     }
@@ -389,7 +418,11 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
                 break;
 
-            case R.id.ll_like_comment:
+            case R.id.ll_like_click:
+                LikeListActivity.startActvity(frag.getActivity(), postID);
+                break;
+
+            case R.id.ll_comment_click:
                 CommentActivity.startActvity(frag.getActivity(), postID, null);
                 break;
 
@@ -398,7 +431,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
     static class ViewHolder {
         TextView tv_ff_shell_username;
-        TextView tv_ff_shell_time;
+        TextView tv_ff_shell_time,tv_posting_date_of_post;
         TextView tv_actiontext_checkBox_ff_shell;
         TextView tv_ff_shell_like_count;
         TextView tv_ff_shell_comment_count;
@@ -412,7 +445,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
      //   ImageButton bt_ff_shell_complain;
         ImageButton bt_ff_shell_map;
         ImageView user_Image;
-        LinearLayout ll_like_comment;
+        LinearLayout ll_like_click;
+        LinearLayout ll_comment_click;
         CirclePageIndicator circleIndicator;
         ViewPager viewPager;
         LinearLayout ll_view_pager;

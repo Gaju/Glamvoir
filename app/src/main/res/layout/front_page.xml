@@ -179,19 +179,18 @@
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="By joining you are agreeing our"
+                    android:text="By joining you agree our"
                     android:textColor="@android:color/black" />
 
                 <glamvoir.appzstack.glamvoir.customview.CustomTestLight
-                    android:id="@+id/textView5"
+                    android:id="@+id/term_click"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_weight=".5"
                     android:gravity="center|bottom"
                     android:text="Term"
-
-                    android:textColor="@color/navigationBarColor" />
+                    android:textColor="@color/tabBarIndicator" />
 
                 <glamvoir.appzstack.glamvoir.customview.CustomTestLight
                     android:id="@+id/textView6"
@@ -200,7 +199,6 @@
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_weight="1"
                     android:gravity="left|bottom"
-
                     android:text="and"
                     android:textColor="@android:color/black" />
 
@@ -209,13 +207,13 @@
 
 
             <glamvoir.appzstack.glamvoir.customview.CustomTestLight
-                android:id="@+id/textView3"
+                android:id="@+id/tv_click_privacy_policy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|top"
                 android:text="Privacy Policy"
-                android:textColor="@color/navigationBarColor" />
+                android:textColor="@color/tabBarIndicator" />
 
         </LinearLayout>
     </LinearLayout>

@@ -162,13 +162,13 @@
                     android:text="CONNECT" />
 
                 <glamvoir.appzstack.glamvoir.customview.CustomTestLight
-                    android:id="@+id/textView11"
+                    android:id="@+id/tv_posting_date_of_post"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|right"
                     android:gravity="center|right"
                     android:paddingRight="@dimen/padding_normal"
-                    android:text="Aug 12 at 9:12 PM"
+
                     android:textSize="10sp" />
 
             </LinearLayout>
@@ -242,25 +242,39 @@
                 android:layout_marginRight="10dp"
                 android:orientation="horizontal"
                 android:id="@+id/ll_like_comment">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_like_click"
+    android:orientation="horizontal">
+    <glamvoir.appzstack.glamvoir.customview.CustomTestLight
+        android:id="@+id/tv_ff_shell_like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginRight="@dimen/padding_medium"
+        android:hint="5"
+        android:textSize="10sp"
+        android:textColor="@color/sub_tittle" />
 
-                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
-                    android:id="@+id/tv_ff_shell_like_count"
+          </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="@dimen/padding_medium"
-                    android:hint="5"
-                    android:textSize="10sp"
-                    android:textColor="@color/sub_tittle" />
-
-                <glamvoir.appzstack.glamvoir.customview.CustomTestLight
-                    android:id="@+id/tv_ff_shell_comment_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="10"
+                    android:id="@+id/ll_comment_click"
                     android:layout_marginRight="10dp"
-                    android:textSize="10sp"
-                    android:textColor="@color/sub_tittle" />
+                    android:orientation="horizontal">
+                    <glamvoir.appzstack.glamvoir.customview.CustomTestLight
+                        android:id="@+id/tv_ff_shell_comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="10"
+
+                        android:textSize="10sp"
+                        android:textColor="@color/sub_tittle" />
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

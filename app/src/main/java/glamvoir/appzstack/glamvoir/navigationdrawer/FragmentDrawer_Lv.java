@@ -76,7 +76,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private ProgressBar progressbar;
     private TextView alertCount;
 
-    String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTINGS"};
+    String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POSTS", "SETTINGS"};
 
     int ICONS[] = {R.drawable.feed_active,
             R.drawable.fleamarket,

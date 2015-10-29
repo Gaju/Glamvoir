@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -69,11 +68,10 @@ public class Contact_Us  extends AppCompatActivity implements View.OnClickListen
         email.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         email.setData(Uri.parse("mailto:"));
         email.setType("plain/text");
-        email.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
         email.putExtra(Intent.EXTRA_EMAIL,new String[]{"glamvoir@gmail.com"});
         email.putExtra(Intent.EXTRA_SUBJECT, "");
         email.putExtra(Intent.EXTRA_TEXT, "");
         email.setType("message/rfc822");
-        startActivity(Intent.createChooser(email, "Select Email Client"));
+        startActivity(Intent.createChooser(email, "Choose an Email client :"));
     }
 }

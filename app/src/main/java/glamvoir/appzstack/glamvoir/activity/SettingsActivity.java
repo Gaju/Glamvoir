@@ -1,17 +1,13 @@
 package glamvoir.appzstack.glamvoir.activity;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -145,28 +141,19 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
             case 3:
 
               //  Contact_Us.startActivity(SettingsActivity.this);
-
-
-                try {
+             try {
                 Intent emailContact = new Intent(Intent.ACTION_SEND);
-                emailContact.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 emailContact.setData(Uri.parse("mailto:"));
-                emailContact.setType("plain/text");
-                emailContact.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
                 emailContact.putExtra(Intent.EXTRA_EMAIL,new String[]{"jobs@boommarcom.com"});
                 emailContact.putExtra(Intent.EXTRA_SUBJECT, "Contact Us");
                 emailContact.putExtra(Intent.EXTRA_TEXT, "");
                 emailContact.setType("message/rfc822");
                 startActivity(Intent.createChooser(emailContact, "Select Email Client"));
 
-
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(getApplicationContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
-
-
-
-                break;
+            break;
             case 4:
                 Term_and_Condition.startActivity(SettingsActivity.this);
                 break;

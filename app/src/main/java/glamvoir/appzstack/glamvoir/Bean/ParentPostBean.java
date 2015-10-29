@@ -16,7 +16,8 @@ public class ParentPostBean extends BaseBean implements Serializable {
     public String post_description;
     public String post_video;
     public String post_image;
-    public String post_start_date;
+   // public String post_start_date;
+    public String creation_date;
     public String post_end_date;
     public String user_fname;
     public String user_lname;
@@ -227,13 +228,22 @@ public class ParentPostBean extends BaseBean implements Serializable {
         this.post_image = post_image;
     }
 
-    public String getPost_start_date() {
+   /* public String getPost_start_date() {
         return post_start_date;
     }
 
     public void setPost_start_date(String post_start_date) {
         this.post_start_date = post_start_date;
+    }*/
+
+      public String getcreation_date() {
+        return creation_date;
     }
+
+    public void setcreation_date(String creation_date) {
+        this.creation_date = creation_date;
+    }
+
 
     public String getPost_end_date() {
         return post_end_date;

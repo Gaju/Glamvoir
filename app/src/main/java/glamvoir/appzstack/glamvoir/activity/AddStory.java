@@ -23,6 +23,8 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -58,13 +60,8 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class AddStory extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    /* public static void startActivity(Context context) {
-         Intent intent = new Intent(context, AddStory.class);
-         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
-         context.startActivity(intent);
-     }*/
     private static final String TAG = "AddStory";
     private static final int CAPTURE_IMAGE_CAMERA = 1;
     private static final String DIRECTORY_NAME = "Glamvoir";
@@ -94,10 +91,12 @@ public class AddStory extends AppCompatActivity implements
     String result = null;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
-    Spinner dropDownMenu;
+    Spinner dropDownMenu,dropCitySpinner;
     TextView selected_text;
     private LinearLayout lltool;
     ImageButton galleryImages, time_calender, calender_item, cameraImages;
+    RadioButton rdbMale, rdbFemale,rblboth;
+    RadioGroup rgGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +128,7 @@ public class AddStory extends AppCompatActivity implements
 
         getToolbar(toolbar);
         addItemsToSpinner();
+        addItemsCityToSpinner();
         CurrentDate();
 
         //    init();
@@ -216,6 +216,9 @@ public class AddStory extends AppCompatActivity implements
     }
 
 
+
+
+
     // add items into spinner dynamically
     public void addItemsToSpinner() {
 
@@ -266,6 +269,25 @@ public class AddStory extends AppCompatActivity implements
 
     }
 
+    public void addItemsCityToSpinner() {
+
+        ArrayList<String> list= new ArrayList<String>();
+        list.add("All");
+        list.add("Delhi");
+        list.add("Mumbai");
+        list.add("Kolkata");
+        list.add("Gurgaon");
+
+        // Custom ArrayAdapter with spinner item layout to set popup background
+
+        CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
+                getApplicationContext(), list);
+
+        dropCitySpinner.setAdapter(spinAdapter);
+    }
+
+
+
 
     /**
      * customize the toolbar
@@ -288,6 +310,7 @@ public class AddStory extends AppCompatActivity implements
         galleryImages.setOnClickListener(this);
         calender_item.setOnClickListener(this);
         time_calender.setOnClickListener(this);
+        rgGender.setOnCheckedChangeListener(this);
     }
 
 
@@ -299,6 +322,11 @@ public class AddStory extends AppCompatActivity implements
         lltool = (LinearLayout) findViewById(R.id.lltool);
         galleryImages = (ImageButton) findViewById(R.id.button3);
         cameraImages = (ImageButton) findViewById(R.id.button2);
+        rgGender = (RadioGroup) findViewById(R.id.rgGender);
+        rdbMale = (RadioButton) findViewById(R.id.rdbMale);
+        rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
+        rblboth=(RadioButton)findViewById(R.id.rdbboth);
+        dropCitySpinner = (Spinner) findViewById(R.id.spinner);
         cameraImages.setOnClickListener(this);
         lv_addstory = (ListView) findViewById(R.id.lv_addstory);
         lv_addstory.setFastScrollEnabled(true);
@@ -494,6 +522,36 @@ public class AddStory extends AppCompatActivity implements
         }
         addStoryImageAdapter.addAll(dataT);
     }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // TODO Auto-generated method stub
+        switch (checkedId) {
+
+            case R.id.rdbboth:
+                // AppPreferences.getInstance(this).setGender(GENDER_MALE);
+                Toast.makeText(AddStory.this,"Selected both",Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.rdbMale:
+                // AppPreferences.getInstance(this).setGender(GENDER_MALE);
+                Toast.makeText(AddStory.this,"Selected Men",Toast.LENGTH_LONG).show();
+
+                break;
+            case R.id.rdbFemale:
+                //   AppPreferences.getInstance(this).setGender(GENDER_FEMALE);
+                Toast.makeText(AddStory.this,"Selected Women",Toast.LENGTH_LONG).show();
+
+                break;
+
+            default:
+
+
+                break;
+        }
+    }
+
+
 
 
     public String DataComprision(String userCooseDate, String userCurrentDate) {

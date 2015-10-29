@@ -10,7 +10,6 @@ import android.text.SpannableString;
 import android.webkit.WebView;
 
 import glamvoir.appzstack.glamvoir.R;
-import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.customview.CustomTextBold;
 
 /**
@@ -54,16 +53,17 @@ public class Term_and_Condition extends AppCompatActivity {
     @Override
     public Intent getSupportParentActivityIntent() {
         Intent parentIntent = getIntent();
-        String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
+       // String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
         Intent newIntent = null;
-        try {
-            //you need to define the class with package name
-            newIntent = new Intent(Term_and_Condition.this, Class.forName(AppConstant.PACKAGE + className));
-            newIntent.putExtra("ParentClassName", "HomeActivity");
+
+        finish();
+       /* try {
+
+
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
         return newIntent;
     }
 }
