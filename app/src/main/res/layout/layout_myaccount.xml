@@ -137,7 +137,13 @@
                             android:gravity="center_vertical"
                             android:layout_margin="@dimen/margin_medium"/>
 
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginLeft="@dimen/padding_top_normal"
+                        android:layout_marginRight="@dimen/padding_top_normal"
+                        android:layout_marginTop="@dimen/padding_top_normal"
+                        android:background="@color/button_material_light" />
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/myaccount_inputmail"

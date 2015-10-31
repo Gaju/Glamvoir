@@ -35,12 +35,6 @@ public class LikeListActivity extends AppCompatActivity {
     private ListView mlistView;
     private String postID;
 
-    public static void startActivity(Context context, String postID) {
-        Intent intent = new Intent(context, LikeListActivity.class);
-        intent.putExtra("postID", postID);
-        intent.putExtra("ParentClassName", context.getClass().getSimpleName());
-        context.startActivity(intent);
-    }
 
     public static void startActvity(Context context, String postID) {
         Intent intent = new Intent(context, LikeListActivity.class);

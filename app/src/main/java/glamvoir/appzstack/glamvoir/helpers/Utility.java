@@ -54,7 +54,7 @@ public class Utility {
         mAppPreferences.setFirstName(userDetails.user_fname);
         mAppPreferences.setLastName(userDetails.user_lname);
         mAppPreferences.setUserId(userDetails.user_id);
-
+        mAppPreferences.setuserAge(userDetails.user_dob);
         mAppPreferences.setGender(userDetails.user_gender);
         mAppPreferences.setUserAbout(userDetails.user_about);
         mAppPreferences.setUserContact(userDetails.user_contact);

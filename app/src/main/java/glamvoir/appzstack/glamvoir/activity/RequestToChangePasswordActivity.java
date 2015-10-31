@@ -107,7 +107,7 @@ public class RequestToChangePasswordActivity extends AppCompatActivity implement
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("SEND REQUEST");
+        getSupportActionBar().setTitle("FORGOT PASSWORD");
     }
 
     @Override

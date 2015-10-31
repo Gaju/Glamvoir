@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -29,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -60,7 +62,7 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class AddStory extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+        GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "AddStory";
     private static final int CAPTURE_IMAGE_CAMERA = 1;
@@ -85,6 +87,7 @@ public class AddStory extends AppCompatActivity implements
     Bundle bundle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+   LinearLayout ll_text_upload,ll_image_upload;
 
     AddStoryImageAdapter addStoryImageAdapter;
     private ListView lv_addstory;
@@ -92,6 +95,7 @@ public class AddStory extends AppCompatActivity implements
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     Spinner dropDownMenu,dropCitySpinner;
+    private ToggleButton switching_image_to_text;
     TextView selected_text;
     private LinearLayout lltool;
     ImageButton galleryImages, time_calender, calender_item, cameraImages;
@@ -311,6 +315,7 @@ public class AddStory extends AppCompatActivity implements
         calender_item.setOnClickListener(this);
         time_calender.setOnClickListener(this);
         rgGender.setOnCheckedChangeListener(this);
+        switching_image_to_text.setOnCheckedChangeListener(this);
     }
 
 
@@ -322,6 +327,9 @@ public class AddStory extends AppCompatActivity implements
         lltool = (LinearLayout) findViewById(R.id.lltool);
         galleryImages = (ImageButton) findViewById(R.id.button3);
         cameraImages = (ImageButton) findViewById(R.id.button2);
+        switching_image_to_text = (ToggleButton) findViewById(R.id.switching_image_to_text);
+        ll_text_upload= (LinearLayout) findViewById(R.id.ll_text_upload);
+        ll_image_upload = (LinearLayout) findViewById(R.id.ll_image_upload);
         rgGender = (RadioGroup) findViewById(R.id.rgGender);
         rdbMale = (RadioButton) findViewById(R.id.rdbMale);
         rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
@@ -370,7 +378,7 @@ public class AddStory extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_likes, menu);
         //MenuView.ItemView post;
         //post=(MenuView.ItemView)menu.findItem(R.id.action_uplaod);
         //post.setTitle("POST");
@@ -384,7 +392,7 @@ public class AddStory extends AppCompatActivity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_uplaod) {
+        if (id == R.id.likes) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -580,5 +588,34 @@ public class AddStory extends AppCompatActivity implements
         }
 
         return result;
+    }
+
+
+    /**
+     * Called when the checked state of a compound button has changed.
+     *
+     * @param buttonView The compound button view whose state has changed.
+     * @param isChecked  The new checked state of buttonView.
+     */
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            // The toggle is enabled
+            galleryImages .setClickable(false);
+            galleryImages .setFocusable(false);
+            cameraImages .setClickable(false);
+            cameraImages .setFocusable(false);
+            ll_text_upload.setVisibility(View.VISIBLE);
+            ll_image_upload.setVisibility(View.GONE);
+        } else {
+
+            galleryImages .setClickable(true);
+            galleryImages .setFocusable(true);
+            cameraImages .setClickable(true);
+            cameraImages .setFocusable(true);
+            ll_text_upload.setVisibility(View.GONE);
+            ll_image_upload.setVisibility(View.VISIBLE);
+
+        }
     }
 }

@@ -2,12 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+
     android:orientation="vertical">
+    <android.support.v7.widget.CardView
+
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="4dp"
+
+        card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="@dimen/padding_top_normal"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -18,12 +27,12 @@
             android:layout_weight=".8"
             android:orientation="vertical">
 
-            <glamvoir.appzstack.glamvoir.customview.RoundedImageView
+            <ImageView
                 android:id="@+id/circleView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/camera" />
+                android:background="@drawable/no_media" />
 
         </LinearLayout>
 
@@ -68,4 +77,5 @@
 
         </LinearLayout>
     </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

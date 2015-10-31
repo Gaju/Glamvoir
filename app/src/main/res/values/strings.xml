@@ -43,6 +43,8 @@
     <string name="title_home">FLEA MARKET</string>
     <string name="title_mysave">MY SAVES</string>
     <string name="title_post">MY POST</string>
+    <string name="post">POST</string>
+
     <string name="title_setting">SETTING</string>
 
     <string name="internet_connection_error">Please check your internet connection and try again later!!</string>

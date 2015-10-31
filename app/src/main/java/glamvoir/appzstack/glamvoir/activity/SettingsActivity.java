@@ -126,31 +126,19 @@ public class SettingsActivity extends AppCompatActivity implements SettingAdapte
 
 
                 Contact_Us.startActivity(SettingsActivity.this);
-               /* Intent email = new Intent(Intent.ACTION_SEND);
-                email.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                email.setData(Uri.parse("mailto:"));
-                email.setType("plain/text");
-                email.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-                email.putExtra(Intent.EXTRA_EMAIL,new String[]{"glamvoir@gmail.com"});
-                email.putExtra(Intent.EXTRA_SUBJECT, "");
-                email.putExtra(Intent.EXTRA_TEXT, "");
-                email.setType("message/rfc822");
-                startActivity(Intent.createChooser(email, "Select Email Client"));*/
+
 
                 break;
             case 3:
 
-              //  Contact_Us.startActivity(SettingsActivity.this);
              try {
-                Intent emailContact = new Intent(Intent.ACTION_SEND);
-                emailContact.setData(Uri.parse("mailto:"));
-                emailContact.putExtra(Intent.EXTRA_EMAIL,new String[]{"jobs@boommarcom.com"});
-                emailContact.putExtra(Intent.EXTRA_SUBJECT, "Contact Us");
-                emailContact.putExtra(Intent.EXTRA_TEXT, "");
-                emailContact.setType("message/rfc822");
-                startActivity(Intent.createChooser(emailContact, "Select Email Client"));
 
-                } catch (android.content.ActivityNotFoundException ex) {
+                 Intent testIntent = new Intent(Intent.ACTION_VIEW);
+                 Uri data = Uri.parse("mailto:?subject=" + " " + "&body=" + "" + "&to=" + "jobs@boommarcom.com");
+                 testIntent.setData(data);
+                 startActivity(testIntent);
+
+             } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(getApplicationContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
             break;

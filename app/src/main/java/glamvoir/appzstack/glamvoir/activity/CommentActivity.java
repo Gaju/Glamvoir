@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -177,7 +175,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_likes, menu);
@@ -197,7 +195,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
 }

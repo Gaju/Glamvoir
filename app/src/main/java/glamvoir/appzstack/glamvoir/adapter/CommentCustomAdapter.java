@@ -12,10 +12,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.TimeAgo.TimeAgo;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
@@ -86,7 +89,20 @@ public class CommentCustomAdapter extends BaseAdapter {
         }
 
         if (item.comment_date != null) {
-            holder.comment_time.setText(item.comment_date);
+            TimeAgo timeAgo;
+            String string_date = item.comment_date;
+
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d = null;
+            try {
+                d = f.parse(string_date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long milliseconds = d.getTime();
+            timeAgo= new TimeAgo();
+            String setTimeago=  timeAgo.DateDifference(milliseconds);
+            holder.comment_time.setText(setTimeago);
         }
 
         if (item.user_image != null && !item.user_image.equals("")) {

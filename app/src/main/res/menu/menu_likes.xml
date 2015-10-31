@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/likes"
-        android:title="@string/likes"
+        android:title="@string/post"
         android:orderInCategory="400"
         app:showAsAction="always|withText" />
 

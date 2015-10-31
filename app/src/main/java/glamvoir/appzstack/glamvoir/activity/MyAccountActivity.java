@@ -188,11 +188,16 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             case R.id.done:
                 if (Validation.isValidName(edt_fName.getText().toString())) {
                     if (Validation.isValidPassword(edt_lName.getText().toString())) {
-                        if (Validation.isValidMobile(edt_Contact.getText().toString())) {
+                        if (edt_Contact.getText().toString().length()!=0) {
+                            if (Validation.isValidMobile(edt_Contact.getText().toString())) {
+                                update();
+                                Utility.hideKeyboard(this, edt_lName);
+                            } else {
+                                tl_Contact.setError(getResources().getString(R.string.invalid_number));
+                            }
+                        }else {
                             update();
                             Utility.hideKeyboard(this, edt_lName);
-                        } else {
-                            tl_Contact.setError(getResources().getString(R.string.invalid_number));
                         }
                     } else {
                         tl_lName.setError(getResources().getString(R.string.invalid_lname));
@@ -237,6 +242,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         edt_Email.setText(preferences.getEmailID());
 
+        if (preferences.getuserAge()!=null){
+            edt_age.setText(preferences.getuserAge());
+        }
         if (preferences.getUserAbout() != null) {
             edt_AboutMe.setText(preferences.getUserAbout());
         }
@@ -322,6 +330,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                             if (data.data != null && data.data.error_code != null) {
                                 Utility.updateUserData(mRequestBean.getContext(), data.data.results);
                                 updateUI();
+                                finish();
                             }
                         }
                     }
