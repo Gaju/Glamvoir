@@ -120,8 +120,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.ll_like_click = (LinearLayout) convertView.findViewById(R.id.ll_like_click);
             holder.ll_comment_click = (LinearLayout) convertView.findViewById(R.id.ll_comment_click);
             //@@@@@@@@
-             holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
-             holder.tv_posting_date_of_post = (TextView) convertView.findViewById(R.id.tv_posting_date_of_post);
+            holder.tv_ff_shell_time = (TextView) convertView.findViewById(R.id.tv_ff_shell_time);
+            holder.tv_posting_date_of_post = (TextView) convertView.findViewById(R.id.tv_posting_date_of_post);
 
             holder.tv_actiontext_checkBox_ff_shell = (TextView) convertView.findViewById(R.id.tv_actiontext_checkBox_ff_shell);
             holder.tv_ff_shell_like_count = (TextView) convertView.findViewById(R.id.tv_ff_shell_like_count);
@@ -159,8 +159,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         holder.user_Image.setTag(position);
         holder.tv_ff_shell_username.setTag(position);
         holder.ll_like_click.setTag(position);
-        holder. ll_comment_click.setTag(position);
-     //   holder.bt_ff_shell_complain.setTag(position);
+        holder.ll_comment_click.setTag(position);
+        //   holder.bt_ff_shell_complain.setTag(position);
         holder.viewPager.setTag(position);
         holder.circleIndicator.setTag(position);
         //@@@@@@@
@@ -225,12 +225,19 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             holder.tv_ff_shell_like_count.setVisibility(View.GONE);
         }
 
-        if (item.getIs_following() == 0) {
-            holder.tv_actiontext_checkBox_ff_shell.setText("Follow");
-            holder.checkBox_ff_shell.setChecked(false);
+        if (!AppPreferences.getInstance(frag.getActivity()).getUserId().equals(item.user_id)) {
+            holder.tv_actiontext_checkBox_ff_shell.setVisibility(View.VISIBLE);
+            holder.checkBox_ff_shell.setVisibility(View.VISIBLE);
+            if (item.getIs_following() == 0) {
+                holder.tv_actiontext_checkBox_ff_shell.setText("Follow");
+                holder.checkBox_ff_shell.setChecked(false);
+            } else {
+                holder.tv_actiontext_checkBox_ff_shell.setText("Unfollow");
+                holder.checkBox_ff_shell.setChecked(true);
+            }
         } else {
-            holder.tv_actiontext_checkBox_ff_shell.setText("Unfollow");
-            holder.checkBox_ff_shell.setChecked(true);
+            holder.tv_actiontext_checkBox_ff_shell.setVisibility(View.GONE);
+            holder.checkBox_ff_shell.setVisibility(View.GONE);
         }
 
         if (item.getTotal_comment() > 0) {
@@ -267,8 +274,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 e.printStackTrace();
             }
             long milliseconds = d.getTime();
-            timeAgo= new TimeAgo();
-            String setTimeago=  timeAgo.DateDifference(milliseconds);
+            timeAgo = new TimeAgo();
+            String setTimeago = timeAgo.DateDifference(milliseconds);
             holder.tv_ff_shell_time.setText(setTimeago);
         } else {
             holder.tv_ff_shell_time.setVisibility(View.GONE);
@@ -431,7 +438,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
     static class ViewHolder {
         TextView tv_ff_shell_username;
-        TextView tv_ff_shell_time,tv_posting_date_of_post;
+        TextView tv_ff_shell_time, tv_posting_date_of_post;
         TextView tv_actiontext_checkBox_ff_shell;
         TextView tv_ff_shell_like_count;
         TextView tv_ff_shell_comment_count;
@@ -442,7 +449,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         ImageButton bt_ff_shell_like;
         ImageButton bt_ff_shell_whatapp;
         ImageButton bt_ff_shell_share;
-     //   ImageButton bt_ff_shell_complain;
+        //   ImageButton bt_ff_shell_complain;
         ImageButton bt_ff_shell_map;
         ImageView user_Image;
         LinearLayout ll_like_click;
@@ -518,7 +525,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, item.getPost_description());
             intent.setType("text/plain");
-            String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result,item.getPost_title() + "" + item.getPost_description(), null);
+            String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_title() + "" + item.getPost_description(), null);
             if (path == null) {
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
@@ -593,7 +600,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             try {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" +item.getPost_description());
+                intent.putExtra(Intent.EXTRA_TEXT, item.getPost_title() + "" + item.getPost_description());
                 intent.setType("text/plain");
 
                 String path = MediaStore.Images.Media.insertImage(frag.getActivity().getContentResolver(), result, item.getPost_title() + "" + item.getPost_description(), null);

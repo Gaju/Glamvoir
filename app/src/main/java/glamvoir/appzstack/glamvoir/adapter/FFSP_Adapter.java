@@ -120,15 +120,15 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
             if (singleFollow.user_fname != null && singleFollow.user_lname != null)
                 holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);
 
-            if (Integer.parseInt(singleFollow.total_following) < 1)
-                holder.subtitle.setText(singleFollow.total_following + " follower");
-            else holder.subtitle.setText(singleFollow.total_following + " followers");
+            if (Integer.parseInt(singleFollow.total_follower) < 1)
+                holder.subtitle.setText(singleFollow.total_follower + " follower");
+            else holder.subtitle.setText(singleFollow.total_follower + " followers");
 
-            if (singleFollow.is_following.equalsIgnoreCase("1")) {
-                holder.icon.setImageResource(R.drawable.following_active);
+            if (singleFollow.is_follower.equalsIgnoreCase("1")) {
+                holder.icon.setImageResource(R.drawable.followers_active);
                 holder.icon_title.setText("Unfollow");
             } else {
-                holder.icon.setImageResource(R.drawable.following);
+                holder.icon.setImageResource(R.drawable.followers);
                 holder.icon_title.setText("Follow");
             }
 
@@ -209,7 +209,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         } else if (context instanceof FollowingActivity) {
 
             // FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
-            ((FFSPActivity) context).followFollower(appPreferences.getUserId(), mPosition);
+            ((FFSPActivity) context).followFollower(singleFollow.user_id, mPosition);
 
         } else if (context instanceof FollowersActivity) {
 

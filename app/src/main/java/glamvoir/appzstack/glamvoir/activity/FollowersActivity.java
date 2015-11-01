@@ -39,7 +39,7 @@ public class FollowersActivity extends FFSPActivity {
 
     @Override
     protected String getMethodName() {
-        return AppConstant.METHOD_FOLLOWING;
+        return AppConstant.METHOD_FOLLOWER;
     }
 
     @Override

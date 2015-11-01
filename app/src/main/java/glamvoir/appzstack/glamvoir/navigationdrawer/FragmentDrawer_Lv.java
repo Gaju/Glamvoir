@@ -117,7 +117,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
      * method to set the alert counter
      */
     private void setAlertCount() {
-        if (AppConfig.ALERT_COUNTER >= 0) {
+        if (AppConfig.ALERT_COUNTER > 0) {
             alertCount.setVisibility(View.VISIBLE);
             alertCount.setText(String.valueOf(AppConfig.ALERT_COUNTER));
         }

@@ -4,10 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
-import java.util.ArrayList;
-
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
-
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.ObservedFollowResponse;
 import glamvoir.appzstack.glamvoir.network.Communication;
@@ -51,7 +48,7 @@ public class ObserveFFSPIntentService extends IntentService {
         String url = "http://glamvoir.com/index.php/api?method=" + AppConstant.METHOD_FOLLOWER_FOLLOWING + "&follower_user_id=" + followerID + "&following_user_id=" + intent.getStringExtra(INTENT_ARG_MYUSERID);
         TaskResponse<ObservedFollowResponse> response = new TaskResponse<ObservedFollowResponse>();
         try {
-            response.data = Communication.toggleFollow(AppConstant.METHOD_FOLLOWER_FOLLOWING, intent.getStringExtra(INTENT_ARG_MYUSERID), followerID);
+            response.data = Communication.toggleFollow(AppConstant.METHOD_FOLLOWER_FOLLOWING, followerID, intent.getStringExtra(INTENT_ARG_MYUSERID));
             if (response.data.isSucceeded()) {
                 if (response.data != null) {
                     sendObservedBroadcast(response.data.observedFollowIds.get(0).is_followng, response.data.observedFollowIds.get(0).total_folower, position);

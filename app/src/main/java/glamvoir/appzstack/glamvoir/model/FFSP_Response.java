@@ -106,8 +106,14 @@ public class FFSP_Response implements Parcelable {
         @JsonProperty("total_following")
         public String total_following;
 
+        @JsonProperty("total_follower")
+        public String total_follower;
+
         @JsonProperty("is_following")
         public String is_following;
+
+        @JsonProperty("is_follower")
+        public String is_follower;
 
         @JsonProperty("post_title")
         public String post_title;
