@@ -1,8 +1,6 @@
 package glamvoir.appzstack.glamvoir.navigationdrawer;
 
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -131,7 +129,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-       setAlertCount();
+        setAlertCount();
     }
 
     @Override
@@ -285,7 +283,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     }
 
     private void removeAlertcount() {
-        AppConfig.ALERT_COUNTER = 0;
+        AppConfig.ALERT_COUNTER = -1;
         alertCount.setVisibility(View.GONE);
     }
 
