@@ -224,7 +224,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:id="@+id/button4" />
+                android:id="@+id/mobile_number" />
 
             <ImageButton
                 style="?android:attr/borderlessButtonStyle"

@@ -72,8 +72,8 @@ public class LikedUserAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
+        holder.comment.setVisibility(View.GONE);
+        holder.comment_time.setVisibility(View.GONE);
         if (item.user_fname != null) {
             holder.user_name.setText(item.user_fname + " " + item.user_lname);
         }

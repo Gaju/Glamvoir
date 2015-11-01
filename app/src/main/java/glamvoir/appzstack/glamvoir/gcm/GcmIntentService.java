@@ -76,9 +76,9 @@ public class GcmIntentService extends IntentService {
         String creation_date = extras.getString("creation_date");
 
         //storing alert counter globally
-       // AppConfig.ALERT_COUNTER = extras.getInt("badge");
+       AppConfig.ALERT_COUNTER = extras.getInt("badge");
 
-        sendAlertCounterBroadcast(extras.getInt("badge"));
+       // sendAlertCounterBroadcast(extras.getInt("badge"));
 
         // Invoking the default notification service
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(

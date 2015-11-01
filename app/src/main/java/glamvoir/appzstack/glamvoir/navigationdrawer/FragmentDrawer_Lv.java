@@ -67,7 +67,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private ImageView proFile_Image;
     private RelativeLayout alertLayout;
     private File file;
-    int save = -1;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private NavigationDrawerAdapter_Lv adapter;
@@ -118,21 +117,21 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
      * method to set the alert counter
      */
     private void setAlertCount() {
-        if (AppConfig.ALERT_COUNTER > 0) {
+        if (AppConfig.ALERT_COUNTER >= 0) {
             alertCount.setVisibility(View.VISIBLE);
-            alertCount.setText(AppConfig.ALERT_COUNTER);
+            alertCount.setText(String.valueOf(AppConfig.ALERT_COUNTER));
         }
     }
 
-    private void setAlertCount(int count) {
+   /* private void setAlertCount(int count) {
             alertCount.setVisibility(View.VISIBLE);
-            alertCount.setText(count);
-    }
+            alertCount.setText(String.valueOf(count));
+    }*/
 
     @Override
     public void onResume() {
         super.onResume();
-        setAlertCount();
+       setAlertCount();
     }
 
     @Override
@@ -380,19 +379,19 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         return sdf.format(c.getTime());
     }
 
-    /**
-     * clas to handle the broadcast counter when gcm trigger
-     */
-    public class ObserveAlertBroadcast extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(BROADCAST_ALERT_ACTION)) {
-                int count = intent.getIntExtra(BROADCAST_EXTRA_COUNTER, 0);
-                if (count > 0)
-                    setAlertCount(count);
-            }
-        }
-    }
+//    /**
+//     * clas to handle the broadcast counter when gcm trigger
+//     */
+//    public class ObserveAlertBroadcast extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            String action = intent.getAction();
+//            if (action.equals(BROADCAST_ALERT_ACTION)) {
+//                int count = intent.getIntExtra(BROADCAST_EXTRA_COUNTER, 0);
+//                if (count > 0)
+//                    setAlertCount(count);
+//            }
+//        }
+//    }
 }

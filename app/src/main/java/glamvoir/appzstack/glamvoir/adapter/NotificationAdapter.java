@@ -12,9 +12,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.TimeAgo.TimeAgo;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.model.net.response.ListNotificationResponse;
 
@@ -72,6 +76,25 @@ public class NotificationAdapter extends BaseAdapter {
         }
 
         holder.comment_time.setVisibility(View.GONE);
+        holder.user_name.setVisibility(View.GONE);
+
+        if (item.creation_date!=null){
+            holder.comment_time.setVisibility(View.VISIBLE);
+            TimeAgo timeAgo;
+            String string_date = item.creation_date;
+
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d = null;
+            try {
+                d = f.parse(string_date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long milliseconds = d.getTime();
+            timeAgo= new TimeAgo();
+            String setTimeago=  TimeAgo.DateDifference(milliseconds);
+            holder.comment_time.setText(setTimeago);
+        }
 
         if (item.title != null) {
             holder.user_name.setText(item.title);

@@ -197,11 +197,6 @@
             android:exported="true"
             android:name=".gcm.GcmIntentService" />
 
-        <receiver android:name=".navigationdrawer.FragmentDrawer_Lv$ObserveAlertBroadcast" >
-            <intent-filter>
-                <action android:name="com.alert" />
-            </intent-filter>
-        </receiver>
 
     </application>
 
