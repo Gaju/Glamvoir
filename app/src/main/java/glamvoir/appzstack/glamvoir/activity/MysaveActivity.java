@@ -76,13 +76,14 @@ public class MysaveActivity extends FFSPActivity {
         Intent parentIntent = getIntent();
         String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
         Intent newIntent = null;
-        try {
+       /* try {
             //you need to define the class with package name
             newIntent = new Intent(MysaveActivity.this, Class.forName(AppConstant.PACKAGE + className));
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
+        finish();
         return newIntent;
     }
 

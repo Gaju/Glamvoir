@@ -10,4 +10,178 @@
 
     <include layout="@layout/loading_with_circle" />
 
+
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:gravity="center">
+
+       <glamvoir.appzstack.glamvoir.customview.CustomTextBold
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textAppearance="?android:attr/textAppearanceMedium"
+           android:text="CHOOSE YOUR CITY:"
+           android:id="@+id/textView5"
+           android:layout_marginBottom="@dimen/padding_top_normal"
+           android:layout_gravity="center_horizontal" />
+
+       <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:weightSum="4">
+
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="New Button"
+               android:layout_weight="1"
+               android:background="@drawable/corner_button_dip"
+
+               android:id="@+id/bt10" />
+
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="New Button"
+               android:id="@+id/bt11"
+               android:layout_weight="1"
+               android:layout_marginLeft="@dimen/padding_large"
+               android:background="@drawable/corner_button_dip"
+               android:layout_gravity="right" />
+
+
+
+       </LinearLayout>
+
+
+
+       <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+           android:layout_margin="@dimen/padding_top_normal"
+        android:weightSum="3">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/bt1"
+            android:background="@drawable/corner_button_dip"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/bt2"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:background="@drawable/corner_button_dip"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/bt3"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:background="@drawable/corner_button_dip"
+            android:layout_gravity="right"
+            android:layout_weight="1"/>
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_top_normal"
+
+        android:weightSum="3">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:background="@drawable/corner_button_dip"
+            android:id="@+id/bt4"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/bt5"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:background="@drawable/corner_button_dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/bt6"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:background="@drawable/corner_button_dip"
+            android:layout_weight="1"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_top_normal"
+        android:weightSum="3">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:background="@drawable/corner_button_dip"
+            android:id="@+id/bt7"
+
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/bt8"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:background="@drawable/corner_button_dip"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/bt9"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:background="@drawable/corner_button_dip"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
+
+
+
+   </LinearLayout>
+
+
+
+
+
 </LinearLayout>

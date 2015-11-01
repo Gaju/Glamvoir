@@ -275,7 +275,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             }
             long milliseconds = d.getTime();
             timeAgo = new TimeAgo();
-            String setTimeago = timeAgo.DateDifference(milliseconds);
+            String setTimeago = TimeAgo.DateDifference(milliseconds);
             holder.tv_ff_shell_time.setText(setTimeago);
         } else {
             holder.tv_ff_shell_time.setVisibility(View.GONE);
@@ -295,6 +295,8 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
         if (item.getContact_no().length() == 10) {
             holder.bt_connect_with_seller.setVisibility(View.VISIBLE);
+
+
         } else {
             holder.bt_connect_with_seller.setVisibility(View.GONE);
         }
@@ -359,7 +361,21 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 }).show();
                 break;
             case R.id.bt_connect_with_seller:
-                Toast.makeText(frag.getActivity(), "You click connect sellet", Toast.LENGTH_LONG).show();
+                try {
+
+                    // set the data
+
+                    String uri = "tel:"+item.getContact_no();
+                    Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+                    frag.startActivity(callIntent);
+
+                }catch(Exception e) {
+
+                    Toast.makeText(frag.getActivity(),"Your call has failed...",Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+
+                }
+
                 break;
 
             case R.id.imageView:

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -30,12 +29,13 @@ import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 /**
  * Created by jaim on 9/12/2015.
  */
-public class MyCityActivity extends AppCompatActivity {
+public class MyCityActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     private LinearLayout layout;
     protected View loadIndicator;
+    private  Button bt1,bt2,bt3,bt4,bt5,bt6,bt7,bt8,bt9,bt10,bt11;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MyCityActivity.class);
@@ -55,6 +55,7 @@ public class MyCityActivity extends AppCompatActivity {
         initViews();
 
         //layout.setOrientation(LinearLayout.VERTICAL);  //Can also be done in xml by android:orientation="vertical"
+        iniListiner();
 
         getToolbar(toolbar);
 
@@ -62,10 +63,37 @@ public class MyCityActivity extends AppCompatActivity {
 
     }
 
+    private void iniListiner() {
+        bt1.setOnClickListener(this);
+        bt2.setOnClickListener(this);
+        bt3.setOnClickListener(this);
+        bt4.setOnClickListener(this);
+        bt5.setOnClickListener(this);
+        bt6.setOnClickListener(this);
+        bt7.setOnClickListener(this);
+        bt8.setOnClickListener(this);
+        bt9.setOnClickListener(this);
+        bt10.setOnClickListener(this);
+        bt11.setOnClickListener(this);
+
+    }
+
     private void initViews() {
         layout = (LinearLayout) findViewById(R.id.layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         loadIndicator = findViewById(R.id.loadIndicator);
+        bt1= (Button) findViewById(R.id.bt1);
+        bt2= (Button) findViewById(R.id.bt2);
+        bt3= (Button) findViewById(R.id.bt3);
+        bt4= (Button) findViewById(R.id.bt4);
+        bt5= (Button) findViewById(R.id.bt5);
+        bt6= (Button) findViewById(R.id.bt6);
+        bt7= (Button) findViewById(R.id.bt7);
+        bt8= (Button) findViewById(R.id.bt8);
+        bt9= (Button) findViewById(R.id.bt9);
+        bt10= (Button) findViewById(R.id.bt10);
+        bt11= (Button) findViewById(R.id.bt11);
+
     }
 
     private void getToolbar(Toolbar toolbar) {
@@ -128,67 +156,58 @@ public class MyCityActivity extends AppCompatActivity {
             };
 
 
-    private void addButtons(final List<CityResponse.City> list) {
+    private void addButtons(List<CityResponse.City> list) {
 
-//        for (int i = 0; i <= (list.size() / 3)+1; i++) {
-//            LinearLayout row = new LinearLayout(this);
-//            row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//
-//            for (int j = 0; j < 3; j++) {
-//                Button btnTag = new Button(this);
-//                btnTag.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                int pos = (j + 1 + (i * 4)) - 1;
-//                if (pos != -1 && pos <= list.size()) {
-//                    btnTag.setText(list.get(pos).city_name);
-//                    btnTag.setId(j + 1 + (i * 3));
-//                    row.addView(btnTag);
-//                }
-//            }
-//            layout.addView(row);
-//        }
+         for (int j = 0; j < list.size(); j++) {
+           /* Button btnTag = new Button(this);
+            btnTag.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            btnTag.setText(list.get(j).city_name);
+            btnTag.setId(j + 1);
+            row.addView(btnTag);*/
+            bt1.setText(list.get(0).city_name);
+            bt2.setText(list.get(1).city_name);
+            bt3.setText(list.get(2).city_name);
+            bt4.setText(list.get(3).city_name);
+            bt5.setText(list.get(4).city_name);
+            bt6.setText(list.get(5).city_name);
+            bt7.setText(list.get(6).city_name);
+            bt8.setText(list.get(7).city_name);
+            bt9.setText(list.get(8).city_name);
+            bt10.setText(list.get(9).city_name);
+            bt11.setText(list.get(10).city_name);
+          
 
-
-        final Button[] my_button = new Button[list.size()];
-
-        for (int bt = 0; bt < list.size(); bt ++){
-            final int Index = bt;
-
-            my_button[Index] = new Button(this);
-            my_button[Index].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            my_button[Index].setText(list.get(Index).city_name);
-            my_button[Index].setId(Index);
-
-            my_button[bt].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (my_button[Index].getId() == ((Button) v).getId()) {
-                        Toast.makeText(getApplicationContext(), list.get(Index).city_name, Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-
-            layout.addView(my_button[Index]);
         }
-
-
-
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt1:
+                break;
+            case R.id.bt2:
+                break;
+            case R.id.bt3:
+                break;
+            case R.id.bt4:
+                break;
+            case R.id.bt5:
+                break;
+            case R.id.bt6:
+                break;
+            case R.id.bt7:
+                break;
+            case R.id.bt8:
+                break;
+            case R.id.bt9:
+                break;
+            case R.id.bt10:
+                break;
+            case R.id.bt11:
+                break;
 
-//        for (int i = 0; i < list.size(); i++) {
-//            LinearLayout row = new LinearLayout(this);
-//            row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//
-//            for (int j = 0; j < list.size(); j++) {
-//                Button btnTag = new Button(this);
-//                btnTag.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                btnTag.setText(list.get(j).city_name);
-//                btnTag.setId(j + 1);
-//                row.addView(btnTag);
-//            }
-//
-//            layout.addView(row);
-//        }
-//    }
+        }
+
+    }
 }

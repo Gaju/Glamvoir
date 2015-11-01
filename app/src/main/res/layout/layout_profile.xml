@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <include layout="@layout/appbar" />
-
     <ScrollView
-        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/scrollView3"
         android:layout_gravity="center_horizontal"
-        android:fillViewport="false">
-
+        android:fillViewport="false" >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
 
-            <include layout="@layout/loading_with_circle" />
-
+            <include layout="@layout/loading_with_circle"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -30,6 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
 
 
                     <LinearLayout
@@ -65,102 +63,83 @@
                         android:layout_marginTop="20dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
-
                         <LinearLayout
-                            android:id="@+id/ll_user_about"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                           >
+
 
 
                             <ImageButton
-                                android:id="@+id/button12"
+                                android:id="@+id/ll_user_about"
                                 style="?android:attr/borderlessButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
                                 android:layout_weight="1"
+
+                                android:layout_gravity="center_horizontal"
 
                                 android:src="@drawable/info" />
-
                             <TextView
-                                android:id="@+id/textView3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="About"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@android:color/black" />
+                                android:text="About"
+                                android:gravity="center"
+                                android:textColor="@android:color/black"
+                                android:id="@+id/textView3"
+                                android:layout_weight="1" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_user_contact"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
-
+                            android:orientation="vertical"
+                            >
                             <ImageButton
-                                android:id="@+id/bt_user_contact"
+                                android:id="@+id/ll_user_contact"
                                 style="?android:attr/borderlessButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_weight="1"
                                 android:src="@drawable/phone" />
-
                             <TextView
-                                android:id="@+id/tv_user_contact"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Contact"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@android:color/black" />
+                                android:text="Contact"
+                                android:gravity="center"
+                                android:textColor="@android:color/black"
+                                android:id="@+id/tv_user_contact"
+                                android:layout_weight="1" />
 
                         </LinearLayout>
 
 
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
+
+
                         android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/bt_pro_following"
 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center">
-
-                            <ProgressBar
-                                android:id="@+id/progressbar"
-                                style="@android:style/Widget.ProgressBar.Small"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_centerInParent="true"
-                                android:layout_gravity="center"
-                                android:indeterminate="true"
-                                android:indeterminateDrawable="@drawable/progress_medium_holo"
-                                android:visibility="gone" />
-
-                            <Button
-                                android:id="@+id/bt_pro_following"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Following" />
-
-                        </RelativeLayout>
-
+                            android:text="Following" />
 
                     </LinearLayout>
 
@@ -169,8 +148,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
 
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="3"
+                        android:orientation="horizontal">
 
 
                         <Button
@@ -191,7 +170,6 @@
 
                             android:text="Followers" />
 
-
                         <Button
                             android:id="@+id/bt_pro_activity"
 
@@ -205,16 +183,17 @@
                     </LinearLayout>
 
 
+
                 </LinearLayout>
             </RelativeLayout>
-
             <ListView
-                android:id="@+id/listView2"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
+                android:id="@+id/listView2"
                 android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
+
 
 
     </ScrollView>

@@ -50,8 +50,8 @@ public class AppConstant {
     public static final String CATEGORY_ALL = "1";
     public static final String CATEGORY_FASHION = "2";
     public static final String CATEGORY_FOOD_PLACE = "3";
-    public static final String CATEGORY_INTEREST = "4";
-    public static final String CATEGORY_STORE_DEAL = "5";
+    public static final String CATEGORY_INTEREST = "5";
+    public static final String CATEGORY_STORE_DEAL = "4";
     public static final String CATEGORY_FLEA_MARKET = "6";
 
     public static String getDeviceToken(Context context) {

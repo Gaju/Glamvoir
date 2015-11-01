@@ -4,24 +4,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="4"
+    >
 
-    <include layout="@layout/appbar" />
-
-    <LinearLayout
+    <include layout="@layout/appbar"
+        />
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="7"
-        android:orientation="vertical">
-
+        android:layout_weight="3">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_weight=".5"
             android:weightSum="3"
-            android:layout_height="48dp"
-
+            android:layout_height="40dp"
             android:layout_margin="8dp"
+            android:id="@+id/ll_grnder_selection"
             >
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -29,8 +29,6 @@
                 android:id="@+id/rgGender"
                 android:orientation="horizontal"
                 android:layout_weight="3">
-
-
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -38,10 +36,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/yourbuttonbackground"
                     android:button="@android:color/transparent"
-
                     android:layout_marginLeft="4dp"
                     android:gravity="center"
-
                     android:id="@+id/rdbboth" />
 
                 <RadioButton
@@ -73,16 +69,24 @@
 
 
         </LinearLayout>
-
         <LinearLayout
+            android:layout_below="@+id/ll_grnder_selection"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_weight=".5"
-
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="4dp"
-            android:layout_height="48dp">
+            android:layout_height="48dp"
+            android:id="@+id/ll_comment_click_spiiner_city">
+
+            <include layout="@layout/loading_with_circle" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                >
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -90,26 +94,31 @@
                 android:layout_weight="1"
                 android:id="@+id/spinner" />
 
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:id="@+id/spinner2" />
 
+            </LinearLayout>
         </LinearLayout>
-
-
-
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_weight="5"
+
             android:weightSum="3"
             android:layout_margin="8dp"
             android:layout_height="wrap_content"
             android:id="@+id/ll_image_upload"
+            android:layout_below="@+id/ll_comment_click_spiiner_city"
 
             >
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="match_parent"
                 android:id="@+id/lv_addstory"
                 android:layout_weight="3"
                 android:scrollbars="none"
@@ -118,161 +127,149 @@
 
 
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_weight="5"
-            android:weightSum="3"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll_text_upload"
-            android:visibility="gone"
-            >
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/heading_input"
-                style="@style/TestInputTheme"
-                app:hintTextAppearance="@android:style/TextAppearance.Medium"
-
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_weight="5"
+                android:weightSum="3"
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll_text_upload"
+                android:visibility="gone"
+                android:layout_below="@+id/ll_image_upload"
                 >
 
-                <EditText
-                    android:id="@+id/heading"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="@dimen/margin_bottom_xlarge"
-                    android:ems="10"
-                    android:hint="Add a title"
-                    android:layout_weight="1.5"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textSize="@dimen/textsize_normal" />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/heading_input"
+                    style="@style/TestInputTheme"
+                    app:hintTextAppearance="@android:style/TextAppearance.Medium"
 
-            </android.support.design.widget.TextInputLayout>
+                    >
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/description_input"
-                style="@style/TestInputTheme"
-                app:hintTextAppearance="@android:style/TextAppearance.Medium">
+                    <EditText
+                        android:id="@+id/heading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_bottom_xlarge"
+                        android:ems="10"
+                        android:hint="Add a title"
+                        android:layout_weight="1.5"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:textSize="@dimen/textsize_normal" />
 
-                <EditText
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="Add description"
-                    android:imeOptions="actionDone"
-                    android:inputType="textMultiLine"
-                    android:layout_weight="1.5"
-                    android:maxLength="350"
-                    android:textSize="@dimen/textsize_normal" />
+                </android.support.design.widget.TextInputLayout>
 
-            </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/description_input"
+                    style="@style/TestInputTheme"
+                    app:hintTextAppearance="@android:style/TextAppearance.Medium">
 
+                    <EditText
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:ems="10"
+                        android:hint="Add description"
+                        android:imeOptions="actionDone"
+                        android:inputType="textMultiLine"
+                        android:layout_weight="1.5"
+                        android:maxLength="350"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+
+
+            </LinearLayout>
 
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_weight=".5"
-            android:weightSum="7"
+
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:weightSum="7"
+        android:background="@android:color/transparent"
+        android:layout_height="80dp"
+
+        android:layout_below="@+id/ll_image_upload"
+        >
+
+
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/up_camera"
             android:background="@android:color/transparent"
-            android:layout_height="50dp"
-            >
+            android:layout_weight="1"
+            android:id="@+id/button2" />
 
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/imgesmult"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:id="@+id/button3" />
 
-            <ImageButton
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/up_camera"
-                android:background="@android:color/transparent"
-                android:layout_weight="1"
-                android:id="@+id/button2" />
+        <ImageButton
 
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/imgesmult"
-                style="?android:attr/borderlessButtonStyle"
-                android:background="@android:color/transparent"
-                android:layout_weight="1"
-                android:id="@+id/button3" />
+            android:layout_width="50dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_height="match_parent"
+            android:src="@drawable/u_location"
+            android:background="@android:color/transparent"
+            android:id="@+id/button6"
+            android:layout_weight="1" />
 
-            <ImageButton
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/upl_phone"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:id="@+id/mobile_number" />
 
-                android:layout_width="50dp"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_height="match_parent"
-                android:src="@drawable/u_location"
-                android:background="@android:color/transparent"
-                android:id="@+id/button6"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/upl_phone"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:id="@+id/mobile_number" />
-
-            <ImageButton
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/calendar_up"
-                android:background="@android:color/transparent"
-                android:layout_weight="1"
-                android:id="@+id/calender_item" />
-            <ImageButton
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:src="@android:drawable/ic_lock_idle_alarm"
-                android:background="@android:color/transparent"
-                android:layout_weight="1"
-                android:id="@+id/time_calender" />
-            <ToggleButton
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@android:drawable/ic_input_get"
-                android:background="@drawable/toggle_button"
-                android:layout_weight="1"
-                android:textOn=""
-                android:textOff=""
-
-                android:id="@+id/switching_image_to_text" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:layout_gravity="center_horizontal">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Add Another Story"
-                android:textColor="@android:color/white"
-                android:background="@color/com_facebook_blue"
-                android:id="@+id/button" />
-        </LinearLayout>
-
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/calendar_up"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:id="@+id/calender_item" />
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@android:drawable/ic_lock_idle_alarm"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:id="@+id/time_calender" />
+        <ToggleButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/toggle_button"
+            android:layout_weight="1"
+            android:textOn=""
+            android:textOff=""
+            android:id="@+id/switching_image_to_text" />
     </LinearLayout>
-
-
 
 </LinearLayout>

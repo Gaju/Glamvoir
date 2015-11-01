@@ -2,8 +2,11 @@ package glamvoir.appzstack.glamvoir.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.LoaderManager;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Loader;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
@@ -11,15 +14,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -48,14 +54,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.AddStoryImageAdapter;
+import glamvoir.appzstack.glamvoir.adapter.CustomCitySpinnerAdapter;
 import glamvoir.appzstack.glamvoir.adapter.CustomSpinnerAdapter;
+import glamvoir.appzstack.glamvoir.asynctaskloader.CityLoader;
+import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
+import glamvoir.appzstack.glamvoir.helpers.Validation;
+import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
+import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 
 /**
  * Created by jaim on 9/9/2015.
@@ -77,7 +90,7 @@ public class AddStory extends AppCompatActivity implements
     private int mYear, mMonth, mDay, mHour, mMinute;
     String userCurrentDate;
     String userCooseDate, finalDate;
-
+    protected View loadIndicator;
     ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
 
     GridView gridGallery;
@@ -98,7 +111,7 @@ public class AddStory extends AppCompatActivity implements
     private ToggleButton switching_image_to_text;
     TextView selected_text;
     private LinearLayout lltool;
-    ImageButton galleryImages, time_calender, calender_item, cameraImages;
+    ImageButton galleryImages, time_calender, calender_item, cameraImages,mobile_number;
     RadioButton rdbMale, rdbFemale,rblboth;
     RadioGroup rgGender;
 
@@ -116,7 +129,7 @@ public class AddStory extends AppCompatActivity implements
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        setContentView(R.layout.my_post);//layout_mypost
+        setContentView(R.layout.my_post);
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -131,8 +144,9 @@ public class AddStory extends AppCompatActivity implements
         initListener();
 
         getToolbar(toolbar);
+        getLoaderManager().restartLoader(LoaderID.GET_CITY, null, cityCallback);
         addItemsToSpinner();
-        addItemsCityToSpinner();
+
         CurrentDate();
 
         //    init();
@@ -273,22 +287,6 @@ public class AddStory extends AppCompatActivity implements
 
     }
 
-    public void addItemsCityToSpinner() {
-
-        ArrayList<String> list= new ArrayList<String>();
-        list.add("All");
-        list.add("Delhi");
-        list.add("Mumbai");
-        list.add("Kolkata");
-        list.add("Gurgaon");
-
-        // Custom ArrayAdapter with spinner item layout to set popup background
-
-        CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
-                getApplicationContext(), list);
-
-        dropCitySpinner.setAdapter(spinAdapter);
-    }
 
 
 
@@ -316,6 +314,7 @@ public class AddStory extends AppCompatActivity implements
         time_calender.setOnClickListener(this);
         rgGender.setOnCheckedChangeListener(this);
         switching_image_to_text.setOnCheckedChangeListener(this);
+        mobile_number.setOnClickListener(this);
     }
 
 
@@ -324,9 +323,11 @@ public class AddStory extends AppCompatActivity implements
      */
     private void initViews() {
         handler = new Handler();
+        loadIndicator = findViewById(R.id.loadIndicator);
         lltool = (LinearLayout) findViewById(R.id.lltool);
         galleryImages = (ImageButton) findViewById(R.id.button3);
         cameraImages = (ImageButton) findViewById(R.id.button2);
+        mobile_number= (ImageButton) findViewById(R.id.mobile_number);
         switching_image_to_text = (ToggleButton) findViewById(R.id.switching_image_to_text);
         ll_text_upload= (LinearLayout) findViewById(R.id.ll_text_upload);
         ll_image_upload = (LinearLayout) findViewById(R.id.ll_image_upload);
@@ -350,13 +351,9 @@ public class AddStory extends AppCompatActivity implements
             selected_text.setSelected(true);
         }
 
-        //gridGallery = (GridView) findViewById(R.id.gridGallery);
-        // gridGallery.setFastScrollEnabled(true);
         addStoryImageAdapter = new AddStoryImageAdapter(this, imageLoader, AddStory.this);
         lv_addstory.setAdapter(addStoryImageAdapter);
-        // adapter = new GalleryAdapter(AddStory.this, imageLoader);
-        // adapter.setMultiplePick(false);
-        //  gridGallery.setAdapter(adapter);
+
     }
 
     @Override
@@ -463,6 +460,40 @@ public class AddStory extends AppCompatActivity implements
                 } else {
                     Utility.showToast(AddStory.this, "No External Storage");
                 }
+                break;
+            case R.id.mobile_number:
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.addstory_mobile_number, null);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(dialogView);
+            final EditText myaccount_phone = (EditText) dialogView.findViewById(R.id.myaccount_phone);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    if (Validation.isValidMobile(myaccount_phone.getText().toString())) {
+                        String posting_contact_number=myaccount_phone.getText().toString();
+                        Toast.makeText(AddStory.this,posting_contact_number,Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(AddStory.this,getResources().getString(R.string.invalid_number),Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                }
+            });
+            builder.create();
+            builder.show();
+
                 break;
         }
     }
@@ -606,7 +637,7 @@ public class AddStory extends AppCompatActivity implements
             cameraImages .setClickable(false);
             cameraImages .setFocusable(false);
             ll_text_upload.setVisibility(View.VISIBLE);
-            ll_image_upload.setVisibility(View.GONE);
+            lv_addstory.setVisibility(View.GONE);
         } else {
 
             galleryImages .setClickable(true);
@@ -614,8 +645,50 @@ public class AddStory extends AppCompatActivity implements
             cameraImages .setClickable(true);
             cameraImages .setFocusable(true);
             ll_text_upload.setVisibility(View.GONE);
-            ll_image_upload.setVisibility(View.VISIBLE);
+            lv_addstory.setVisibility(View.VISIBLE);
 
         }
+    }
+
+
+    LoaderManager.LoaderCallbacks<TaskResponse<CityResponse>> cityCallback =
+            new LoaderManager.LoaderCallbacks<TaskResponse<CityResponse>>() {
+
+                @Override
+                public Loader<TaskResponse<CityResponse>> onCreateLoader(int id, Bundle args) {
+                    loadIndicator.setVisibility(View.VISIBLE);
+                    return new CityLoader(mRequestBean.getContext());
+                }
+
+                @Override
+                public void onLoadFinished(Loader<TaskResponse<CityResponse>> loader, TaskResponse<CityResponse> data) {
+                    if (loader instanceof CityLoader) {
+                        loadIndicator.setVisibility(View.GONE);
+                        if (data.error != null) {
+                            Utility.showToast(mRequestBean.getContext(), data.error.toString());
+                        } else {
+
+                            if (data.data != null && data.data.error_code != null) {
+                                addButtons(data.data.results);
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoaderReset(Loader<TaskResponse<CityResponse>> loader) {
+                }
+            };
+
+    private void addButtons(List<CityResponse.City> list) {
+
+
+        // Custom ArrayAdapter with spinner item layout to set popup background
+
+        CustomCitySpinnerAdapter spinAdapter = new CustomCitySpinnerAdapter(AddStory.this, list);
+
+        dropCitySpinner.setAdapter(spinAdapter);
+
     }
 }

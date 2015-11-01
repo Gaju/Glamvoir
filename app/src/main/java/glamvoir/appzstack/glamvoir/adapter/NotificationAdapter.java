@@ -1,6 +1,7 @@
 package glamvoir.appzstack.glamvoir.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,12 +76,12 @@ public class NotificationAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.comment_time.setVisibility(View.GONE);
+
         holder.user_name.setVisibility(View.GONE);
 
         if (item.creation_date!=null){
             holder.comment_time.setVisibility(View.VISIBLE);
-            TimeAgo timeAgo;
+            TimeAgo timeAgo= new TimeAgo();
             String string_date = item.creation_date;
 
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -91,9 +92,11 @@ public class NotificationAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             long milliseconds = d.getTime();
-            timeAgo= new TimeAgo();
+
             String setTimeago=  TimeAgo.DateDifference(milliseconds);
             holder.comment_time.setText(setTimeago);
+            holder.comment_time.setTextColor(Color.parseColor("#000000"));
+
         }
 
         if (item.title != null) {
@@ -106,6 +109,7 @@ public class NotificationAdapter extends BaseAdapter {
 
         if (item.message != null) {
             holder.comment.setText(item.message);
+            holder.comment.setTextColor(Color.parseColor("#000000"));
         }
 
         return convertView;
