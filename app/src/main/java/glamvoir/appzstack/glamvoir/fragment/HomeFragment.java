@@ -27,6 +27,7 @@ public class HomeFragment extends Fragment {
     EditText search_tab ;
     String[] titlesTAB;
     int Numboftabs = 5;
+    private View headerTab;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -44,14 +45,14 @@ public class HomeFragment extends Fragment {
 
         search_tab= (EditText) rootView.findViewById(R.id.search_tab);
 
-
         search_tab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 isKeyboardShown(search_tab.getRootView());
             }
         });
-    
+
+        headerTab = rootView.findViewById(R.id.header);
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
 
@@ -171,26 +172,26 @@ public class HomeFragment extends Fragment {
             if (position == 0) // if the position is 0 we are returning the First tab
             {
 
-                ALL tab1 = new ALL();
+                ALL tab1 = new ALL(headerTab);
                 return tab1;
             } else if (position == 1) // if the position is 0 we are returning the First tab
             {
 
-                Fashion tab2 = new Fashion();
+                Fashion tab2 = new Fashion(headerTab);
                 return tab2;
             } else if (position == 2) // if the position is 0 we are returning the First tab
             {
-                FoodAndPlaces tab3 = new FoodAndPlaces();
+                FoodAndPlaces tab3 = new FoodAndPlaces(headerTab);
                 return tab3;
             } else if (position == 3) // if the position is 0 we are returning the First tab
             {
 
-                StoreAndDeals tab4 = new StoreAndDeals();
+                StoreAndDeals tab4 = new StoreAndDeals(headerTab);
                 return tab4;
             } else if (position == 4) // if the position is 0 we are returning the First tab
             {
 
-                Interest tab5 = new Interest();
+                Interest tab5 = new Interest(headerTab);
                 return tab5;
             }
 
@@ -213,10 +214,5 @@ public class HomeFragment extends Fragment {
             return NumbOfTabs;
         }
 
-
     }
-
-
-
-
 }

@@ -142,7 +142,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
 /*
             if (singleFollow.user_fname != null && singleFollow.user_lname != null)
                 holder.title.setText(singleFollow.user_fname + " " + singleFollow.user_lname);*/
-            if (singleFollow.post_title != null )
+            if (singleFollow.post_title != null)
                 holder.title.setText(singleFollow.post_title);
 
             if (singleFollow.post_image != null && !singleFollow.post_image.equals("")) {
@@ -168,7 +168,7 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         } else if (context instanceof MyPostActivity) {
 
             //holder.subtitle.setVisibility(View.INVISIBLE);
-            if (singleFollow.post_title != null )
+            if (singleFollow.post_title != null)
                 holder.title.setText(singleFollow.post_title);
 
             if (singleFollow.post_image != null && !singleFollow.post_image.equals("")) {
@@ -203,7 +203,6 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
         AppPreferences appPreferences = new AppPreferences(context);
         FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) view.getTag();
         if (context instanceof MysaveActivity && canDelete) {
-
             ((FFSPActivity) context).removeItem(mPosition, appPreferences.getUserId(), singleFollow.post_id);
 
         } else if (context instanceof FollowingActivity) {
@@ -230,11 +229,15 @@ public class FFSP_Adapter extends BaseLoadableListAdapter<FFSP_Response> {
                 int position = intent.getIntExtra(ObserveFFSPIntentService.INTENT_ARG_FLAG, 0);
 
                 //    (FFSP_Response.SingleFollow) items.get(position).
+                try {
+                    FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) getItem(position);
+                    singleFollow.is_following = isFollowing;
+                    singleFollow.total_following = totalCount;
+                    notifyDataSetChanged();
 
-                FFSP_Response.SingleFollow singleFollow = (FFSP_Response.SingleFollow) getItem(position);
-                singleFollow.is_following = isFollowing;
-                singleFollow.total_following = totalCount;
-                notifyDataSetChanged();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     };

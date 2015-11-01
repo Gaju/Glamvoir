@@ -205,13 +205,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.bt_pro_following:
                 ObserveFFSPIntentService.startObserveAdService(ProfileActivity.this, AppPreferences.getInstance(this).getUserId(), followerID, 0);
                 progressbar.setVisibility(View.VISIBLE);
-               // new ToggleFollow().execute();
+                // new ToggleFollow().execute();
                 break;
             case R.id.bt_pro_followers:
+                FollowersActivity.startActivity(ProfileActivity.this, followerID);
                 break;
             case R.id.bt_can_following:
+                FollowingActivity.startActivity(ProfileActivity.this, followerID);
                 break;
             case R.id.bt_pro_activity:
+                MyPostActivity.startActivity(ProfileActivity.this, followerID);
                 break;
         }
     }

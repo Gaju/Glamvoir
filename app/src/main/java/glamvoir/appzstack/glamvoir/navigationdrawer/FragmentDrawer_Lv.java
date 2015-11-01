@@ -73,6 +73,8 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private Toolbar mtoolbar;
     private ProgressBar progressbar;
     private TextView alertCount;
+    TextView tv_name ;
+    TextView tv_email ;
 
     String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTINGS"};
 
@@ -86,9 +88,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
     private StringBuilder mName;
     private String mEmail;
-    int PROFILE = R.drawable.camera;
     private FragmentDrawerListener_Lv drawerListener_lv;
-
     private AppPreferences appPreferences;
 
     public FragmentDrawer_Lv() {
@@ -103,12 +103,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         appPreferences = new AppPreferences(getActivity());
-        AppPreferences appPreferences = new AppPreferences(getActivity());
-
-        if (appPreferences.getFirstName() != null && appPreferences.getEmailID() != null) {
-            mName = new StringBuilder().append(appPreferences.getFirstName()).append(" ").append((appPreferences.getLastName() == null) ? "" : appPreferences.getLastName());
-            mEmail = appPreferences.getEmailID();
-        }
     }
 
     /**
@@ -129,6 +123,13 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
+        if (appPreferences.getFirstName() != null && appPreferences.getEmailID() != null) {
+            mName = new StringBuilder().append(appPreferences.getFirstName()).append(" ").append((appPreferences.getLastName() == null) ? "" : appPreferences.getLastName());
+            mEmail = appPreferences.getEmailID();
+
+            tv_name.setText(mName);
+            tv_email.setText(mEmail);
+        }
         setAlertCount();
     }
 
@@ -136,8 +137,8 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer_lv, container, false);
-        TextView tv_name = (TextView) layout.findViewById(R.id.name);
-        TextView tv_email = (TextView) layout.findViewById(R.id.email);
+        tv_name = (TextView) layout.findViewById(R.id.name);
+        tv_email = (TextView) layout.findViewById(R.id.email);
         progressbar = (ProgressBar) layout.findViewById(R.id.progressbar);
         rl_nav_drawer = (RelativeLayout) layout.findViewById(R.id.rl_nav_drawer);
         rl_nav_drawer.setOnClickListener(this);
@@ -146,8 +147,6 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         alertCount = (TextView) layout.findViewById(R.id.alertcounter);
         alertLayout = (RelativeLayout) layout.findViewById(R.id.alertlayout);
         alertLayout.setOnClickListener(this);
-        tv_name.setText(mName);
-        tv_email.setText(mEmail);
         tv_name.setOnClickListener(this);
         tv_email.setOnClickListener(this);
         listView = (ListView) layout.findViewById(R.id.drawerList);

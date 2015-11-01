@@ -1,15 +1,11 @@
 package glamvoir.appzstack.glamvoir.fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import glamvoir.appzstack.glamvoir.config.AppConfig;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -19,6 +15,11 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  * Created by jaim on 9/12/2015.
  */
 public class FleaFragment extends BaseFragment {
+
+    @Override
+    protected View getHeaderView() {
+        return null;
+    }
 
     private RequestBean mRequestBean;
 

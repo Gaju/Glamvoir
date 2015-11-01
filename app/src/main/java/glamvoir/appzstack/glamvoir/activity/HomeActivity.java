@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.fragment.FleaFragment;
 import glamvoir.appzstack.glamvoir.fragment.HomeFragment;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
@@ -33,6 +34,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
     private RequestBean mRequestBean;
     private Toolbar toolbar;
     int fleaposition;
+    AppPreferences appPreferences;
 
 
     public static void startActivityWithClearTop(Activity activity) {
@@ -47,6 +49,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        appPreferences = new AppPreferences(this);
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -121,43 +124,51 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
             return true;
         }
 */
+
+        if (id == R.id.action_search) {
+
+            Intent intent = new Intent(HomeActivity.this, SearchResultsActivity.class);
+            intent.putExtra("ParentClassName", this.getClass().getSimpleName());
+            startActivity(intent);
+        }
+
         if (id == R.id.action_uplaod) {
             Toast.makeText(getApplicationContext(), "Search action is selected!", Toast.LENGTH_SHORT).show();
 
 
-            if (HomeFragment.mViewPager.getCurrentItem()==1){
-          //      AddStory.startActivity(HomeActivity.this);
+            if (HomeFragment.mViewPager.getCurrentItem() == 1) {
+                //      AddStory.startActivity(HomeActivity.this);
                 Intent intent = new Intent(HomeActivity.this, AddStory.class);
                 intent.putExtra("ParentClassName", this.getClass().getSimpleName());
                 intent.putExtra("CATOGERYNAME", "FASHION & LIFESTYLE");
                 startActivity(intent);
 
             }
-            if (HomeFragment.mViewPager.getCurrentItem()==2){
-              //  AddStory.startActivity(HomeActivity.this);
+            if (HomeFragment.mViewPager.getCurrentItem() == 2) {
+                //  AddStory.startActivity(HomeActivity.this);
                 Intent intent = new Intent(HomeActivity.this, AddStory.class);
                 intent.putExtra("ParentClassName", this.getClass().getSimpleName());
                 intent.putExtra("CATOGERYNAME", "FOOD & PLACES");
                 startActivity(intent);
 
             }
-            if (HomeFragment.mViewPager.getCurrentItem()==3){
-               // AddStory.startActivity(HomeActivity.this);
+            if (HomeFragment.mViewPager.getCurrentItem() == 3) {
+                // AddStory.startActivity(HomeActivity.this);
                 Intent intent = new Intent(HomeActivity.this, AddStory.class);
                 intent.putExtra("ParentClassName", this.getClass().getSimpleName());
                 intent.putExtra("CATOGERYNAME", "MUSIC & GIGS");
                 startActivity(intent);
 
             }
-            if (HomeFragment.mViewPager.getCurrentItem()==4){
-               // AddStory.startActivity(HomeActivity.this);
+            if (HomeFragment.mViewPager.getCurrentItem() == 4) {
+                // AddStory.startActivity(HomeActivity.this);
                 Intent intent = new Intent(HomeActivity.this, AddStory.class);
                 intent.putExtra("ParentClassName", this.getClass().getSimpleName());
                 intent.putExtra("CATOGERYNAME", "INTERESTS");
                 startActivity(intent);
 
             }
-            if (fleaposition==1){
+            if (fleaposition == 1) {
                 Intent intent = new Intent(HomeActivity.this, AddStory.class);
                 intent.putExtra("ParentClassName", this.getClass().getSimpleName());
                 intent.putExtra("CATOGERYNAME", "FLEA MARKET");
@@ -176,7 +187,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
     }
 
     private void displayView(int position) {
-        fleaposition=position;
+        fleaposition = position;
         Fragment fragment = null;
         String title = getString(R.string.app_name);
         switch (position) {
@@ -211,18 +222,18 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                 break;
 
             case 2:
-                FollowersActivity.startActivity(HomeActivity.this);
+                FollowersActivity.startActivity(HomeActivity.this, appPreferences.getUserId());
                 break;
 
             case 3:
-                FollowingActivity.startActivity(HomeActivity.this);
+                FollowingActivity.startActivity(HomeActivity.this, appPreferences.getUserId());
                 break;
 
             case 4:
-                MysaveActivity.startActivity(HomeActivity.this);
+                MysaveActivity.startActivity(HomeActivity.this, appPreferences.getUserId());
                 break;
             case 5:
-                MyPostActivity.startActivity(HomeActivity.this);
+                MyPostActivity.startActivity(HomeActivity.this, appPreferences.getUserId());
                 break;
 
 

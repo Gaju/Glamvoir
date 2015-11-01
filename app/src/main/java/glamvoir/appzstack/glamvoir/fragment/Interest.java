@@ -28,6 +28,18 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class Interest extends BaseFragment {
 
+    private View view;
+
+    public Interest(View headerTab) {
+        super();
+        this.view = headerTab;
+    }
+
+    @Override
+    protected View getHeaderView() {
+        return view;
+    }
+
     private RequestBean mRequestBean;
 
     @Override

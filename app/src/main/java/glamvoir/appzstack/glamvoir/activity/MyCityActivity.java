@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -127,21 +128,67 @@ public class MyCityActivity extends AppCompatActivity {
             };
 
 
-    private void addButtons(List<CityResponse.City> list) {
+    private void addButtons(final List<CityResponse.City> list) {
 
-        //for (int i = 0; i < list.size(); i++) {
-        LinearLayout row = new LinearLayout(this);
-        row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//        for (int i = 0; i <= (list.size() / 3)+1; i++) {
+//            LinearLayout row = new LinearLayout(this);
+//            row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//
+//            for (int j = 0; j < 3; j++) {
+//                Button btnTag = new Button(this);
+//                btnTag.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//                int pos = (j + 1 + (i * 4)) - 1;
+//                if (pos != -1 && pos <= list.size()) {
+//                    btnTag.setText(list.get(pos).city_name);
+//                    btnTag.setId(j + 1 + (i * 3));
+//                    row.addView(btnTag);
+//                }
+//            }
+//            layout.addView(row);
+//        }
 
-        for (int j = 0; j < list.size(); j++) {
-            Button btnTag = new Button(this);
-            btnTag.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            btnTag.setText(list.get(j).city_name);
-            btnTag.setId(j + 1);
-            row.addView(btnTag);
+
+        final Button[] my_button = new Button[list.size()];
+
+        for (int bt = 0; bt < list.size(); bt ++){
+            final int Index = bt;
+
+            my_button[Index] = new Button(this);
+            my_button[Index].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            my_button[Index].setText(list.get(Index).city_name);
+            my_button[Index].setId(Index);
+
+            my_button[bt].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (my_button[Index].getId() == ((Button) v).getId()) {
+                        Toast.makeText(getApplicationContext(), list.get(Index).city_name, Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            layout.addView(my_button[Index]);
         }
 
-        layout.addView(row);
-        // }
+
+
+
     }
+
+
+//        for (int i = 0; i < list.size(); i++) {
+//            LinearLayout row = new LinearLayout(this);
+//            row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//
+//            for (int j = 0; j < list.size(); j++) {
+//                Button btnTag = new Button(this);
+//                btnTag.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//                btnTag.setText(list.get(j).city_name);
+//                btnTag.setId(j + 1);
+//                row.addView(btnTag);
+//            }
+//
+//            layout.addView(row);
+//        }
+//    }
 }

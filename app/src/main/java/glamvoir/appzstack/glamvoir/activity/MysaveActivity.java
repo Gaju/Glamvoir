@@ -3,7 +3,6 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,18 +19,24 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class MysaveActivity extends FFSPActivity {
     private boolean canDelete = false;
-    public static void startActivity(Context context) {
+
+    public static void startActivity(Context context, String userID) {
         Intent intent = new Intent(context, MysaveActivity.class);
+        intent.putExtra("userid", userID);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }
 
     private RequestBean mRequestBean;
-    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userID = extras.getString("userid");
+        }
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -53,6 +58,11 @@ public class MysaveActivity extends FFSPActivity {
     @Override
     protected String getAppBarTitle() {
         return getResources().getString(R.string.mysave);
+    }
+
+    @Override
+    protected String getUserID() {
+        return userID;
     }
 
     @Override

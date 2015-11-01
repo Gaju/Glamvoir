@@ -18,18 +18,23 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class FollowingActivity extends FFSPActivity {
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context,String userID) {
         Intent intent = new Intent(context, FollowingActivity.class);
+        intent.putExtra("userid", userID);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }
 
     private RequestBean mRequestBean;
-    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userID = extras.getString("userid");
+        }
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
@@ -53,6 +58,11 @@ public class FollowingActivity extends FFSPActivity {
     protected String getAppBarTitle() {
 
         return getResources().getString(R.string.following);
+    }
+
+    @Override
+    protected String getUserID() {
+        return userID;
     }
 
     @Override

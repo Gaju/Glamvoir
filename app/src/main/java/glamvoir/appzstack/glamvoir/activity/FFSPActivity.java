@@ -3,7 +3,6 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.app.LoaderManager;
 import android.content.IntentFilter;
 import android.content.Loader;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -48,6 +44,9 @@ public abstract class FFSPActivity extends AppCompatActivity {
     protected LoadableListAdapter<FFSP_Response.SingleFollow> adapter;
     protected TextView txt_Nodata;
     protected View loadIndicator;
+    protected boolean isFromFFSP = false;
+    protected String userID = null;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,6 +116,8 @@ public abstract class FFSPActivity extends AppCompatActivity {
 
     protected abstract String getAppBarTitle();
 
+    protected abstract String getUserID();
+
     protected abstract LoadableListAdapter<FFSP_Response.SingleFollow> createAdapter(ArrayList<FFSP_Response.SingleFollow> data);
 
     protected void loadData() {
@@ -161,8 +162,7 @@ public abstract class FFSPActivity extends AppCompatActivity {
                 @Override
                 public Loader<TaskResponse<FFSP_Response>> onCreateLoader(int id, Bundle args) {
                     loadIndicator.setVisibility(View.VISIBLE);
-                    AppPreferences appPreferences = new AppPreferences(getRequestBean().getContext());
-                    return new FFSPLoader(getRequestBean(), getMethodName(), appPreferences.getUserId());
+                    return new FFSPLoader(getRequestBean(), getMethodName(), getUserID());
                 }
 
                 @Override

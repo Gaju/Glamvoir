@@ -38,6 +38,18 @@ import glamvoir.appzstack.glamvoir.network.InternetStatus;
  */
 public class Fashion extends BaseFragment {
 
+    private View view;
+
+    public Fashion(View headerTab) {
+        super();
+        this.view = headerTab;
+    }
+
+    @Override
+    protected View getHeaderView() {
+        return view;
+    }
+
     private RequestBean mRequestBean;
 
     @Override

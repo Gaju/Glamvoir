@@ -3,7 +3,6 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,45 +20,31 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 public class MyPostActivity extends FFSPActivity {
     private boolean canDelete = false;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context,String userID) {
         Intent intent = new Intent(context, MyPostActivity.class);
+        intent.putExtra("userid", userID);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }
 
     private RequestBean mRequestBean;
-    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userID = extras.getString("userid");
+        }
 
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
 
-        //initialize all views
-        initViews();
-
-        initListener();
-
-        getToolbar(toolbar);
     }
 
-
-    /**
-     * customize the toolbar
-     *
-     * @param toolbar : pass the toolbar reference
-     */
-    private void getToolbar(Toolbar toolbar) {
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.mypost));
-    }
 
     @Override
     protected String getMethodName() {
@@ -78,24 +63,13 @@ public class MyPostActivity extends FFSPActivity {
     }
 
     @Override
+    protected String getUserID() {
+        return userID;
+    }
+
+    @Override
     protected LoadableListAdapter createAdapter(ArrayList data) {
         return new FFSP_Adapter(MyPostActivity.this, data);
-    }
-
-    /**
-     * initialize all views listeners
-     */
-    private void initListener() {
-
-    }
-
-
-    /**
-     * initialize all views
-     */
-    private void initViews() {
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     @Override

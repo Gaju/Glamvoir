@@ -34,6 +34,7 @@ import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
+import glamvoir.appzstack.glamvoir.widgets.QuickReturnListView;
 
 /**
  * Created by gajendran on 1/10/15.
@@ -61,6 +62,8 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
 
     protected abstract Fragment getFragment();
 
+    protected abstract View getHeaderView();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,9 +71,14 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
 
         View rootView = inflater.inflate(R.layout.layout_basefragment, container, false);
         mlistView = (ListView) rootView.findViewById(R.id.lv_all);
+
+     //   QuickReturnListView listView = (QuickReturnListView) mlistView;
+      //  listView.setQuickReturnView(getHeaderView());
+
         txt_NoDataFound = (TextView) rootView.findViewById(R.id.no_data_found);
         loadIndicator = rootView.findViewById(R.id.loadIndicator);
         edt_Search = (EditText) rootView.findViewById(R.id.tv_search);
+
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -84,7 +92,6 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
                     isKeyboardShown(edt_Search.getRootView());
                 }
             });
-
 
         } else {
             edt_Search.setVisibility(View.GONE);
@@ -107,9 +114,17 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0) {
-                    swipeRefreshLayout.setEnabled(true);
-                } else swipeRefreshLayout.setEnabled(false);
+                boolean enable = false;
+                if(mlistView != null && mlistView.getChildCount() > 0){
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = mlistView.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = mlistView.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipeRefreshLayout.setEnabled(enable);
+               // else swipeRefreshLayout.setEnabled(false);
             }
         });
 
