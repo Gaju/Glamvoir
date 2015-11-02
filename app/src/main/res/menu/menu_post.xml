@@ -4,7 +4,7 @@
     tools:context=".LikesListActivity">
 
     <item
-        android:id="@+id/likes"
+        android:id="@+id/post"
         android:title="@string/post"
         android:orderInCategory="400"
         app:showAsAction="always|withText" />

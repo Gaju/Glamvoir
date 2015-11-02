@@ -1,10 +1,14 @@
 package glamvoir.appzstack.glamvoir.network;
 
 import java.io.File;
+import java.util.ArrayList;
 
+import glamvoir.appzstack.glamvoir.Bean.AddPostBean;
+import glamvoir.appzstack.glamvoir.activity.CustomGallery;
 import glamvoir.appzstack.glamvoir.interfaces.GlamvoirService;
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.AddPostResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
@@ -91,14 +95,41 @@ public class Communication {
         return response;
     }
 
-
-
     public static CityResponse getCity(String methodType) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         CityResponse response = service.getCity(methodType);
         return response;
     }
 
+    //user_id, post_parent_id, cat_id, post_gender, post_title, post_description, post_city, post_image,
+    //post_video, post_end_date, post_location, post_lat, post_long
+
+
+    public static AddPostResponse addPost(String methodType, AddPostBean bean, ArrayList<CustomGallery> dataT) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        AddPostResponse response = null;
+
+        if (dataT != null && dataT.size() > 0) {
+            // response = service.addPost(methodType, bean.getUser_id(), bean.getPost_parent_id(), bean.getCat_id(), bean.getPost_gender(), );
+        } else {
+            response = service.add_ParentPost_Without_Image(methodType,
+                    bean.getUser_id(),
+                    bean.getPost_parent_id(),
+                    bean.getCat_id(),
+                    bean.getPost_gender(),
+                    bean.getPost_title(),
+                    bean.getPost_description(),
+                    bean.getPost_city(),
+                    bean.getPost_image(),
+                    bean.getPost_video(),
+                    bean.getPost_end_date(),
+                    bean.getPost_location(),
+                    bean.getPost_lat(),
+                    bean.getPost_long());
+        }
+        //  response = service.addPost(methodType);
+        return response;
+    }
 
     public static GetPostLikeFollowResponse getPostFollow(String methodType, String followingUserID, String followerUserID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();

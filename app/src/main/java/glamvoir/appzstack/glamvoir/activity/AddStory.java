@@ -8,15 +8,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,18 +55,23 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import glamvoir.appzstack.glamvoir.Bean.AddPostBean;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.AddStoryImageAdapter;
 import glamvoir.appzstack.glamvoir.adapter.CustomCitySpinnerAdapter;
 import glamvoir.appzstack.glamvoir.adapter.CustomSpinnerAdapter;
+import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.asynctaskloader.Add_Parent_PostLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.CityLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
@@ -68,6 +79,7 @@ import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.helpers.Validation;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
+import glamvoir.appzstack.glamvoir.model.net.response.AddPostResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 
 /**
@@ -100,20 +112,28 @@ public class AddStory extends AppCompatActivity implements
     Bundle bundle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-   LinearLayout ll_text_upload,ll_image_upload;
+    LinearLayout ll_text_upload, ll_image_upload;
 
     AddStoryImageAdapter addStoryImageAdapter;
     private ListView lv_addstory;
     String result = null;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
-    Spinner dropDownMenu,dropCitySpinner;
+    Spinner dropDownMenu, dropCitySpinner;
     private ToggleButton switching_image_to_text;
     TextView selected_text;
     private LinearLayout lltool;
-    ImageButton galleryImages, time_calender, calender_item, cameraImages,mobile_number;
-    RadioButton rdbMale, rdbFemale,rblboth;
+    ImageButton galleryImages, time_calender, calender_item, cameraImages, mobile_number, btn_Location;
+    RadioButton rdbMale, rdbFemale, rblboth;
     RadioGroup rgGender;
+
+    private AddPostBean postDetailBean = null;
+    private boolean canLocationAdd = true;
+    private List<CityResponse.City> cityList = null;
+    EditText heading;
+    EditText description;
+    private TextInputLayout tl_Heading, tl_Description;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +156,9 @@ public class AddStory extends AppCompatActivity implements
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
 
+        postDetailBean = new AddPostBean();
+        postDetailBean.setUser_id(AppPreferences.getInstance(this).getUserId());
+
         bundle = getIntent().getExtras();
 
         initImageLoader();
@@ -149,14 +172,46 @@ public class AddStory extends AppCompatActivity implements
 
         CurrentDate();
 
-        //    init();
+        dropCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                setCityID(cityList.get(position).city_id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        heading.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (s.toString().length() > 0) {
+                    tl_Heading.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void CurrentDate() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         userCurrentDate = df.format(c.getTime());
-       // Toast.makeText(this, userCurrentDate, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, userCurrentDate, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -234,9 +289,6 @@ public class AddStory extends AppCompatActivity implements
     }
 
 
-
-
-
     // add items into spinner dynamically
     public void addItemsToSpinner() {
 
@@ -245,6 +297,7 @@ public class AddStory extends AppCompatActivity implements
         list.add("FOOD AND PLACE");
         list.add("MUSIC AND GIGS");
         list.add("INTERST");
+        list.add("FLEAMARKET");
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 
@@ -273,6 +326,29 @@ public class AddStory extends AppCompatActivity implements
                 // On selecting a spinner item
                 String item = adapter.getItemAtPosition(position).toString();
 
+
+                switch (position) {
+                    case 0:
+                        postDetailBean.setCat_id(AppConstant.CATEGORY_FASHION);
+                        break;
+
+                    case 1:
+                        postDetailBean.setCat_id(AppConstant.CATEGORY_FOOD_PLACE);
+                        break;
+
+                    case 2:
+                        postDetailBean.setCat_id(AppConstant.CATEGORY_STORE_DEAL);
+                        break;
+
+                    case 3:
+                        postDetailBean.setCat_id(AppConstant.CATEGORY_INTEREST);
+                        break;
+
+                    case 4:
+                        postDetailBean.setCat_id(AppConstant.CATEGORY_FLEA_MARKET);
+                        break;
+                }
+
                 // Showing selected spinner item
 //                Toast.makeText(getApplicationContext(), "Selected  : " + item,
 //                        Toast.LENGTH_LONG).show();
@@ -286,9 +362,6 @@ public class AddStory extends AppCompatActivity implements
         });
 
     }
-
-
-
 
 
     /**
@@ -312,6 +385,7 @@ public class AddStory extends AppCompatActivity implements
         galleryImages.setOnClickListener(this);
         calender_item.setOnClickListener(this);
         time_calender.setOnClickListener(this);
+        btn_Location.setOnClickListener(this);
         rgGender.setOnCheckedChangeListener(this);
         switching_image_to_text.setOnCheckedChangeListener(this);
         mobile_number.setOnClickListener(this);
@@ -327,14 +401,23 @@ public class AddStory extends AppCompatActivity implements
         lltool = (LinearLayout) findViewById(R.id.lltool);
         galleryImages = (ImageButton) findViewById(R.id.button3);
         cameraImages = (ImageButton) findViewById(R.id.button2);
-        mobile_number= (ImageButton) findViewById(R.id.mobile_number);
+        mobile_number = (ImageButton) findViewById(R.id.mobile_number);
         switching_image_to_text = (ToggleButton) findViewById(R.id.switching_image_to_text);
-        ll_text_upload= (LinearLayout) findViewById(R.id.ll_text_upload);
+        ll_text_upload = (LinearLayout) findViewById(R.id.ll_text_upload);
         ll_image_upload = (LinearLayout) findViewById(R.id.ll_image_upload);
         rgGender = (RadioGroup) findViewById(R.id.rgGender);
         rdbMale = (RadioButton) findViewById(R.id.rdbMale);
         rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
-        rblboth=(RadioButton)findViewById(R.id.rdbboth);
+        rblboth = (RadioButton) findViewById(R.id.rdbboth);
+        rblboth.setChecked(true);
+        postDetailBean.setPost_gender("3");
+
+        heading = (EditText) findViewById(R.id.heading);
+        description = (EditText) findViewById(R.id.description);
+
+        tl_Heading = (TextInputLayout) findViewById(R.id.heading_input);
+        tl_Description = (TextInputLayout) findViewById(R.id.description_input);
+
         dropCitySpinner = (Spinner) findViewById(R.id.spinner);
         cameraImages.setOnClickListener(this);
         lv_addstory = (ListView) findViewById(R.id.lv_addstory);
@@ -345,6 +428,8 @@ public class AddStory extends AppCompatActivity implements
         selected_text = (TextView) findViewById(R.id.selected_text);
         calender_item = (ImageButton) findViewById(R.id.calender_item);
         time_calender = (ImageButton) findViewById(R.id.time_calender);
+        btn_Location = (ImageButton) findViewById(R.id.button6);
+
         if (bundle != null) {
             selected_text.setVisibility(View.VISIBLE);
             selected_text.setText(bundle.getString("CATOGERYNAME"));
@@ -375,7 +460,7 @@ public class AddStory extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_likes, menu);
+        getMenuInflater().inflate(R.menu.menu_post, menu);
         //MenuView.ItemView post;
         //post=(MenuView.ItemView)menu.findItem(R.id.action_uplaod);
         //post.setTitle("POST");
@@ -389,11 +474,67 @@ public class AddStory extends AppCompatActivity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.likes) {
+        if (id == R.id.post) {
+
+            if (dataT != null && dataT.size() > 0) {
+
+            } else {
+
+                if (ll_text_upload.getVisibility() == View.VISIBLE) {
+                    if (heading.getText().toString().length() > 0) {
+                        postDetailBean.setPost_title(heading.getText().toString());
+                        post();
+                    } else {
+                        tl_Heading.setError("Title should not be empty");
+                    }
+
+                    if (description.getText().toString().length() == 0) {
+                        postDetailBean.setPost_description("NA");
+                    } else {
+                        postDetailBean.setPost_description(description.getText().toString());
+                    }
+                } else {
+                    Utility.showToast(getApplicationContext(), "fill data");
+                }
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void post() {
+        getLoaderManager().restartLoader(LoaderID.PARENT_POST, null, parentPostCallback);
+    }
+
+
+    LoaderManager.LoaderCallbacks<TaskResponse<AddPostResponse>> parentPostCallback =
+            new LoaderManager.LoaderCallbacks<TaskResponse<AddPostResponse>>() {
+
+                @Override
+                public Loader<TaskResponse<AddPostResponse>> onCreateLoader(int id, Bundle args) {
+                    return new Add_Parent_PostLoader(mRequestBean.getContext(), postDetailBean, dataT);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<TaskResponse<AddPostResponse>> loader, TaskResponse<AddPostResponse> data) {
+                    if (loader instanceof Add_Parent_PostLoader) {
+                        if (data.error != null) {
+                            Utility.showToast(mRequestBean.getContext(), data.error.toString());
+                        } else {
+
+                            if (data.data != null && data.data.error_code != null) {
+                                Utility.showToast(getApplicationContext(), "post success");
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoaderReset(Loader<TaskResponse<AddPostResponse>> loader) {
+                }
+            };
+
 
     /**
      * Called when a view has been clicked.
@@ -449,6 +590,20 @@ public class AddStory extends AppCompatActivity implements
                 tpd.show();
                 break;
 
+            case R.id.button6:
+
+                if (canLocationAdd) {
+                    new GetAddress(getLatitude(), getLongitude()).execute();
+                    postDetailBean.setPost_long(String.valueOf(getLongitude()));
+                    postDetailBean.setPost_lat(String.valueOf(getLongitude()));
+                    canLocationAdd = false;
+                } else {
+                    postDetailBean.setPost_long("0");
+                    postDetailBean.setPost_lat("0");
+                    canLocationAdd = true;
+                }
+                break;
+
             case R.id.button2:
 
                 if (Utility.checkAvailable()) {
@@ -462,37 +617,37 @@ public class AddStory extends AppCompatActivity implements
                 }
                 break;
             case R.id.mobile_number:
-            LayoutInflater inflater = this.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.addstory_mobile_number, null);
+                LayoutInflater inflater = this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.addstory_mobile_number, null);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(dialogView);
-            final EditText myaccount_phone = (EditText) dialogView.findViewById(R.id.myaccount_phone);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setView(dialogView);
+                final EditText myaccount_phone = (EditText) dialogView.findViewById(R.id.myaccount_phone);
 
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                    if (Validation.isValidMobile(myaccount_phone.getText().toString())) {
-                        String posting_contact_number=myaccount_phone.getText().toString();
-                        Toast.makeText(AddStory.this,posting_contact_number,Toast.LENGTH_LONG).show();
+                        if (Validation.isValidMobile(myaccount_phone.getText().toString())) {
+                            String posting_contact_number = myaccount_phone.getText().toString();
+                            Toast.makeText(AddStory.this, posting_contact_number, Toast.LENGTH_LONG).show();
 
-                    } else {
-                        Toast.makeText(AddStory.this,getResources().getString(R.string.invalid_number),Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(AddStory.this, getResources().getString(R.string.invalid_number), Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
 
                     }
-                }
-
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-
-                }
-            });
-            builder.create();
-            builder.show();
+                });
+                builder.create();
+                builder.show();
 
                 break;
         }
@@ -569,28 +724,26 @@ public class AddStory extends AppCompatActivity implements
 
             case R.id.rdbboth:
                 // AppPreferences.getInstance(this).setGender(GENDER_MALE);
-                Toast.makeText(AddStory.this,"Selected both",Toast.LENGTH_LONG).show();
+                Toast.makeText(AddStory.this, "Selected both", Toast.LENGTH_LONG).show();
+                postDetailBean.setPost_gender("3");
                 break;
 
             case R.id.rdbMale:
                 // AppPreferences.getInstance(this).setGender(GENDER_MALE);
-                Toast.makeText(AddStory.this,"Selected Men",Toast.LENGTH_LONG).show();
+                Toast.makeText(AddStory.this, "Selected Men", Toast.LENGTH_LONG).show();
+                postDetailBean.setPost_gender("1");
 
                 break;
             case R.id.rdbFemale:
                 //   AppPreferences.getInstance(this).setGender(GENDER_FEMALE);
-                Toast.makeText(AddStory.this,"Selected Women",Toast.LENGTH_LONG).show();
-
+                Toast.makeText(AddStory.this, "Selected Women", Toast.LENGTH_LONG).show();
+                postDetailBean.setPost_gender("2");
                 break;
 
             default:
-
-
                 break;
         }
     }
-
-
 
 
     public String DataComprision(String userCooseDate, String userCurrentDate) {
@@ -632,18 +785,19 @@ public class AddStory extends AppCompatActivity implements
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             // The toggle is enabled
-            galleryImages .setClickable(false);
-            galleryImages .setFocusable(false);
-            cameraImages .setClickable(false);
-            cameraImages .setFocusable(false);
+            galleryImages.setClickable(false);
+            galleryImages.setFocusable(false);
+            cameraImages.setClickable(false);
+            cameraImages.setFocusable(false);
             ll_text_upload.setVisibility(View.VISIBLE);
             lv_addstory.setVisibility(View.GONE);
+
         } else {
 
-            galleryImages .setClickable(true);
-            galleryImages .setFocusable(true);
-            cameraImages .setClickable(true);
-            cameraImages .setFocusable(true);
+            galleryImages.setClickable(true);
+            galleryImages.setFocusable(true);
+            cameraImages.setClickable(true);
+            cameraImages.setFocusable(true);
             ll_text_upload.setVisibility(View.GONE);
             lv_addstory.setVisibility(View.VISIBLE);
 
@@ -669,9 +823,9 @@ public class AddStory extends AppCompatActivity implements
                         } else {
 
                             if (data.data != null && data.data.error_code != null) {
-                                addButtons(data.data.results);
+                                cityList = data.data.results;
+                                addButtons();
                             }
-
                         }
                     }
                 }
@@ -681,14 +835,81 @@ public class AddStory extends AppCompatActivity implements
                 }
             };
 
-    private void addButtons(List<CityResponse.City> list) {
+    private void addButtons() {
+        if (cityList != null && cityList.size() > 0) {
+            CustomCitySpinnerAdapter spinAdapter = new CustomCitySpinnerAdapter(AddStory.this, cityList);
+            dropCitySpinner.setAdapter(spinAdapter);
+        }
+    }
+
+    /**
+     * method used to set the city id
+     *
+     * @param cityID
+     */
+    public void setCityID(String cityID) {
+        if (cityID != null)
+            postDetailBean.setPost_city(cityID);
+        else
+            postDetailBean.setPost_city("NA");
+    }
 
 
-        // Custom ArrayAdapter with spinner item layout to set popup background
+    /**
+     * class to fetch address based on the latitude and longitude
+     */
+    private class GetAddress extends AsyncTask<Void, Void, String> {
 
-        CustomCitySpinnerAdapter spinAdapter = new CustomCitySpinnerAdapter(AddStory.this, list);
+        private double mLatitude, mLongitude;
 
-        dropCitySpinner.setAdapter(spinAdapter);
+        GetAddress(double lat, double lng) {
+            mLatitude = lat;
+            mLongitude = lng;
+        }
 
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            // TODO Auto-generated method stub
+
+            try {
+                Geocoder geocoder = new Geocoder(AddStory.this,
+                        Locale.ENGLISH);
+                StringBuilder strReturnedAddress = null;
+
+                List<Address> addresses = geocoder.getFromLocation(mLatitude, mLongitude, 1);
+
+                if (addresses != null) {
+                    Address returnedAddress = addresses.get(0);
+                    strReturnedAddress = new StringBuilder();
+                    for (int i = 0; i < returnedAddress
+                            .getMaxAddressLineIndex(); i++) {
+                        strReturnedAddress.append(returnedAddress
+                                .getAddressLine(i));
+                    }
+                }
+                return strReturnedAddress.toString();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+            if (result != null) {
+                postDetailBean.setPost_location(result);
+            } else {
+                postDetailBean.setPost_location("NA");
+            }
+        }
     }
 }

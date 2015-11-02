@@ -2,6 +2,7 @@ package glamvoir.appzstack.glamvoir.interfaces;
 
 import glamvoir.appzstack.glamvoir.model.FFSP_Response;
 import glamvoir.appzstack.glamvoir.model.PhotoUploadResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.AddPostResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CommentResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
@@ -69,6 +70,27 @@ public interface GlamvoirService {
 
     @GET("/index.php/api")
     CityResponse getCity(@Query("method") String methodType);
+
+
+    //user_id, post_parent_id, cat_id, post_gender, post_title, post_description, post_city, post_image,
+    //post_video, post_end_date, post_location, post_lat, post_long
+
+
+    @GET("/index.php/api")
+    AddPostResponse add_ParentPost_Without_Image(@Query("method") String methodType,
+                                                 @Query("user_id") String user_id,
+                                                 @Query("post_parent_id") String post_parent_id,
+                                                 @Query("cat_id") String cat_id,
+                                                 @Query("post_gender") String post_gender,
+                                                 @Query("post_title") String post_title,
+                                                 @Query("post_description") String post_description,
+                                                 @Query("post_city") String post_city,
+                                                 @Query("post_image") String post_image,
+                                                 @Query("post_video") String post_video,
+                                                 @Query("post_end_date") String post_end_date,
+                                                 @Query("post_location") String post_location,
+                                                 @Query("post_lat") String post_lat,
+                                                 @Query("post_long") String post_long);
 
     @GET("/index.php/api")
     GetPostLikeFollowResponse getPostFollow(@Query("method") String methodType, @Query("following_user_id") String following_user_id, @Query("follower_user_id") String follower_user_id);

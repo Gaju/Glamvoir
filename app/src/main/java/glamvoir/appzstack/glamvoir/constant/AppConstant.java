@@ -20,6 +20,7 @@ public class AppConstant {
     public static final String METHOD_FOLLOWER_FOLLOWING = "followerfollowing";
     public static final String METHOD_LIKED_USERS= "get_likeduser";
     public static final String METHOD_GET_CITY= "getcity";
+    public static final String METHOD_ADD_POST= "addPosts";
 
     public static final String METHOD_GET_NOTIFICATION= "listnotification";
 
@@ -50,8 +51,8 @@ public class AppConstant {
     public static final String CATEGORY_ALL = "1";
     public static final String CATEGORY_FASHION = "2";
     public static final String CATEGORY_FOOD_PLACE = "3";
-    public static final String CATEGORY_INTEREST = "5";
     public static final String CATEGORY_STORE_DEAL = "4";
+    public static final String CATEGORY_INTEREST = "5";
     public static final String CATEGORY_FLEA_MARKET = "6";
 
     public static String getDeviceToken(Context context) {
