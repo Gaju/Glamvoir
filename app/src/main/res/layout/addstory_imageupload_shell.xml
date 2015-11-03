@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+
     <android.support.v7.widget.CardView
 
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -10,6 +13,15 @@
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="4dp"
         card_view:cardUseCompatPadding="true">
+        <ImageButton
+            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/remove_images"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            android:layout_gravity="right" />
+
         <LinearLayout
             android:orientation="vertical" android:layout_width="match_parent"
             android:layout_height="match_parent">

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -114,6 +115,7 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
             holder.tv_add_heading = (TextView) convertView.findViewById(R.id.addstory_heading);
             holder.tv_add_description = (TextView) convertView.findViewById(R.id.addstory_description);
             holder.upload_Image = (ImageView) convertView.findViewById(R.id.addshell_images);
+            holder.remove_images= (ImageButton) convertView.findViewById(R.id.remove_images);
             holder.upload_Image.setScaleType(ImageView.ScaleType.FIT_CENTER);
             convertView.setTag(holder);
 
@@ -225,6 +227,7 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
         TextView tv_add_description;
         ImageView upload_Image;
         LinearLayout ll_heading_description;
+        ImageButton remove_images;
         int ref;
     }
 

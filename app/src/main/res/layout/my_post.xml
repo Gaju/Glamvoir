@@ -189,7 +189,7 @@
         android:background="@android:color/transparent"
         android:orientation="horizontal"
 
-        android:weightSum="7">
+        android:weightSum="6">
 
 
         <ImageButton
@@ -227,6 +227,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:visibility="gone"
             android:src="@drawable/upl_phone" />
 
         <ImageButton
@@ -253,7 +254,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/toggle_button"
+            android:drawableTop="@drawable/toggle_button"
             android:textOff=""
             android:textOn="" />
     </LinearLayout>

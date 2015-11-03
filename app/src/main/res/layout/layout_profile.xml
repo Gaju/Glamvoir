@@ -158,26 +158,26 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-
-                            android:text="Following" />
+                            android:background="@drawable/following_profile"
+                             />
 
                         <Button
                             android:id="@+id/bt_pro_followers"
-
+                            android:layout_marginLeft="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-
-                            android:text="Followers" />
+                            android:background="@drawable/followers_profile"
+                           />
 
                         <Button
                             android:id="@+id/bt_pro_activity"
-
+                            android:layout_marginLeft="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-
-                            android:text="Activity" />
+                            android:background="@drawable/activity"
+                            />
 
 
                     </LinearLayout>

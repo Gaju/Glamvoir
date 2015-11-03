@@ -345,7 +345,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             if (isFollowing.equals("0")) {
                 btn_ToggleFollow.setText("Follow");
             } else {
-                btn_ToggleFollow.setText("Following");
+                btn_ToggleFollow.setBackgroundResource(R.drawable.following_btn_active);
             }
         }
     }

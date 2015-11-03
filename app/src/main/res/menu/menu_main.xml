@@ -10,7 +10,7 @@
         app:showAsAction="always|withText" />
 
     <item android:id="@+id/action_search"
-        android:icon="@drawable/search"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/action_search"
         app:showAsAction="always"
         android:actionViewClass="android.widget.SearchView"/>
