@@ -47,6 +47,7 @@ import glamvoir.appzstack.glamvoir.TimeAgo.TimeAgo;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.activity.LikeListActivity;
 import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
+import glamvoir.appzstack.glamvoir.activity.SearchResultsActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
@@ -70,6 +71,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     private int pos = 0;
     private String postID = null;
     TimeAgo timeAgo;
+    Context mContext;
 
     public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
         this.frag = frag;
@@ -77,6 +79,15 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         inflater = (LayoutInflater) frag.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(frag.getActivity()));
+        options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
+    }
+
+    public Custome_All_ListAdapter(Context searchResultsActivity, ArrayList<ParentPostBean> allPostsBeans) {
+        this.mContext = searchResultsActivity;
+        this.list = allPostsBeans;
+        inflater = (LayoutInflater)searchResultsActivity .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(searchResultsActivity));
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
     }
 

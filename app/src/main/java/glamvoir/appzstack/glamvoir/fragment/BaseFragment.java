@@ -50,7 +50,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
-    public void onRefresh() {
+      public void onRefresh() {
         loadData();
     }
 
@@ -184,6 +184,10 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
                 }
             };
 
+
+
+
+
     private void setAdapter() {
         adapter = new Custome_All_ListAdapter(getFragment(), list);
         mlistView.setAdapter(adapter);
@@ -278,4 +282,6 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
         }
         return isKeyboardShown;
     }
+
+
 }
