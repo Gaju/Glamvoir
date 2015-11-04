@@ -1,15 +1,14 @@
 package glamvoir.appzstack.glamvoir.activity;
 
+
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,27 +17,22 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import glamvoir.appzstack.glamvoir.Bean.AllPostsBean;
 import glamvoir.appzstack.glamvoir.Bean.ParentPostBean;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Custome_All_ListAdapter;
 import glamvoir.appzstack.glamvoir.asynctask.SavePostAsyncTask;
-import glamvoir.appzstack.glamvoir.asynctaskloader.SearchLoader;
-import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
+import glamvoir.appzstack.glamvoir.constant.AppConstant;
+import glamvoir.appzstack.glamvoir.fragment.SearchResultFragment;
+import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
-import glamvoir.appzstack.glamvoir.asynctaskloader.GetAllPostLoader;
-import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
-import glamvoir.appzstack.glamvoir.config.AppConfig;
-import glamvoir.appzstack.glamvoir.constant.AppConstant;
-import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
 
 
 /**
  * Created by gajendran on 2/11/15.
  */
-public class SearchResultsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class SearchResultsActivity extends AppCompatActivity {
     private ListView mlistView;
     private ArrayList<ParentPostBean> list = new ArrayList<ParentPostBean>();
     private Custome_All_ListAdapter adapter;
@@ -46,9 +40,7 @@ public class SearchResultsActivity extends AppCompatActivity implements SwipeRef
     private Toolbar toolbar;
     private EditText tv_search;
     private RequestBean mRequestBean;
-    private View loadIndicator, view;
-    private TextView txt_NoDataFound;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    SearchResultFragment fragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +50,12 @@ public class SearchResultsActivity extends AppCompatActivity implements SwipeRef
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);
+        fragment = new SearchResultFragment();
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container, fragment, "search");
+        fragmentTransaction.commit();
 
         //initialize all views
         initViews();
@@ -66,7 +63,7 @@ public class SearchResultsActivity extends AppCompatActivity implements SwipeRef
         initListener();
 
         getToolbar(toolbar);
-        setAdapter();
+
     }
 
 
@@ -82,18 +79,15 @@ public class SearchResultsActivity extends AppCompatActivity implements SwipeRef
     private void initViews() {
 
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
-        mlistView=(ListView)findViewById(R.id.lv_all);
-        tv_search=(EditText)findViewById(R.id.tv_search);
-        txt_NoDataFound = (TextView)findViewById(R.id.no_data_found);
-        loadIndicator = findViewById(R.id.loadIndicator);
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
+
+        tv_search = (EditText) findViewById(R.id.tv_search);
+
         tv_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (tv_search.getText().toString().length()!=0){
-                       // performSearch();
+                    if (tv_search.getText().toString().length() > 0) {
+                        fragment.performSearch(tv_search.getText().toString());
                     }
 
                     return true;
@@ -103,58 +97,54 @@ public class SearchResultsActivity extends AppCompatActivity implements SwipeRef
         });
     }
 
-    private void performSearch() {
-        getLoaderManager().initLoader(LoaderID.GETPOST, null, ffspCallback);
-    }
 
-    android.app.LoaderManager.LoaderCallbacks<AllPostsBean> ffspCallback =
-            new android.app.LoaderManager.LoaderCallbacks<AllPostsBean>() {
-
-                @Override
-                public android.content.Loader<AllPostsBean> onCreateLoader(int id, Bundle args) {
-                    loadIndicator.setVisibility(View.VISIBLE);
-                    return new SearchLoader(mRequestBean, AppConfig.GETALLPOST, AppConstant.CATEGORY_ALL,tv_search.getText().toString());
-                }
-
-                @Override
-                public void onLoadFinished(android.content.Loader<AllPostsBean> loader, AllPostsBean data)
-                    {
-                        loadIndicator.setVisibility(View.GONE);
-                        if (data.getSuccessCode() == 1) {
-                            if (data.getmExceptionName().equals("No Result Found")) {
-                                txt_NoDataFound.setVisibility(View.VISIBLE);
-                            } else {
-                                Utility.showToast(SearchResultsActivity.this, data.getmExceptionName());
-                            }
-                        } else {
-                            if (data.results != null) {
-                                if (data.results.size() > 0) {
-                                    list.addAll(data.results);
-                                    getAdapter().notifyDataSetChanged();
-                                } else {
-                                    txt_NoDataFound.setVisibility(View.VISIBLE);
-                                }
-                            } else {
-                                txt_NoDataFound.setVisibility(View.VISIBLE);
-                            }
-                        }
-
-                        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
-                    }
-
-
-                @Override
-                public void onLoaderReset(android.content.Loader<AllPostsBean> loader) {
-
-                }
-
-
-            };
-
-
-
+//
+//    private void performSearch() {
+//        getLoaderManager().initLoader(LoaderID.GETPOST, null, ffspCallback);
+//    }
+//
+//    android.app.LoaderManager.LoaderCallbacks<AllPostsBean> ffspCallback =
+//            new android.app.LoaderManager.LoaderCallbacks<AllPostsBean>() {
+//
+//                @Override
+//                public android.content.Loader<AllPostsBean> onCreateLoader(int id, Bundle args) {
+//                    loadIndicator.setVisibility(View.VISIBLE);
+//                    return new SearchLoader(mRequestBean, AppConfig.GETALLPOST, AppConstant.CATEGORY_ALL,tv_search.getText().toString());
+//                }
+//
+//                @Override
+//                public void onLoadFinished(android.content.Loader<AllPostsBean> loader, AllPostsBean data)
+//                    {
+//                        loadIndicator.setVisibility(View.GONE);
+//                        if (data.getSuccessCode() == 1) {
+//                            if (data.getmExceptionName().equals("No Result Found")) {
+//                                txt_NoDataFound.setVisibility(View.VISIBLE);
+//                            } else {
+//                                Utility.showToast(SearchResultsActivity.this, data.getmExceptionName());
+//                            }
+//                        } else {
+//                            if (data.results != null) {
+//                                if (data.results.size() > 0) {
+//                                    list.addAll(data.results);
+//                                    getAdapter().notifyDataSetChanged();
+//                                } else {
+//                                    txt_NoDataFound.setVisibility(View.VISIBLE);
+//                                }
+//                            } else {
+//                                txt_NoDataFound.setVisibility(View.VISIBLE);
+//                            }
+//                        }
+//
+//                        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+//                            swipeRefreshLayout.setRefreshing(false);
+//                        }
+//                    }
+//
+//                @Override
+//                public void onLoaderReset(android.content.Loader<AllPostsBean> loader) {
+//
+//                }
+//            };
 
     /**
      * customize the toolbar
@@ -184,45 +174,39 @@ public class SearchResultsActivity extends AppCompatActivity implements SwipeRef
         return newIntent;
     }
 
-    @Override
-    public void onRefresh() {
 
-        performSearch();
-    }
+//    private void setAdapter() {
+//        adapter = new Custome_All_ListAdapter(this, list);
+//        mlistView.setAdapter(adapter);
+//    }
+//
+//
+//    public Custome_All_ListAdapter getAdapter() {
+//        return adapter;
+//    }
+//
 
-
-    private void setAdapter() {
-        adapter = new Custome_All_ListAdapter(this, list);
-        mlistView.setAdapter(adapter);
-    }
-
-
-    public Custome_All_ListAdapter getAdapter() {
-        return adapter;
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(NetworkIntentService.BROADCAST_LIKE_ACTION);
-        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ACTION);
-        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ERROR);
-        this.registerReceiver(getAdapter().observeLikeReceiver, filter);
-        registered = true;
-    }
-
-    private boolean registered = false;
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (registered) {
-            this.unregisterReceiver(getAdapter().observeLikeReceiver);
-            registered = false;
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(NetworkIntentService.BROADCAST_LIKE_ACTION);
+//        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ACTION);
+//        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ERROR);
+//        this.registerReceiver(getAdapter().observeLikeReceiver, filter);
+//        registered = true;
+//    }
+//
+//    private boolean registered = false;
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if (registered) {
+//            this.unregisterReceiver(getAdapter().observeLikeReceiver);
+//            registered = false;
+//        }
+//    }
 
     public void savePost(String methodName, String mUserID, String postID, int pos) {
         if (InternetStatus.isInternetAvailable(this, true)) {

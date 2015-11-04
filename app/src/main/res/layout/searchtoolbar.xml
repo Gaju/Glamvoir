@@ -3,29 +3,31 @@
     class="glamvoir.appzstack.glamvoir.customview.CustomTextBold"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/searchtoolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:minHeight="?attr/actionBarSize"
-    app:theme="@style/CustomToolbarTheme"
-    local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-    <EditText
-        android:id="@+id/tv_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:drawableLeft="@drawable/search"
-        android:drawablePadding="2dip"
-        android:hint="Search Here..."
-        android:textColor="@color/tabBarIndicator"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:paddingLeft="10dp" />
 
-</android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/tools"
+        xmlns:local="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/searchtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/CustomToolbarTheme"
+        local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <EditText
+            android:id="@+id/tv_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:drawableLeft="@drawable/search"
+            android:drawablePadding="2dip"
+            android:hint="Search Here..."
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/tabBarIndicator" />
+
+    </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>
 
