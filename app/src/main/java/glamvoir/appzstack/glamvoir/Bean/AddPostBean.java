@@ -6,18 +6,18 @@ package glamvoir.appzstack.glamvoir.Bean;
 public class AddPostBean {
 
     private String user_id;
-    private String post_parent_id;
+    private String post_parent_id = "0";
     private String cat_id;
     private String post_gender;
     private String post_title;
     private String post_description;
     private String post_city;
-    private String post_image = "NA";
-    private String post_video = "NA";
-    private String post_end_date = "NA";
-    private String post_location = "NA";
-    private String post_lat = "NA";
-    private String post_long = "NA";
+    private String post_image = "";
+    private String post_video = "";
+    private String post_end_date = "";
+    private String post_location = "";
+    private String post_lat = "";
+    private String post_long = "";
 
     public String getUser_id() {
         return user_id;

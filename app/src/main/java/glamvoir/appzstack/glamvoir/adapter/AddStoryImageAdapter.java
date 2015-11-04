@@ -20,10 +20,10 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.CustomGallery;
-import glamvoir.appzstack.glamvoir.helpers.Utility;
 
 /**
  * Created by jaim on 10/26/2015.
@@ -36,8 +36,8 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
     private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
     private Activity parentActivity;
     ViewHolder holder;
-    private String[] tempHeading;
-    private String[] tempDescription;
+    private String[] tempHeading = new String[5];
+    private String[] tempDescription = new String[5];
 
     public AddStoryImageAdapter(Context c, ImageLoader imageLoader, Activity parentActivity) {
 
@@ -55,7 +55,6 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
      */
     @Override
     public int getCount() {
-
         return data.size();
     }
 
@@ -68,7 +67,6 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
      */
     @Override
     public Object getItem(int position) {
-
         return data.get(position);
     }
 
@@ -80,7 +78,6 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
      */
     @Override
     public long getItemId(int position) {
-
         return position;
     }
 
@@ -123,7 +120,8 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.ref = position;
+        holder.ll_heading_description.setTag(position);
+
         holder.tv_add_heading.setText(tempHeading[position]);
         holder.tv_add_description.setText(tempDescription[position]);
 
@@ -140,20 +138,20 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
                         @Override
                         public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                             // Empty implementation
-                            Utility.showToast(mContext, failReason.toString());
+                            //Utility.showToast(mContext, failReason.toString());
                         }
 
                         @Override
                         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                             // Empty implementation
-                            Utility.showToast(mContext, "uri = " + imageUri);
+                            //Utility.showToast(mContext, "uri = " + imageUri);
                             holder.upload_Image.setImageBitmap(loadedImage);
                         }
 
                         @Override
                         public void onLoadingCancelled(String imageUri, View view) {
                             // Empty implementation
-                            Utility.showToast(mContext, "canccel");
+                            // Utility.showToast(mContext, "canccel");
                         }
                     });
         } catch (Exception e) {
@@ -173,14 +171,59 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
         try {
             this.data.clear();
             this.data.addAll(files);
-            tempHeading = new String[files.size()];
-            tempDescription = new String[files.size()];
+
+//            tempHeading = new String[data.size()];
+//            tempDescription = new String[data.size()];
+
+            for (int i = 0; i < data.size(); i++) {
+                if (tempHeading[i] != "" && tempHeading[i] != null) {
+
+                } else {
+                    tempHeading[i] = "";
+                    tempDescription[i] = "";
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         notifyDataSetChanged();
+    }
+
+    public boolean isTitleAdded() {
+//        int counter = 0;
+//        if (tempHeading != null) {
+//            for (int i = 0; i < tempHeading.length; i++) {
+//                if (tempHeading[i] != null && tempHeading[i] == "" ) {
+//                    counter = counter + i;
+//                }
+//            }
+
+        if (Arrays.asList(tempHeading).contains("")) {
+            return false;
+        } else {
+            return true;
+        }
+//            if (counter > 0) {
+//                return false;
+//            } else {
+//                return true;
+//            }
+
+        // return false;
+    }
+
+    public String[] getTitles() {
+        if (tempHeading != null)
+            return tempHeading;
+        return null;
+    }
+
+    public String[] getDescription() {
+        if (tempDescription != null)
+            return tempDescription;
+        return null;
     }
 
     /**
@@ -190,8 +233,11 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
      */
     @Override
     public void onClick(View v) {
+        final int pos = (Integer) v.getTag();
+
         switch (v.getId()) {
             case R.id.ll_heading_description:
+
                 LayoutInflater inflater = parentActivity.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.add_story_alertdialog_head_des, null);
 
@@ -203,8 +249,9 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        tempHeading[holder.ref] = heading.getText().toString();
-                        tempDescription[holder.ref] = description.getText().toString();
+                        tempHeading[pos] = heading.getText().toString();
+                        tempDescription[pos] = description.getText().toString();
+                        notifyDataSetChanged();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

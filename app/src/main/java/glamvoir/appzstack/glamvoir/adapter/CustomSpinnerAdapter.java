@@ -30,7 +30,6 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
 
         inflater = (LayoutInflater) context1
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     @Override
@@ -47,9 +46,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
     public View getCustomView(int position, View convertView, ViewGroup parent) {
 
         View row = inflater.inflate(R.layout.spinner_row, parent, false);
-
         TextView tvCategory = (TextView) row.findViewById(R.id.tvCategory);
-
         tvCategory.setText(data.get(position).toString());
 
         return row;

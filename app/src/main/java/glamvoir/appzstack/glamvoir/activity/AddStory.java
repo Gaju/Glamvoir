@@ -81,6 +81,7 @@ import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.model.net.response.AddPostResponse;
 import glamvoir.appzstack.glamvoir.model.net.response.CityResponse;
+import glamvoir.appzstack.glamvoir.network.Communication;
 
 /**
  * Created by jaim on 9/9/2015.
@@ -95,6 +96,7 @@ public class AddStory extends AppCompatActivity implements
     private static final String IMAGE_EXTENSION = ".jpg";
     private static final String IMAGE_PREFIX = "IMG";
     private static final int MAX_PHOTOS = 5;
+    private static int counter = 0;
 
     private static Uri picUri = null;
 
@@ -127,12 +129,13 @@ public class AddStory extends AppCompatActivity implements
     RadioButton rdbMale, rdbFemale, rblboth;
     RadioGroup rgGender;
 
-    private AddPostBean postDetailBean = null;
+    private AddPostBean addStoryBean = null;
     private boolean canLocationAdd = true;
     private List<CityResponse.City> cityList = null;
     EditText heading;
     EditText description;
     private TextInputLayout tl_Heading, tl_Description;
+    private String locationAddress = null;
 
 
     @Override
@@ -156,8 +159,8 @@ public class AddStory extends AppCompatActivity implements
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
 
-        postDetailBean = new AddPostBean();
-        postDetailBean.setUser_id(AppPreferences.getInstance(this).getUserId());
+        addStoryBean = new AddPostBean();
+        addStoryBean.setUser_id(AppPreferences.getInstance(this).getUserId());
 
         bundle = getIntent().getExtras();
 
@@ -329,23 +332,23 @@ public class AddStory extends AppCompatActivity implements
 
                 switch (position) {
                     case 0:
-                        postDetailBean.setCat_id(AppConstant.CATEGORY_FASHION);
+                        addStoryBean.setCat_id(AppConstant.CATEGORY_FASHION);
                         break;
 
                     case 1:
-                        postDetailBean.setCat_id(AppConstant.CATEGORY_FOOD_PLACE);
+                        addStoryBean.setCat_id(AppConstant.CATEGORY_FOOD_PLACE);
                         break;
 
                     case 2:
-                        postDetailBean.setCat_id(AppConstant.CATEGORY_STORE_DEAL);
+                        addStoryBean.setCat_id(AppConstant.CATEGORY_STORE_DEAL);
                         break;
 
                     case 3:
-                        postDetailBean.setCat_id(AppConstant.CATEGORY_INTEREST);
+                        addStoryBean.setCat_id(AppConstant.CATEGORY_INTEREST);
                         break;
 
                     case 4:
-                        postDetailBean.setCat_id(AppConstant.CATEGORY_FLEA_MARKET);
+                        addStoryBean.setCat_id(AppConstant.CATEGORY_FLEA_MARKET);
                         break;
                 }
 
@@ -410,7 +413,7 @@ public class AddStory extends AppCompatActivity implements
         rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
         rblboth = (RadioButton) findViewById(R.id.rdbboth);
         rblboth.setChecked(true);
-        postDetailBean.setPost_gender("3");
+        addStoryBean.setPost_gender("3");
 
         heading = (EditText) findViewById(R.id.heading);
         description = (EditText) findViewById(R.id.description);
@@ -461,9 +464,9 @@ public class AddStory extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_post, menu);
-        //MenuView.ItemView post;
-        //post=(MenuView.ItemView)menu.findItem(R.id.action_uplaod);
-        //post.setTitle("POST");
+        //MenuView.ItemView sendPost;
+        //sendPost=(MenuView.ItemView)menu.findItem(R.id.action_uplaod);
+        //sendPost.setTitle("POST");
 
         return true;
     }
@@ -477,24 +480,28 @@ public class AddStory extends AppCompatActivity implements
         if (id == R.id.post) {
 
             if (dataT != null && dataT.size() > 0) {
+                if (addStoryImageAdapter.isTitleAdded()) {
+                    sendPost();
+                } else {
+                    Utility.showToast(getApplicationContext(), "Title should not be empty");
+                }
 
             } else {
-
                 if (ll_text_upload.getVisibility() == View.VISIBLE) {
                     if (heading.getText().toString().length() > 0) {
-                        postDetailBean.setPost_title(heading.getText().toString());
-                        post();
+                        addStoryBean.setPost_title(heading.getText().toString());
+                        sendPost();
                     } else {
                         tl_Heading.setError("Title should not be empty");
                     }
 
                     if (description.getText().toString().length() == 0) {
-                        postDetailBean.setPost_description("NA");
+                        addStoryBean.setPost_description("");
                     } else {
-                        postDetailBean.setPost_description(description.getText().toString());
+                        addStoryBean.setPost_description(description.getText().toString());
                     }
                 } else {
-                    Utility.showToast(getApplicationContext(), "fill data");
+                    Utility.showToast(getApplicationContext(), "Atleast one sendPost need to be add");
                 }
             }
 
@@ -503,7 +510,7 @@ public class AddStory extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void post() {
+    private void sendPost() {
         getLoaderManager().restartLoader(LoaderID.PARENT_POST, null, parentPostCallback);
     }
 
@@ -513,7 +520,7 @@ public class AddStory extends AppCompatActivity implements
 
                 @Override
                 public Loader<TaskResponse<AddPostResponse>> onCreateLoader(int id, Bundle args) {
-                    return new Add_Parent_PostLoader(mRequestBean.getContext(), postDetailBean, dataT);
+                    return new Add_Parent_PostLoader(mRequestBean.getContext(), addStoryBean, dataT, addStoryImageAdapter.getTitles(), addStoryImageAdapter.getDescription());
                 }
 
                 @Override
@@ -524,7 +531,17 @@ public class AddStory extends AppCompatActivity implements
                         } else {
 
                             if (data.data != null && data.data.error_code != null) {
-                                Utility.showToast(getApplicationContext(), "post success");
+
+                                if (dataT.size() >= 1) {
+                                    for (int i = 1; i < dataT.size(); i++) {
+                                        new SendChildPost(data.data.results.get(0).post_parent_id,
+                                                dataT.get(i).sdcardPath,
+                                                addStoryImageAdapter.getTitles()[i],
+                                                addStoryImageAdapter.getDescription()[i]).execute();
+                                    }
+                                } else {
+                                    Utility.showToast(getApplicationContext(), "Post sent successfully");
+                                }
                             }
                         }
                     }
@@ -534,6 +551,49 @@ public class AddStory extends AppCompatActivity implements
                 public void onLoaderReset(Loader<TaskResponse<AddPostResponse>> loader) {
                 }
             };
+
+
+    /**
+     * class to send child post
+     */
+    private class SendChildPost extends AsyncTask<Void, Void, TaskResponse<AddPostResponse>> {
+
+        private String parentPostID;
+        private TaskResponse response = null;
+        String imagePath;
+        String title;
+        String desc;
+
+        SendChildPost(String parentPostID, String imagePath, String title, String desc) {
+            this.parentPostID = parentPostID;
+            this.imagePath = imagePath;
+            this.title = title;
+            this.desc = desc;
+        }
+
+        @Override
+        protected TaskResponse<AddPostResponse> doInBackground(Void... params) {
+            response = new TaskResponse();
+            try {
+                response.data = Communication.addChildPost(AppConstant.METHOD_ADD_POST, parentPostID, addStoryBean, imagePath, title, desc);
+            } catch (Exception e) {
+                response.error = e;
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(TaskResponse<AddPostResponse> addPostResponseTaskResponse) {
+            super.onPostExecute(addPostResponseTaskResponse);
+            counter++;
+            if (counter == dataT.size() - 1) {
+                Utility.showToast(getApplicationContext(), "Post Success");
+                counter = 0;
+            } else {
+                Utility.showToast(getApplicationContext(), "count = " + counter);
+            }
+        }
+    }
 
 
     /**
@@ -593,14 +653,24 @@ public class AddStory extends AppCompatActivity implements
             case R.id.button6:
 
                 if (canLocationAdd) {
-                    new GetAddress(getLatitude(), getLongitude()).execute();
-                    postDetailBean.setPost_long(String.valueOf(getLongitude()));
-                    postDetailBean.setPost_lat(String.valueOf(getLongitude()));
+                    if (getLongitude() != 0 && getLatitude() != 0) {
+                        if (locationAddress == null)
+                            new GetAddress(getLatitude(), getLongitude()).execute();
+                        addStoryBean.setPost_long(String.valueOf(getLongitude()));
+                        addStoryBean.setPost_lat(String.valueOf(getLongitude()));
+                        Utility.showToast(AddStory.this, "latitute = " + String.valueOf(getLongitude()) + " Longitude = " + String.valueOf(getLongitude()));
+                    } else {
+                        Utility.showToast(getApplicationContext(), "Location cant able to fetch, please turn on GPS");
+                    }
                     canLocationAdd = false;
+                    btn_Location.setImageResource(R.drawable.u_location_active);
                 } else {
-                    postDetailBean.setPost_long("0");
-                    postDetailBean.setPost_lat("0");
+                    addStoryBean.setPost_long("");
+                    addStoryBean.setPost_lat("");
+                    addStoryBean.setPost_location("");
+                    Utility.showToast(AddStory.this, "Disabled location");
                     canLocationAdd = true;
+                    btn_Location.setImageResource(R.drawable.u_location);
                 }
                 break;
 
@@ -725,19 +795,19 @@ public class AddStory extends AppCompatActivity implements
             case R.id.rdbboth:
                 // AppPreferences.getInstance(this).setGender(GENDER_MALE);
                 Toast.makeText(AddStory.this, "Selected both", Toast.LENGTH_LONG).show();
-                postDetailBean.setPost_gender("3");
+                addStoryBean.setPost_gender("3");
                 break;
 
             case R.id.rdbMale:
                 // AppPreferences.getInstance(this).setGender(GENDER_MALE);
                 Toast.makeText(AddStory.this, "Selected Men", Toast.LENGTH_LONG).show();
-                postDetailBean.setPost_gender("1");
+                addStoryBean.setPost_gender("1");
 
                 break;
             case R.id.rdbFemale:
                 //   AppPreferences.getInstance(this).setGender(GENDER_FEMALE);
                 Toast.makeText(AddStory.this, "Selected Women", Toast.LENGTH_LONG).show();
-                postDetailBean.setPost_gender("2");
+                addStoryBean.setPost_gender("2");
                 break;
 
             default:
@@ -849,9 +919,9 @@ public class AddStory extends AppCompatActivity implements
      */
     public void setCityID(String cityID) {
         if (cityID != null)
-            postDetailBean.setPost_city(cityID);
+            addStoryBean.setPost_city(cityID);
         else
-            postDetailBean.setPost_city("NA");
+            addStoryBean.setPost_city("");
     }
 
 
@@ -905,10 +975,12 @@ public class AddStory extends AppCompatActivity implements
         protected void onPostExecute(String result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
+            locationAddress = result;
             if (result != null) {
-                postDetailBean.setPost_location(result);
+                addStoryBean.setPost_location(locationAddress);
+                Utility.showToast(AddStory.this, locationAddress);
             } else {
-                postDetailBean.setPost_location("NA");
+                addStoryBean.setPost_location("");
             }
         }
     }

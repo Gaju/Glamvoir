@@ -20,11 +20,15 @@ public class Add_Parent_PostLoader extends AsyncTaskLoader<TaskResponse<AddPostR
     private TaskResponse response = null;
     private AddPostBean bean = null;
     private ArrayList<CustomGallery> dataT = null;
+    String[] title;
+    String[] desc;
 
-    public Add_Parent_PostLoader(Context context, AddPostBean bean, ArrayList<CustomGallery> dataT) {
+    public Add_Parent_PostLoader(Context context, AddPostBean bean, ArrayList<CustomGallery> dataT, String[] title, String[] desc) {
         super(context);
         this.bean = bean;
         this.dataT = dataT;
+        this.title = title;
+        this.desc = desc;
     }
 
     //user_id, post_parent_id, cat_id, post_gender, post_title, post_description, post_city, post_image,
@@ -35,7 +39,7 @@ public class Add_Parent_PostLoader extends AsyncTaskLoader<TaskResponse<AddPostR
     public TaskResponse<AddPostResponse> loadInBackground() {
         response = new TaskResponse();
         try {
-            response.data = Communication.addPost(AppConstant.METHOD_ADD_POST, bean, dataT);
+            response.data = Communication.addParentPost(AppConstant.METHOD_ADD_POST, bean, dataT, title, desc);
         } catch (Exception e) {
             response.error = e;
         }

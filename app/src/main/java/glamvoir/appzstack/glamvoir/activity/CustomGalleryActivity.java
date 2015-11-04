@@ -32,7 +32,6 @@ import java.util.List;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.GalleryAdapter;
-import glamvoir.appzstack.glamvoir.helpers.Utility;
 
 public class CustomGalleryActivity extends AppCompatActivity {
 
@@ -121,26 +120,24 @@ public class CustomGalleryActivity extends AppCompatActivity {
         btnGalleryOk = (Button) findViewById(R.id.btnGalleryOk);
         btnGalleryOk.setOnClickListener(mOkClickListener);
 
-        new Thread() {
-
-            @Override
-            public void run() {
-                Looper.prepare();
-                handler.post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        adapter.addAll(getGalleryPhotos());
-                        checkImageStatus();
-                    }
-                });
-                Looper.loop();
-            }
-
-            ;
-
-        }.start();
-
+        try {
+            new Thread() {
+                @Override
+                public void run() {
+                    Looper.prepare();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.addAll(getGalleryPhotos());
+                            checkImageStatus();
+                        }
+                    });
+                    Looper.loop();
+                }
+            }.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkImageStatus() {
@@ -174,7 +171,7 @@ public class CustomGalleryActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 //            maxLength.add(position);
 //            if (maxLength.size() <= MAX_PHOTO || maxLength.contains(position)) {
-                adapter.changeSelection(v, position);
+            adapter.changeSelection(v, position);
 //            } else {
 //                Utility.showToast(CustomGalleryActivity.this, "not possible");
 //            }

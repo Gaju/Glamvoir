@@ -34,7 +34,6 @@ import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
-import glamvoir.appzstack.glamvoir.widgets.QuickReturnListView;
 
 /**
  * Created by gajendran on 1/10/15.

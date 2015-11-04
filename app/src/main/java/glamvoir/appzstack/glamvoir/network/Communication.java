@@ -105,14 +105,27 @@ public class Communication {
     //post_video, post_end_date, post_location, post_lat, post_long
 
 
-    public static AddPostResponse addPost(String methodType, AddPostBean bean, ArrayList<CustomGallery> dataT) {
+    public static AddPostResponse addParentPost(String methodType, AddPostBean bean, ArrayList<CustomGallery> dataT, String[] title, String[] desc) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         AddPostResponse response = null;
 
         if (dataT != null && dataT.size() > 0) {
-            // response = service.addPost(methodType, bean.getUser_id(), bean.getPost_parent_id(), bean.getCat_id(), bean.getPost_gender(), );
+            response = service.add_Post_With_Image(new TypedFile("image/*", new File(dataT.get(0).sdcardPath)),
+                    new TypedString(methodType),
+                    new TypedString(bean.getUser_id()),
+                    new TypedString(bean.getPost_parent_id()),
+                    new TypedString(bean.getCat_id()),
+                    new TypedString(bean.getPost_gender()),
+                    new TypedString(title[0]),
+                    new TypedString(desc[0]),
+                    new TypedString(bean.getPost_city()),
+                    new TypedString(""),
+                    new TypedString(bean.getPost_end_date()),
+                    new TypedString(bean.getPost_location()),
+                    new TypedString(bean.getPost_lat()),
+                    new TypedString(bean.getPost_long()));
         } else {
-            response = service.add_ParentPost_Without_Image(methodType,
+            response = service.add_Post_Without_Image(methodType,
                     bean.getUser_id(),
                     bean.getPost_parent_id(),
                     bean.getCat_id(),
@@ -127,9 +140,32 @@ public class Communication {
                     bean.getPost_lat(),
                     bean.getPost_long());
         }
-        //  response = service.addPost(methodType);
         return response;
     }
+
+
+    public static AddPostResponse addChildPost(String methodType, String parentID, AddPostBean bean, String imagePath, String title, String desc) {
+        GlamvoirService service = RestAdapter.getGlamvoirService();
+        AddPostResponse response = null;
+
+        response = service.add_Post_With_Image(new TypedFile("image/*", new File(imagePath)),
+                new TypedString(methodType),
+                new TypedString(bean.getUser_id()),
+                new TypedString(parentID),
+                new TypedString(bean.getCat_id()),
+                new TypedString(bean.getPost_gender()),
+                new TypedString(title),
+                new TypedString(desc),
+                new TypedString(bean.getPost_city()),
+                new TypedString(""),
+                new TypedString(bean.getPost_end_date()),
+                new TypedString(bean.getPost_location()),
+                new TypedString(bean.getPost_lat()),
+                new TypedString(bean.getPost_long()));
+
+        return response;
+    }
+
 
     public static GetPostLikeFollowResponse getPostFollow(String methodType, String followingUserID, String followerUserID) {
         GlamvoirService service = RestAdapter.getGlamvoirService();
@@ -177,7 +213,7 @@ public class Communication {
         GlamvoirService service = RestAdapter.getGlamvoirService();
 
         File requestFilePath = new File(imagePath);
-        String filename = imagePath.substring(imagePath.lastIndexOf("/") + 1);
+        // String filename = imagePath.substring(imagePath.lastIndexOf("/") + 1);
 
 //        MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
 //        multipartTypedOutput.addPart("method", new TypedString(methodType));
