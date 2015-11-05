@@ -19,10 +19,12 @@ import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
  */
 public class MyPostActivity extends FFSPActivity {
     private boolean canDelete = false;
+    private boolean isFromOtherProfile;
 
-    public static void startActivity(Context context,String userID) {
+    public static void startActivity(Context context, String userID, boolean isFromOtherProfile) {
         Intent intent = new Intent(context, MyPostActivity.class);
         intent.putExtra("userid", userID);
+        intent.putExtra("isFromOtherProfile", isFromOtherProfile);
         intent.putExtra("ParentClassName", context.getClass().getSimpleName());
         context.startActivity(intent);
     }
@@ -36,6 +38,7 @@ public class MyPostActivity extends FFSPActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userID = extras.getString("userid");
+            isFromOtherProfile = extras.getBoolean("isFromOtherProfile");
         }
 
         mRequestBean = new RequestBean();
@@ -91,7 +94,10 @@ public class MyPostActivity extends FFSPActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        if (isFromOtherProfile) {
+        } else {
+            getMenuInflater().inflate(R.menu.menu_edit, menu);
+        }
         return true;
     }
 

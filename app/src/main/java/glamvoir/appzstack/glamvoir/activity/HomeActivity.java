@@ -233,7 +233,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer_Lv
                 MysaveActivity.startActivity(HomeActivity.this, appPreferences.getUserId());
                 break;
             case 5:
-                MyPostActivity.startActivity(HomeActivity.this, appPreferences.getUserId());
+                MyPostActivity.startActivity(HomeActivity.this, appPreferences.getUserId(), false);
                 break;
 
 

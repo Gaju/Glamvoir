@@ -60,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private String followerID;
     private Button btn_ToggleFollow;
     private Button btn_ListFollower, btn_ListFollowing, btn_List_Activity;
-    private ImageButton ll_user_about,ll_user_contact;
+    private ImageButton ll_user_about, ll_user_contact;
 
     String activity_about;
 
@@ -114,8 +114,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         btn_ListFollower = (Button) findViewById(R.id.bt_pro_followers);
         btn_ListFollowing = (Button) findViewById(R.id.bt_can_following);
         btn_List_Activity = (Button) findViewById(R.id.bt_pro_activity);
-        ll_user_about= (ImageButton) findViewById(R.id.ll_user_about);
-        ll_user_contact= (ImageButton) findViewById(R.id.ll_user_contact);
+        ll_user_about = (ImageButton) findViewById(R.id.ll_user_about);
+        ll_user_contact = (ImageButton) findViewById(R.id.ll_user_contact);
 
 
     }
@@ -177,7 +177,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             txt_UserName.setText(data.get(0).user_fname + " " + data.get(0).user_lname);
         }
         if (data.get(0).user_about != null) {
-           activity_about=data.get(0).user_about ;
+            activity_about = data.get(0).user_about;
         }
 
         if (data.get(0).user_image != null && !data.get(0).user_image.equals("")) {
@@ -231,22 +231,21 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 FollowingActivity.startActivity(ProfileActivity.this, followerID);
                 break;
             case R.id.bt_pro_activity:
-                MyPostActivity.startActivity(ProfileActivity.this, followerID);
+                MyPostActivity.startActivity(ProfileActivity.this, followerID, true);
                 break;
             case R.id.ll_user_about:
-                if (activity_about.length()!=0){
+                if (activity_about.length() != 0) {
                     LayoutInflater inflater = this.getLayoutInflater();
                     View dialogView = inflater.inflate(R.layout.profile_activity_about_dialog, null);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setView(dialogView);
-                    TextView  profile_activity_about = (TextView) dialogView.findViewById(R.id.profile_activity_about);
+                    TextView profile_activity_about = (TextView) dialogView.findViewById(R.id.profile_activity_about);
                     profile_activity_about.setText(activity_about);
                     builder.create();
                     builder.show();
 
-                }
-                else {
+                } else {
                     Toast.makeText(this, "No profile...", Toast.LENGTH_LONG).show();
                 }
 
@@ -263,7 +262,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
                     startActivity(callIntent);*/
 
-                }catch(Exception e) {
+                } catch (Exception e) {
 
                     Toast.makeText(this, "Your call has failed...", Toast.LENGTH_LONG).show();
                     e.printStackTrace();

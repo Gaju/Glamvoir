@@ -105,7 +105,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
             }
         });
 
-        protected int currentFirstVisibleItem;
+        //protected int currentFirstVisibleItem;
 
         mlistView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

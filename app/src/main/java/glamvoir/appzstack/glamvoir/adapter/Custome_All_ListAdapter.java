@@ -47,7 +47,6 @@ import glamvoir.appzstack.glamvoir.TimeAgo.TimeAgo;
 import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.activity.LikeListActivity;
 import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
-import glamvoir.appzstack.glamvoir.activity.SearchResultsActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
@@ -376,13 +375,13 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
                     // set the data
 
-                    String uri = "tel:"+item.getContact_no();
+                    String uri = "tel:" + item.getContact_no();
                     Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
                     frag.startActivity(callIntent);
 
-                }catch(Exception e) {
+                } catch (Exception e) {
 
-                    Toast.makeText(frag.getActivity(),"Your call has failed...",Toast.LENGTH_LONG).show();
+                    Toast.makeText(frag.getActivity(), "Your call has failed...", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
 
                 }
@@ -391,7 +390,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
             case R.id.imageView:
 
-                ProfileActivity.startActivity(frag.getActivity(), list.get(pos).user_id);
+                if (!AppPreferences.getInstance(frag.getActivity()).getUserId().equals(list.get(pos).user_id)) {
+                    ProfileActivity.startActivity(frag.getActivity(), list.get(pos).user_id);
+                }
                 break;
 
             case R.id.checkBox_ff_shell:
@@ -446,9 +447,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 Toast.makeText(frag.getActivity(), "You click connect Map", Toast.LENGTH_LONG).show();
                 break;
             case R.id.tv_ff_shell_username:
-
-                Toast.makeText(frag.getActivity(), "You click connect Map", Toast.LENGTH_LONG).show();
-                ProfileActivity.startActivity(frag.getActivity(), list.get(pos).user_id);
+                if (!AppPreferences.getInstance(frag.getActivity()).getUserId().equals(list.get(pos).user_id)) {
+                    ProfileActivity.startActivity(frag.getActivity(), list.get(pos).user_id);
+                }
 
                 break;
 
