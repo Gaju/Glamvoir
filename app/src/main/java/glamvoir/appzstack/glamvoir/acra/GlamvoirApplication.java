@@ -16,7 +16,7 @@ import glamvoir.appzstack.glamvoir.R;
 
 
 @ReportsCrashes(formKey = "", //will not be used.
-        mailTo = "jaimishra54@gmail.com",
+        mailTo = "glamvoir@gmail.com",
         customReportContent = {
                 ReportField.APP_VERSION_CODE,
                 ReportField.APP_VERSION_NAME,
