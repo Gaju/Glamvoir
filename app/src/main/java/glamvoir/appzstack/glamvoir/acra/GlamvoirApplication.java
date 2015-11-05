@@ -15,7 +15,7 @@ import org.acra.annotation.ReportsCrashes;
 import glamvoir.appzstack.glamvoir.R;
 
 
-@ReportsCrashes(formKey = "", //will not be used
+@ReportsCrashes(formKey = "", //will not be used.
         mailTo = "jaimishra54@gmail.com",
         customReportContent = {
                 ReportField.APP_VERSION_CODE,
