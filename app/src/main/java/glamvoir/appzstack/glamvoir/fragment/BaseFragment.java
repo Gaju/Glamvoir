@@ -105,6 +105,8 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
             }
         });
 
+        protected int currentFirstVisibleItem;
+
         mlistView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -115,6 +117,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
                 if(mlistView != null && mlistView.getChildCount() > 0){
+
                     // check if the first item of the list is visible
                     boolean firstItemVisible = mlistView.getFirstVisiblePosition() == 0;
                     // check if the top of the first item is visible
