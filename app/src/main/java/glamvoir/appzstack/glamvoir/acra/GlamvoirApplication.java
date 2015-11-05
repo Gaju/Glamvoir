@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
 import org.acra.ACRA;
+import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
@@ -16,6 +17,15 @@ import glamvoir.appzstack.glamvoir.R;
 
 @ReportsCrashes(formKey = "", //will not be used
         mailTo = "jaimishra54@gmail.com",
+        customReportContent = {
+                ReportField.APP_VERSION_CODE,
+                ReportField.APP_VERSION_NAME,
+                ReportField.ANDROID_VERSION,
+                ReportField.PACKAGE_NAME,
+                ReportField.REPORT_ID,
+                ReportField.BUILD,
+                ReportField.STACK_TRACE
+        },
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.crash_text)
 
