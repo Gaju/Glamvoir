@@ -1,15 +1,18 @@
 package glamvoir.appzstack.glamvoir.adapter;
 
+import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -48,12 +51,15 @@ import glamvoir.appzstack.glamvoir.activity.CommentActivity;
 import glamvoir.appzstack.glamvoir.activity.LikeListActivity;
 import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
+import glamvoir.appzstack.glamvoir.asynctaskloader.LikeFollowLoader;
+import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
-import glamvoir.appzstack.glamvoir.fragment.SearchResultFragment;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
+import glamvoir.appzstack.glamvoir.model.TaskResponse;
+import glamvoir.appzstack.glamvoir.model.net.response.GetPostLikeFollowResponse;
 
 /**
  * Created by jaim on 9/11/2015.
@@ -403,7 +409,14 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 break;
             case R.id.bt_ff_shell_like:
                 // Toast.makeText(frag.getActivity(), "You click connect like", Toast.LENGTH_LONG).show();
-                NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, pos, AppConstant.GETPOST_LIKE);
+                  NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, pos, AppConstant.GETPOST_LIKE);
+
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("functionType", AppConstant.GETPOST_LIKE);
+//                bundle.putString("postID", postID);
+//                bundle.putInt("pos", pos);
+//                frag.getActivity().getLoaderManager().initLoader(LoaderID.LIKE_FOLLOW, bundle, likeFollowCallback);
+
                 break;
             case R.id.bt_ff_shell_whatapp:
                 item = list.get(pos);
@@ -483,9 +496,9 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     }
 
     private void savePost(String userID, String postID, int pos) {
-        if(isFromSearch){
-           // ((SearchResultFragment) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
-        }else{
+        if (isFromSearch) {
+            // ((SearchResultFragment) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
+        } else {
             ((BaseFragment) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
         }
 
@@ -702,6 +715,69 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
             return stream;
         }
     }
+
+
+    LoaderManager.LoaderCallbacks<TaskResponse<GetPostLikeFollowResponse>> likeFollowCallback =
+            new LoaderManager.LoaderCallbacks<TaskResponse<GetPostLikeFollowResponse>>() {
+
+                @Override
+                public Loader<TaskResponse<GetPostLikeFollowResponse>> onCreateLoader(int id, Bundle args) {
+
+                    int functionType = args.getInt("functionType", 0);
+                    String postID = args.getString("postID");
+                    int position = args.getInt("pos", 0);
+
+                    if (functionType == AppConstant.GETPOST_LIKE) {
+
+                        //  NetworkIntentService.startLikeIntentService(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, pos, AppConstant.GETPOST_LIKE);
+
+                        Loader loader = new LikeFollowLoader(frag.getActivity(), AppPreferences.getInstance(frag.getActivity()).getUserId(), postID, position, AppConstant.GETPOST_LIKE);
+                        return loader;
+                    } else {
+                        //  Loader loader = new LikeFollowLoader(mRequestBean, AppConstant.METHOD_GETCOMMENT, appPreferences.getUserId(), args.getString("postID"));
+                        //  return loader;
+                    }
+
+                    return null;
+                }
+
+                @Override
+                public void onLoadFinished(android.content.Loader<TaskResponse<GetPostLikeFollowResponse>> loader, TaskResponse<GetPostLikeFollowResponse> data) {
+                    if (loader instanceof LikeFollowLoader) {
+                        if (data.error != null) {
+                            Utility.showToast(frag.getActivity(), data.error.toString());
+                        } else {
+                            int functionType = data.data.functionType;
+                            switch (functionType) {
+                                case AppConstant.GETPOST_LIKE:
+
+                                    String totalLike = data.data.list.get(0).total_like;
+                                    String like_dislike_status = data.data.list.get(0).like_dislike_status;
+                                    int position = data.data.itemPosition;
+
+                                    try {
+                                        ParentPostBean item = list.get(position);
+                                        item.setLike_dislike_status(Integer.parseInt(like_dislike_status));
+                                        item.setTotal_like(Integer.parseInt(totalLike));
+                                        holder.bt_ff_shell_like.setImageResource(R.drawable.heart_active);
+                                        //notifyDataSetChanged();
+
+                                    } catch (Exception e) {
+                                        e.getMessage();
+                                    }
+                                    break;
+
+                                case AppConstant.GETPOST_FOLLOW:
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoaderReset(android.content.Loader<TaskResponse<GetPostLikeFollowResponse>> loader) {
+                }
+            };
 
 
 }

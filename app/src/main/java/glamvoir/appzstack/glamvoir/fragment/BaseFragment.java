@@ -1,6 +1,5 @@
 package glamvoir.appzstack.glamvoir.fragment;
 
-import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,7 +29,6 @@ import glamvoir.appzstack.glamvoir.asynctask.SavePostAsyncTask;
 import glamvoir.appzstack.glamvoir.asynctaskloader.GetAllPostLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
-import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 import glamvoir.appzstack.glamvoir.interfaces.AsynTaskListener;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
 import glamvoir.appzstack.glamvoir.network.InternetStatus;
@@ -198,27 +196,27 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(NetworkIntentService.BROADCAST_LIKE_ACTION);
-        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ACTION);
-        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ERROR);
-        getActivity().registerReceiver(getAdapter().observeLikeReceiver, filter);
-        registered = true;
-    }
-
-    private boolean registered = false;
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (registered) {
-            getActivity().unregisterReceiver(getAdapter().observeLikeReceiver);
-            registered = false;
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(NetworkIntentService.BROADCAST_LIKE_ACTION);
+//        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ACTION);
+//        filter.addAction(NetworkIntentService.BROADCAST_FOLLOW_ERROR);
+//        getActivity().registerReceiver(getAdapter().observeLikeReceiver, filter);
+//        registered = true;
+//    }
+//
+//    private boolean registered = false;
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if (registered) {
+//            getActivity().unregisterReceiver(getAdapter().observeLikeReceiver);
+//            registered = false;
+//        }
+//    }
 
     public void savePost(String methodName, String mUserID, String postID, int pos) {
         if (InternetStatus.isInternetAvailable(getActivity(), true)) {

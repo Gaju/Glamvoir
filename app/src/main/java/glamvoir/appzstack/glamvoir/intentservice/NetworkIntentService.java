@@ -20,7 +20,7 @@ public class NetworkIntentService extends IntentService {
 
     public static final String INTENT_ARG_USERID = "user_id";
     public static final String INTENT_ARG_POSTID = "post_id";
-    public static final String INTENT_ARG_FLAG = "flag";
+    public static final String INTENT_ARG_FLAG = "functionType";
     public static final String INTENT_ARG_FNAME = "fname";
     public static final String INTENT_ARG_LNAME = "lname";
     public static final String INTENT_ARG_POST_USERID = "post_user_id";

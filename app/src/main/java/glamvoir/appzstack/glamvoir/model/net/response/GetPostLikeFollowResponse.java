@@ -13,6 +13,9 @@ public class GetPostLikeFollowResponse extends BaseResponse {
     @JsonProperty("results")
     public List<LikeStatus> list;
 
+    public int functionType;
+    public int itemPosition;
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class LikeStatus {
 

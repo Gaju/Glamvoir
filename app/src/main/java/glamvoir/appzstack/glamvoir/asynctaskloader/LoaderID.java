@@ -16,4 +16,5 @@ public class LoaderID {
     public static final int GET_NOTIFICATION = 9;
     public static final int PARENT_POST = 10;
     public static final int SEARCH = 11;
+    public static final int LIKE_FOLLOW = 12;
 }

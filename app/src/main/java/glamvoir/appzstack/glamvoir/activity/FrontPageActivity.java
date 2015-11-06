@@ -69,7 +69,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     private GoogleApiClient mGoogleApiClient;
 
     /**
-     * A flag indicating that a PendingIntent is in progress and prevents us
+     * A functionType indicating that a PendingIntent is in progress and prevents us
      * from starting further intents.
      */
     private boolean mIntentInProgress;

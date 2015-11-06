@@ -17,7 +17,7 @@ public class ObserveFFSPIntentService extends IntentService {
 
     public static final String INTENT_ARG_FOLLOW_USER = "advert_param";
     public static final String INTENT_ARG_MYUSERID = "user_id";
-    public static final String INTENT_ARG_FLAG = "flag";
+    public static final String INTENT_ARG_FLAG = "functionType";
 
     public static final String BROADCAST_ACTION_OBSERVED_ERROR = "glamvoir.appzstack.glamvoir.observed_changed_error";
     public static final String BROADCAST_ACTION_OBSERVED = "glamvoir.appzstack.glamvoir.observed_changed";
