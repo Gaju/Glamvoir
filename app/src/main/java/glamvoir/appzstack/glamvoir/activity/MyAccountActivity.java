@@ -47,7 +47,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private EditText edt_fName, edt_Phone, myaccount_lastname, edt_Email, edt_lName, edt_AboutMe, edt_City, edt_Contact;
     private TextInputLayout tl_fName, tl_Phone, tl_Email, tl_lName, tl_AboutMe, tl_City, tl_Contact;
     private RadioButton rdbMale, rdbFemale;
-    private TextView changepwd,edt_age;
+    private TextView changepwd, edt_age;
     private RadioGroup rgGender;
     private Button btn_Done;
     protected View loadIndicator;
@@ -81,7 +81,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         getToolbar(toolbar);
 
-        setupWindowAnimations();
+//        setupWindowAnimations();
 
         updateUI();
 
@@ -136,7 +136,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
                 if (!Validation.isValidMobile(s.toString())) {
                     tl_Phone.setErrorEnabled(true);
-                }else{
+                } else {
                     tl_Phone.setErrorEnabled(false);
                 }
             }
@@ -188,14 +188,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             case R.id.done:
                 if (Validation.isValidName(edt_fName.getText().toString())) {
                     if (Validation.isValidPassword(edt_lName.getText().toString())) {
-                        if (edt_Contact.getText().toString().length()!=0) {
+                        if (edt_Contact.getText().toString().length() != 0) {
                             if (Validation.isValidMobile(edt_Contact.getText().toString())) {
                                 update();
                                 Utility.hideKeyboard(this, edt_lName);
                             } else {
                                 tl_Contact.setError(getResources().getString(R.string.invalid_number));
                             }
-                        }else {
+                        } else {
                             update();
                             Utility.hideKeyboard(this, edt_lName);
                         }
@@ -242,8 +242,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         edt_Email.setText(preferences.getEmailID());
 
-        if (preferences.getuserAge()!=null){
-            edt_age.setText(preferences.getuserAge());
+        if (preferences.getUser_dob() != null) {
+            edt_age.setText(preferences.getUser_dob());
         }
         if (preferences.getUserAbout() != null) {
             edt_AboutMe.setText(preferences.getUserAbout());
@@ -298,7 +298,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         rdbMale = (RadioButton) findViewById(R.id.rdbMale);
         rdbFemale = (RadioButton) findViewById(R.id.rdbFemale);
 
-        changepwd= (TextView) findViewById(R.id.changepwd);
+        changepwd = (TextView) findViewById(R.id.changepwd);
 
         btn_Done = (Button) findViewById(R.id.done);
         loadIndicator = findViewById(R.id.loadIndicator);

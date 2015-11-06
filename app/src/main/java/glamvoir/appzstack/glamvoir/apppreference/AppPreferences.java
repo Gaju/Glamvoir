@@ -63,15 +63,6 @@ public class AppPreferences {
         return mPreferences.getString(SharedPrefrencesKey.userID.toString(), null);
     }
 
-    public void setuserAge(String userId) {
-        mEditor.putString(SharedPrefrencesKey.userID.toString(), userId);
-        mEditor.commit();
-    }
-
-    public String getuserAge() {
-        return mPreferences.getString(SharedPrefrencesKey.userID.toString(), null);
-    }
-
     public void setAuthToken(String accessToken) {
         mEditor.putString(SharedPrefrencesKey.authToken.toString(), accessToken);
         mEditor.commit();
@@ -178,6 +169,15 @@ public class AppPreferences {
 
     public void setUserContact(String userContact) {
         mEditor.putString(SharedPrefrencesKey.userContact.toString(), userContact);
+        mEditor.commit();
+    }
+
+    public String getUser_dob() {
+        return mPreferences.getString(SharedPrefrencesKey.userAge.toString(), null);
+    }
+
+    public void setUser_dob(String userContact) {
+        mEditor.putString(SharedPrefrencesKey.userAge.toString(), userContact);
         mEditor.commit();
     }
 

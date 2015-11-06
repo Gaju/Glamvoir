@@ -36,6 +36,15 @@ public class UserDetails implements Parcelable {
     @JsonProperty("user_about")
     public String user_about;
 
+    @JsonProperty("user_dob")
+    public String user_dob;
+
+    @JsonProperty("user_city")
+    public String user_city;
+
+    @JsonProperty("user_contact")
+    public String user_contact;
+
 
     @Override
     public int describeContents() {

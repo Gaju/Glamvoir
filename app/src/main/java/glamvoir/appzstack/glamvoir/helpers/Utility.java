@@ -36,29 +36,51 @@ public class Utility {
     public static void saveUserData(Context context, List<UserDetails> userDetailsList) {
         UserDetails userDetails = userDetailsList.get(0);
         AppPreferences mAppPreferences = new AppPreferences(context);
-        mAppPreferences.setAuthToken(userDetails.user_authtoken);
-        mAppPreferences.setEmailID(userDetails.user_email);
-        mAppPreferences.setFirstName(userDetails.user_fname);
-        mAppPreferences.setLastName(userDetails.user_lname);
-        mAppPreferences.setUserId(userDetails.user_id);
-        mAppPreferences.setUserImage(userDetails.user_image);
-        mAppPreferences.setGender(userDetails.user_gender);
-        mAppPreferences.setUserAbout(userDetails.user_about);
-        //mAppPreferences.setUserContact(userDetails.user_contact);
-        //mAppPreferences.setUserCity(userDetails.user_city);
+
+        if (userDetails.user_authtoken != null)
+            mAppPreferences.setAuthToken(userDetails.user_authtoken);
+        if (userDetails.user_email != null)
+            mAppPreferences.setEmailID(userDetails.user_email);
+        if (userDetails.user_fname != null)
+            mAppPreferences.setFirstName(userDetails.user_fname);
+        if (userDetails.user_lname != null)
+            mAppPreferences.setLastName(userDetails.user_lname);
+        if (userDetails.user_id != null)
+            mAppPreferences.setUserId(userDetails.user_id);
+        if (userDetails.user_image != null)
+            mAppPreferences.setUserImage(userDetails.user_image);
+        if (userDetails.user_gender != null)
+            mAppPreferences.setGender(userDetails.user_gender);
+        if (userDetails.user_about != null)
+            mAppPreferences.setUserAbout(userDetails.user_about);
+        if (userDetails.user_contact != null)
+            mAppPreferences.setUserContact(userDetails.user_contact);
+        if (userDetails.user_city != null)
+            mAppPreferences.setUserCity(userDetails.user_city);
+        if (userDetails.user_dob != null)
+            mAppPreferences.setUser_dob(userDetails.user_dob);
     }
 
     public static void updateUserData(Context context, List<ProfileResponse.GetProfileResponse> userDetailsList) {
         ProfileResponse.GetProfileResponse userDetails = userDetailsList.get(0);
         AppPreferences mAppPreferences = new AppPreferences(context);
-        mAppPreferences.setFirstName(userDetails.user_fname);
-        mAppPreferences.setLastName(userDetails.user_lname);
-        mAppPreferences.setUserId(userDetails.user_id);
-        mAppPreferences.setuserAge(userDetails.user_dob);
-        mAppPreferences.setGender(userDetails.user_gender);
-        mAppPreferences.setUserAbout(userDetails.user_about);
-        mAppPreferences.setUserContact(userDetails.user_contact);
-        mAppPreferences.setUserCity(userDetails.user_city);
+
+        if (userDetails.user_fname != null)
+            mAppPreferences.setFirstName(userDetails.user_fname);
+        if (userDetails.user_lname != null)
+            mAppPreferences.setLastName(userDetails.user_lname);
+        if (userDetails.user_id != null)
+            mAppPreferences.setUserId(userDetails.user_id);
+        if (userDetails.user_dob != null)
+            mAppPreferences.setUser_dob(userDetails.user_dob);
+        if (userDetails.user_gender != null)
+            mAppPreferences.setGender(userDetails.user_gender);
+        if (userDetails.user_about != null)
+            mAppPreferences.setUserAbout(userDetails.user_about);
+        if (userDetails.user_contact != null)
+            mAppPreferences.setUserContact(userDetails.user_contact);
+        if (userDetails.user_city != null)
+            mAppPreferences.setUserCity(userDetails.user_city);
     }
 
     public static boolean shouldEnableCacheOnMemory() {
