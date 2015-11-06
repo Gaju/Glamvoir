@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.multidex.MultiDex;
 import android.support.v4.content.LocalBroadcastManager;
 
 import org.acra.ACRA;
@@ -35,6 +36,9 @@ import glamvoir.appzstack.glamvoir.R;
 public class GlamvoirApplication extends Application {
     @Override
     public void onCreate() {
+
+        MultiDex.install(this);
+
         ACRA.init(this);
         super.onCreate();
         LocalBroadcastManager.getInstance(this).registerReceiver(onDownloadBroadcastReceiver, new IntentFilter("Download_Complete"));

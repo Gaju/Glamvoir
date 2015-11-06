@@ -50,6 +50,7 @@ import glamvoir.appzstack.glamvoir.activity.ProfileActivity;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.fragment.BaseFragment;
+import glamvoir.appzstack.glamvoir.fragment.SearchResultFragment;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
 import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
@@ -71,24 +72,17 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     private String postID = null;
     TimeAgo timeAgo;
     Context mContext;
+    private boolean isFromSearch;
 
-    public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans) {
+    public Custome_All_ListAdapter(Fragment frag, ArrayList<ParentPostBean> allPostsBeans, boolean isFromSearch) {
         this.frag = frag;
         this.list = allPostsBeans;
         inflater = (LayoutInflater) frag.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(frag.getActivity()));
         options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
+        this.isFromSearch = isFromSearch;
     }
-
-//    public Custome_All_ListAdapter(Context searchResultsActivity, ArrayList<ParentPostBean> allPostsBeans) {
-//        this.mContext = searchResultsActivity;
-//        this.list = allPostsBeans;
-//        inflater = (LayoutInflater)searchResultsActivity .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        imageLoader = ImageLoader.getInstance();
-//        imageLoader.init(ImageLoaderConfiguration.createDefault(searchResultsActivity));
-//        options = ImageLoaderInitializer.getDisplayImageOptionWithFade();
-//    }
 
     @Override
     public int getCount() {
@@ -489,7 +483,12 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
     }
 
     private void savePost(String userID, String postID, int pos) {
-        ((BaseFragment) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
+        if(isFromSearch){
+           // ((SearchResultFragment) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
+        }else{
+            ((BaseFragment) frag).savePost(AppConstant.METHOD_SAVEPOST, userID, postID, pos);
+        }
+
     }
 
 

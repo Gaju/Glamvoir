@@ -65,7 +65,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     }
 
-
     /**
      * initialize all views listeners
      */
@@ -78,9 +77,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private void initViews() {
 
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
-
         tv_search = (EditText) findViewById(R.id.tv_search);
-
         tv_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -207,34 +204,5 @@ public class SearchResultsActivity extends AppCompatActivity {
 //        }
 //    }
 
-    public void savePost(String methodName, String mUserID, String postID, int pos) {
-        if (InternetStatus.isInternetAvailable(this, true)) {
-            new SavePostAsyncTask(this, new AsynTaskListener() {
-                @Override
-                public void success(String success, String listenerId) {
-                }
 
-                @Override
-                public void error(String errorMessage, String errorCode, String listenerId) {
-                    Utility.showToast(SearchResultsActivity.this, errorMessage);
-                }
-
-                @Override
-                public void successWithresult(List<Object> sucessObject, String message, String pos) {
-
-                    if (message.equalsIgnoreCase("0")) {
-                        Utility.showToast(SearchResultsActivity.this, "Post saved");
-
-                        ParentPostBean item = list.get(Integer.parseInt(pos));
-                        item.setIs_saved(Integer.parseInt("1"));
-                        adapter.notifyDataSetChanged();
-
-                    } else {
-                        Utility.showToast(SearchResultsActivity.this, message);
-                    }
-
-                }
-            }, "server").execute(methodName, mUserID, postID, String.valueOf(pos));
-        }
-    }
 }

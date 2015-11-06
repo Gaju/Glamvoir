@@ -52,7 +52,7 @@ public class PhotoUploadAsyncTask extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
         if (photoUploadResponse != null) {
-            if (photoUploadResponse.error_code.equalsIgnoreCase("0")) {
+            if (photoUploadResponse.error_code != null && photoUploadResponse.error_code.equalsIgnoreCase("0")) {
                 mAsynTaskListener.successWithresult(mLIList, photoUploadResponse.error_code + "", mAsynTaskId);
             } else {
                 mAsynTaskListener.error(photoUploadResponse.msg_string, photoUploadResponse.error_code + "", mAsynTaskId);

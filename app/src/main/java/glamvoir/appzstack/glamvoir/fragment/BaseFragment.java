@@ -49,7 +49,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
-      public void onRefresh() {
+    public void onRefresh() {
         loadData();
     }
 
@@ -71,8 +71,8 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
         View rootView = inflater.inflate(R.layout.layout_basefragment, container, false);
         mlistView = (ListView) rootView.findViewById(R.id.lv_all);
 
-     //   QuickReturnListView listView = (QuickReturnListView) mlistView;
-      //  listView.setQuickReturnView(getHeaderView());
+        //   QuickReturnListView listView = (QuickReturnListView) mlistView;
+        //  listView.setQuickReturnView(getHeaderView());
 
         txt_NoDataFound = (TextView) rootView.findViewById(R.id.no_data_found);
         loadIndicator = rootView.findViewById(R.id.loadIndicator);
@@ -116,7 +116,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
-                if(mlistView != null && mlistView.getChildCount() > 0){
+                if (mlistView != null && mlistView.getChildCount() > 0) {
 
                     // check if the first item of the list is visible
                     boolean firstItemVisible = mlistView.getFirstVisiblePosition() == 0;
@@ -126,7 +126,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
                 swipeRefreshLayout.setEnabled(enable);
-               // else swipeRefreshLayout.setEnabled(false);
+                // else swipeRefreshLayout.setEnabled(false);
             }
         });
 
@@ -140,7 +140,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
     }
 
     protected void loadData() {
-        getLoaderManager().initLoader(LoaderID.GETPOST, null, ffspCallback);
+        getLoaderManager().restartLoader(LoaderID.GETPOST, null, ffspCallback);
     }
 
     LoaderManager.LoaderCallbacks<AllPostsBean> ffspCallback =
@@ -187,11 +187,8 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
             };
 
 
-
-
-
     private void setAdapter() {
-        adapter = new Custome_All_ListAdapter(getFragment(), list);
+        adapter = new Custome_All_ListAdapter(getFragment(), list, false);
         mlistView.setAdapter(adapter);
     }
 

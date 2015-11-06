@@ -44,7 +44,6 @@ public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> {
     @Override
     public AllPostsBean loadInBackground() {
         allPostsBean = new AllPostsBean();
-
         AppPreferences appPreferences = AppPreferences.getInstance(requestBean.getContext());
         String url = null;
         try {
@@ -52,7 +51,7 @@ public class GetAllPostLoader extends AsyncTaskLoader<AllPostsBean> {
                 url = mUrl + "method=" + AppConstant.METHOD_GETPOST + "&user_gender=" + appPreferences.getGender() + "&cat_id=" + categoryID + "&user_id=" + appPreferences.getUserId();
 
             } else {
-                url = mUrl + "method=" + AppConstant.METHOD_GETPOST + "&user_gender=" + appPreferences.getGender() + "&cat_id=" + categoryID + "&user_id=" + appPreferences.getUserId() + "keyword=" + keyword;
+                url = mUrl + "method=" + AppConstant.METHOD_GETPOST + "&user_gender=" + appPreferences.getGender() + "&cat_id=" + categoryID + "&user_id=" + appPreferences.getUserId() + "&keyword=" + keyword;
             }
             String serverResponseString = networkCall.getResponseFromServer(url.trim());
             ParserClass parserClass = ParserClass.getsInstance(requestBean.getContext());

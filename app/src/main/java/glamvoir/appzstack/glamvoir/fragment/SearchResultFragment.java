@@ -1,6 +1,8 @@
 package glamvoir.appzstack.glamvoir.fragment;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,7 +42,14 @@ public class SearchResultFragment extends Fragment implements SwipeRefreshLayout
     private View loadIndicator, view;
     private TextView txt_NoDataFound;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Context context;
 
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        context = activity;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,12 +71,12 @@ public class SearchResultFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-       // performSearch();
+        // performSearch();
     }
 
 
     private void setAdapter() {
-        adapter = new Custome_All_ListAdapter(SearchResultFragment.this, list);
+        adapter = new Custome_All_ListAdapter(SearchResultFragment.this, list, true);
         mlistView.setAdapter(adapter);
     }
 
@@ -213,4 +222,35 @@ public class SearchResultFragment extends Fragment implements SwipeRefreshLayout
 //
 //                }
 //            };
+
+//    public void savePost(String methodName, String mUserID, String postID, int pos) {
+//        if (InternetStatus.isInternetAvailable(this, true)) {
+//            new SavePostAsyncTask(this, new AsynTaskListener() {
+//                @Override
+//                public void success(String success, String listenerId) {
+//                }
+//
+//                @Override
+//                public void error(String errorMessage, String errorCode, String listenerId) {
+//                    Utility.showToast(context, errorMessage);
+//                }
+//
+//                @Override
+//                public void successWithresult(List<Object> sucessObject, String message, String pos) {
+//
+//                    if (message.equalsIgnoreCase("0")) {
+//                        Utility.showToast(context, "Post saved");
+//
+//                        ParentPostBean item = list.get(Integer.parseInt(pos));
+//                        item.setIs_saved(Integer.parseInt("1"));
+//                        adapter.notifyDataSetChanged();
+//
+//                    } else {
+//                        Utility.showToast(context, message);
+//                    }
+//
+//                }
+//            }, "server").execute(methodName, mUserID, postID, String.valueOf(pos));
+//        }
+//    }
 }
