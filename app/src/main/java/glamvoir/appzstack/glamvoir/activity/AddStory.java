@@ -154,6 +154,7 @@ public class AddStory extends AppCompatActivity implements
 
         setContentView(R.layout.my_post);
 
+
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);
@@ -798,7 +799,7 @@ public class AddStory extends AppCompatActivity implements
                 addStoryBean.setPost_gender("3");
                 break;
 
-            case R.id.rdbMale:
+            case R.id.rdbmen:
                 // AppPreferences.getInstance(this).setGender(GENDER_MALE);
                 Toast.makeText(AddStory.this, "Selected Men", Toast.LENGTH_LONG).show();
                 addStoryBean.setPost_gender("1");

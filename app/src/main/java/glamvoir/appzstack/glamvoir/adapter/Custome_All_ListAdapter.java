@@ -39,6 +39,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -292,7 +293,20 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
         }
 
         if (item.getcreation_date() != null) {
-            holder.tv_posting_date_of_post.setText(item.getcreation_date());
+            String string_date = item.getcreation_date();
+            SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Format formatter = new SimpleDateFormat("E, dd MMM yyyy");
+            Date d = null;
+            try {
+                d = formate.parse(string_date);
+                String date_claender = formatter.format(d.getTime());
+                holder.tv_posting_date_of_post.setText(date_claender);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
         } else {
             holder.tv_posting_date_of_post.setVisibility(View.GONE);
         }
