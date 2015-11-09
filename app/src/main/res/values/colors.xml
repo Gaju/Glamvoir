@@ -4,12 +4,14 @@
     <color name="colorPrimaryDark">#CFCFCF</color>
     <color name="textColorPrimary">#000000</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#0000FF</color>
+    <color name="colorAccent">#4275e8</color>
     <color name="tabBarBackground">#CFCFCF</color>
-    <color name="tabBarIndicator">#0000FF</color>
+    <color name="tabBarIndicator">#4275e8</color>
     <color name="buttonStroke">#2a2a2a</color>
+    <color name="post_feed_icon_color">#f1f1f1</color>
     <color name="overscroll">#33b5e5</color>
     <color name="sub_tittle">#909090</color>
+    <color name="homebyjoining_color">#828282</color>
     <color name="ad_param_label">#444</color>
 
 </resources>

@@ -46,7 +46,7 @@
                             android:ems="10"
                             android:hint="First Name"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:textSize="@dimen/textsize_normal" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -65,7 +65,7 @@
                             android:ems="10"
                             android:hint="Last Name"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:textSize="@dimen/textsize_normal" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -176,7 +176,7 @@
                             android:ems="10"
                             android:hint="About Me"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:textSize="@dimen/textsize_normal" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -245,8 +245,7 @@
                         android:layout_marginLeft="@dimen/margin_left_normal"
                         android:layout_marginRight="@dimen/margin_right_normal"
                         android:layout_marginTop="@dimen/margin_top_large"
-                        android:background="@drawable/corner_button_dip"
-                        android:text="@string/done"
+                        android:background="@drawable/done"
                         android:textAllCaps="true"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -254,7 +253,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView

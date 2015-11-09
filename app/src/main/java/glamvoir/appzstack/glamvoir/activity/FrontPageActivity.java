@@ -13,10 +13,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,8 +79,8 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
     private boolean mSignInClicked;
 
     private ConnectionResult mConnectionResult;
-
-    private Button btnSignIn, btn_SignUp, btn_LoginGmain, bt_facebook;
+    private ImageButton btnSignIn,btn_SignUp;
+    private Button  btn_LoginGmain, bt_facebook;
     private CoordinatorLayout coordinatorLayout;
 
     private TextView term_click,tv_click_privacy_policy;
@@ -99,6 +101,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MultiDex.install(this);
         super.onCreate(savedInstanceState);
         /*PackageInfo info;
         try {
@@ -122,7 +125,7 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        setContentView(R.layout.front_page);
+        setContentView(R.layout.front_page_two);
         callbackmanager = CallbackManager.Factory.create();
         // Add code to print out the key hash
 
@@ -259,8 +262,8 @@ public class FrontPageActivity extends AppCompatActivity implements View.OnClick
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                 .coordinatorLayout);
-        btnSignIn = (Button) findViewById(R.id.frontpage_signin);
-        btn_SignUp = (Button) findViewById(R.id.frontpage_signup);
+        btnSignIn = (ImageButton) findViewById(R.id.frontpage_signin);
+        btn_SignUp = (ImageButton) findViewById(R.id.frontpage_signup);
         btn_LoginGmain = (Button) findViewById(R.id.login_gmail);
         bt_facebook = (Button) findViewById(R.id.bt_facebook);
         term_click= (TextView) findViewById(R.id. term_click);

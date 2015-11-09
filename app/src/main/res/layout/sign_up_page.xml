@@ -157,16 +157,16 @@
             </android.support.design.widget.TextInputLayout>
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/join_glamvoir"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_marginLeft="@dimen/margin_left_normal"
                 android:layout_marginRight="@dimen/margin_right_normal"
                 android:layout_marginTop="@dimen/margin_top_large"
 
-                android:background="@drawable/corner_button_dip"
-                android:text="JOIN GLAMVOIR"
+                android:background="@drawable/join"
+
                 android:textColor="@android:color/black" />
 
            <!-- <TextView

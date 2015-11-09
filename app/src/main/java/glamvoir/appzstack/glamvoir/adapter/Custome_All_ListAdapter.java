@@ -322,7 +322,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
 
 
         } else {
-            holder.bt_connect_with_seller.setVisibility(View.GONE);
+            holder.bt_connect_with_seller.setVisibility(View.INVISIBLE);
         }
 
         holder.bt_connect_with_seller.setOnClickListener(this);

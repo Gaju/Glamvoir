@@ -37,17 +37,19 @@
             android:elevation="4dp"
             android:hint="Comment.."
             android:paddingLeft="10dp"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
             android:textSize="16sp" />
 
         <ImageButton
             android:id="@+id/bt_sent"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/ic_send_black_24dp" />
+            android:src="@drawable/post_comment" />
 
 
     </RelativeLayout>

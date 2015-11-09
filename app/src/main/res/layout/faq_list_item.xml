@@ -4,11 +4,11 @@
     android:layout_height="55dip"
     android:orientation="vertical" >
 
-    <TextView
+    <glamvoir.appzstack.glamvoir.customview.CustomTestLight
         android:id="@+id/lblListItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:textSize="12sp"
         android:textColor="#707070"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"

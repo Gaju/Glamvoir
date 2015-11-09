@@ -87,7 +87,7 @@ public class GcmIntentService extends IntentService {
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(message);
         mBuilder.setTicker("Glamvoir Notification");
-        mBuilder.setSmallIcon(R.mipmap.main_logo);
+        mBuilder.setSmallIcon(R.mipmap.fontlogo);
 
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         String[] events = null;

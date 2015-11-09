@@ -437,6 +437,7 @@ public class AddStory extends AppCompatActivity implements
         if (bundle != null) {
             selected_text.setVisibility(View.VISIBLE);
             selected_text.setText(bundle.getString("CATOGERYNAME"));
+            selected_text.setVisibility(View.INVISIBLE);
             selected_text.setSelected(true);
         }
 

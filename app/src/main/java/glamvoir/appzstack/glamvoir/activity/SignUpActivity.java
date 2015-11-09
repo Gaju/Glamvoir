@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -44,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private TextInputLayout tl_fName, tl_lName, tl_Email, tl_Password;
     RadioButton rdbMale, rdbFemale;
     RadioGroup rgGender;
-    private Button btn_Signup;
+    private ImageButton btn_Signup;
     private RequestBean mRequestBean;
     private Toolbar toolbar;
 
@@ -188,7 +189,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void initViews() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        btn_Signup = (Button) findViewById(R.id.join_glamvoir);
+        btn_Signup = (ImageButton) findViewById(R.id.join_glamvoir);
 
         edt_fName = (EditText) findViewById(R.id.firstname);
         edt_lName = (EditText) findViewById(R.id.lastname);

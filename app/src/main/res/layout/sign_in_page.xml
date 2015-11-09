@@ -54,19 +54,18 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <Button
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/done"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_large"
-            android:text="SIGN IN TO GLAMVOIR"
-            android:textAllCaps="true"
-            android:layout_marginLeft="@dimen/margin_left_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginTop="@dimen/margin_left_medium"
+            android:layout_marginLeft="@dimen/margin_left_medium"
             android:layout_marginRight="@dimen/margin_right_normal"
-            android:background="@drawable/corner_button_dip"
-            android:textColor="@android:color/black" />
+            android:background="@drawable/signinbtn"
+            />
 
-        <glamvoir.appzstack.glamvoir.customview.CustomTextBold
+        <glamvoir.appzstack.glamvoir.customview.CustomTestLight
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
