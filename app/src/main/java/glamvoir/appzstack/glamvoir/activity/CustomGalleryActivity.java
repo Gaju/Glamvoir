@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -155,13 +156,20 @@ public class CustomGalleryActivity extends AppCompatActivity {
             ArrayList<CustomGallery> selected = adapter.getSelected();
 
             String[] allPath = new String[selected.size()];
+            if (allPath.length<=5){
             for (int i = 0; i < allPath.length; i++) {
                 allPath[i] = selected.get(i).sdcardPath;
+             }
+                Intent data = new Intent().putExtra("all_path", allPath);
+                setResult(RESULT_OK, data);
+                finish();
+
+            }
+            else {
+                Toast.makeText(CustomGalleryActivity.this,"Cant not share more than 5 media items.", Toast.LENGTH_LONG).show();
             }
 
-            Intent data = new Intent().putExtra("all_path", allPath);
-            setResult(RESULT_OK, data);
-            finish();
+
 
         }
     };
@@ -216,6 +224,8 @@ public class CustomGalleryActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+
+
         }
 
         // show newest photo at beginning of the list

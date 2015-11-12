@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.activity.CustomGallery;
-import glamvoir.appzstack.glamvoir.helpers.Utility;
 
 public class GalleryAdapter extends BaseAdapter {
 
@@ -24,6 +23,7 @@ public class GalleryAdapter extends BaseAdapter {
 	private LayoutInflater infalter;
 	private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
 	ImageLoader imageLoader;
+	public int count;
 
 	private boolean isActionMultiplePick;
 
@@ -53,6 +53,7 @@ public class GalleryAdapter extends BaseAdapter {
 	}
 
 	public void setMultiplePick(boolean isMultiplePick) {
+
 		this.isActionMultiplePick = isMultiplePick;
 	}
 
@@ -117,19 +118,24 @@ public class GalleryAdapter extends BaseAdapter {
 
 	public void changeSelection(View v, int position) {
 
-		//if(data.size()<5) {
+	//	if(data.size()<5) {
 			if (data.get(position).isSeleted) {
 				data.get(position).isSeleted = false;
 			} else {
 				data.get(position).isSeleted = true;
 			}
-
-			((ViewHolder) v.getTag()).imgQueueMultiSelected.setSelected(data
-					.get(position).isSeleted);
-//		}else{
-//			Utility.showToast(mContext,"not possible");
-//		}
-	}
+       //   if (data.size()<5) {
+			  ((ViewHolder) v.getTag()).imgQueueMultiSelected.setSelected(data
+					  .get(position).isSeleted);
+		//  }
+		/*else {
+			  Utility.showToast(mContext, "not possible");
+		  }*/
+		}
+	//else{
+	//		Utility.showToast(mContext,"not possible");
+	//	}
+	//}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

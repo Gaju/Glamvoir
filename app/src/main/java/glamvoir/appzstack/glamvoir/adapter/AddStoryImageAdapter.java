@@ -121,9 +121,20 @@ public class AddStoryImageAdapter extends BaseAdapter implements View.OnClickLis
         }
 
         holder.ll_heading_description.setTag(position);
+  try {
+      holder.tv_add_heading.setText(tempHeading[position]);
+  }
+  catch (Exception e){
+   e.getMessage();
+  }
+        try {
+            holder.tv_add_description.setText(tempDescription[position]);
+        }
+        catch (Exception e){
+            e.getMessage();
+        }
 
-        holder.tv_add_heading.setText(tempHeading[position]);
-        holder.tv_add_description.setText(tempDescription[position]);
+
 
         try {
 

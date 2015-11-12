@@ -164,7 +164,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (et_comment.getText().toString().length() > 0) {
+
             comment(postID, et_comment.getText().toString());
+            et_comment.setText("");
         } else {
             Utility.showToast(mRequestBean.getContext(), "Comment should not be empty");
         }

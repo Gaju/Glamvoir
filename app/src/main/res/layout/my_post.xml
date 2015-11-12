@@ -83,24 +83,32 @@
 
             <include layout="@layout/loading_with_circle" />
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
 
                 android:layout_weight="1">
+        <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/city_border"
+                    android:layout_weight=".5"
+                    android:textColor="@android:color/black"
+                    android:id="@+id/user_city" />
 
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:visibility="invisible" />
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:background="@drawable/city_border"
+                    android:textColor="@android:color/black"
+                    android:id="@+id/all_cities" />
 
             </LinearLayout>
         </LinearLayout>

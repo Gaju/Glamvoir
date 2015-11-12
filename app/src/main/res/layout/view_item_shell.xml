@@ -21,7 +21,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -35,7 +34,7 @@
         android:layout_marginRight="10dp"
         android:autoLink="web"
         android:ellipsize="end"
-        android:text="TextView"
+
         android:maxLength="350"
         android:textColor="@color/sub_tittle"
         android:textSize="10sp" />

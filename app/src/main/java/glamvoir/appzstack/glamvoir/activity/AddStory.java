@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -29,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -68,11 +70,9 @@ import glamvoir.appzstack.glamvoir.Bean.AddPostBean;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.AddStoryImageAdapter;
-import glamvoir.appzstack.glamvoir.adapter.CustomCitySpinnerAdapter;
 import glamvoir.appzstack.glamvoir.adapter.CustomSpinnerAdapter;
 import glamvoir.appzstack.glamvoir.apppreference.AppPreferences;
 import glamvoir.appzstack.glamvoir.asynctaskloader.Add_Parent_PostLoader;
-import glamvoir.appzstack.glamvoir.asynctaskloader.CityLoader;
 import glamvoir.appzstack.glamvoir.asynctaskloader.LoaderID;
 import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
@@ -106,7 +106,7 @@ public class AddStory extends AppCompatActivity implements
     String userCooseDate, finalDate;
     protected View loadIndicator;
     ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
-
+    Typeface copperplateGothicLight;
     GridView gridGallery;
     Handler handler;
     // GalleryAdapter adapter;
@@ -128,7 +128,7 @@ public class AddStory extends AppCompatActivity implements
     ImageButton galleryImages, time_calender, calender_item, cameraImages, mobile_number, btn_Location;
     RadioButton rdbMale, rdbFemale, rblboth;
     RadioGroup rgGender;
-
+    Button user_city,all_Cities;
     private AddPostBean addStoryBean = null;
     private boolean canLocationAdd = true;
     private List<CityResponse.City> cityList = null;
@@ -136,7 +136,7 @@ public class AddStory extends AppCompatActivity implements
     EditText description;
     private TextInputLayout tl_Heading, tl_Description;
     private String locationAddress = null;
-
+    AppPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,11 +154,12 @@ public class AddStory extends AppCompatActivity implements
 
         setContentView(R.layout.my_post);
 
-
+        preferences = new AppPreferences(AddStory.this);
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
+        copperplateGothicLight = Typeface.createFromAsset(this.getAssets(), "nexa_light-webfont.ttf");
 
         addStoryBean = new AddPostBean();
         addStoryBean.setUser_id(AppPreferences.getInstance(this).getUserId());
@@ -171,16 +172,16 @@ public class AddStory extends AppCompatActivity implements
         initListener();
 
         getToolbar(toolbar);
-        getLoaderManager().restartLoader(LoaderID.GET_CITY, null, cityCallback);
+       // getLoaderManager().restartLoader(LoaderID.GET_CITY, null, cityCallback);
         addItemsToSpinner();
 
         CurrentDate();
 
-        dropCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+     /*   dropCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                setCityID(cityList.get(position).city_id);
+               //#########################
+                setCityID(cityList.get(position).city_id); nn
             }
 
             @Override
@@ -189,7 +190,7 @@ public class AddStory extends AppCompatActivity implements
             }
         });
 
-
+*/
         heading.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -393,6 +394,8 @@ public class AddStory extends AppCompatActivity implements
         rgGender.setOnCheckedChangeListener(this);
         switching_image_to_text.setOnCheckedChangeListener(this);
         mobile_number.setOnClickListener(this);
+        all_Cities.setOnClickListener(this);
+        user_city.setOnClickListener(this);
     }
 
 
@@ -414,15 +417,22 @@ public class AddStory extends AppCompatActivity implements
         rdbFemale = (RadioButton) findViewById(R.id.rdbMale);
         rblboth = (RadioButton) findViewById(R.id.rdbboth);
         rblboth.setChecked(true);
-        addStoryBean.setPost_gender("3");
 
+        addStoryBean.setPost_gender("3");
+        user_city= (Button) findViewById(R.id.user_city);
+        all_Cities= (Button) findViewById(R.id.all_cities);
+        all_Cities.setBackgroundResource(R.drawable.city_active_background);
+        all_Cities.setText("All Cities");
+        all_Cities.setTypeface(copperplateGothicLight);
+        setCityID("12");
+        user_cityUI(preferences.getUserCity());
         heading = (EditText) findViewById(R.id.heading);
         description = (EditText) findViewById(R.id.description);
 
         tl_Heading = (TextInputLayout) findViewById(R.id.heading_input);
         tl_Description = (TextInputLayout) findViewById(R.id.description_input);
 
-        dropCitySpinner = (Spinner) findViewById(R.id.spinner);
+     //   dropCitySpinner = (Spinner) findViewById(R.id.spinner);
         cameraImages.setOnClickListener(this);
         lv_addstory = (ListView) findViewById(R.id.lv_addstory);
         lv_addstory.setFastScrollEnabled(true);
@@ -445,6 +455,7 @@ public class AddStory extends AppCompatActivity implements
         lv_addstory.setAdapter(addStoryImageAdapter);
 
     }
+
 
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -722,6 +733,21 @@ public class AddStory extends AppCompatActivity implements
                 builder.show();
 
                 break;
+
+            case R.id.user_city:
+
+                setCityID(preferences.getUserCity());
+                user_city.setBackgroundResource(R.drawable.city_active_background);
+                all_Cities.setBackgroundResource(R.drawable.city_border);
+                break;
+            case R.id.all_cities:
+
+                setCityID("12");
+                user_city.setBackgroundResource(R.drawable.city_border);
+                all_Cities.setBackgroundResource(R.drawable.city_active_background);
+                all_Cities.setTypeface(copperplateGothicLight);
+
+                break;
         }
     }
 
@@ -877,7 +903,7 @@ public class AddStory extends AppCompatActivity implements
     }
 
 
-    LoaderManager.LoaderCallbacks<TaskResponse<CityResponse>> cityCallback =
+  /*  LoaderManager.LoaderCallbacks<TaskResponse<CityResponse>> cityCallback =
             new LoaderManager.LoaderCallbacks<TaskResponse<CityResponse>>() {
 
                 @Override
@@ -896,7 +922,7 @@ public class AddStory extends AppCompatActivity implements
 
                             if (data.data != null && data.data.error_code != null) {
                                 cityList = data.data.results;
-                                addButtons();
+                             //   addButtons();
                             }
                         }
                     }
@@ -906,14 +932,14 @@ public class AddStory extends AppCompatActivity implements
                 public void onLoaderReset(Loader<TaskResponse<CityResponse>> loader) {
                 }
             };
-
-    private void addButtons() {
+*/
+    /*private void addButtons() {
         if (cityList != null && cityList.size() > 0) {
             CustomCitySpinnerAdapter spinAdapter = new CustomCitySpinnerAdapter(AddStory.this, cityList);
-            dropCitySpinner.setAdapter(spinAdapter);
+       //     dropCitySpinner.setAdapter(spinAdapter);
         }
     }
-
+*/
     /**
      * method used to set the city id
      *
@@ -925,6 +951,63 @@ public class AddStory extends AppCompatActivity implements
         else
             addStoryBean.setPost_city("");
     }
+
+    private void user_cityUI(String userCity) {
+
+        if (userCity!=null){
+            if(userCity.equals("7")){
+                user_city.setText("DELHI NCR");
+                user_city.setTypeface(copperplateGothicLight);
+            }
+
+
+            if(userCity.equals("1")){
+                user_city.setText("MUMBAI");
+                user_city.setTypeface(copperplateGothicLight); }
+
+            if(userCity.equals("2")){
+                user_city.setText("BANGALORE");
+                user_city.setTypeface(copperplateGothicLight); }
+
+            if(userCity.equals("3")){
+                user_city.setText("CHENNAI");
+                user_city.setTypeface(copperplateGothicLight);}
+
+            if(userCity.equals("4")){
+
+                user_city.setText("CHANDIGARH");
+                user_city.setTypeface(copperplateGothicLight);
+            }
+            if(userCity.equals("5")){
+                user_city.setText("KOLKATA");
+                user_city.setTypeface(copperplateGothicLight);
+            }
+
+            if(userCity.equals("6")){
+
+                user_city.setText("HYDERABAD");
+                user_city.setTypeface(copperplateGothicLight);}
+
+            if(userCity.equals("8")){
+                user_city.setText("JAIPUR");
+                user_city.setTypeface(copperplateGothicLight);
+            }
+            if(userCity.equals("9")){
+                user_city.setText("GOA");
+                user_city.setTypeface(copperplateGothicLight);
+            }
+
+            if(userCity.equals("10")){
+                user_city.setText("LUCKNOW");
+                user_city.setTypeface(copperplateGothicLight);  }
+
+            if(userCity.equals("11")){
+
+                user_city.setText("AHMEDABAD");
+                user_city.setTypeface(copperplateGothicLight);  }
+        }
+    }
+
 
 
     /**

@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -62,13 +61,13 @@ public class MyCityActivity extends AppCompatActivity implements View.OnClickLis
         preferences = new AppPreferences(MyCityActivity.this);
 
         initViews();
-        updateUI();
+        getLoaderManager().restartLoader(LoaderID.GET_CITY, null, cityCallback);
         //layout.setOrientation(LinearLayout.VERTICAL);  //Can also be done in xml by android:orientation="vertical"
         iniListiner();
 
         getToolbar(toolbar);
+        updateUI();
 
-        getLoaderManager().restartLoader(LoaderID.GET_CITY, null, cityCallback);
 
     }
 
@@ -206,37 +205,23 @@ public class MyCityActivity extends AppCompatActivity implements View.OnClickLis
                  bt7.setText(list.get(j).city_name);
                  bt7.setTypeface(copperplateGothicLight);}
 
-             if(list.get(j).city_id.equals("7")){
+             if(list.get(j).city_id.equals("8")){
                  bt8.setText(list.get(j).city_name);
                  bt8.setTypeface(copperplateGothicLight);
              }
-             if(list.get(j).city_id.equals("8")){
+             if(list.get(j).city_id.equals("9")){
                  bt9.setText(list.get(j).city_name);
                  bt9.setTypeface(copperplateGothicLight);
              }
 
-             if(list.get(j).city_id.equals("9")){
+             if(list.get(j).city_id.equals("10")){
                  bt10.setText(list.get(j).city_name);
                  bt10.setTypeface(copperplateGothicLight);  }
-
-             if(list.get(j).city_id.equals("10")){
-
-                 bt11.setText(list.get(j).city_name);
-                 bt11.setTypeface(copperplateGothicLight);  }
-
 
              if(list.get(j).city_id.equals("11")){
 
                  bt11.setText(list.get(j).city_name);
                  bt11.setTypeface(copperplateGothicLight);  }
-
-
-
-
-
-
-          
-
         }
 
     }
@@ -333,38 +318,38 @@ public class MyCityActivity extends AppCompatActivity implements View.OnClickLis
         if (preferences.getUserCity() != null) {
            // edt_age.setText(preferences.getUser_dob());
             if(preferences.getUserCity().equals("7")){
-                bt1.setBackgroundResource(R.drawable.a);
+                bt1.setBackgroundResource(R.drawable.city_active_background);
             }
             else if (preferences.getUserCity().equals("1")){
-                bt2.setBackgroundResource(R.drawable.a);
+                bt2.setBackgroundResource(R.drawable.city_active_background);
             }
             else if (preferences.getUserCity().equals("2")){
-                bt3.setBackgroundResource(R.drawable.a);
+                bt3.setBackgroundResource(R.drawable.city_active_background);
             }
             else if (preferences.getUserCity().equals("3")){
-                bt4.setBackgroundResource(R.drawable.a);
+                bt4.setBackgroundResource(R.drawable.city_active_background);
             }
             else if (preferences.getUserCity().equals("4")){
-                bt5.setBackgroundResource(R.drawable.a);
+                bt5.setBackgroundResource(R.drawable.city_active_background);
             }
             else if (preferences.getUserCity().equals("5")){
-                bt6.setBackgroundResource(R.drawable.a);
+                bt6.setBackgroundResource(R.drawable.city_active_background);
 
             }
             else if (preferences.getUserCity().equals("6")){
-                bt7.setBackgroundResource(R.drawable.a);
+                bt7.setBackgroundResource(R.drawable.city_active_background);
 
             }
             else if (preferences.getUserCity().equals("8")){
-                bt9.setBackgroundResource(R.drawable.a);
+                bt9.setBackgroundResource(R.drawable.city_active_background);
 
             }
             else if (preferences.getUserCity().equals("9")){
-                bt10.setBackgroundResource(R.drawable.a);
+                bt10.setBackgroundResource(R.drawable.city_active_background);
 
             }
             else if (preferences.getUserCity().equals("10")){
-                bt11.setBackgroundResource(R.drawable.a);
+                bt11.setBackgroundResource(R.drawable.city_active_background);
 
             }  //
 
