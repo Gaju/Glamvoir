@@ -366,7 +366,7 @@ public class MyCityActivity extends AppCompatActivity implements View.OnClickLis
             else if (preferences.getUserCity().equals("10")){
                 bt11.setBackgroundResource(R.drawable.a);
 
-            }
+            }  //
 
 
         }
