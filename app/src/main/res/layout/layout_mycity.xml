@@ -26,6 +26,7 @@
            android:text="CHOOSE YOUR CITY:"
            android:id="@+id/textView5"
            android:layout_marginBottom="@dimen/padding_top_normal"
+           android:textColor="@android:color/black"
            android:layout_gravity="center_horizontal" />
 
        <LinearLayout
@@ -38,20 +39,19 @@
            <Button
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="New Button"
-               android:layout_weight="1"
-               android:background="@drawable/corner_button_dip"
 
+               android:layout_weight="1"
+               android:background="@drawable/city_border"
                android:id="@+id/bt10" />
 
            <Button
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="New Button"
+
                android:id="@+id/bt11"
                android:layout_weight="1"
                android:layout_marginLeft="@dimen/padding_large"
-               android:background="@drawable/corner_button_dip"
+               android:background="@drawable/city_border"
                android:layout_gravity="right" />
 
 
@@ -70,28 +70,28 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
+
             android:id="@+id/bt1"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
+
             android:id="@+id/bt2"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/padding_large"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
+
             android:id="@+id/bt3"
             android:layout_marginLeft="@dimen/padding_large"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:layout_gravity="right"
             android:layout_weight="1"/>
 
@@ -112,27 +112,27 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:background="@drawable/corner_button_dip"
+
+            android:background="@drawable/city_border"
             android:id="@+id/bt4"
             android:layout_weight="1"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
+
             android:id="@+id/bt5"
             android:layout_marginLeft="@dimen/padding_large"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
+
             android:id="@+id/bt6"
             android:layout_marginLeft="@dimen/padding_large"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:layout_weight="1"/>
 
 
@@ -149,29 +149,25 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:id="@+id/bt7"
-
             android:layout_weight="1"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
             android:id="@+id/bt8"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/padding_large"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:layout_gravity="center_horizontal" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
             android:id="@+id/bt9"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/padding_large"
-            android:background="@drawable/corner_button_dip"
+            android:background="@drawable/city_border"
             android:layout_gravity="right" />
 
     </LinearLayout>
