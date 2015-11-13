@@ -120,6 +120,7 @@ public class SearchResultFragment extends Fragment implements SwipeRefreshLayout
     private void initViews(View view) {
         mlistView = (ListView) view.findViewById(R.id.lv_all);
         txt_NoDataFound = (TextView) view.findViewById(R.id.no_data_found);
+        txt_NoDataFound.setVisibility(View.GONE);
         loadIndicator = view.findViewById(R.id.loadIndicator);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -176,6 +177,8 @@ public class SearchResultFragment extends Fragment implements SwipeRefreshLayout
     public void performSearch(String keyword) {
         Bundle b = new Bundle();
         b.putString("keyword", keyword);
+        list.clear();
+        txt_NoDataFound.setVisibility(View.GONE);
         getLoaderManager().restartLoader(LoaderID.SEARCH, b, searchCallback);
     }
 

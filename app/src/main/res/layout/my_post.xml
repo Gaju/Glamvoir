@@ -160,8 +160,11 @@
                         android:ems="10"
                         android:hint="Add a title"
                         android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:textSize="@dimen/textsize_normal" />
+                        android:inputType="textCapSentences"
+                        android:textSize="@dimen/textsize_normal"
+                        />
+                    <requestFocus/>
+
 
                 </android.support.design.widget.TextInputLayout>
 

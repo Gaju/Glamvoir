@@ -136,7 +136,7 @@ public class AddStory extends AppCompatActivity implements
     EditText description;
     private TextInputLayout tl_Heading, tl_Description;
     private String locationAddress = null;
-    AppPreferences preferences;
+   // AppPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,12 +154,12 @@ public class AddStory extends AppCompatActivity implements
 
         setContentView(R.layout.my_post);
 
-        preferences = new AppPreferences(AddStory.this);
+       /* preferences = new AppPreferences(AddStory.this);*/
         mRequestBean = new RequestBean();
         mRequestBean.setLoader(true);
         mRequestBean.setActivity(this);
         mRequestBean.setLoader(true);
-        copperplateGothicLight = Typeface.createFromAsset(this.getAssets(), "nexa_light-webfont.ttf");
+        copperplateGothicLight = Typeface.createFromAsset(this.getAssets(), "nexa_bold-webfont.ttf");
 
         addStoryBean = new AddPostBean();
         addStoryBean.setUser_id(AppPreferences.getInstance(this).getUserId());
@@ -425,7 +425,7 @@ public class AddStory extends AppCompatActivity implements
         all_Cities.setText("All Cities");
         all_Cities.setTypeface(copperplateGothicLight);
         setCityID("12");
-        user_cityUI(preferences.getUserCity());
+        user_cityUI(AppPreferences.getInstance(this).getUserCity());
         heading = (EditText) findViewById(R.id.heading);
         description = (EditText) findViewById(R.id.description);
 
@@ -736,7 +736,7 @@ public class AddStory extends AppCompatActivity implements
 
             case R.id.user_city:
 
-                setCityID(preferences.getUserCity());
+                setCityID(AppPreferences.getInstance(this).getUserCity());
                 user_city.setBackgroundResource(R.drawable.city_active_background);
                 all_Cities.setBackgroundResource(R.drawable.city_border);
                 break;

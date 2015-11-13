@@ -7,6 +7,7 @@ public class AppConfig {
 
     // CREDENTIALS
     public final static String DOMAIN = "http://glamvoir.com/api";
+   // public final static String DOMAIN = "http://glamvoir.com/index.php/api"; // jai use to check why error is coming during posting.
 
    /* public final static String DOMAIN = "http://android.999globalsoft.com/";*/
    /* public final static String DOMAIN = "http://glamvoir.shrubtechnology.com/api";*/
