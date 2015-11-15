@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    class="glamvoir.appzstack.glamvoir.customview.CustomTextBold"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="4">
 
     <include layout="@layout/appbar" />
+
+    <include layout="@layout/loading_with_circle" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,6 +41,7 @@
                     android:background="@drawable/yourbuttonbackground"
                     android:button="@android:color/transparent"
                     android:gravity="center"
+                    android:textStyle="bold"
                     android:text="BOTH" />
 
                 <RadioButton
@@ -49,6 +53,7 @@
                     android:background="@drawable/yourbuttonbackground"
                     android:button="@android:color/transparent"
                     android:gravity="center"
+                    android:textStyle="bold"
                     android:text=" WOMEN"
 
                     />
@@ -62,6 +67,7 @@
                     android:background="@drawable/yourbuttonbackground"
                     android:button="@android:color/transparent"
                     android:gravity="center"
+                    android:textStyle="bold"
                     android:text=" MEN" />
 
 
@@ -81,7 +87,6 @@
             android:layout_weight=".5"
             android:orientation="horizontal">
 
-            <include layout="@layout/loading_with_circle" />
 
 
 
@@ -89,15 +94,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
-
                 android:layout_weight="1">
         <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/city_border"
+                    android:background="@drawable/b"
                     android:layout_weight=".5"
                     android:textColor="@android:color/black"
+                    android:textStyle="bold"
                     android:id="@+id/user_city" />
 
                 <Button
@@ -106,8 +111,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:layout_marginLeft="@dimen/margin_medium"
-                    android:background="@drawable/city_border"
+                    android:background="@drawable/b"
                     android:textColor="@android:color/black"
+                    android:textStyle="bold"
                     android:id="@+id/all_cities" />
 
             </LinearLayout>

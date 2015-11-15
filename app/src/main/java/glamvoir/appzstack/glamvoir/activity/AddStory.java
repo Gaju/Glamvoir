@@ -136,6 +136,7 @@ public class AddStory extends AppCompatActivity implements
     EditText description;
     private TextInputLayout tl_Heading, tl_Description;
     private String locationAddress = null;
+
    // AppPreferences preferences;
 
     @Override
@@ -533,6 +534,8 @@ public class AddStory extends AppCompatActivity implements
 
                 @Override
                 public Loader<TaskResponse<AddPostResponse>> onCreateLoader(int id, Bundle args) {
+
+              //      loadIndicator.setVisibility(View.VISIBLE);
                     return new Add_Parent_PostLoader(mRequestBean.getContext(), addStoryBean, dataT, addStoryImageAdapter.getTitles(), addStoryImageAdapter.getDescription());
                 }
 
@@ -552,10 +555,17 @@ public class AddStory extends AppCompatActivity implements
                                                 addStoryImageAdapter.getTitles()[i],
                                                 addStoryImageAdapter.getDescription()[i]).execute();
                                     }
+                                    Utility.showToast(getApplicationContext(), "Post sent successfully");
+                                    finish();
                                 } else {
                                     Utility.showToast(getApplicationContext(), "Post sent successfully");
+                                 //  loadIndicator.setVisibility(View.GONE);
+
                                 }
                             }
+
+
+
                         }
                     }
                 }
@@ -601,9 +611,12 @@ public class AddStory extends AppCompatActivity implements
             counter++;
             if (counter == dataT.size() - 1) {
                 Utility.showToast(getApplicationContext(), "Post Success");
-                counter = 0;
+              //  loadIndicator.setVisibility(View.GONE);
+                 counter = 0;
+                 finish();
             } else {
-                Utility.showToast(getApplicationContext(), "count = " + counter);
+                //Utility.showToast(getApplicationContext(), "count = " + counter);
+
             }
         }
     }
@@ -618,9 +631,16 @@ public class AddStory extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button3:
-                Intent i = new Intent(AddStory.this, CustomGalleryActivity.class);
-                i.setAction(Action.ACTION_MULTIPLE_PICK);
-                startActivityForResult(i, 200);
+                if(dataT.size()<=4){
+
+                    Intent i = new Intent(AddStory.this, CustomGalleryActivity.class);
+                    i.setAction(Action.ACTION_MULTIPLE_PICK);
+                    startActivityForResult(i, 200);
+                }
+                else {
+                    Toast.makeText(this,"You already seleceted 5 images",Toast.LENGTH_LONG).show();
+                }
+
                 break;
 
             case R.id.calender_item:
@@ -688,15 +708,19 @@ public class AddStory extends AppCompatActivity implements
                 break;
 
             case R.id.button2:
-
-                if (Utility.checkAvailable()) {
-                    Intent i1 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    File file = getOutputMediaFile();
-                    picUri = Uri.fromFile(file); // create
-                    i1.putExtra(MediaStore.EXTRA_OUTPUT, picUri); // set the image file
-                    startActivityForResult(i1, CAPTURE_IMAGE_CAMERA);
-                } else {
-                    Utility.showToast(AddStory.this, "No External Storage");
+                if(dataT.size()<5) {
+                    if (Utility.checkAvailable()) {
+                        Intent i1 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        File file = getOutputMediaFile();
+                        picUri = Uri.fromFile(file); // create
+                        i1.putExtra(MediaStore.EXTRA_OUTPUT, picUri); // set the image file
+                        startActivityForResult(i1, CAPTURE_IMAGE_CAMERA);
+                    } else {
+                        Utility.showToast(AddStory.this, "No External Storage");
+                    }
+                }
+                else {
+                    Toast.makeText(this,"You already seleceted 5 images",Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.mobile_number:
@@ -795,13 +819,18 @@ public class AddStory extends AppCompatActivity implements
             String[] all_path = data.getStringArrayExtra("all_path");
 
             for (String string : all_path) {
-                CustomGallery item = new CustomGallery();
-                item.sdcardPath = string;
-                dataT.add(item);
+                if (dataT.size() < MAX_PHOTOS) {
+                    CustomGallery item = new CustomGallery();
+                    item.sdcardPath = string;
+                    dataT.add(item);
+                }
+                else {
+                    Utility.showToast(AddStory.this, "can't able to add more than 5 photos");
+                }
             }
 
         } else if (requestCode == CAPTURE_IMAGE_CAMERA) {
-            if (dataT.size() <= MAX_PHOTOS) {
+            if (dataT.size() < MAX_PHOTOS) {
                 CustomGallery item = new CustomGallery();
                 if (picUri != null) {
                     String modifyURL = picUri.toString().replace("file://", "");

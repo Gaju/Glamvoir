@@ -14,7 +14,7 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/llcoment"
         android:layout_below="@+id/include" />
 
@@ -37,8 +37,8 @@
             android:elevation="4dp"
             android:hint="Comment.."
             android:paddingLeft="10dp"
-            android:inputType="textMultiLine"
             android:maxLines="3"
+            android:maxLength="350"
             android:textSize="14sp" />
 
         <ImageButton

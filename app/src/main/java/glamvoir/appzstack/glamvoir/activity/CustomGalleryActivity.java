@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -33,6 +34,7 @@ import java.util.List;
 import glamvoir.appzstack.glamvoir.R;
 import glamvoir.appzstack.glamvoir.adapter.Action;
 import glamvoir.appzstack.glamvoir.adapter.GalleryAdapter;
+import glamvoir.appzstack.glamvoir.constant.AppConstant;
 
 public class CustomGalleryActivity extends AppCompatActivity {
 
@@ -40,10 +42,10 @@ public class CustomGalleryActivity extends AppCompatActivity {
     GridView gridGallery;
     Handler handler;
     GalleryAdapter adapter;
-
+     AddStory addStory;
     ImageView imgNoMedia;
     Button btnGalleryOk;
-
+    Toolbar toolbar;
     String action;
     private ImageLoader imageLoader;
 
@@ -55,13 +57,15 @@ public class CustomGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //
         setContentView(R.layout.gallery);
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        addStory=new AddStory();
         action = getIntent().getAction();
         if (action == null) {
             finish();
         }
         initImageLoader();
         init();
+        getToolbar(toolbar);
     }
 
     private void initImageLoader() {
@@ -156,7 +160,7 @@ public class CustomGalleryActivity extends AppCompatActivity {
             ArrayList<CustomGallery> selected = adapter.getSelected();
 
             String[] allPath = new String[selected.size()];
-            if (allPath.length<=5){
+            if (allPath.length<=5 && addStory.dataT.size()<=4){
             for (int i = 0; i < allPath.length; i++) {
                 allPath[i] = selected.get(i).sdcardPath;
              }
@@ -231,6 +235,24 @@ public class CustomGalleryActivity extends AppCompatActivity {
         // show newest photo at beginning of the list
         Collections.reverse(galleryList);
         return galleryList;
+    }
+
+    private void getToolbar(Toolbar toolbar) {
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("SEND IMAGES");
+
+    }
+
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        Intent parentIntent = getIntent();
+        String className = parentIntent.getStringExtra("ParentClassName"); //getting the parent class name
+        Intent newIntent = null;
+        finish();
+        return newIntent;
     }
 
 }

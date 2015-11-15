@@ -3,9 +3,11 @@ package glamvoir.appzstack.glamvoir.activity;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -39,6 +42,7 @@ import glamvoir.appzstack.glamvoir.constant.AppConstant;
 import glamvoir.appzstack.glamvoir.customview.CustomTextBold;
 import glamvoir.appzstack.glamvoir.helpers.ImageLoaderInitializer;
 import glamvoir.appzstack.glamvoir.helpers.Utility;
+import glamvoir.appzstack.glamvoir.intentservice.NetworkIntentService;
 import glamvoir.appzstack.glamvoir.intentservice.ObserveFFSPIntentService;
 import glamvoir.appzstack.glamvoir.model.TaskResponse;
 import glamvoir.appzstack.glamvoir.model.net.request.RequestBean;
@@ -63,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private ImageButton ll_user_about, ll_user_contact;
 
     String activity_about;
-
+    String user_contact_number;
 
     public static void startActivity(Context context, String userID) {
         Intent intent = new Intent(context, ProfileActivity.class);
@@ -179,7 +183,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (data.get(0).user_about != null) {
             activity_about = data.get(0).user_about;
         }
-
+        if (data.get(0).user_contact != null) {
+            user_contact_number = data.get(0).user_contact;
+        }
         if (data.get(0).user_image != null && !data.get(0).user_image.equals("")) {
             displayImage(userImage, data.get(0).user_image);
         } else {
@@ -254,20 +260,56 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.ll_user_contact:
 
-                try {
+                new BottomSheet.Builder(this).title("Take action on post").sheet(R.menu.menu_main_call).listener(new DialogInterface.OnClickListener() {
 
-                    // set the data
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case R.id.user_call:
 
-                   /* String uri = "tel:"+item.getContact_no();
-                    Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
-                    startActivity(callIntent);*/
+                                try {
 
-                } catch (Exception e) {
+                                    // set the data
+                                    if(user_contact_number.length()!=0) {
+                                        String uri = "tel:" + user_contact_number;
+                                        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+                                        startActivity(callIntent);
+                                    }
 
-                    Toast.makeText(this, "Your call has failed...", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
+                                } catch (Exception e) {
 
-                }
+                                    Toast.makeText(ProfileActivity.this, "Your call has failed...", Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+
+                                }
+
+                                break;
+
+                            case R.id.user_message:
+                                try {
+
+                                    // set the data
+                                    if(user_contact_number.length()!=0) {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", user_contact_number, null)));
+                                    }
+
+                                } catch (Exception e) {
+
+                                    Toast.makeText(ProfileActivity.this, "Your call has failed...", Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+
+                                }
+
+                                break;
+                            case R.id.cacel:
+                                Toast.makeText(ProfileActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                }).show();
+
+
 
                 break;
         }

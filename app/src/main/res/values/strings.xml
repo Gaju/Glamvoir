@@ -106,6 +106,9 @@
 
     </string-array>
 
+    <string name="user_call">CALL</string>
+    <string name="user_msg">MESSAGE</string>
+
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="delete">Delete</string>

@@ -385,7 +385,7 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                 }).show();
                 break;
             case R.id.bt_connect_with_seller:
-                try {
+               /* try {
 
                     // set the data
 
@@ -398,7 +398,56 @@ public class Custome_All_ListAdapter extends BaseAdapter implements View.OnClick
                     Toast.makeText(frag.getActivity(), "Your call has failed...", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
 
-                }
+                }*/
+                new BottomSheet.Builder(frag.getActivity()).title("Take action on post").sheet(R.menu.menu_main_call).listener(new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case R.id.user_call:
+
+                                try {
+
+                                    // set the data
+                                    if(item.getContact_no().length()!=0) {
+                                        String uri = "tel:" + item.getContact_no();
+                                        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+                                        frag.startActivity(callIntent);
+                                    }
+
+                                } catch (Exception e) {
+
+                                    Toast.makeText(frag.getActivity(), "Your call has failed...", Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+
+                                }
+
+                                break;
+
+                            case R.id.user_message:
+                                try {
+
+                                    // set the data
+                                    if(item.getContact_no().length()!=0) {
+                                        frag.startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", item.getContact_no(), null)));
+                                    }
+
+                                } catch (Exception e) {
+
+                                    Toast.makeText(frag.getActivity(), "Your call has failed...", Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+
+                                }
+
+                                break;
+                            case R.id.cacel:
+                                Toast.makeText(frag.getActivity(), "Cancel", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                }).show();
+
 
                 break;
 

@@ -110,7 +110,8 @@ public class Communication {
         AddPostResponse response = null;
 
         if (dataT != null && dataT.size() > 0) {
-            response = service.add_Post_With_Image(new TypedFile("image/*", new File(dataT.get(0).sdcardPath)),
+            response = service.add_Post_With_Image(
+                    new TypedFile("image/jpeg", new File(dataT.get(0).sdcardPath)),
                     new TypedString(methodType),
                     new TypedString(bean.getUser_id()),
                     new TypedString(bean.getPost_parent_id()),
@@ -148,7 +149,7 @@ public class Communication {
         GlamvoirService service = RestAdapter.getGlamvoirService();
         AddPostResponse response = null;
 
-        response = service.add_Post_With_Image(new TypedFile("image/*", new File(imagePath)),
+        response = service.add_Post_With_Image(new TypedFile("image/jpeg", new File(imagePath)),
                 new TypedString(methodType),
                 new TypedString(bean.getUser_id()),
                 new TypedString(parentID),
