@@ -108,6 +108,9 @@ public class CommentCustomAdapter extends BaseAdapter {
         if (item.user_image != null && !item.user_image.equals("")) {
             imageLoader.displayImage(item.user_image, holder.user_image, options);
         }
+        else {
+            holder.user_image.setBackgroundResource(R.drawable.no_media);
+        }
 
         return convertView;
     }

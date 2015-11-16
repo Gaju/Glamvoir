@@ -1,12 +1,14 @@
 package glamvoir.appzstack.glamvoir.navigationdrawer;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -36,6 +38,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import glamvoir.appzstack.glamvoir.R;
+import glamvoir.appzstack.glamvoir.TimeAgo.RealPathUtil;
 import glamvoir.appzstack.glamvoir.activity.AlertActivity;
 import glamvoir.appzstack.glamvoir.activity.MyAccountActivity;
 import glamvoir.appzstack.glamvoir.adapter.NavigationDrawerAdapter_Lv;
@@ -75,6 +78,7 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
     private TextView alertCount;
     TextView tv_name ;
     TextView tv_email ;
+    RealPathUtil realPathUtil=new RealPathUtil();
 
     String TITLES[] = {"FEED", "FLEA MARKET", "FOLLOWERS", "FOLLOWING", "MY SAVES", "MY POST", "SETTINGS"};
 
@@ -301,10 +305,15 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
 
         } else if (requestCode == CAPTURE_IMAGE_GALLARY) {
             try {
-
-                photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), getRealPathFromURI(data.getData()));
-
-
+            if (Build.VERSION.SDK_INT < 11) {
+                photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), realPathUtil.getRealPathFromURI_BelowAPI11(getActivity(), data.getData()));
+            }
+                else if (Build.VERSION.SDK_INT < 19){
+                photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), realPathUtil.getRealPathFromURI_API11to18(getActivity(), data.getData()));
+            }
+          else {
+                photoUpload(AppConstant.METHOD_UPDATE_IMAGE, AppPreferences.getInstance(getActivity()).getUserId(), realPathUtil.getRealPathFromURI_API19(getActivity(), data.getData()));
+            }
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -312,16 +321,22 @@ public class FragmentDrawer_Lv extends Fragment implements View.OnClickListener 
         }
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
+    private String getRealPathFromURI(Uri contentURI,Context context) {
         String result;
-        Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
+      String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver().query(contentURI, projection, null, null, null);
+
         if (cursor == null) { // Source is Dropbox or other similar local file path
             result = contentURI.getPath();
         } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+
+                cursor.moveToFirst();
+               //cursor.getColumnIndexOrThrow
+               int     idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+               cursor.close();
+
             result = cursor.getString(idx);
-            cursor.close();
+
         }
         return result;
     }

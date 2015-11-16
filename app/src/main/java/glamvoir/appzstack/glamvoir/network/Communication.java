@@ -225,7 +225,7 @@ public class Communication {
 
         // PhotoUploadResponse response = service.uploadPhoto(multipartTypedOutput);
 
-        PhotoUploadResponse response = service.uploadPhoto(new TypedFile("image/*", requestFilePath), new TypedString(methodType), new TypedString(userID));
+        PhotoUploadResponse response = service.uploadPhoto(new TypedFile("image/jpeg", requestFilePath), new TypedString(methodType), new TypedString(userID));
         return response;
     }
 }

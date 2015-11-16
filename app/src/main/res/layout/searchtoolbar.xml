@@ -26,6 +26,7 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingLeft="10dp"
+            android:singleLine="true"
             android:textColor="@color/tabBarIndicator" />
 
     </android.support.v7.widget.Toolbar>

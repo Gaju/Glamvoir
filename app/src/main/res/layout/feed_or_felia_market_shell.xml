@@ -51,7 +51,8 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="2dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/no_media" />
+                    android:scaleType="fitXY"
+                     />
 
 
 

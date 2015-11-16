@@ -64,7 +64,7 @@ public class NotificationAdapter extends BaseAdapter {
         ListNotificationResponse.ListNotification item = list.get(position);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.layout_comment_shell, null);
+            convertView = inflater.inflate(R.layout.layout_notification_shell, null);
             holder = new ViewHolder();
             holder.user_image = (ImageView) convertView.findViewById(R.id.circleView);
 
@@ -77,7 +77,7 @@ public class NotificationAdapter extends BaseAdapter {
         }
 
 
-        holder.user_name.setVisibility(View.GONE);
+        holder.user_name.setVisibility(View.INVISIBLE);
 
         if (item.creation_date!=null){
             holder.comment_time.setVisibility(View.VISIBLE);

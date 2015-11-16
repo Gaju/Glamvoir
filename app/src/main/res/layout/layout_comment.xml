@@ -2,20 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home_bg"
     android:orientation="vertical">
 
     <include
         android:id="@+id/include"
         layout="@layout/appbar" />
 
-    <include layout="@layout/loading_with_circle"/>
+    <include layout="@layout/loading_with_circle"
+        />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/llcoment"
+        android:divider="@null"
         android:layout_below="@+id/include" />
 
     <RelativeLayout
@@ -38,7 +39,6 @@
             android:hint="Comment.."
             android:paddingLeft="10dp"
             android:maxLines="3"
-            android:maxLength="350"
             android:textSize="14sp" />
 
         <ImageButton
